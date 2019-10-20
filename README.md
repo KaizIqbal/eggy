@@ -1,0 +1,2 @@
+# eggy
+Opensource cursor engine
