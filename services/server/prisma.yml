@@ -1,4 +1,4 @@
 endpoint: http://localhost:4466
 datamodel:
-  - databases/user.prisma
-  - databases/egg.prisma
+  - model/user.prisma
+  - model/egg.prisma
