@@ -1,0 +1,7 @@
+type egg {
+    id: ID! @id
+    name: String!
+    owner: User! @relation(link: INLINE)
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
+}
