@@ -1,7 +1,7 @@
-type egg {
+type Egg {
     id: ID! @id
     name: String!
-    owner: User! @relation(link: INLINE)
+    owner: User! @relation(name: "EggOwner", onDelete: SET_NULL)
     createdAt: DateTime! @createdAt
     updatedAt: DateTime! @updatedAt
 }
