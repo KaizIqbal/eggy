@@ -3,5 +3,5 @@ type User {
   name: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  eggs: [egg!]!
+  eggs: [Egg] @relation(name: "EggOwner", onDelete: CASCADE)
 }
