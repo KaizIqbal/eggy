@@ -1,0 +1,16 @@
+{
+  "name": "eggy-server",
+  "version": "1.0.0",
+  "description": "GraphqQL Server For Eggy",
+  "scripts": {
+    "deploy:dev": "prisma deploy -d -e .env.dev",
+    "deploy:prod": "prisma deploy -d -e .env.prod"
+  },
+  "repository": "https://github.com/KaizIqbal/eggy",
+  "author": "KaizKhatri",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "prisma-cli": "^1.0.9"
+  }
+}
