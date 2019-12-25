@@ -1,3 +1,6 @@
 # Environment Variables
 .env.dev
 .env.prod
+
+#Node Modules
+node_modules
