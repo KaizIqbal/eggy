@@ -1,7 +1,8 @@
 type Egg {
     id: ID! @id
     name: String!
-    owner: User! @relation(name: "EggOwner", onDelete: SET_NULL)
+    owner: User @relation(name: "EggOwner", onDelete: SET_NULL)
+    isPublished: Boolean! @default(value: "false") 
     createdAt: DateTime! @createdAt
     updatedAt: DateTime! @updatedAt
 }
