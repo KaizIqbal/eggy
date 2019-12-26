@@ -9,7 +9,7 @@
   "repository": "https://github.com/KaizIqbal/eggy",
   "author": "KaizKhatri",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "dependencies": {
     "prisma-cli": "^1.0.9"
   }
