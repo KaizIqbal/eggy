@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "GraphQl Server for Eggy",
   "scripts": {
-    "deploy": "prisma deploy -e secret.env",
+    "deploy": "cd prisma && prisma deploy -e ../secret.env",
     "start": "ts-node src/index.ts",
     "dev": "ts-node-dev --no-notify --respawn --transpileOnly ./src/",
     "playground": "graphql playground --dotenv secret.env"
