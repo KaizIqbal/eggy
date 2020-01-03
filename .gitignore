@@ -1,7 +1,5 @@
 # Environment Variables
-.env.dev
-.env.prod
-.env
+secret.env
 
 # dependencies
 node_modules
