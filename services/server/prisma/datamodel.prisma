@@ -2,3 +2,10 @@ type User {
   id: ID! @id
   name: String!
 }
+
+type Egg {
+  id: ID! @id
+  title: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
