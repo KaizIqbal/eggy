@@ -1,7 +1,9 @@
+# import * from "./generated/prisma.graphql"
+
 type Mutation {
-  hi: String!
+  createEgg(title: String): Egg!
 }
 
 type Query {
-  hi: String!
+  eggs: [Egg]!
 }
