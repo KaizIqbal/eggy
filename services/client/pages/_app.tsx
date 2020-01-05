@@ -1,18 +1,29 @@
-import App, { Container } from "next/app";
+import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloClient, NormalizedCacheObject } from "apollo-boost";
+import App from "next/app";
+import React from "react";
 import Page from "../components/Page";
+import withApollo from "../hooks/withApollo";
 
-class MyApp extends App {
+interface IMyAppProps {
+  apollo: ApolloClient<NormalizedCacheObject>;
+}
+
+class MyApp extends App<IMyAppProps> {
   render() {
-    const { Component } = this.props;
+    // instead of creating a client here, we use the rehydrated apollo client provided by our own withApollo provider.
+    const { Component, pageProps, apollo } = this.props;
 
     return (
-      <Container>
-        <Page>
-          <Component />
-        </Page>
-      </Container>
+      <React.Fragment>
+        <ApolloProvider client={apollo}>
+          <Page>
+            <Component {...pageProps} />
+          </Page>
+        </ApolloProvider>
+      </React.Fragment>
     );
   }
 }
 
-export default MyApp;
+export default withApollo(MyApp);
