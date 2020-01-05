@@ -1,6 +1,9 @@
+import CreateEgg from "../components/createEgg";
+
 const Egg = props => (
   <div>
-    <p>Sell!</p>
+    <h1>Create Egg Form</h1>
+    <CreateEgg />
   </div>
 );
 
