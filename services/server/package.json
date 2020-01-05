@@ -1,7 +1,7 @@
 {
   "name": "eggy-server",
   "version": "1.0.0",
-  "description": "GraphQl Server for Eggy",
+  "description": "",
   "scripts": {
     "deploy": "cd prisma && prisma deploy -e ../secret.env",
     "start": "ts-node src/index.ts",
@@ -36,5 +36,6 @@
     "presets": [
       "env"
     ]
-  }
+  },
+  "keywords": []
 }
