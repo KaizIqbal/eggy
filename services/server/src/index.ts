@@ -1,5 +1,6 @@
 // tslint:disable-next-line: no-var-requires
-require("dotenv").config({ path: "secret.env" });
+//TODO enable for local development
+// require("dotenv").config({ path: "secret.env" });
 import createServer from "./createServer";
 import db from "./db";
 
@@ -11,8 +12,9 @@ const server = createServer();
 server.start(
   {
     cors: {
-      credentials: true,
-      origin: process.env.FRONTEND_URL
+      credentials: true
+      //TODO : only accessible to the front end
+      // origin: process.env.FRONTEND_URL
     }
   },
   deets => {
