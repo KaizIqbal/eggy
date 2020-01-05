@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import * as React from "react";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
 
 //Styled Stuff
 const Form = styled.form``;
@@ -20,26 +21,30 @@ const CREATE_EGG_MUTATION = gql`
 interface ICreateEggProps {}
 
 const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
-  let title;
+  //createEgg Mutation hook
   const [createEgg, { loading, error, data }] = useMutation(
-    CREATE_EGG_MUTATION,
-    // {
-    //   onCompleted() {
-    //     console.log(data);
-    //   }
-    // }
+    CREATE_EGG_MUTATION
   );
 
+  // react form hook
+  const { register, handleSubmit, errors } = useForm();
+
+  //Handle On Form Submit
+  const onSubmit = async (values, e) => {
+    e.preventDefault();
+    console.log(values);
+    // createEgg Mutation call with data
+    await createEgg({ variables: { title: values.title } });
+    console.log(data);
+  };
+
+  //rendering part
+  // if any error in form submiting
   if (error) return <p>Error: {error.message}</p>;
+
+  //else render form
   return (
-    <Form
-      onSubmit={async e => {
-        e.preventDefault();
-        // createEgg Mutation call with state
-        await createEgg({ variables: { title: title.value } });
-        // title.value = "";
-      }}
-    >
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading}>
         <label htmlFor="title">
           Title
@@ -48,12 +53,11 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
             id="title"
             name="title"
             placeholder="Title"
-            required
-            ref={node => {
-              title = node;
-            }}
+            ref={register({ required: true })}
           />
+          {errors.title && "Your input is required"}
         </label>
+        <br />
         <button type="submit">Submit</button>
       </fieldset>
     </Form>
