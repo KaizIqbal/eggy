@@ -1,7 +1,7 @@
-const Home = props => (
+const Index = props => (
   <div>
-    <p>Hey!</p>
+    <h1>This is Home</h1>
   </div>
 );
 
-export default Home;
+export default Index;
