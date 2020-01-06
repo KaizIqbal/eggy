@@ -1,4 +1,4 @@
-import CreateEgg from "../components/createEgg";
+import { CreateEgg } from "../components";
 
 const Egg = props => (
   <div>
