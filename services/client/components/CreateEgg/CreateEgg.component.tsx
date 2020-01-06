@@ -1,11 +1,8 @@
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import * as React from "react";
-import styled from "styled-components";
 import { useForm } from "react-hook-form";
-
-//Styled Stuff
-const Form = styled.form``;
+import { Form } from "./CreateEgg.styles";
 
 //Mutation for createEgg
 const CREATE_EGG_MUTATION = gql`
