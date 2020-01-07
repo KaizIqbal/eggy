@@ -2,33 +2,29 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { Form } from "./CreateEgg.styles";
-import Router from "next/router";
+import { Form } from "./UpdateEgg.styles";
+import { Router } from "next/dist/client/router";
 
-//Mutation for createEgg
-const CREATE_EGG_MUTATION = gql`
-  mutation createEgg($title: String!) {
-    createEgg(title: $title) {
+//Mutation for UpdateEgg
+const UPDATE_EGG_MUTATION = gql`
+  mutation UpdateEgg($title: String!) {
+    UpdateEgg(title: $title) {
       id
     }
   }
 `;
 
-//CreateEgg Component
+//UpdateEgg Component
 
-interface ICreateEggProps {}
+interface IUpdateEggProps {
+  id: any;
+}
 
-const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
-  //createEgg Mutation hook
-  const [createEgg, { loading, error }] = useMutation(CREATE_EGG_MUTATION, {
-    onCompleted: data => {
-      // console.log(data);
-      Router.push({
-        pathname: "/egg",
-        query: { id: data.createEgg.id }
-      });
-    }
-  });
+const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
+  //UpdateEgg Mutation hook
+  const [UpdateEgg, { loading, error, data }] = useMutation(
+    UPDATE_EGG_MUTATION
+  );
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
@@ -37,8 +33,13 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
   const onSubmit = async (values, e) => {
     e.preventDefault();
     // console.log(values);
-    // createEgg Mutation call with data
-    await createEgg({ variables: { title: values.title } });
+    // UpdateEgg Mutation call with data
+    await UpdateEgg({ variables: { title: values.title } });
+    console.log(data);
+    // Router.push({
+    //   pathname: "/egg",
+    //   query:{id:data.}
+    // });
   };
 
   //rendering part
@@ -67,4 +68,4 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
   );
 };
 
-export default CreateEgg;
+export default UpdateEgg;
