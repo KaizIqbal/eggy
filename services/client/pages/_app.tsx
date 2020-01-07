@@ -33,6 +33,16 @@ interface IProps {
 
 // adds our custom props interface to the generic App base class.
 class MyApp extends App<IProps> {
+  // This is expose query to user
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
+
+    if (Component.getInitialProps) {
+      pageProps = Component.getInitialProps(ctx);
+    }
+    pageProps.query = ctx.query;
+    return { pageProps };
+  }
   render() {
     // instead of creating a client here, we use the rehydrated apollo client provided by our own withApollo provider.
     const { Component, pageProps, apollo } = this.props;
