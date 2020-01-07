@@ -3,7 +3,6 @@ import gql from "graphql-tag";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "./UpdateEgg.styles";
-import { Router } from "next/dist/client/router";
 
 //Mutation for UpdateEgg
 const UPDATE_EGG_MUTATION = gql`
@@ -22,9 +21,7 @@ interface IUpdateEggProps {
 
 const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
   //UpdateEgg Mutation hook
-  const [UpdateEgg, { loading, error, data }] = useMutation(
-    UPDATE_EGG_MUTATION
-  );
+  const [UpdateEgg, { loading, error }] = useMutation(UPDATE_EGG_MUTATION);
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
@@ -35,11 +32,6 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
     // console.log(values);
     // UpdateEgg Mutation call with data
     await UpdateEgg({ variables: { title: values.title } });
-    console.log(data);
-    // Router.push({
-    //   pathname: "/egg",
-    //   query:{id:data.}
-    // });
   };
 
   //rendering part
