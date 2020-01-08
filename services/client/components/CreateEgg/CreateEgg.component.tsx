@@ -24,7 +24,7 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
     onCompleted: data => {
       // console.log(data);
       Router.push({
-        pathname: "/egg",
+        pathname: "/update",
         query: { id: data.createEgg.id }
       });
     }
