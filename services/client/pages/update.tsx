@@ -2,7 +2,7 @@ import { UpdateEgg } from "../components";
 
 const Update = ({ query }) => (
   <div>
-    <h1>Create Egg Form</h1>
+    <h1>Update Egg Form</h1>
     <UpdateEgg id={query.id} />
   </div>
 );
