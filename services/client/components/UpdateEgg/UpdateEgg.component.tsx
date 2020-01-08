@@ -60,6 +60,9 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
   if (fetching) return <p>Loading...</p>;
   // if any error in fetching Data
   if (fetchingError) return <p>Error: {fetchingError.message}</p>;
+  // if Data is not existed
+  if (!fetchData.egg) return <p>No Egg Found</p>;
+
   // if any error in form submiting
   if (error) return <p>Error: {error.message}</p>;
 
