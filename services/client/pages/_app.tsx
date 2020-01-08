@@ -35,7 +35,7 @@ interface IProps {
 class MyApp extends App<IProps> {
   // This is expose query to user
   static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
+    let pageProps = { query: String };
 
     if (Component.getInitialProps) {
       pageProps = Component.getInitialProps(ctx);
