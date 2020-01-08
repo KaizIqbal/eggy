@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "./CreateEgg.styles";
 import Router from "next/router";
 
-//Mutation for createEgg
+// Mutation for createEgg
 const CREATE_EGG_MUTATION = gql`
   mutation createEgg($title: String!) {
     createEgg(title: $title) {
@@ -14,12 +14,12 @@ const CREATE_EGG_MUTATION = gql`
   }
 `;
 
-//CreateEgg Component
+// CreateEgg Component
 
 interface ICreateEggProps {}
 
 const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
-  //createEgg Mutation hook
+  // createEgg Mutation hook
   const [createEgg, { loading, error }] = useMutation(CREATE_EGG_MUTATION, {
     onCompleted: data => {
       // console.log(data);
@@ -33,7 +33,7 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
   // react form hook
   const { register, handleSubmit, errors } = useForm();
 
-  //Handle On Form Submit
+  // Handle On Form Submit
   const onSubmit = async (values, e) => {
     e.preventDefault();
     // console.log(values);
@@ -41,11 +41,11 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
     await createEgg({ variables: { title: values.title } });
   };
 
-  //rendering part
+  // rendering part
   // if any error in form submiting
   if (error) return <p>Error: {error.message}</p>;
 
-  //else render form
+  // else render form
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading}>
