@@ -38,7 +38,7 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
     e.preventDefault();
     // console.log(values);
     // createEgg Mutation call with data
-    await createEgg({ variables: { title: values.title } });
+    await createEgg({ variables: { ...values } });
   };
 
   // rendering part
