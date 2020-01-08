@@ -52,7 +52,7 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
     e.preventDefault();
     // console.log(values);
     // UpdateEgg Mutation call with data
-    await UpdateEgg({ variables: { id: props.id, title: values.title } });
+    await UpdateEgg({ variables: { id: props.id, ...values } });
   };
 
   // rendering part
@@ -83,7 +83,7 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
           {errors.title && "Your input is required"}
         </label>
         <br />
-        <button type="submit">Update</button>
+        <button type="submit">Updat{loading ? "ing" : "e"}</button>
       </fieldset>
     </Form>
   );
