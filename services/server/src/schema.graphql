@@ -2,8 +2,10 @@
 
 type Mutation {
   createEgg(title: String): Egg!
+  updateEgg(id:ID! title: String): Egg!
 }
 
 type Query {
   eggs: [Egg]!
+  egg(where: EggWhereUniqueInput!): Egg
 }
