@@ -1,16 +1,6 @@
 import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import { CreateEgg, EggList } from "../components";
-
-//For Fetching all Eggs
-const EGGS_QUERY = gql`
-  query eggs {
-    eggs {
-      id
-      title
-    }
-  }
-`;
+import {EGGS_QUERY} from "../graphql/Query"
 
 //Eggs page
 const Eggs = props => {
@@ -28,4 +18,5 @@ const Eggs = props => {
 };
 
 export default Eggs;
-export {EGGS_QUERY};
+export { EGGS_QUERY };
+

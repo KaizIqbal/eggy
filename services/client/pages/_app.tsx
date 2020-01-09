@@ -58,7 +58,7 @@ class MyApp extends App<IProps> {
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
           <link
             rel="shortcut icon"
-            href="/static/favicon.ico"
+            href="/public/favicon.ico"
             type="image/x-icon"
           />
           <title>Eggy</title>
