@@ -20,15 +20,18 @@ interface ICreateEggProps {}
 
 const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
   // createEgg Mutation hook
-  const [createEgg, { loading, error }] = useMutation(CREATE_EGG_MUTATION, {
-    onCompleted: data => {
-      // console.log(data);
-      Router.push({
-        pathname: "/update",
-        query: { id: data.createEgg.id }
-      });
-    }
-  });
+  const [createEgg, { loading, error }] = useMutation(
+    CREATE_EGG_MUTATION
+    // {
+    // onCompleted: data => {
+    //   // console.log(data);
+    //   Router.push({
+    //     pathname: "/update",
+    //     query: { id: data.createEgg.id }
+    //   });
+    // }
+    // }
+  );
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
