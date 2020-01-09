@@ -1,27 +1,9 @@
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import * as React from "react";
 import { useForm } from "react-hook-form";
+import { UPDATE_EGG_MUTATION } from "../../graphql/Mutation";
+import { EGG_QUERY } from "../../graphql/Query";
 import { Form } from "./UpdateEgg.styles";
-
-// Mutation for UpdateEgg
-const UPDATE_EGG_MUTATION = gql`
-  mutation updateEgg($id: ID!, $title: String!) {
-    updateEgg(id: $id, title: $title) {
-      id
-    }
-  }
-`;
-
-// Query For fetch Egg by id
-const EGG_QUERY = gql`
-  query egg($id: ID!) {
-    egg(where: { id: $id }) {
-      id
-      title
-    }
-  }
-`;
 
 // UpdateEgg Component
 interface IUpdateEggProps {

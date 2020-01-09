@@ -1,17 +1,8 @@
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import * as React from "react";
 import { useForm } from "react-hook-form";
+import { CREATE_EGG_MUTATION } from "../../graphql/Mutation";
 import { Form } from "./CreateEgg.styles";
-
-// Mutation for createEgg
-const CREATE_EGG_MUTATION = gql`
-  mutation createEgg($title: String!) {
-    createEgg(title: $title) {
-      id
-    }
-  }
-`;
 
 // CreateEgg Component
 interface ICreateEggProps {}
