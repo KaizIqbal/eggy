@@ -1,17 +1,8 @@
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import * as React from "react";
-import { EGGS_QUERY } from "../../pages/eggs";
+import { DELETE_EGG_MUTATION } from "../../graphql/Mutation";
+import { EGGS_QUERY } from "../../graphql/Query";
 import { Button } from "./DeleteEgg.styles";
-
-// Mutation for DeleteEgg
-const DELETE_EGG_MUTATION = gql`
-  mutation deleteEgg($id: ID!) {
-    deleteEgg(id: $id) {
-      id
-    }
-  }
-`;
 
 // DeleteEgg Component
 interface IDeleteEggProps {
