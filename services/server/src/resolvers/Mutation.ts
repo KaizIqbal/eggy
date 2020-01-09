@@ -31,6 +31,15 @@ const Mutation = {
       },
       info
     );
+  },
+  async deleteEgg(parent, args, ctx, info) {
+    const where = { id: args.id };
+    // 1.find egg
+    // const egg = await ctx.db.Query.egg({ where }, `{id title}`);
+    // 2.check they own the egg ,or  have a permission
+    // TODO
+    // 3.Delete It
+    return ctx.db.mutation.deleteEgg({ where }, info);
   }
 };
 
