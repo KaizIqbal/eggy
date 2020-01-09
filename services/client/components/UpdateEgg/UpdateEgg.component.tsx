@@ -4,16 +4,6 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "./UpdateEgg.styles";
 
-// Query For fetch Egg by id
-const GET_EGG = gql`
-  query egg($id: ID!) {
-    egg(where: { id: $id }) {
-      id
-      title
-    }
-  }
-`;
-
 // Mutation for UpdateEgg
 const UPDATE_EGG_MUTATION = gql`
   mutation updateEgg($id: ID!, $title: String!) {
@@ -23,8 +13,17 @@ const UPDATE_EGG_MUTATION = gql`
   }
 `;
 
-// UpdateEgg Component
+// Query For fetch Egg by id
+const EGG_QUERY = gql`
+  query egg($id: ID!) {
+    egg(where: { id: $id }) {
+      id
+      title
+    }
+  }
+`;
 
+// UpdateEgg Component
 interface IUpdateEggProps {
   id: any;
 }
@@ -32,11 +31,12 @@ interface IUpdateEggProps {
 const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
   // Fetch data by id using Query Hook
   const { loading: fetching, error: fetchingError, data: fetchData } = useQuery(
-    GET_EGG,
+    EGG_QUERY,
     {
       variables: { id: props.id }
     }
   );
+
   // UpdateEgg Mutation hook
   const [UpdateEgg, { loading, error }] = useMutation(UPDATE_EGG_MUTATION, {
     onCompleted: data => {
