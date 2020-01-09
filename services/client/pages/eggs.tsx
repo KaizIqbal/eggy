@@ -1,19 +1,21 @@
-import { CreateEgg, EggList } from "../components";
-import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+import { CreateEgg, EggList } from "../components";
 
-const Eggs = props => {
-  const EGGS_QUERY = gql`
-    query eggs {
-      eggs {
-        id
-        title
-      }
+//For Fetching all Eggs
+const EGGS_QUERY = gql`
+  query eggs {
+    eggs {
+      id
+      title
     }
-  `;
+  }
+`;
 
+//Eggs page
+const Eggs = props => {
   // the hook that calls the query.
-  const eggs = useQuery(EGGS_QUERY,{ pollInterval: 500 });
+  const eggs = useQuery(EGGS_QUERY);
   // console.log(eggs);
   return (
     <div>
@@ -26,3 +28,4 @@ const Eggs = props => {
 };
 
 export default Eggs;
+export {EGGS_QUERY};

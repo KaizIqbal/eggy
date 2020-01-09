@@ -14,7 +14,6 @@ const CREATE_EGG_MUTATION = gql`
 `;
 
 // CreateEgg Component
-
 interface ICreateEggProps {}
 
 const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
