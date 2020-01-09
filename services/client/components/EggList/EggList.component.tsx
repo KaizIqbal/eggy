@@ -1,6 +1,7 @@
 import React from "react";
 import Router from "next/router";
 import { List, ListEgg, Button } from "./EggList.styles";
+import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
 
 // this interface defines the shape of the data returned by the eggs query.
 export interface Iegg {
@@ -29,6 +30,7 @@ const EggList = ({ eggs }: IProps) => {
           }}>
           Edit
         </Button>
+        <DeleteEgg>Delete</DeleteEgg>
       </ListEgg>
     );
   });
