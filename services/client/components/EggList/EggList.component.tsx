@@ -30,7 +30,7 @@ const EggList = ({ eggs }: IProps) => {
           }}>
           Edit
         </Button>
-        <DeleteEgg>Delete</DeleteEgg>
+        <DeleteEgg id={egg.id}>Delete</DeleteEgg>
       </ListEgg>
     );
   });

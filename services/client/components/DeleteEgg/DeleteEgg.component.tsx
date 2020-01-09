@@ -4,9 +4,9 @@ import * as React from "react";
 import { Button } from "./DeleteEgg.styles";
 
 // Mutation for DeleteEgg
-const CREATE_EGG_MUTATION = gql`
-  mutation DeleteEgg($title: String!) {
-    DeleteEgg(title: $title) {
+const DELETE_EGG_MUTATION = gql`
+  mutation deleteEgg($id: ID!) {
+    deleteEgg(id: $id) {
       id
     }
   }
@@ -16,12 +16,22 @@ const CREATE_EGG_MUTATION = gql`
 
 interface IDeleteEggProps {
   children: any;
+  id: any;
 }
 
 const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
   // DeleteEgg Mutation hook
-  const [DeleteEgg, { loading, error }] = useMutation(CREATE_EGG_MUTATION);
-  return <Button>{props.children}</Button>;
+  const [deleteEgg, { error }] = useMutation(DELETE_EGG_MUTATION, {
+    variables: { id: props.id }
+  });
+  //Handle onClick
+  const onClick = () => {
+    if (window.confirm("Are you sure you want to delete this egg?")) {
+      deleteEgg();
+    }
+  };
+  if (error) return <p>Error: {error.message}</p>;
+  return <Button onClick={onClick}>{props.children}</Button>;
 };
 
 export default DeleteEgg;

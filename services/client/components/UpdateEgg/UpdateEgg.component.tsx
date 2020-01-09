@@ -30,7 +30,7 @@ interface IUpdateEggProps {
 }
 
 const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
-  // Fetch data by id usinf Query Hook
+  // Fetch data by id using Query Hook
   const { loading: fetching, error: fetchingError, data: fetchData } = useQuery(
     GET_EGG,
     {
