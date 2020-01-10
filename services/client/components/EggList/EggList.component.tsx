@@ -2,6 +2,7 @@ import Router from "next/router";
 import React from "react";
 import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
 import { Button, List, ListEgg } from "./EggList.styles";
+import Link from "next/link";
 
 // this interface defines the shape of the data returned by the eggs query.
 export interface Iegg {
@@ -17,7 +18,9 @@ const EggList = ({ eggs }: IProps) => {
   const listEgg = eggs.map(egg => {
     return (
       <ListEgg key={egg.id}>
-        {egg.title}
+        <Link href={{ pathname: "/egg", query: { id: egg.id } }}>
+          <a>{egg.title}</a>
+        </Link>
         <Button
           type="button"
           name="Edit"
