@@ -5,7 +5,7 @@ import {EGGS_QUERY} from "../graphql/Query"
 //Eggs page
 const Eggs = props => {
   // the hook that calls the query.
-  const eggs = useQuery(EGGS_QUERY);
+  const eggs = useQuery(EGGS_QUERY,{pollInterval:500});
   // console.log(eggs);
   return (
     <div>
