@@ -36,7 +36,7 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
 
       // Push to the Eggs page
       Router.push({
-        pathname: "/eggs"
+        pathname: "/basket"
       });
     } catch (error) {
       // Reset Form
