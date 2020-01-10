@@ -21,8 +21,10 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
       // console.log(values);
       // createEgg Mutation call with data
       await createEgg({ variables: { ...values } });
+      // Reset Form
       e.target.reset();
     } catch (error) {
+      // Reset Form
       e.target.reset();
       console.error(error);
     }
