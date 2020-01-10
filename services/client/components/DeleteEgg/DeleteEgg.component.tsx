@@ -24,8 +24,8 @@ const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
         query: EGGS_QUERY,
         data: { eggs: newEggList }
       });
-    } catch (e) {
-      window.alert(e);
+    } catch (error) {
+      console.error(error);
     }
   };
 
