@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/react-hooks";
 import * as React from "react";
 import { EGG_QUERY } from "../../graphql/Query";
+import Head from "next/head";
 
 // DeleteEgg Component
 interface IDeleteEggProps {
@@ -23,6 +24,9 @@ const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
 
   return (
     <div>
+      <Head>
+        <title>Eggy | {data.egg.title}</title>
+      </Head>
       <h1>Egg Detail</h1>
       <h3>{data.egg.title}</h3>
     </div>
