@@ -16,10 +16,16 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
 
   // Handle On Form Submit
   const onSubmit = async (values, e) => {
-    e.preventDefault();
-    // console.log(values);
-    // createEgg Mutation call with data
-    await createEgg({ variables: { ...values } });
+    try {
+      e.preventDefault();
+      // console.log(values);
+      // createEgg Mutation call with data
+      await createEgg({ variables: { ...values } });
+      e.target.reset();
+    } catch (error) {
+      e.target.reset();
+      console.error(error);
+    }
   };
 
   // rendering part
