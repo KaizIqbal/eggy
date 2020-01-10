@@ -3,7 +3,7 @@ import Link from "next/link";
 const Nav = () => (
   <div>
     <Link href="/basket">
-      <a>eggs</a>
+      <a>Basket</a>
     </Link>
     <br />
     <Link href="/">
