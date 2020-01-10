@@ -3,9 +3,9 @@ import { CreateEgg, EggList } from "../components";
 import {EGGS_QUERY} from "../graphql/Query"
 
 //Eggs page
-const Eggs = props => {
+const Basket = props => {
   // the hook that calls the query.
-  const eggs = useQuery(EGGS_QUERY,{pollInterval:500});
+  const eggs = useQuery(EGGS_QUERY);
   // console.log(eggs);
   return (
     <div>
@@ -17,6 +17,6 @@ const Eggs = props => {
   );
 };
 
-export default Eggs;
+export default Basket;
 export { EGGS_QUERY };
 
