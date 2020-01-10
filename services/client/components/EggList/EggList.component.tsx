@@ -1,7 +1,7 @@
-import React from "react";
 import Router from "next/router";
-import { List, ListEgg, Button } from "./EggList.styles";
+import React from "react";
 import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
+import { Button, List, ListEgg } from "./EggList.styles";
 
 // this interface defines the shape of the data returned by the eggs query.
 export interface Iegg {
