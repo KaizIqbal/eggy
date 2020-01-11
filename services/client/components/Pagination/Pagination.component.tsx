@@ -1,8 +1,10 @@
 import { useQuery } from "@apollo/react-hooks";
+import Head from "next/head";
 import * as React from "react";
+import { perPage } from "../../config";
 import { PAGINATION_QUERY } from "../../graphql/Query";
 import PaginationStyle from "./Pagination.styles";
-import { perPage } from "../../config";
+import Link from "next/link";
 
 // Pagination Component
 interface IPaginationProps {
@@ -23,10 +25,19 @@ const Pagination: React.FunctionComponent<IPaginationProps> = props => {
 
   ///Total count return by query
   const count = data.eggsConnection.aggregate.count;
-  const page = Math.ceil(count / perPage);
+  const pages = Math.ceil(count / perPage);
+  const page = props.page;
   return (
     <PaginationStyle>
-      Page {props.page} Of {page}
+      <Head>
+        <title>Basket - Page {page}</title>
+      </Head>
+      <Link prefetch href={{ pathname: "basket", query: { page: page - 1 } }}>
+        <a>Prev</a>
+      </Link>
+      <p>
+        Page {page} Of {pages}
+      </p>
     </PaginationStyle>
   );
 };
