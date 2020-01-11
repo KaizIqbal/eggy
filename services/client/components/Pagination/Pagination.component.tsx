@@ -5,7 +5,9 @@ import PaginationStyle from "./Pagination.styles";
 import { perPage } from "../../config";
 
 // Pagination Component
-interface IPaginationProps {}
+interface IPaginationProps {
+  page: string;
+}
 
 const Pagination: React.FunctionComponent<IPaginationProps> = props => {
   // Fetch data by id using Query Hook
@@ -22,7 +24,11 @@ const Pagination: React.FunctionComponent<IPaginationProps> = props => {
   ///Total count return by query
   const count = data.eggsConnection.aggregate.count;
   const page = Math.ceil(count / perPage);
-  return <PaginationStyle>Page 1 Of {page}</PaginationStyle>;
+  return (
+    <PaginationStyle>
+      Page {props.page} Of {page}
+    </PaginationStyle>
+  );
 };
 
 export default Pagination;
