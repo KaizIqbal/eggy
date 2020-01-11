@@ -9,4 +9,5 @@ type Mutation {
 type Query {
   eggs: [Egg]!
   egg(where: EggWhereUniqueInput!): Egg
+  eggsConnection(where: EggWhereInput): EggConnection!
 }
