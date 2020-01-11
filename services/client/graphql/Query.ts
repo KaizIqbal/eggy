@@ -20,4 +20,15 @@ const EGGS_QUERY = gql`
   }
 `;
 
-export { EGG_QUERY, EGGS_QUERY };
+//For get count of eggs
+const PAGINATION_QUERY = gql`
+  query page {
+    eggsConnection {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
+
+export { EGG_QUERY, EGGS_QUERY, PAGINATION_QUERY };
