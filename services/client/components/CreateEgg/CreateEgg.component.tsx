@@ -3,13 +3,27 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { CREATE_EGG_MUTATION } from "../../graphql/Mutation";
 import { Form } from "./CreateEgg.styles";
+import Router from "next/router";
 
 // CreateEgg Component
 interface ICreateEggProps {}
 
 const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
   // createEgg Mutation hook
-  const [createEgg, { loading, error }] = useMutation(CREATE_EGG_MUTATION);
+  const [createEgg, { loading, error }] = useMutation(CREATE_EGG_MUTATION, {
+    onCompleted: ({ createEgg }) => {
+      try {
+        // Push to the Eggs page
+        // console.log(data);
+        Router.push({
+          pathname: "/egg",
+          query: { id: createEgg.id }
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  });
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();

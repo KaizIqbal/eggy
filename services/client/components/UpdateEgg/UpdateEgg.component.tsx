@@ -21,7 +21,20 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
   );
 
   // UpdateEgg Mutation hook
-  const [UpdateEgg, { loading, error }] = useMutation(UPDATE_EGG_MUTATION);
+  const [UpdateEgg, { loading, error }] = useMutation(UPDATE_EGG_MUTATION, {
+    onCompleted: ({ updateEgg }) => {
+      try {
+        // Push to the Eggs page
+        // console.log(updateEgg);
+        Router.push({
+          pathname: "/egg",
+          query: { id: updateEgg.id }
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  });
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
@@ -33,11 +46,6 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
       // console.log(values);
       // UpdateEgg Mutation call with data
       await UpdateEgg({ variables: { id: props.id, ...values } });
-
-      // Push to the Eggs page
-      Router.push({
-        pathname: "/basket"
-      });
     } catch (error) {
       // Reset Form
       e.target.reset();
