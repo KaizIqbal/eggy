@@ -6,12 +6,15 @@ import { UPDATE_EGG_MUTATION } from "../../graphql/Mutation";
 import { EGG_QUERY } from "../../graphql/Query";
 import { Form } from "./UpdateEgg.styles";
 
-// UpdateEgg Component
+// ##### COMPONENT PROPS TYPE #####
 interface IUpdateEggProps {
-  id: any;
+  id: string;
 }
 
+// ##### COMPONENT #####
 const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
+  // ##### HOOKS #####
+
   // Fetch data by id using Query Hook
   const { loading: fetching, error: fetchingError, data: fetchData } = useQuery(
     EGG_QUERY,
@@ -25,7 +28,6 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
     onCompleted: ({ updateEgg }) => {
       try {
         // Push to the Eggs page
-        // console.log(updateEgg);
         Router.push({
           pathname: "/egg",
           query: { id: updateEgg.id }
@@ -38,6 +40,8 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
+
+  // ##### HANDLE FUNCTION #####
 
   // Handle On Form Submit
   const onSubmit = async (values, e) => {
@@ -53,11 +57,14 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
     }
   };
 
-  // rendering part
+  // ##### RENDER #####
+
   // Fetching Egg Details
   if (fetching) return <p>Loading...</p>;
+
   // if any error in fetching Data
   if (fetchingError) return <p>Error: {fetchingError.message}</p>;
+
   // if Data is not existed
   if (!fetchData.egg) return <p>No Egg Found</p>;
 
@@ -68,6 +75,7 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading}>
+        {/* Insert Title of Egg */}
         <label htmlFor="title">
           Title
           <input
@@ -80,7 +88,10 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
           />
           {errors.title && "Your input is required"}
         </label>
+
         <br />
+
+        {/* Submition */}
         <button type="submit">Updat{loading ? "ing" : "e"}</button>
       </fieldset>
     </Form>
