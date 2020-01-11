@@ -8,7 +8,7 @@ const Basket = props => {
       <h1>Create Egg Form</h1>
       <CreateEgg />
       <h1>Eggs</h1>
-      <EggList page={props.query.page} />
+      <EggList page={parseFloat(props.query.page) || 1} />
     </div>
   );
 };

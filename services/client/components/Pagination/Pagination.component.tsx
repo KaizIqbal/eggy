@@ -6,7 +6,7 @@ import { perPage } from "../../config";
 
 // Pagination Component
 interface IPaginationProps {
-  page: string;
+  page: number;
 }
 
 const Pagination: React.FunctionComponent<IPaginationProps> = props => {
