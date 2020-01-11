@@ -1,20 +1,22 @@
 import { useMutation } from "@apollo/react-hooks";
+import Router from "next/router";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { CREATE_EGG_MUTATION } from "../../graphql/Mutation";
 import { Form } from "./CreateEgg.styles";
-import Router from "next/router";
 
-// CreateEgg Component
+// ##### COMPONENT PROPS TYPE #####
 interface ICreateEggProps {}
 
+// ##### COMPONENT #####
 const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
+  // ##### HOOKS #####
+
   // createEgg Mutation hook
   const [createEgg, { loading, error }] = useMutation(CREATE_EGG_MUTATION, {
     onCompleted: ({ createEgg }) => {
       try {
         // Push to the Eggs page
-        // console.log(data);
         Router.push({
           pathname: "/egg",
           query: { id: createEgg.id }
@@ -28,13 +30,15 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
   // react form hook
   const { register, handleSubmit, errors } = useForm();
 
+  // ##### HANDLING FUNCTION #####
+
   // Handle On Form Submit
   const onSubmit = async (values, e) => {
     try {
       e.preventDefault();
-      // console.log(values);
       // createEgg Mutation call with data
       await createEgg({ variables: { ...values } });
+
       // Reset Form
       e.target.reset();
     } catch (error) {
@@ -44,7 +48,8 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
     }
   };
 
-  // rendering part
+  // ##### RENDER #####
+
   // if any error in form submiting
   if (error) return <p>Error: {error.message}</p>;
 
@@ -52,6 +57,7 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading}>
+        {/* Insert Title of Egg */}
         <label htmlFor="title">
           Title
           <input
@@ -63,7 +69,10 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
           />
           {errors.title && "Your input is required"}
         </label>
+
         <br />
+
+        {/* Submition */}
         <button type="submit">Submit</button>
       </fieldset>
     </Form>

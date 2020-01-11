@@ -7,35 +7,39 @@ import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
 import { Button, List, ListEgg } from "./EggList.styles";
 import Pagination from "../Pagination/Pagination.component";
 
-// this interface defines the shape of the data returned by the eggs query.
-export interface Iegg {
-  id: string;
-  title: string;
-}
-
-// DeleteEgg Component
+// ##### COMPONENT PROPS TYPE #####
 interface IEggListProps {
   page: number;
 }
 
+// ##### COMPONENT #####
 const EggList: React.FunctionComponent<IEggListProps> = props => {
+  // ##### HOOKS #####
+
   // the hook that calls the query.
   const { loading, error, data } = useQuery(EGGS_QUERY);
 
-  // rendering part
+  // ##### RENDER #####
+
   // Fetching Eggs Details
   if (loading) return <p>Loading...</p>;
+
   // if any error in fetching Data
   if (error) return <p>Error: {error.message}</p>;
+
   // if Data is not existed
   if (!data.eggs) return <p>No Egg Found</p>;
 
+  // create List of each egg
   const listEgg = data.eggs.map(egg => {
     return (
       <ListEgg key={egg.id}>
-        <Link href={{ pathname: "/egg", query: { id: egg.id } }}>
+        {/* Name of Egg with Link of Detail Page*/}
+        <Link prefetch href={{ pathname: "/egg", query: { id: egg.id } }}>
           <a>{egg.title}</a>
         </Link>
+
+        {/*  Edit Button*/}
         <Button
           type="button"
           name="Edit"
@@ -48,17 +52,24 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
           }}>
           Edit
         </Button>
+
+        {/* Delete Button */}
         <DeleteEgg id={egg.id}>Delete</DeleteEgg>
       </ListEgg>
     );
   });
 
   return (
-    <div>
+    <>
+      {/* Pagination Top of list */}
       <Pagination page={props.page} />
+
+      {/* Actual Egg List */}
       <List>{listEgg}</List>
+
+      {/* Pagination Bottom of list */}
       <Pagination page={props.page} />
-    </div>
+    </>
   );
 };
 

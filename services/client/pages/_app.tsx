@@ -7,6 +7,8 @@ import withApollo from "../hooks/withApollo";
 import { ApolloClient, NormalizedCacheObject } from "apollo-boost";
 import { Page } from "../components";
 
+// ##### GLOBAL THEME #####
+// TODO:Edit Global Theme
 export interface ITheme {
   niceBlack: string;
 }
@@ -26,11 +28,13 @@ const GlobalStyle = createGlobalStyle<IThemeWrapper>`
   }
 `;
 
+// ##### COMPONENT PROPS TYPE #####
 // since "apollo" isn't a native Next.js prop we have to declare it's type.
 interface IProps {
   apollo: ApolloClient<NormalizedCacheObject>;
 }
 
+// ##### COMPONENT #####
 // adds our custom props interface to the generic App base class.
 class MyApp extends App<IProps> {
   // This is expose query to user
@@ -43,6 +47,8 @@ class MyApp extends App<IProps> {
     pageProps.query = ctx.query;
     return { pageProps };
   }
+
+  // ##### RENDER #####
   render() {
     // instead of creating a client here, we use the rehydrated apollo client provided by our own withApollo provider.
     const { Component, pageProps, apollo } = this.props;
