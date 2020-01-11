@@ -39,14 +39,31 @@ const Pagination: React.FunctionComponent<IPaginationProps> = props => {
       <Head>
         <title>Basket - Page {page}</title>
       </Head>
+
       {/* TODO: Disable on 1st page */}
       {/* Previous Page Button */}
-      <Link prefetch href={{ pathname: "basket", query: { page: page - 1 } }}>
-        <a>Prev</a>
+      <Link
+        prefetch
+        href={{
+          pathname: "basket",
+          query: { page: page > 1 ? page - 1 : 1 }
+        }}>
+        <a> Prev</a>
       </Link>
       <p>
         Page {page} Of {pages}
       </p>
+
+      {/* TODO: Disable on last page */}
+      {/* Previous Page Button */}
+      <Link
+        prefetch
+        href={{
+          pathname: "basket",
+          query: { page: page < pages ? page + 1 : page }
+        }}>
+        <a>Next</a>
+      </Link>
     </PaginationStyle>
   );
 };
