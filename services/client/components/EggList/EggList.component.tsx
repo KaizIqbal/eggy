@@ -15,7 +15,7 @@ export interface Iegg {
 
 // DeleteEgg Component
 interface IEggListProps {
-  page: string;
+  page: number;
 }
 
 const EggList: React.FunctionComponent<IEggListProps> = props => {
