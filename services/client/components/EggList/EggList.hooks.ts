@@ -1,27 +1,30 @@
 import { useQuery } from "@apollo/react-hooks";
-import { EGGS_QUERY, GET_EGGS_CURSOR } from "../../graphql/Query";
+import { GET_EGGS_CURSOR } from "../../graphql/Query";
 
 function useEggs() {
-  const { data, loading, fetchMore } = useQuery(GET_EGGS_CURSOR, {
+  const { data, loading, fetchMore, error } = useQuery(GET_EGGS_CURSOR, {
     notifyOnNetworkStatusChange: true
   });
 
-  if (loading && !data.eggs) return { loading, eggs: [] };
+  // if (loading && !data.eggsConnection) return { loading, eggs: [] };
+  if (loading) return { loading };
+  if (error) return { error };
+  console.log(data);
 
   const loadMore = () => {
     return fetchMore({
-      query: EGGS_QUERY,
+      query: GET_EGGS_CURSOR,
       variables: {
-        cursor: data.eggs.pageInfo.endCursor
+        cursor: data.eggsConnection.pageInfo.endCursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        const newEdges = fetchMoreResult.eggs.edges;
-        const pageInfo = fetchMoreResult.eggs.pageInfo;
-        return newEdges.length
+        const newEdges = fetchMoreResult.eggsConnection.edges;
+        const pageInfo = fetchMoreResult.eggsConnection.pageInfo;
+        return Object.keys(newEdges).length
           ? {
               eggs: {
-                __typename: previousResult.eggs.__typename,
-                edges: [...previousResult.eggs.edges, ...newEdges],
+                __typename: previousResult.eggsConnection.__typename,
+                edges: [...previousResult.eggsConnection.edges, ...newEdges],
                 pageInfo
               }
             }
@@ -30,10 +33,11 @@ function useEggs() {
     });
   };
   return {
-    eggs: data.eggs.edges.map(({ node }) => node),
-    hasNextPage: data.eggs.pageInfo.hasNextPage,
+    eggs: data.eggsConnection.edges.map(({ node }) => node),
+    hasNextPage: data.eggsConnection.pageInfo.hasNextPage,
     loading,
-    loadMore
+    loadMore,
+    error
   };
 }
 export default useEggs;

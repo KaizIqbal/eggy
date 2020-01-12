@@ -47,7 +47,6 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
   const onSubmit = async (values, e) => {
     try {
       e.preventDefault();
-      // console.log(values);
       // UpdateEgg Mutation call with data
       await UpdateEgg({ variables: { id: props.id, ...values } });
     } catch (error) {

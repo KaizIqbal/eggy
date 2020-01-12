@@ -1,5 +1,4 @@
 import gql from "graphql-tag";
-import { perPage } from "../config";
 
 // Query For fetch Egg by id
 const EGG_QUERY = gql`
@@ -23,7 +22,7 @@ const EGGS_QUERY = gql`
 
 //For get eggs based on cursor
 const GET_EGGS_CURSOR = gql`
-  query eggs($first: Int = perPage, $cursor: ID!) {
+  query eggs($first: Int = 4, $cursor: String!) {
     eggsConnection(first: $first, after: $cursor) {
       edges {
         node {

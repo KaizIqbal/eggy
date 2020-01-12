@@ -2,11 +2,11 @@ import Link from "next/link";
 
 const Nav = () => (
   <>
-    <Link prefetch href="/basket">
+    <Link href="/basket">
       <a>Basket</a>
     </Link>
     <br />
-    <Link prefetch href="/">
+    <Link href="/">
       <a>Home!</a>
     </Link>
   </>
