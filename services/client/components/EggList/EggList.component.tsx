@@ -5,7 +5,7 @@ import React from "react";
 import { EGGS_QUERY } from "../../graphql/Query";
 import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
 import { Button, List, ListEgg } from "./EggList.styles";
-import Pagination from "../Pagination/Pagination.component";
+import { perPage } from "../../config";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IEggListProps {
@@ -17,7 +17,9 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
   // ##### HOOKS #####
 
   // the hook that calls the query.
-  const { loading, error, data } = useQuery(EGGS_QUERY);
+  const { loading, error, data } = useQuery(EGGS_QUERY, {
+    variables: { skip: props.page * perPage - perPage }
+  });
 
   // ##### RENDER #####
 
@@ -61,14 +63,8 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
 
   return (
     <>
-      {/* Pagination Top of list */}
-      <Pagination page={props.page} />
-
       {/* Actual Egg List */}
       <List>{listEgg}</List>
-
-      {/* Pagination Bottom of list */}
-      <Pagination page={props.page} />
     </>
   );
 };
