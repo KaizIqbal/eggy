@@ -12,9 +12,9 @@ const server = createServer();
 server.start(
   {
     cors: {
-      credentials: true
+      credentials: true,
       //TODO : only accessible to the front end
-      // origin: process.env.FRONTEND_URL
+      origin: process.env.FRONTEND_URL
     }
   },
   deets => {
