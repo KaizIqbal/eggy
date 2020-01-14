@@ -13,7 +13,6 @@ server.start(
   {
     cors: {
       credentials: true,
-      //TODO : only accessible to the front end
       origin: process.env.FRONTEND_URL
     }
   },
