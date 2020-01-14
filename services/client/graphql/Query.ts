@@ -22,7 +22,7 @@ const EGGS_QUERY = gql`
 
 //For get eggs based on cursor
 const GET_EGGS_CURSOR = gql`
-  query eggs($first: Int = 4, $cursor: String!) {
+  query eggs($first: Int = 7, $cursor: String) {
     eggsConnection(first: $first, after: $cursor) {
       edges {
         node {
