@@ -1,10 +1,7 @@
 import styled from "styled-components";
 
-const List = styled.ul``;
-const ListEgg = styled.li`
-  margin-bottom: 0.5rem;
-`;
+const List = styled.ol``;
 
 const Button = styled.button``;
 
-export { List, ListEgg, Button };
+export { List, Button };
