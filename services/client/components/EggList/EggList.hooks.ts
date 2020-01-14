@@ -6,10 +6,9 @@ function useEggs() {
     notifyOnNetworkStatusChange: true
   });
 
-  // if (loading && !data.eggsConnection) return { loading, eggs: [] };
   if (loading) return { loading };
   if (error) return { error };
-  console.log(data);
+  if (loading && !data.eggsConnection) return { loading, eggs: [] };
 
   const loadMore = () => {
     return fetchMore({
@@ -20,9 +19,9 @@ function useEggs() {
       updateQuery: (previousResult, { fetchMoreResult }) => {
         const newEdges = fetchMoreResult.eggsConnection.edges;
         const pageInfo = fetchMoreResult.eggsConnection.pageInfo;
-        return Object.keys(newEdges).length
+        return newEdges.length
           ? {
-              eggs: {
+              eggsConnection: {
                 __typename: previousResult.eggsConnection.__typename,
                 edges: [...previousResult.eggsConnection.edges, ...newEdges],
                 pageInfo
