@@ -58,7 +58,7 @@ class MyApp extends App<IProps> {
         <Head>
           <meta
             name="viewport"
-            content="width=device-width, initial-scale=1.0"
+            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
