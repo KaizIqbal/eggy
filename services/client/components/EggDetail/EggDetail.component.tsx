@@ -29,7 +29,7 @@ const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
   if (!data.egg) return <p>No Egg Found</p>;
 
   return (
-    <>
+    <div>
       {/* Update Header */}
       <Head>
         <title>Eggy | {data.egg.title}</title>
@@ -38,7 +38,7 @@ const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
       {/* Details */}
       <h1>Egg Detail</h1>
       <h3>{data.egg.title}</h3>
-    </>
+    </div>
   );
 };
 
