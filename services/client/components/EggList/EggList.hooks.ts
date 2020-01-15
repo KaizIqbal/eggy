@@ -3,6 +3,7 @@ import { GET_EGGS_CURSOR } from "../../graphql/Query";
 
 function useEggs() {
   const { data, loading, fetchMore, error } = useQuery(GET_EGGS_CURSOR, {
+    fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true
   });
 

@@ -1,8 +1,9 @@
 import { useMutation } from "@apollo/react-hooks";
 import Router from "next/router";
-import * as React from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { CREATE_EGG_MUTATION } from "../../graphql/Mutation";
+import { GET_EGGS_CURSOR } from "../../graphql/Query";
 import { Form } from "./CreateEgg.styles";
 
 // ##### COMPONENT PROPS TYPE #####
@@ -14,6 +15,11 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
 
   // createEgg Mutation hook
   const [createEgg, { loading, error }] = useMutation(CREATE_EGG_MUTATION, {
+    refetchQueries: [
+      {
+        query: GET_EGGS_CURSOR
+      }
+    ],
     onCompleted: ({ createEgg }) => {
       try {
         // Push to the Eggs page

@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import Router from "next/router";
-import * as React from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { UPDATE_EGG_MUTATION } from "../../graphql/Mutation";
-import { EGG_QUERY } from "../../graphql/Query";
+import { EGG_QUERY, GET_EGGS_CURSOR } from "../../graphql/Query";
 import { Form } from "./UpdateEgg.styles";
 
 // ##### COMPONENT PROPS TYPE #####
@@ -25,6 +25,11 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
 
   // UpdateEgg Mutation hook
   const [UpdateEgg, { loading, error }] = useMutation(UPDATE_EGG_MUTATION, {
+    refetchQueries: [
+      {
+        query: GET_EGGS_CURSOR
+      }
+    ],
     onCompleted: ({ updateEgg }) => {
       try {
         // Push to the Eggs page
