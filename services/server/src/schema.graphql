@@ -1,13 +1,17 @@
 # import * from "./generated/prisma.graphql"
 
 type Mutation {
+  # Eggs
   createEgg(title: String): Egg!
   updateEgg(id:ID! title: String): Egg!
   deleteEgg(id:ID!): Egg!
+  
+  # Users
+  signup(email:String! password:String! name:String!): User!
 }
 
 type Query {
   eggs(where: EggWhereInput): [Egg]!
   egg(where: EggWhereUniqueInput!): Egg
-  eggsConnection(after: String, first: Int): EggConnection!
+  eggsConnection(after: String first: Int): EggConnection!
 }
