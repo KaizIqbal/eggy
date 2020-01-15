@@ -4,6 +4,7 @@ import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
 import useEggs from "./EggList.hooks";
 import { Button } from "../DeleteEgg/DeleteEgg.styles";
 import Router from "next/router";
+import {} from "./EggList.styles";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -18,7 +19,7 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
 
   // ##### RENDER #####
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Lo</p>;
   if (error) return <p>Error! ${error.message}</p>;
 
   const eggsCount = hasNextPage ? eggs.length + 1 : eggs.length;
@@ -30,7 +31,7 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
         dataLength={eggsCount}
         next={loadMoreEggs}
         hasMore={hasNextPage}
-        loader={<p>Loading..</p>}
+        loader={<p>Loading...</p>}
         endMessage={<p>There not more eggs</p>}
       >
         {eggs.map(egg => (
