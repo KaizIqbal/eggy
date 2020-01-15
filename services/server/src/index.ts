@@ -1,12 +1,12 @@
-// tslint:disable-next-line: no-var-requires
 //TODO enable for local development
 // require("dotenv").config({ path: "secret.env" });
+import * as coockieParser from "cookie-parser";
 import createServer from "./createServer";
 import db from "./db";
 
 const server = createServer();
 
-// TODO use express middleware to handle coockie(JWT)
+server.express.use(coockieParser());
 // TODO use express middleware to produce current user
 
 server.start(
@@ -17,7 +17,6 @@ server.start(
     }
   },
   deets => {
-    // tslint:disable-next-line: no-invalid-template-strings
     console.log(`🚀 Server running on http://localhost:${deets.port}`);
   }
 );
