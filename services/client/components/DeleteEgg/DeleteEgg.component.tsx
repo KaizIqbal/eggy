@@ -1,41 +1,27 @@
 import { useMutation } from "@apollo/react-hooks";
-import * as React from "react";
+import React from "react";
 import { DELETE_EGG_MUTATION } from "../../graphql/Mutation";
+import { GET_EGGS_CURSOR } from "../../graphql/Query";
 import { Button } from "./DeleteEgg.styles";
-import { EGGS_QUERY } from "../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IDeleteEggProps {
-  children: any;
+  children: string;
   id: string;
 }
 
 // ##### COMPONENT #####
 const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
-  // ##### CACHE UPDATE #####
-
-  //Manually Update  the cache on the client,so ot matches the server
-  const updateCache = async (cache, { data }) => {
-    try {
-      const eggList = cache.readQuery({ query: EGGS_QUERY });
-      const newEggList = eggList.eggs.filter(
-        egg => egg.id !== data.deleteEgg.id
-      );
-      await cache.writeQuery({
-        query: EGGS_QUERY,
-        data: { eggs: newEggList }
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   // ##### HOOKS #####
 
   // DeleteEgg Mutation hook
   const [deleteEgg, { error }] = useMutation(DELETE_EGG_MUTATION, {
     variables: { id: props.id },
-    update: updateCache
+    refetchQueries: [
+      {
+        query: GET_EGGS_CURSOR
+      }
+    ]
   });
 
   // ##### HANDLING FUNCTION #####

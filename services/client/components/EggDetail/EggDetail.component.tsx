@@ -1,15 +1,15 @@
 import { useQuery } from "@apollo/react-hooks";
 import Head from "next/head";
-import * as React from "react";
+import React from "react";
 import { EGG_QUERY } from "../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
-interface IDeleteEggProps {
+interface IEggDetailProps {
   id: string;
 }
 
 // ##### COMPONENT #####
-const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
+const EggDetail: React.FunctionComponent<IEggDetailProps> = props => {
   // ##### HOOKS #####
 
   // Fetch data by id using Query Hook
@@ -42,4 +42,4 @@ const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
   );
 };
 
-export default DeleteEgg;
+export default EggDetail;

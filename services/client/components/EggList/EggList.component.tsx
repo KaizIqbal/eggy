@@ -1,8 +1,9 @@
 import React from "react";
-import useEggs from "./EggList.hooks";
 import InfiniteScroll from "react-infinite-scroll-component";
-import UpdateEgg from "../UpdateEgg/UpdateEgg.component";
-import DeleteEgg from "../EggDetail/EggDetail.component";
+import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
+import useEggs from "./EggList.hooks";
+import { Button } from "../DeleteEgg/DeleteEgg.styles";
+import Router from "next/router";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -32,15 +33,25 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
         loader={<p>Loading..</p>}
         endMessage={<p>There not more eggs</p>}
       >
-        <ul>
-          {eggs.map(egg => (
-            <li key={egg.id}>
-              {egg.title}
-              <UpdateEgg id={egg.id} />
-              <DeleteEgg id={egg.id}>Delete</DeleteEgg>
-            </li>
-          ))}
-        </ul>
+        {eggs.map(egg => (
+          <li key={egg.id}>
+            {egg.title}
+            <Button
+              type="button"
+              onClick={() => {
+                Router.push({
+                  pathname: "/update",
+                  query: {
+                    id: egg.id
+                  }
+                });
+              }}
+            >
+              Update
+            </Button>
+            <DeleteEgg id={egg.id}>Delete</DeleteEgg>
+          </li>
+        ))}
       </InfiniteScroll>
     </div>
   );
