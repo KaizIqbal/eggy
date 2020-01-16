@@ -65,6 +65,8 @@ const Mutation = {
 
     // set jwt token as cookie on the response
     ctx.response.cookie("token", token, {
+      domain: process.env.DOMAIN,
+      secure: true,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year Cookie
     });
