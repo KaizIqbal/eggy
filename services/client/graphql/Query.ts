@@ -38,4 +38,16 @@ const GET_EGGS_CURSOR = gql`
   }
 `;
 
-export { EGG_QUERY, EGGS_QUERY, GET_EGGS_CURSOR };
+//For me
+const ME_QUERY = gql`
+  query me {
+    me {
+      id
+      name
+      email
+      permissions
+    }
+  }
+`;
+
+export { EGG_QUERY, EGGS_QUERY, GET_EGGS_CURSOR, ME_QUERY };
