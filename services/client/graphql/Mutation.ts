@@ -27,4 +27,22 @@ const UPDATE_EGG_MUTATION = gql`
   }
 `;
 
-export { CREATE_EGG_MUTATION, DELETE_EGG_MUTATION, UPDATE_EGG_MUTATION };
+// Mutation for Signup user
+
+const SIGNUP_MUTATION = gql`
+  mutation signUp($email: String!, $name: String!, $password: String!) {
+    signup(email: $email, name: $name, password: $password) {
+      email
+      name
+      password
+      permission
+    }
+  }
+`;
+
+export {
+  CREATE_EGG_MUTATION,
+  DELETE_EGG_MUTATION,
+  UPDATE_EGG_MUTATION,
+  SIGNUP_MUTATION
+};
