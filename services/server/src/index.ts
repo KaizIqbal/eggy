@@ -4,7 +4,6 @@ import * as coockieParser from "cookie-parser";
 import createServer from "./createServer";
 import * as jwt from "jsonwebtoken";
 import db from "./db";
-import { Interface } from "readline";
 
 const server = createServer();
 

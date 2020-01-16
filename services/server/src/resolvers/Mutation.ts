@@ -49,7 +49,7 @@ const Mutation = {
     const password = await bcrypt.hash(args.password, 10);
 
     // create user in database
-    const user = ctx.db.mutation.createUser(
+    const user = await ctx.db.mutation.createUser(
       {
         data: {
           ...args,
@@ -66,7 +66,6 @@ const Mutation = {
     // set jwt token as cookie on the response
     ctx.response.cookie("token", token, {
       domain: process.env.DOMAIN,
-      secure: true,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year Cookie
     });
