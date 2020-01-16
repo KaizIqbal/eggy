@@ -14,4 +14,5 @@ type Query {
   eggs(where: EggWhereInput): [Egg]!
   egg(where: EggWhereUniqueInput!): Egg
   eggsConnection(after: String first: Int): EggConnection!
+  me: User
 }
