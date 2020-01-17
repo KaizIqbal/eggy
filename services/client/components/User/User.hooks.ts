@@ -7,7 +7,6 @@ function useUser() {
   if (loading) return { loading };
   if (error) return { error };
 
-  console.log(data);
   return {
     me: data.me,
     loading,
