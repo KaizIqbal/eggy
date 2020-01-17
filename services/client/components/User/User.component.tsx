@@ -17,7 +17,7 @@ const User: React.FunctionComponent<IUserProps> = props => {
   if (loading) return <p>Lo</p>;
   if (error) return <p>Error! ${error.message}</p>;
 
-  if (me) console.log(me);
+  if (me) return <p>{me.name}</p>;
   return null;
 };
 
