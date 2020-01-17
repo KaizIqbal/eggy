@@ -10,16 +10,6 @@ const EGG_QUERY = gql`
   }
 `;
 
-//For Fetching all Eggs
-const EGGS_QUERY = gql`
-  query eggs {
-    eggs {
-      id
-      title
-    }
-  }
-`;
-
 //For get eggs based on cursor
 const GET_EGGS_CURSOR = gql`
   query eggs($first: Int = 7, $cursor: String) {
@@ -49,4 +39,4 @@ const ME_QUERY = gql`
   }
 `;
 
-export { EGG_QUERY, EGGS_QUERY, GET_EGGS_CURSOR, ME_QUERY };
+export { EGG_QUERY, GET_EGGS_CURSOR, ME_QUERY };
