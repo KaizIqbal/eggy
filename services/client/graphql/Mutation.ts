@@ -32,6 +32,7 @@ const UPDATE_EGG_MUTATION = gql`
 const SIGNUP_MUTATION = gql`
   mutation signUp($email: String!, $name: String!, $password: String!) {
     signup(email: $email, name: $name, password: $password) {
+      id
       email
       name
       password
