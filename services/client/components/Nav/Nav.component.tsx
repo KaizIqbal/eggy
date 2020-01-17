@@ -1,7 +1,9 @@
 import Link from "next/link";
+import User from "../User/User.component";
 
 const Nav = () => (
   <div>
+    <User />
     <Link href="/basket">
       <a>Basket</a>
     </Link>
