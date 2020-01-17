@@ -14,11 +14,11 @@ const User: React.FunctionComponent<IUserProps> = props => {
 
   // ##### RENDER #####
 
-  if (loading) return <p>Lo</p>;
+  if (loading) return <p>Fetching user...</p>;
   if (error) return <p>Error! ${error.message}</p>;
 
   if (me) return <p>{me.name}</p>;
-  return null;
+  return <p>Guest</p>;
 };
 
 export default User;
