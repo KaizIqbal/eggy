@@ -8,11 +8,14 @@ type Mutation {
   
   # Users
   signup(email:String! password:String! name:String!): User!
+  login(email:String! password:String!):User!
 }
 
 type Query {
-  eggs(where: EggWhereInput): [Egg]!
+  #Eggs
   egg(where: EggWhereUniqueInput!): Egg
   eggsConnection(after: String first: Int): EggConnection!
+
+  #User
   me: User
 }

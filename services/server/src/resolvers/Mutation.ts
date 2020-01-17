@@ -1,5 +1,5 @@
 import * as bcrypt from "bcryptjs";
-import * as jwt from "jsonwebtoken";
+import authoriaztion from "../utils/auth";
 
 const Mutation = {
   async createEgg(parent, args, ctx, info) {
@@ -45,11 +45,11 @@ const Mutation = {
   },
 
   async signup(parent, args, ctx, info) {
-    // lowercase their email
+    // 1.lowercase their email
     args.email = args.email.toLowerCase();
-    // hash their password
+    // 2.hash their password
     const password = await bcrypt.hash(args.password, 10);
-    // create user in database
+    // 3.create user in database
     let user = await ctx.db.mutation.createUser(
       {
         data: {
@@ -61,20 +61,37 @@ const Mutation = {
       info
     );
 
-    // create the JWT Token for them
-    const token = await jwt.sign({ _uid: user.id }, process.env.APP_SECRET);
+    // 4.Auth the user
+    await authoriaztion(user, ctx);
 
-    // set jwt token as cookie on the response
-    ctx.response.cookie("auth", token, {
-      domain: process.env.DOMAIN,
-      secure: true,
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year Cookie
-    });
-
-    // finnaly return user
+    // 5.return user
 
     return user;
+  },
+  async login(parent, args, ctx, info) {
+    // Deconstruct the email and password
+    const { email, password } = args;
+
+    // 1.Check is there is user with that email
+    const user = await ctx.db.query.user({
+      where: {
+        email
+      }
+    });
+
+    if (!user) {
+      throw new Error(`No such user found for email ${email}`);
+    }
+
+    // 2.Check their password is correct
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      throw new Error("Invalid Password!");
+    }
+    // 3.Auth the user
+    await authoriaztion(user, ctx);
+
+    // 5.return the user
   }
 };
 
