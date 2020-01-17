@@ -33,6 +33,7 @@ const Mutation = {
       info
     );
   },
+
   async deleteEgg(parent, args, ctx, info) {
     const where = { id: args.id };
     // 1.find egg
@@ -42,14 +43,14 @@ const Mutation = {
     // 3.Delete It
     return ctx.db.mutation.deleteEgg({ where }, info);
   },
+
   async signup(parent, args, ctx, info) {
     // lowercase their email
     args.email = args.email.toLowerCase();
     // hash their password
     const password = await bcrypt.hash(args.password, 10);
-
     // create user in database
-    const user = await ctx.db.mutation.createUser(
+    let user = await ctx.db.mutation.createUser(
       {
         data: {
           ...args,
@@ -61,11 +62,12 @@ const Mutation = {
     );
 
     // create the JWT Token for them
-    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    const token = await jwt.sign({ _uid: user.id }, process.env.APP_SECRET);
 
     // set jwt token as cookie on the response
-    ctx.response.cookie("token", token, {
+    ctx.response.cookie("auth", token, {
       domain: process.env.DOMAIN,
+      secure: true,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year Cookie
     });
