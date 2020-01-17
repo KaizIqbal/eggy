@@ -92,6 +92,7 @@ const Mutation = {
     await authoriaztion(user, ctx);
 
     // 5.return the user
+    return user;
   }
 };
 
