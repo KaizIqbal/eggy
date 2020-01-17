@@ -1,21 +1,19 @@
 //TODO enable for local development
 // require("dotenv").config({ path: "secret.env" });
 import * as coockieParser from "cookie-parser";
-import createServer from "./createServer";
 import * as jwt from "jsonwebtoken";
-import db from "./db";
+import createServer from "./createServer";
 
 const server = createServer();
 
 server.express.use(coockieParser());
 // Decode the token to get userId from each request
-server.express.use((req, res, next) => {
-  const { token } = req.cookies;
-  if (token) {
-    const { userId } = jwt.verify(token, process.env.APP_SECRET);
-
+server.express.use((req: any, res, next) => {
+  const { auth }: { auth: any } = req.cookies;
+  if (auth) {
+    const { _uid } = jwt.verify(auth, process.env.APP_SECRET);
     // put the userId onto the req for the further requests to access
-    req.userId = userId;
+    req.userId = _uid;
   }
   next();
 });
@@ -26,7 +24,7 @@ server.start(
       origin: process.env.FRONTEND_URL
     }
   },
-  deets => {
-    console.log(`🚀 Server running on http://localhost:${deets.port}`);
+  ({ port }) => {
+    console.log(`🚀 Server running on http://localhost:${port}`);
   }
 );
