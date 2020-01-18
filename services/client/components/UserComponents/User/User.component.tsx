@@ -1,5 +1,6 @@
 import React from "react";
 import useUser from "./User.hooks";
+import LogOut from "../LogOut/LogOut.component";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -25,6 +26,8 @@ const User: React.FunctionComponent<IUserProps> = props => {
         {me.name}
         <br />
         {props.children}
+        <br />
+        <LogOut />
       </p>
     );
   if (!me) return props.children;
