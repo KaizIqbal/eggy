@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/react-hooks";
 import Head from "next/head";
 import React from "react";
-import { EGG_QUERY } from "../../graphql/Query";
+import { EGG_QUERY } from "../../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IEggDetailProps {
