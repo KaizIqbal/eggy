@@ -93,6 +93,17 @@ const Mutation = {
 
     // 5.return the user
     return user;
+  },
+  logout(parent, args, ctx, info) {
+    try {
+      ctx.response.clearCookie("auth", {
+        domain: process.env.DOMAIN,
+        path: "/"
+      });
+      return { message: "Logout Successfully" };
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 };
 
