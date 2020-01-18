@@ -2,8 +2,8 @@ import { useMutation } from "@apollo/react-hooks";
 import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { CREATE_EGG_MUTATION } from "../../graphql/Mutation";
-import { GET_EGGS_CURSOR } from "../../graphql/Query";
+import { CREATE_EGG_MUTATION } from "../../../graphql/Mutation";
+import { GET_EGGS_CURSOR } from "../../../graphql/Query";
 import { Form } from "./CreateEgg.styles";
 
 // ##### COMPONENT PROPS TYPE #####

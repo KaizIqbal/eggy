@@ -1,9 +1,9 @@
+import Router from "next/router";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
-import useEggs from "./EggList.hooks";
 import { Button } from "../DeleteEgg/DeleteEgg.styles";
-import Router from "next/router";
+import useEggs from "./EggList.hooks";
 import {} from "./EggList.styles";
 
 // ##### COMPONENT PROPS TYPE #####

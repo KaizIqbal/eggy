@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/react-hooks";
-import { GET_EGGS_CURSOR } from "../../graphql/Query";
+import { GET_EGGS_CURSOR } from "../../../graphql/Query";
 
 function useEggs() {
   const { data, loading, fetchMore, error } = useQuery(GET_EGGS_CURSOR);

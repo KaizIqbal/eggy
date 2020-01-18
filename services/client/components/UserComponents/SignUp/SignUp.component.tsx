@@ -1,8 +1,9 @@
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { SIGNUP_MUTATION } from "../../graphql/Mutation";
+import { SIGNUP_MUTATION } from "../../../graphql/Mutation";
 import { Form } from "./SignUp.styles";
+import { ME_QUERY } from "../../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ISignUpProps {}
@@ -13,8 +14,14 @@ const SignUp: React.FunctionComponent<ISignUpProps> = props => {
 
   // signUp Mutation hook
   const [signUp, { loading, error }] = useMutation(SIGNUP_MUTATION, {
-    onCompleted: ({ signUp }) => {
+    refetchQueries: [
+      {
+        query: ME_QUERY
+      }
+    ],
+    onCompleted: ({ signup }) => {
       try {
+        // console.log(signup);
       } catch (error) {
         console.error(error);
       }
