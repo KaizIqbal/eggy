@@ -1,10 +1,10 @@
 import { SignUp } from "../components";
 
 // ##### PAGE #####
-const Signup = props => (
+const SignUpPage = props => (
   <div>
     <SignUp />
   </div>
 );
 
-export default Signup;
+export default SignUpPage;

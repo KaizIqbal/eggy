@@ -8,5 +8,17 @@ import UpdateEgg from "./EggComponents/UpdateEgg/UpdateEgg.component";
 // User Components
 import LogIn from "./UserComponents/LogIn/LogIn.component";
 import SignUp from "./UserComponents/SignUp/SignUp.component";
+import RequestReset from "./UserComponents/RequestReset/RequestReset.component";
+import Reset from "./UserComponents/Reset/Reset.component";
 
-export { CreateEgg, EggDetail, EggList, Page, UpdateEgg, SignUp, LogIn };
+export {
+  CreateEgg,
+  EggDetail,
+  EggList,
+  Page,
+  UpdateEgg,
+  SignUp,
+  LogIn,
+  RequestReset,
+  Reset
+};
