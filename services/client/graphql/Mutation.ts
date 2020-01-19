@@ -63,11 +63,43 @@ const LOGOUT_MUTATION = gql`
   }
 `;
 
+// Mutation for Request reset token
+
+const REQUEST_RESET_MUTATION = gql`
+  mutation requestReset($email: String!) {
+    requestReset(email: $email) {
+      message
+    }
+  }
+`;
+
+// Mutation for Request reset token
+
+const RESET_PASSWORD_MUTATION = gql`
+  mutation resetPassword(
+    $resetToken: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    resetPassword(
+      resetToken: $resetToken
+      password: $password
+      confirmPassword: $confirmPassword
+    ) {
+      id
+      email
+      name
+    }
+  }
+`;
+
 export {
   CREATE_EGG_MUTATION,
   DELETE_EGG_MUTATION,
   UPDATE_EGG_MUTATION,
   SIGNUP_MUTATION,
   LOGIN_MUTATION,
-  LOGOUT_MUTATION
+  LOGOUT_MUTATION,
+  REQUEST_RESET_MUTATION,
+  RESET_PASSWORD_MUTATION
 };
