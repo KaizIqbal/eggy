@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { LOGOUT_MUTATION } from "../../../graphql/Mutation";
 import { ME_QUERY } from "../../../graphql/Query";
-import { Button } from "./LogOut.styles";
+import { Button } from "../styles";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ILogOutProps {}

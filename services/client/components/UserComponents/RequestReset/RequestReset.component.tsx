@@ -1,32 +1,29 @@
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { LOGIN_MUTATION } from "../../../graphql/Mutation";
-import { ME_QUERY } from "../../../graphql/Query";
+import { REQUEST_RESET_MUTATION } from "../../../graphql/Mutation";
 import { Form } from "../styles";
 
 // ##### COMPONENT PROPS TYPE #####
-interface ILogInProps {}
+interface IRequestResetProps {}
 
 // ##### COMPONENT #####
-const LogIn: React.FunctionComponent<ILogInProps> = props => {
+const RequestReset: React.FunctionComponent<IRequestResetProps> = props => {
   // ##### HOOKS #####
 
-  // logIn Mutation hook
-  const [logIn, { loading, error }] = useMutation(LOGIN_MUTATION, {
-    refetchQueries: [
-      {
-        query: ME_QUERY
-      }
-    ],
-    onCompleted: ({ login }) => {
-      try {
-        // console.log(login);
-      } catch (error) {
-        console.error(error);
+  // RequestReset Mutation hook
+  const [requestReset, { loading, error, called }] = useMutation(
+    REQUEST_RESET_MUTATION,
+    {
+      onCompleted: data => {
+        try {
+          console.log(data);
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
-  });
+  );
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
@@ -38,7 +35,7 @@ const LogIn: React.FunctionComponent<ILogInProps> = props => {
     try {
       e.preventDefault();
       // createEgg Mutation call with data
-      await logIn({ variables: { ...values } });
+      await requestReset({ variables: { ...values } });
       // Reset Form
       e.target.reset();
     } catch (error) {
@@ -52,6 +49,10 @@ const LogIn: React.FunctionComponent<ILogInProps> = props => {
 
   // if any error in form submiting
   if (error) return <p>Error: {error.message}</p>;
+
+  // Sucessfully Reset link sended
+  if (!error && !loading && called)
+    return <p>Reset Link Sended check your email</p>;
 
   // else render form
   return (
@@ -72,24 +73,11 @@ const LogIn: React.FunctionComponent<ILogInProps> = props => {
 
         <br />
 
-        {/* Insert password  */}
-        <label htmlFor="password">
-          Password
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="password"
-            ref={register({ required: true })}
-          />
-          {errors.title && "Password is required"}
-        </label>
-        <br />
         {/* Submition */}
-        <button type="submit">LogIn</button>
+        <button type="submit">RequestReset</button>
       </fieldset>
     </Form>
   );
 };
 
-export default LogIn;
+export default RequestReset;

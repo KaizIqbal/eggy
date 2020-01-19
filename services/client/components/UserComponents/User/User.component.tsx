@@ -25,8 +25,6 @@ const User: React.FunctionComponent<IUserProps> = props => {
       <p>
         {me.name}
         <br />
-        {props.children}
-        <br />
         <LogOut />
       </p>
     );
