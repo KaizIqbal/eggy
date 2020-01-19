@@ -1,7 +1,9 @@
 import { useMutation } from "@apollo/react-hooks";
+import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { RESET_PASSWORD_MUTATION } from "../../../graphql/Mutation";
+import { ME_QUERY } from "../../../graphql/Query";
 import { Form } from "../styles";
 
 // ##### COMPONENT PROPS TYPE #####
@@ -17,13 +19,11 @@ const Reset: React.FunctionComponent<IResetProps> = props => {
   const [resetPassword, { loading, error }] = useMutation(
     RESET_PASSWORD_MUTATION,
     {
-      onCompleted: data => {
-        try {
-          console.log(data);
-        } catch (error) {
-          console.error(error);
+      refetchQueries: [
+        {
+          query: ME_QUERY
         }
-      }
+      ]
     }
   );
 
@@ -46,9 +46,17 @@ const Reset: React.FunctionComponent<IResetProps> = props => {
       });
       // Reset Form
       e.target.reset();
+
+      // Redirect to the Home page
+      Router.push({
+        pathname: "/"
+      });
     } catch (error) {
       // Reset Form
       e.target.reset();
+      Router.push({
+        pathname: "/login"
+      });
       console.error(error);
     }
   };
