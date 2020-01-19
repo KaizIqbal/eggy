@@ -1,4 +1,6 @@
 import * as bcrypt from "bcryptjs";
+import { randomBytes } from "crypto";
+import { promisify } from "util";
 import authoriaztion from "../utils/auth";
 
 const Mutation = {
@@ -104,6 +106,79 @@ const Mutation = {
     } catch (error) {
       throw new Error(error);
     }
+  },
+  async requestReset(parent, args, ctx, info) {
+    // 1. Check if this is a real user
+    const user = await ctx.db.query.user({
+      where: {
+        email: args.email
+      }
+    });
+
+    if (!user) {
+      throw new Error(`No such user found for email ${args.email}`);
+    }
+    // 2. Reset token and expiry on that user
+    try {
+      const randomBytesPromisified = promisify(randomBytes);
+      const resetToken = (await randomBytesPromisified(20)).toString("hex");
+      const resetTokenExpiry = (Date.now() + 3600000).toString(); // 1 hour from now
+
+      const res = await ctx.db.mutation.updateUser({
+        where: {
+          email: args.email
+        },
+        data: { resetToken, resetTokenExpiry }
+      });
+
+      console.log(res);
+
+      return { message: "thanks" };
+    } catch (error) {
+      throw new Error(error);
+    }
+    // 3.Email them that reset token
+  },
+  async resetPassword(parent, args, ctx, info) {
+    // 1. Check the password match
+    if (args.password !== args.confirmPassword) {
+      throw new Error("Password don't match");
+    }
+
+    // 2. Check if its a rigit token reset
+    // 3. Check if its expired
+    const resetTokenExpiry = (Date.now() - 3600000).toString(); // reset expiry
+
+    const [user] = await ctx.db.query.users({
+      where: {
+        resetToken: args.resetToken,
+        resetTokenExpiry_gte: resetTokenExpiry
+      }
+    });
+
+    if (!user) {
+      throw new Error("This token is invalid or expired");
+    }
+
+    // 4. Hash their new password
+    const password = await bcrypt.hash(args.password, 10);
+
+    // 5. save the new password to the user and remove  old sesetToken Fields
+    const updatedUser = await ctx.db.mutation.updateUser({
+      where: {
+        email: user.email
+      },
+      data: {
+        password,
+        resetToken: null,
+        resetTokenExpiry: null
+      }
+    });
+    // 6. generate JWT & set the JWT Coockie
+    await authoriaztion(updatedUser, ctx);
+
+    // 7. return user
+    return updatedUser;
   }
 };
 

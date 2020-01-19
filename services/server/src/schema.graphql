@@ -1,5 +1,5 @@
 # import * from "./generated/prisma.graphql"
-type LogoutMessage{
+type SuccessMessage{
   message: String
 }
 
@@ -12,7 +12,11 @@ type Mutation {
   # Users
   signup(email:String! password:String! name:String!): User!
   login(email:String! password:String!): User!
-  logout: LogoutMessage
+  logout: SuccessMessage
+
+  requestReset(email:String!): SuccessMessage
+  resetPassword(resetToken:String! ,password:String! ,confirmPassword:String!):User!
+
 }
 
 type Query {
@@ -22,4 +26,12 @@ type Query {
 
   #User
   me: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  permission: [Permission!]!
 }
