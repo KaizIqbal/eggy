@@ -2,6 +2,7 @@ import * as bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import { promisify } from "util";
 import authoriaztion from "../utils/auth";
+import { transport, mailFormate } from "../mail";
 
 const Mutation = {
   async createEgg(parent, args, ctx, info) {
@@ -14,8 +15,6 @@ const Mutation = {
       },
       info
     );
-
-    // console.log(egg);
 
     return egg;
   },
@@ -131,13 +130,22 @@ const Mutation = {
         data: { resetToken, resetTokenExpiry }
       });
 
-      console.log(res);
-
+      // 3.Email them that reset token
+      const mailRes = await transport.sendMail({
+        from: "kaiz@eggy.com",
+        to: user.email,
+        subject: "Your Password Reset Token",
+        html: mailFormate(
+          `Your Password reset token is here! \n\n <a href="${
+            process.env.FRONTEND_URL
+          }/login/reset?token=${resetToken}">Click here to reset</a>`
+        )
+      });
+      // 4.Return the message
       return { message: "thanks" };
     } catch (error) {
       throw new Error(error);
     }
-    // 3.Email them that reset token
   },
   async resetPassword(parent, args, ctx, info) {
     // 1. Check the password match
