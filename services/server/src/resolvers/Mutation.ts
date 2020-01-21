@@ -6,10 +6,18 @@ import { transport, mailFormate } from "../mail";
 
 const Mutation = {
   async createEgg(parent, args, ctx, info) {
-    //TODO check it logged In
+    if (!ctx.request.userId) {
+      throw new Error("You must logged in to do that");
+    }
     const egg = await ctx.db.mutation.createEgg(
       {
         data: {
+          // Provide relationship between User and Egg
+          user: {
+            connect: {
+              id: ctx.request.userId
+            }
+          },
           ...args
         }
       },
