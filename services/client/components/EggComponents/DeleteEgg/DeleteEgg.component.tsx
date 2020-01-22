@@ -6,7 +6,6 @@ import { Button } from "./DeleteEgg.styles";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IDeleteEggProps {
-  children: string;
   id: string;
 }
 
@@ -38,7 +37,7 @@ const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
   // if any error in fetching Data
   if (error) return <p>Error: {error.message}</p>;
 
-  return <Button onClick={onClick}>{props.children}</Button>;
+  return <Button onClick={onClick}>Delete</Button>;
 };
 
 export default DeleteEgg;

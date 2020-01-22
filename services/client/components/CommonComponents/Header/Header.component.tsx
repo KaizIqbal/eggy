@@ -1,16 +1,16 @@
 import Nav from "../Nav/Nav.component";
+import { Fragment } from "react";
 
 const Header = () => (
-  <div>
-    <div className="bar">
+  <Fragment>
+    <div>
       <a href="/">Eggy</a>
       <Nav />
     </div>
-    <div className="sub-bar">
+    <div>
       <p>Search</p>
     </div>
-    <div>Cart</div>
-  </div>
+  </Fragment>
 );
 
 export default Header;

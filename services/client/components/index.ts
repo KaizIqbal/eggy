@@ -1,5 +1,6 @@
 // Common Components
 import Page from "./CommonComponents/Page/Page.component";
+import PleaseLogIn from "./CommonComponents/PleaseLogIn/PleaseLogIn.component";
 // Egg Components
 import CreateEgg from "./EggComponents/CreateEgg/CreateEgg.component";
 import EggDetail from "./EggComponents/EggDetail/EggDetail.component";
@@ -12,10 +13,11 @@ import RequestReset from "./UserComponents/RequestReset/RequestReset.component";
 import Reset from "./UserComponents/Reset/Reset.component";
 
 export {
+  Page,
+  PleaseLogIn,
   CreateEgg,
   EggDetail,
   EggList,
-  Page,
   UpdateEgg,
   SignUp,
   LogIn,
