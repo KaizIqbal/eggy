@@ -1,5 +1,5 @@
-import React from "react";
-import useUser from "./User.hooks";
+import React, { Fragment } from "react";
+import useUser from "../../../hooks/user";
 import LogOut from "../LogOut/LogOut.component";
 
 // ##### COMPONENT PROPS TYPE #####
@@ -19,16 +19,18 @@ const User: React.FunctionComponent<IUserProps> = props => {
 
   if (loading) return props.children;
   if (error) return <p>Error! ${error.message}</p>;
+  if (!me) return props.children;
 
   if (me)
     return (
-      <p>
-        {me.name}
-        <br />
-        <LogOut />
-      </p>
+      <Fragment>
+        <p>
+          {me.name}
+          <br />
+          <LogOut />
+        </p>
+      </Fragment>
     );
-  if (!me) return props.children;
 };
 
 export default User;

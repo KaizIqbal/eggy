@@ -41,7 +41,7 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
               type="button"
               onClick={() => {
                 Router.push({
-                  pathname: "/update",
+                  pathname: "/basket/update",
                   query: {
                     id: egg.id
                   }
@@ -50,7 +50,7 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
             >
               Update
             </Button>
-            <DeleteEgg id={egg.id}>Delete</DeleteEgg>
+            <DeleteEgg id={egg.id} />
           </li>
         ))}
       </InfiniteScroll>
