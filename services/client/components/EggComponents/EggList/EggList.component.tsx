@@ -19,7 +19,7 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
 
   // ##### RENDER #####
 
-  if (loading) return <p>Lo</p>;
+  if (loading) return <p>Fetching Eggs...</p>;
   if (error) return <p>Error! ${error.message}</p>;
 
   const eggsCount = hasNextPage ? eggs.length + 1 : eggs.length;

@@ -15,14 +15,17 @@ const AddEggPage = ({ query }) => {
   if (!me) {
     return <p>Please Login</p>;
   }
-  return (
-    <div>
-      <PleaseLogIn>
-        <h1>Create Egg Form</h1>
-        <CreateEgg />
-      </PleaseLogIn>
-    </div>
-  );
+
+  if (me) {
+    return (
+      <div>
+        <PleaseLogIn>
+          <h1>Create Egg Form</h1>
+          <CreateEgg />
+        </PleaseLogIn>
+      </div>
+    );
+  }
 };
 
 export default AddEggPage;

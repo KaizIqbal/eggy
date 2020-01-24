@@ -20,7 +20,7 @@ const EggDetail: React.FunctionComponent<IEggDetailProps> = props => {
   // ##### RENDER #####
 
   // Fetching Egg Details
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Fetching data about Egg...</p>;
 
   // if any error in fetching Data
   if (error) return <p>Error: {error.message}</p>;
