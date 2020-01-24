@@ -1,2 +1,2 @@
-const PleaseLogIn = props => <p>Please Log in</p>;
+const PleaseLogIn = props => props.children;
 export default PleaseLogIn;
