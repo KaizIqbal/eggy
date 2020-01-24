@@ -1,16 +1,18 @@
-// Common Components
-import Page from "./CommonComponents/Page/Page.component";
-import PleaseLogIn from "./CommonComponents/PleaseLogIn/PleaseLogIn.component";
+// layout Components
+import Page from "./layout/Page/Page.component";
+import PleaseLogIn from "./layout/PleaseLogIn/PleaseLogIn.component";
+
 // Egg Components
-import CreateEgg from "./EggComponents/CreateEgg/CreateEgg.component";
-import EggDetail from "./EggComponents/EggDetail/EggDetail.component";
-import EggList from "./EggComponents/EggList/EggList.component";
-import UpdateEgg from "./EggComponents/UpdateEgg/UpdateEgg.component";
+import CreateEgg from "./egg/CreateEgg/CreateEgg.component";
+import EggDetail from "./egg/EggDetail/EggDetail.component";
+import EggList from "./egg/EggList/EggList.component";
+import UpdateEgg from "./egg/UpdateEgg/UpdateEgg.component";
+
 // User Components
-import LogIn from "./UserComponents/LogIn/LogIn.component";
-import SignUp from "./UserComponents/SignUp/SignUp.component";
-import RequestReset from "./UserComponents/RequestReset/RequestReset.component";
-import Reset from "./UserComponents/Reset/Reset.component";
+import LogIn from "./user/LogIn/LogIn.component";
+import SignUp from "./user/SignUp/SignUp.component";
+import RequestReset from "./user/RequestReset/RequestReset.component";
+import Reset from "./user/Reset/Reset.component";
 
 export {
   Page,
