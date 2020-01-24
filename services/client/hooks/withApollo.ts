@@ -1,5 +1,4 @@
 import ApolloClient, { InMemoryCache } from "apollo-boost";
-import Cookies from "js-cookie";
 import withApollo from "next-with-apollo";
 import { codesandbox_server_endpoint } from "../config";
 
