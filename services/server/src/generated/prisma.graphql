@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Tue Jan 21 2020 08:26:46 GMT+0000 (Coordinated Universal Time)
+# timestamp: Sat Jan 25 2020 10:34:07 GMT+0000 (Coordinated Universal Time)
 
 type AggregateEgg {
   count: Int!
@@ -337,7 +337,7 @@ type User implements Node {
   password: String!
   resetToken: String
   resetTokenExpiry: String
-  permission: [Permission!]!
+  permissions: [Permission!]!
 }
 
 """A connection to a list of items."""
@@ -357,7 +357,7 @@ input UserCreateInput {
   password: String!
   resetToken: String
   resetTokenExpiry: String
-  permission: UserCreatepermissionInput
+  permissions: UserCreatepermissionsInput
 }
 
 input UserCreateOneInput {
@@ -365,7 +365,7 @@ input UserCreateOneInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreatepermissionInput {
+input UserCreatepermissionsInput {
   set: [Permission!]
 }
 
@@ -400,7 +400,7 @@ type UserPreviousValues {
   password: String!
   resetToken: String
   resetTokenExpiry: String
-  permission: [Permission!]!
+  permissions: [Permission!]!
 }
 
 type UserSubscriptionPayload {
@@ -446,7 +446,7 @@ input UserUpdateDataInput {
   password: String
   resetToken: String
   resetTokenExpiry: String
-  permission: UserUpdatepermissionInput
+  permissions: UserUpdatepermissionsInput
 }
 
 input UserUpdateInput {
@@ -455,7 +455,7 @@ input UserUpdateInput {
   password: String
   resetToken: String
   resetTokenExpiry: String
-  permission: UserUpdatepermissionInput
+  permissions: UserUpdatepermissionsInput
 }
 
 input UserUpdateManyMutationInput {
@@ -464,7 +464,7 @@ input UserUpdateManyMutationInput {
   password: String
   resetToken: String
   resetTokenExpiry: String
-  permission: UserUpdatepermissionInput
+  permissions: UserUpdatepermissionsInput
 }
 
 input UserUpdateOneRequiredInput {
@@ -474,7 +474,7 @@ input UserUpdateOneRequiredInput {
   upsert: UserUpsertNestedInput
 }
 
-input UserUpdatepermissionInput {
+input UserUpdatepermissionsInput {
   set: [Permission!]
 }
 
