@@ -3,6 +3,7 @@
 import * as coockieParser from "cookie-parser";
 import * as jwt from "jsonwebtoken";
 import createServer from "./createServer";
+import db from "./db";
 
 const server = createServer();
 
@@ -15,6 +16,22 @@ server.express.use((req: any, res, next) => {
     // put the userId onto the req for the further requests to access
     req.userId = _uid;
   }
+  next();
+});
+
+// Middleware for populate user on each request
+server.express.use(async (req: any, res, next) => {
+  // if they arn't logged in skip this
+  if (!req.userId) return next();
+  const user = await db.query.user(
+    {
+      where: {
+        id: req.userId
+      }
+    },
+    "{id ,permissions, name ,email}"
+  );
+  req.user = user;
   next();
 });
 server.start(
