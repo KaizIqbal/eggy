@@ -17,6 +17,8 @@ type Mutation {
   requestReset(email:String!): SuccessMessage
   resetPassword(resetToken:String! ,password:String! ,confirmPassword:String!):User!
 
+  users: [User]!
+
 }
 
 type Query {
