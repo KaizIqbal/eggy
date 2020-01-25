@@ -13,6 +13,7 @@ import LogIn from "./user/LogIn/LogIn.component";
 import SignUp from "./user/SignUp/SignUp.component";
 import RequestReset from "./user/RequestReset/RequestReset.component";
 import Reset from "./user/Reset/Reset.component";
+import Permissions from "./user/Permission/Permission.component";
 
 export {
   Page,
@@ -24,5 +25,6 @@ export {
   SignUp,
   LogIn,
   RequestReset,
-  Reset
+  Reset,
+  Permissions
 };
