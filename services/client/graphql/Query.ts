@@ -39,4 +39,16 @@ const ME_QUERY = gql`
   }
 `;
 
-export { EGG_QUERY, GET_EGGS_CURSOR, ME_QUERY };
+// For all users
+const ALL_USER_QUERY = gql`
+  query users {
+    users {
+      id
+      name
+      email
+      permissions
+    }
+  }
+`;
+
+export { EGG_QUERY, GET_EGGS_CURSOR, ME_QUERY, ALL_USER_QUERY };
