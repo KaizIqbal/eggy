@@ -1,17 +1,9 @@
-import { useQuery } from "@apollo/react-hooks";
-import React, { useState } from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import React, { useState, useEffect } from "react";
+import { possiblePermissions } from "../../../graphql/constraint";
 import { ALL_USER_QUERY } from "../../../graphql/Query";
-import { Table, Button } from "./Permissions.styles";
-
-// ##### USER PERMISSION #####
-const possiblePermissions = [
-  "ADMIN",
-  "USER",
-  "EGGCREATE",
-  "EGGUPDATE",
-  "EGGDELETE",
-  "PERMISSIONUPDATE"
-];
+import { Button, Table } from "./Permissions.styles";
+import { UPDATE_PERMISSION_MUTATION } from "../../../graphql/Mutation";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IPermissionProps {}
@@ -38,7 +30,7 @@ const Permissions: React.FunctionComponent<IPermissionProps> = props => {
             {possiblePermissions.map(permission => (
               <th key={permission}>{permission}</th>
             ))}
-            <th>👇</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -66,12 +58,24 @@ const UserPermissions: React.FunctionComponent<IUserProps> = props => {
   // ##### CONSTANT #####
   const user = props.user;
 
+  // ##### HOOKS #####
+
   // ##### LOACAL STATE HOOKS #####
   const [permissionsState, setPermissionsState] = useState(user.permissions);
+  // ##### UPDATE PERMISSION MUTATION HOOKS #####
+  const [updatePermissionsMutation, { loading, error }] = useMutation(
+    UPDATE_PERMISSION_MUTATION,
+    {
+      variables: {
+        permissions: permissionsState,
+        userId: user.id
+      }
+    }
+  );
 
   // ##### HANDLE FUNCTION #####
 
-  const handlePermissionChange = e => {
+  const handlePermissionChange = async e => {
     const checkbox = e.target;
 
     // take copy of current permissions
@@ -87,9 +91,18 @@ const UserPermissions: React.FunctionComponent<IUserProps> = props => {
       );
     }
     setPermissionsState(updatedPermissions);
+    await updatePermissionsMutation();
   };
 
   // ##### RENDER #####
+
+  if (error)
+    return (
+      <tr>
+        <td colSpan={8}>Error:{error.message}</td>
+      </tr>
+    );
+
   return (
     <tr>
       <td>{user.name}</td>
@@ -108,7 +121,8 @@ const UserPermissions: React.FunctionComponent<IUserProps> = props => {
         </td>
       ))}
       <td>
-        <Button>Update</Button>
+        {/* TODO ADD MORE STATUS LIKE OFFLINE,UPDATED,ORIGINAL,LIVE OR OFFLINE  */}
+        {loading ? "Updating" : "Live"}
       </td>
     </tr>
   );
