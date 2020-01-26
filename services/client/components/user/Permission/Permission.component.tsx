@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/react-hooks";
-import React from "react";
+import React, { useState } from "react";
 import { ALL_USER_QUERY } from "../../../graphql/Query";
-import { Table } from "./Permissions.styles";
+import { Table, Button } from "./Permissions.styles";
 
 // ##### USER PERMISSION #####
 const possiblePermissions = [
@@ -36,13 +36,14 @@ const Permissions: React.FunctionComponent<IPermissionProps> = props => {
             <th>Name</th>
             <th>Email</th>
             {possiblePermissions.map(permission => (
-              <th>{permission}</th>
+              <th key={permission}>{permission}</th>
             ))}
+            <th>👇</th>
           </tr>
         </thead>
         <tbody>
           {data.users.map(user => (
-            <User user={user} />
+            <UserPermissions user={user} key={user.id} />
           ))}
         </tbody>
       </Table>
@@ -52,23 +53,63 @@ const Permissions: React.FunctionComponent<IPermissionProps> = props => {
 
 // ##### COMPONENT PROPS TYPE #####
 interface IUserProps {
-  user: any;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    permissions: Array<string>;
+  };
 }
 
 // ##### COMPONENT #####
-const User: React.FunctionComponent<IUserProps> = props => {
+const UserPermissions: React.FunctionComponent<IUserProps> = props => {
+  // ##### CONSTANT #####
   const user = props.user;
+
+  // ##### LOACAL STATE HOOKS #####
+  const [permissionsState, setPermissionsState] = useState(user.permissions);
+
+  // ##### HANDLE FUNCTION #####
+
+  const handlePermissionChange = e => {
+    const checkbox = e.target;
+
+    // take copy of current permissions
+    let updatedPermissions = [...permissionsState];
+
+    // figure out if we nned to remove or add this permission
+    if (checkbox.checked) {
+      // add it in!
+      updatedPermissions.push(checkbox.value);
+    } else {
+      updatedPermissions = updatedPermissions.filter(
+        permission => permission !== checkbox.value
+      );
+    }
+    setPermissionsState(updatedPermissions);
+  };
+
+  // ##### RENDER #####
   return (
     <tr>
       <td>{user.name}</td>
       <td>{user.email}</td>
       {possiblePermissions.map(permission => (
-        <td>
+        <td key={permission}>
           <label htmlFor={`${user.id}-permission-${permission}`}>
-            <input type="checkbox" />
+            <input
+              id={`${user.id}-permission-${permission}`}
+              type="checkbox"
+              checked={permissionsState.includes(permission)}
+              value={permission}
+              onChange={handlePermissionChange}
+            />
           </label>
         </td>
       ))}
+      <td>
+        <Button>Update</Button>
+      </td>
     </tr>
   );
 };
