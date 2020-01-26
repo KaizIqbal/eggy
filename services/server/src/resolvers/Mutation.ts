@@ -1,8 +1,9 @@
 import * as bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import { promisify } from "util";
+import { mailFormate, transport } from "../mail";
 import authoriaztion from "../utils/auth";
-import { transport, mailFormate } from "../mail";
+const { hasPermission } = require("../utils/hasPermission");
 
 const Mutation = {
   async createEgg(parent, args, ctx, info) {
@@ -195,6 +196,40 @@ const Mutation = {
 
     // 7. return user
     return updatedUser;
+  },
+  async updatePermissions(parent, args, ctx, info) {
+    // 1. check if they are logged in
+    if (!ctx.request.userId) {
+      throw new Error("You must logged in!");
+    }
+
+    // 2. Query the current user
+    const currentuser = await ctx.db.query.user(
+      {
+        where: {
+          id: ctx.request.userId
+        }
+      },
+      info
+    );
+
+    // 3. Check if they have permission to do this
+    hasPermission(currentuser, ["ADMIN", "PERMISSIONUPDATE"]);
+
+    // 4. update the permission
+    return ctx.db.mutation.updateUser(
+      {
+        data: {
+          permissions: {
+            set: args.permissions
+          }
+        },
+        where: {
+          id: args.userId
+        }
+      },
+      info
+    );
   }
 };
 
