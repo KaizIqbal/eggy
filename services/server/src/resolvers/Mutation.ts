@@ -4,6 +4,7 @@ import { promisify } from "util";
 import { mailFormate, transport } from "../mail";
 import authoriaztion from "../utils/auth";
 const { hasPermission } = require("../utils/hasPermission");
+const { loggedIn } = require("../utils/loggedIn");
 
 const Mutation = {
   async createEgg(parent, args, ctx, info) {
@@ -28,6 +29,9 @@ const Mutation = {
     return egg;
   },
   updateEgg(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
     // first take copy in updates
     const updates = { ...args };
     // remove id from updates
@@ -47,9 +51,22 @@ const Mutation = {
   async deleteEgg(parent, args, ctx, info) {
     const where = { id: args.id };
     // 1.find egg
-    // const egg = await ctx.db.Query.egg({ where }, `{id title}`);
+    const egg = await ctx.db.query.egg({ where }, `{id title user{ id }}`);
+
     // 2.check they own the egg ,or  have a permission
-    // TODO
+    const ownsEgg = egg.user.id === ctx.request.userId;
+
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    const hasDeletePermissions = ctx.request.user.permissions.some(
+      (permission: string) => ["ADMIN", "EGGDELETE"].includes(permission)
+    );
+
+    if (!ownsEgg && !hasDeletePermissions) {
+      throw new Error("You don't have permission to do that!");
+    }
+
     // 3.Delete It
     return ctx.db.mutation.deleteEgg({ where }, info);
   },
@@ -199,9 +216,7 @@ const Mutation = {
   },
   async updatePermissions(parent, args, ctx, info) {
     // 1. check if they are logged in
-    if (!ctx.request.userId) {
-      throw new Error("You must logged in!");
-    }
+    loggedIn(ctx);
 
     // 2. Query the current user
     const currentuser = await ctx.db.query.user(
