@@ -1,10 +1,9 @@
-import { EggList } from "../../components";
+import { EggList } from "../components";
 //##### PAGE #####
-const Basket = props => {
+const Basket = () => {
   return (
     <div>
       <h1>Eggs</h1>
-      <a href="/basket/add">+Add Egg</a>
       <EggList />
     </div>
   );

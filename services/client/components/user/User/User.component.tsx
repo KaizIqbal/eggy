@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import Link from "next/link";
+import React from "react";
 import useUser from "../../../hooks/user";
 import LogOut from "../LogOut/LogOut.component";
 
@@ -23,7 +24,9 @@ const User: React.FunctionComponent<IUserProps> = props => {
   if (me)
     return (
       <p>
-        {me.name}
+        <Link href="/u">
+          <a>{me.name}</a>
+        </Link>
         <br />
         <LogOut />
       </p>
