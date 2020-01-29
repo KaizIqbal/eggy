@@ -1,9 +1,11 @@
 import { useMutation } from "@apollo/react-hooks";
+import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { LOGIN_MUTATION } from "../../../graphql/Mutation";
 import { ME_QUERY } from "../../../graphql/Query";
 import { Form } from "../styles";
+import useUser from "../../../hooks/user";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ILogInProps {}
@@ -11,7 +13,8 @@ interface ILogInProps {}
 // ##### COMPONENT #####
 const LogIn: React.FunctionComponent<ILogInProps> = props => {
   // ##### HOOKS #####
-
+  // for checking user already login or not
+  const { me } = useUser();
   // logIn Mutation hook
   const [logIn, { loading, error }] = useMutation(LOGIN_MUTATION, {
     refetchQueries: [
@@ -21,6 +24,9 @@ const LogIn: React.FunctionComponent<ILogInProps> = props => {
     ],
     onCompleted: ({ login }) => {
       try {
+        Router.push({
+          pathname: "/"
+        });
         // console.log(login);
       } catch (error) {
         console.error(error);
@@ -50,11 +56,15 @@ const LogIn: React.FunctionComponent<ILogInProps> = props => {
 
   // ##### RENDER #####
 
+  // TODO user already login push to the User Page
+  if (me) Router.push({ pathname: "/" });
+
   // if any error in form submiting
   if (error) return <p>Error: {error.message}</p>;
 
   // else render form
   return (
+    // Else Login Form
     <Form onSubmit={handleSubmit(onSubmit)} method="post">
       <fieldset disabled={loading}>
         {/* Insert email  */}

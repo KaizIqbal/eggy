@@ -1,4 +1,4 @@
-import { CreateEgg, PleaseLogIn } from "../../components";
+import { CreateEgg, PleaseLogIn } from "../../../components";
 
 // ##### PAGE #####
 const AddEggPage = () => (
