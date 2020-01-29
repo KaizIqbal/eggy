@@ -1,9 +1,9 @@
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import React, { useState, useEffect } from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import React, { useState } from "react";
 import { possiblePermissions } from "../../../graphql/constraint";
+import { UPDATE_PERMISSION_MUTATION } from "../../../graphql/Mutation";
 import { ALL_USER_QUERY } from "../../../graphql/Query";
 import { Button, Table } from "./Permissions.styles";
-import { UPDATE_PERMISSION_MUTATION } from "../../../graphql/Mutation";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IPermissionProps {}
@@ -31,6 +31,7 @@ const Permissions: React.FunctionComponent<IPermissionProps> = props => {
               <th key={permission}>{permission}</th>
             ))}
             <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -90,7 +91,7 @@ const UserPermissions: React.FunctionComponent<IUserProps> = props => {
         permission => permission !== checkbox.value
       );
     }
-    setPermissionsState(updatedPermissions);
+    await setPermissionsState(updatedPermissions);
     await updatePermissionsMutation();
   };
 
@@ -120,9 +121,16 @@ const UserPermissions: React.FunctionComponent<IUserProps> = props => {
           </label>
         </td>
       ))}
+      <td>{loading ? "updating" : "Live"}</td>
       <td>
         {/* TODO ADD MORE STATUS LIKE OFFLINE,UPDATED,ORIGINAL,LIVE OR OFFLINE  */}
-        {loading ? "Updating" : "Live"}
+        <Button
+          onClick={() => {
+            updatePermissionsMutation();
+          }}
+        >
+          Force Updat{loading ? "ing" : "e"}
+        </Button>
       </td>
     </tr>
   );

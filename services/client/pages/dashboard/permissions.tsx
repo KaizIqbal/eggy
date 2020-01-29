@@ -1,4 +1,4 @@
-import { PleaseLogIn, Permissions } from "../components";
+import { PleaseLogIn, Permissions } from "../../components";
 
 // ##### PAGE #####
 const PermissionsPage = () => (
