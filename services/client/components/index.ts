@@ -6,6 +6,7 @@ import PleaseLogIn from "./layout/PleaseLogIn/PleaseLogIn.component";
 import CreateEgg from "./egg/CreateEgg/CreateEgg.component";
 import EggDetail from "./egg/EggDetail/EggDetail.component";
 import EggList from "./egg/EggList/EggList.component";
+import UserEggList from "./egg/UserEggList/UserEggList.component";
 import UpdateEgg from "./egg/UpdateEgg/UpdateEgg.component";
 
 // User Components
@@ -21,6 +22,7 @@ export {
   CreateEgg,
   EggDetail,
   EggList,
+  UserEggList,
   UpdateEgg,
   SignUp,
   LogIn,

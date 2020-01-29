@@ -28,6 +28,27 @@ const GET_EGGS_CURSOR = gql`
   }
 `;
 
+//For get eggs based on cursor
+const GET_USER_EGGS_CURSOR = gql`
+  query eggs($userId: ID, $first: Int = 7, $cursor: String) {
+    eggsConnection(
+      where: { user: { id: $userId } }
+      first: $first
+      after: $cursor
+    ) {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+`;
 //For me
 const ME_QUERY = gql`
   query me {
@@ -51,4 +72,10 @@ const ALL_USER_QUERY = gql`
   }
 `;
 
-export { EGG_QUERY, GET_EGGS_CURSOR, ME_QUERY, ALL_USER_QUERY };
+export {
+  EGG_QUERY,
+  GET_EGGS_CURSOR,
+  GET_USER_EGGS_CURSOR,
+  ME_QUERY,
+  ALL_USER_QUERY
+};
