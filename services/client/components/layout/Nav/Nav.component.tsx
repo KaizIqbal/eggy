@@ -1,16 +1,25 @@
-import User from "../../UserComponents/User/User.component";
+import User from "../../user/User/User.component";
+import Link from "next/link";
 
 const Nav = () => (
   <>
     <br />
-    <a href="/">Home!</a>
+    <Link href="/">
+      <a>Home!</a>
+    </Link>
     <br />
-    <a href="/basket">Basket</a>
+    <Link href="/basket">
+      <a>Basket</a>
+    </Link>
     <User>
       <br />
-      <a href="/signup">Signup</a>
+      <Link href="/signup">
+        <a>Signup</a>
+      </Link>
       <br />
-      <a href="/login">Login</a>
+      <Link href="/login">
+        <a>Login</a>
+      </Link>
     </User>
   </>
 );
