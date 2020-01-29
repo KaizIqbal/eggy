@@ -15,7 +15,7 @@ const PleaseLogIn: React.FunctionComponent<IPleaseLogInProps> = props => {
   // ##### RENDER #####
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error! ${error.message}</p>;
+  if (error) return <p>${error.message}</p>;
 
   if (!me) {
     return <p>Please Login to Continue</p>;
