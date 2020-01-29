@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/react-hooks";
-import { GET_EGGS_CURSOR } from "../../../graphql/Query";
+import { GET_EGGS_CURSOR } from "../graphql/Query";
+import updateEggCache from "../utils/updateEggCache";
 
 function useEggs() {
   const { data, loading, fetchMore, error } = useQuery(GET_EGGS_CURSOR);
@@ -15,17 +16,7 @@ function useEggs() {
         cursor: data.eggsConnection.pageInfo.endCursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
-        const newEdges = fetchMoreResult.eggsConnection.edges;
-        const pageInfo = fetchMoreResult.eggsConnection.pageInfo;
-        return newEdges.length
-          ? {
-              eggsConnection: {
-                __typename: previousResult.eggsConnection.__typename,
-                edges: [...previousResult.eggsConnection.edges, ...newEdges],
-                pageInfo
-              }
-            }
-          : previousResult;
+        return updateEggCache(fetchMoreResult, previousResult);
       }
     });
   };

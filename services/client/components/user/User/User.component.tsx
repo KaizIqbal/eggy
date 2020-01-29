@@ -24,7 +24,7 @@ const User: React.FunctionComponent<IUserProps> = props => {
   if (me)
     return (
       <p>
-        <Link href="/u">
+        <Link href={{ pathname: "/u", query: { userId: me.id } }}>
           <a>{me.name}</a>
         </Link>
         <br />
