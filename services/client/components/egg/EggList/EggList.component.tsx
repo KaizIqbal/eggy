@@ -40,12 +40,15 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
             <Button
               type="button"
               onClick={() => {
-                Router.push({
-                  pathname: "/basket/update",
-                  query: {
-                    id: egg.id
-                  }
-                });
+                Router.push(
+                  {
+                    pathname: "/u/egg/update",
+                    query: {
+                      id: egg.id
+                    }
+                  },
+                  `/u/egg/update/${egg.id}`
+                );
               }}
             >
               Update

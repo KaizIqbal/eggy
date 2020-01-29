@@ -1,5 +1,4 @@
 import { useMutation } from "@apollo/react-hooks";
-import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { CREATE_EGG_MUTATION } from "../../../graphql/Mutation";
@@ -22,11 +21,7 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
     ],
     onCompleted: ({ createEgg }) => {
       try {
-        // Push to the Eggs page
-        Router.push({
-          pathname: "/egg",
-          query: { id: createEgg.id }
-        });
+        // console.log(createEgg);
       } catch (error) {
         console.error(error);
       }

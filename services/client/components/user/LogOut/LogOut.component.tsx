@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/react-hooks";
+import Router from "next/router";
 import React from "react";
 import { LOGOUT_MUTATION } from "../../../graphql/Mutation";
 import { ME_QUERY } from "../../../graphql/Query";
@@ -20,7 +21,9 @@ const LogOut: React.FunctionComponent<ILogOutProps> = props => {
     ],
     onCompleted: ({ logout }) => {
       try {
-        // console.log(logout);
+        Router.push({
+          pathname: "/"
+        });
       } catch (error) {
         console.error(error);
       }

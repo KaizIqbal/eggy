@@ -1,4 +1,4 @@
-import { EggDetail } from "../components";
+import { EggDetail } from "../../../components";
 
 // ##### PAGE #####
 const Egg = ({ query }) => <EggDetail id={query.id} />;
