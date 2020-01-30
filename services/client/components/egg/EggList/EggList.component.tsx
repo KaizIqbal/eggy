@@ -1,6 +1,6 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import useEggs from "../../../hooks/eggs";
+import usePublishedEggs from "../../../hooks/publishedEggs";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -11,7 +11,7 @@ interface IEggListProps {}
 const EggList: React.FunctionComponent<IEggListProps> = props => {
   // ##### HOOKS #####
 
-  const { eggs, error, loading, loadMore, hasNextPage } = useEggs();
+  const { eggs, error, loading, loadMore, hasNextPage } = usePublishedEggs();
 
   // ##### RENDER #####
 

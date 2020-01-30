@@ -13,7 +13,7 @@ const EGG_QUERY = gql`
 //For get eggs based on cursor
 const GET_EGGS_CURSOR = gql`
   query eggs($first: Int = 7, $cursor: String) {
-    eggsConnection(first: $first, after: $cursor) {
+    publishedEggsConnection(first: $first, after: $cursor) {
       edges {
         node {
           id
@@ -30,12 +30,8 @@ const GET_EGGS_CURSOR = gql`
 
 //For get eggs based on cursor
 const GET_USER_EGGS_CURSOR = gql`
-  query eggs($userId: ID, $first: Int = 7, $cursor: String) {
-    eggsConnection(
-      where: { user: { id: $userId } }
-      first: $first
-      after: $cursor
-    ) {
+  query eggs($first: Int = 7, $cursor: String) {
+    userEggsConnection(first: $first, after: $cursor) {
       edges {
         node {
           id

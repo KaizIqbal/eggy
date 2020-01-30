@@ -4,7 +4,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import useUserEggs from "../../../hooks/userEggs";
 import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
 import { Button } from "../DeleteEgg/DeleteEgg.styles";
-import useUser from "../../../hooks/user";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -14,10 +13,8 @@ interface IEggListProps {}
 
 const UserEggList: React.FunctionComponent<IEggListProps> = props => {
   // ##### HOOKS #####
-  const { me } = useUser();
-  const { eggs, error, loading, loadMore, hasNextPage } = useUserEggs({
-    userId: me.id
-  });
+
+  const { eggs, error, loading, loadMore, hasNextPage } = useUserEggs();
 
   // ##### RENDER #####
 
