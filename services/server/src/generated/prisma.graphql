@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Sat Jan 25 2020 10:34:07 GMT+0000 (Coordinated Universal Time)
+# timestamp: Thu Jan 30 2020 02:48:33 GMT+0000 (Coordinated Universal Time)
 
 type AggregateEgg {
   count: Int!
@@ -19,6 +19,7 @@ scalar DateTime
 type Egg implements Node {
   id: ID!
   title: String!
+  isPublished: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
   user: User!
@@ -37,6 +38,7 @@ type EggConnection {
 input EggCreateInput {
   id: ID
   title: String!
+  isPublished: Boolean
   user: UserCreateOneInput!
 }
 
@@ -54,6 +56,8 @@ enum EggOrderByInput {
   id_DESC
   title_ASC
   title_DESC
+  isPublished_ASC
+  isPublished_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -63,6 +67,7 @@ enum EggOrderByInput {
 type EggPreviousValues {
   id: ID!
   title: String!
+  isPublished: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -106,11 +111,13 @@ input EggSubscriptionWhereInput {
 
 input EggUpdateInput {
   title: String
+  isPublished: Boolean
   user: UserUpdateOneRequiredInput
 }
 
 input EggUpdateManyMutationInput {
   title: String
+  isPublished: Boolean
 }
 
 input EggWhereInput {
@@ -202,6 +209,10 @@ input EggWhereInput {
 
   """All values not ending with the given string."""
   title_not_ends_with: String
+  isPublished: Boolean
+
+  """All values that are not equal to given value."""
+  isPublished_not: Boolean
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -334,6 +345,8 @@ type User implements Node {
   id: ID!
   name: String!
   email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   password: String!
   resetToken: String
   resetTokenExpiry: String
@@ -385,6 +398,10 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   password_ASC
   password_DESC
   resetToken_ASC
@@ -397,6 +414,8 @@ type UserPreviousValues {
   id: ID!
   name: String!
   email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   password: String!
   resetToken: String
   resetTokenExpiry: String
@@ -612,6 +631,50 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   email_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   password: String
 
   """All values that are not equal to given value."""
