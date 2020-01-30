@@ -8,6 +8,8 @@ type Mutation {
   createEgg(title: String): Egg!
   updateEgg(id:ID! title: String): Egg!
   deleteEgg(id:ID!): Egg!
+
+  publish(id:ID!): Egg!
   
   # Users
   signup(email:String! password:String! name:String!): User!
