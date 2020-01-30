@@ -70,6 +70,27 @@ const Mutation = {
     // 3.Delete It
     return ctx.db.mutation.deleteEgg({ where }, info);
   },
+  async publish(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+    const userId = ctx.request.userId;
+    const eggExists = await ctx.db.exists.Egg({
+      id: args.id,
+      user: { id: userId }
+    });
+
+    if (!eggExists) {
+      throw new Error(`Egg not found or you're not the publisher`);
+    }
+
+    return ctx.db.mutation.updateEgg(
+      {
+        where: { id: args.id },
+        data: { isPublished: true }
+      },
+      info
+    );
+  },
 
   async signup(parent, args, ctx, info) {
     // 1.lowercase their email

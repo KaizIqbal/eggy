@@ -4,7 +4,6 @@ const { loggedIn } = require("../utils/loggedIn");
 
 const Query = {
   egg: forwardTo("db"),
-  eggsConnection: forwardTo("db"),
   userEggsConnection(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
