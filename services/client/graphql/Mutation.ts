@@ -36,7 +36,7 @@ const SIGNUP_MUTATION = gql`
       email
       name
       password
-      permission
+      permissions
     }
   }
 `;
