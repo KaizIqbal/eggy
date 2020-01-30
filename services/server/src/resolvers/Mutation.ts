@@ -8,9 +8,9 @@ const { loggedIn } = require("../utils/loggedIn");
 
 const Mutation = {
   async createEgg(parent, args, ctx, info) {
-    if (!ctx.request.userId) {
-      throw new Error("You must logged in to do that");
-    }
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
     const egg = await ctx.db.mutation.createEgg(
       {
         data: {
