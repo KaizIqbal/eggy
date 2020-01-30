@@ -11,6 +11,8 @@ type User {
   id: ID! @id
   name: String!
   email: String! @unique
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   password: String!
   resetToken: String
   resetTokenExpiry: String
@@ -20,6 +22,7 @@ type User {
 type Egg {
   id: ID! @id
   title: String!
+  isPublished: Boolean! @default(value: false)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   user: User!
