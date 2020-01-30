@@ -21,9 +21,12 @@ type Mutation {
 }
 
 type Query {
-  #Eggs
+  #Eggs 
   egg(where: EggWhereUniqueInput!): Egg
-  eggsConnection(where: EggWhereInput after: String first: Int): EggConnection!
+  publishedEggsConnection(after: String first: Int): EggConnection!
+  userEggsConnection(after: String first: Int): EggConnection!
+
+
 
   #User
   me: User
