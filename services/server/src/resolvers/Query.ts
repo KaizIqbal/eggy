@@ -1,9 +1,35 @@
 import { forwardTo } from "prisma-binding";
 const { hasPermission } = require("../utils/hasPermission");
+const { loggedIn } = require("../utils/loggedIn");
 
 const Query = {
   egg: forwardTo("db"),
   eggsConnection: forwardTo("db"),
+  userEggsConnection(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    return ctx.db.query.eggsConnection(
+      {
+        where: {
+          user: { id: ctx.request.userId }
+        },
+        ...args
+      },
+      info
+    );
+  },
+  publishedEggsConnection(parent, args, ctx, info) {
+    return ctx.db.query.eggsConnection(
+      {
+        where: {
+          isPublished: true
+        },
+        ...args
+      },
+      info
+    );
+  },
   me(parent, args, ctx, info) {
     // check if there is current user ID
     if (!ctx.request.userId) {
