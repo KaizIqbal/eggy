@@ -1,5 +1,9 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Thu Jan 30 2020 02:48:33 GMT+0000 (Coordinated Universal Time)
+# timestamp: Fri Jan 31 2020 11:05:51 GMT+0000 (Coordinated Universal Time)
+
+type AggregateCursor {
+  count: Int!
+}
 
 type AggregateEgg {
   count: Int!
@@ -14,6 +18,339 @@ type BatchPayload {
   count: Long!
 }
 
+type Cursor implements Node {
+  id: ID!
+  name: String!
+  cursorTypes: [cursorType!]!
+}
+
+"""A connection to a list of items."""
+type CursorConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CursorEdge]!
+  aggregate: AggregateCursor!
+}
+
+input CursorCreatecursorTypesInput {
+  set: [cursorType!]
+}
+
+input CursorCreateInput {
+  id: ID
+  name: String!
+  cursorTypes: CursorCreatecursorTypesInput
+}
+
+input CursorCreateManyInput {
+  create: [CursorCreateInput!]
+  connect: [CursorWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type CursorEdge {
+  """The item at the end of the edge."""
+  node: Cursor!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CursorOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type CursorPreviousValues {
+  id: ID!
+  name: String!
+  cursorTypes: [cursorType!]!
+}
+
+input CursorScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CursorScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CursorScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CursorScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+type CursorSubscriptionPayload {
+  mutation: MutationType!
+  node: Cursor
+  updatedFields: [String!]
+  previousValues: CursorPreviousValues
+}
+
+input CursorSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CursorSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CursorSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CursorSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CursorWhereInput
+}
+
+enum cursorType {
+  WINDOW
+  LINUX
+}
+
+input CursorUpdatecursorTypesInput {
+  set: [cursorType!]
+}
+
+input CursorUpdateDataInput {
+  name: String
+  cursorTypes: CursorUpdatecursorTypesInput
+}
+
+input CursorUpdateInput {
+  name: String
+  cursorTypes: CursorUpdatecursorTypesInput
+}
+
+input CursorUpdateManyDataInput {
+  name: String
+  cursorTypes: CursorUpdatecursorTypesInput
+}
+
+input CursorUpdateManyInput {
+  create: [CursorCreateInput!]
+  connect: [CursorWhereUniqueInput!]
+  set: [CursorWhereUniqueInput!]
+  disconnect: [CursorWhereUniqueInput!]
+  delete: [CursorWhereUniqueInput!]
+  update: [CursorUpdateWithWhereUniqueNestedInput!]
+  updateMany: [CursorUpdateManyWithWhereNestedInput!]
+  deleteMany: [CursorScalarWhereInput!]
+  upsert: [CursorUpsertWithWhereUniqueNestedInput!]
+}
+
+input CursorUpdateManyMutationInput {
+  name: String
+  cursorTypes: CursorUpdatecursorTypesInput
+}
+
+input CursorUpdateManyWithWhereNestedInput {
+  where: CursorScalarWhereInput!
+  data: CursorUpdateManyDataInput!
+}
+
+input CursorUpdateWithWhereUniqueNestedInput {
+  where: CursorWhereUniqueInput!
+  data: CursorUpdateDataInput!
+}
+
+input CursorUpsertWithWhereUniqueNestedInput {
+  where: CursorWhereUniqueInput!
+  update: CursorUpdateDataInput!
+  create: CursorCreateInput!
+}
+
+input CursorWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CursorWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CursorWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CursorWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+input CursorWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 type Egg implements Node {
@@ -23,6 +360,7 @@ type Egg implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   user: User!
+  cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor!]
 }
 
 """A connection to a list of items."""
@@ -40,6 +378,7 @@ input EggCreateInput {
   title: String!
   isPublished: Boolean
   user: UserCreateOneInput!
+  cursors: CursorCreateManyInput
 }
 
 """An edge in a connection."""
@@ -113,6 +452,7 @@ input EggUpdateInput {
   title: String
   isPublished: Boolean
   user: UserUpdateOneRequiredInput
+  cursors: CursorUpdateManyInput
 }
 
 input EggUpdateManyMutationInput {
@@ -258,6 +598,9 @@ input EggWhereInput {
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
   user: UserWhereInput
+  cursors_every: CursorWhereInput
+  cursors_some: CursorWhereInput
+  cursors_none: CursorWhereInput
 }
 
 input EggWhereUniqueInput {
@@ -273,16 +616,22 @@ scalar Long
 type Mutation {
   createEgg(data: EggCreateInput!): Egg!
   createUser(data: UserCreateInput!): User!
+  createCursor(data: CursorCreateInput!): Cursor!
   updateEgg(data: EggUpdateInput!, where: EggWhereUniqueInput!): Egg
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateCursor(data: CursorUpdateInput!, where: CursorWhereUniqueInput!): Cursor
   deleteEgg(where: EggWhereUniqueInput!): Egg
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteCursor(where: CursorWhereUniqueInput!): Cursor
   upsertEgg(where: EggWhereUniqueInput!, create: EggCreateInput!, update: EggUpdateInput!): Egg!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertCursor(where: CursorWhereUniqueInput!, create: CursorCreateInput!, update: CursorUpdateInput!): Cursor!
   updateManyEggs(data: EggUpdateManyMutationInput!, where: EggWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyCursors(data: CursorUpdateManyMutationInput!, where: CursorWhereInput): BatchPayload!
   deleteManyEggs(where: EggWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyCursors(where: CursorWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -324,10 +673,13 @@ enum Permission {
 type Query {
   eggs(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Egg]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor]!
   egg(where: EggWhereUniqueInput!): Egg
   user(where: UserWhereUniqueInput!): User
+  cursor(where: CursorWhereUniqueInput!): Cursor
   eggsConnection(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EggConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  cursorsConnection(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CursorConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -339,6 +691,7 @@ type Query {
 type Subscription {
   egg(where: EggSubscriptionWhereInput): EggSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  cursor(where: CursorSubscriptionWhereInput): CursorSubscriptionPayload
 }
 
 type User implements Node {
