@@ -5,6 +5,7 @@ import { mailFormate, transport } from "../mail";
 import authoriaztion from "../utils/auth";
 const { hasPermission } = require("../utils/hasPermission");
 const { loggedIn } = require("../utils/loggedIn");
+const { checkPublish } = require("../utils/checkPublish");
 
 const Mutation = {
   async createEgg(parent, args, ctx, info) {
@@ -73,20 +74,25 @@ const Mutation = {
   async publish(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
-    const userId = ctx.request.userId;
-    const eggExists = await ctx.db.exists.Egg({
-      id: args.id,
-      user: { id: userId }
-    });
-
-    if (!eggExists) {
-      throw new Error(`Egg not found or you're not the publisher`);
-    }
+    await checkPublish(ctx, args);
 
     return ctx.db.mutation.updateEgg(
       {
         where: { id: args.id },
         data: { isPublished: true }
+      },
+      info
+    );
+  },
+  async unPublish(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+    await checkPublish(ctx, args);
+
+    return ctx.db.mutation.updateEgg(
+      {
+        where: { id: args.id },
+        data: { isPublished: false }
       },
       info
     );
