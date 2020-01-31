@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Fri Jan 31 2020 11:05:51 GMT+0000 (Coordinated Universal Time)
+# timestamp: Fri Jan 31 2020 11:19:12 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -21,7 +21,6 @@ type BatchPayload {
 type Cursor implements Node {
   id: ID!
   name: String!
-  cursorTypes: [cursorType!]!
 }
 
 """A connection to a list of items."""
@@ -34,14 +33,9 @@ type CursorConnection {
   aggregate: AggregateCursor!
 }
 
-input CursorCreatecursorTypesInput {
-  set: [cursorType!]
-}
-
 input CursorCreateInput {
   id: ID
   name: String!
-  cursorTypes: CursorCreatecursorTypesInput
 }
 
 input CursorCreateManyInput {
@@ -68,7 +62,6 @@ enum CursorOrderByInput {
 type CursorPreviousValues {
   id: ID!
   name: String!
-  cursorTypes: [cursorType!]!
 }
 
 input CursorScalarWhereInput {
@@ -204,23 +197,16 @@ enum cursorType {
   LINUX
 }
 
-input CursorUpdatecursorTypesInput {
-  set: [cursorType!]
-}
-
 input CursorUpdateDataInput {
   name: String
-  cursorTypes: CursorUpdatecursorTypesInput
 }
 
 input CursorUpdateInput {
   name: String
-  cursorTypes: CursorUpdatecursorTypesInput
 }
 
 input CursorUpdateManyDataInput {
   name: String
-  cursorTypes: CursorUpdatecursorTypesInput
 }
 
 input CursorUpdateManyInput {
@@ -237,7 +223,6 @@ input CursorUpdateManyInput {
 
 input CursorUpdateManyMutationInput {
   name: String
-  cursorTypes: CursorUpdatecursorTypesInput
 }
 
 input CursorUpdateManyWithWhereNestedInput {
@@ -361,6 +346,7 @@ type Egg implements Node {
   updatedAt: DateTime!
   user: User!
   cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor!]
+  cursorTypes: [cursorType!]!
 }
 
 """A connection to a list of items."""
@@ -373,10 +359,15 @@ type EggConnection {
   aggregate: AggregateEgg!
 }
 
+input EggCreatecursorTypesInput {
+  set: [cursorType!]
+}
+
 input EggCreateInput {
   id: ID
   title: String!
   isPublished: Boolean
+  cursorTypes: EggCreatecursorTypesInput
   user: UserCreateOneInput!
   cursors: CursorCreateManyInput
 }
@@ -409,6 +400,7 @@ type EggPreviousValues {
   isPublished: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
+  cursorTypes: [cursorType!]!
 }
 
 type EggSubscriptionPayload {
@@ -448,9 +440,14 @@ input EggSubscriptionWhereInput {
   node: EggWhereInput
 }
 
+input EggUpdatecursorTypesInput {
+  set: [cursorType!]
+}
+
 input EggUpdateInput {
   title: String
   isPublished: Boolean
+  cursorTypes: EggUpdatecursorTypesInput
   user: UserUpdateOneRequiredInput
   cursors: CursorUpdateManyInput
 }
@@ -458,6 +455,7 @@ input EggUpdateInput {
 input EggUpdateManyMutationInput {
   title: String
   isPublished: Boolean
+  cursorTypes: EggUpdatecursorTypesInput
 }
 
 input EggWhereInput {
