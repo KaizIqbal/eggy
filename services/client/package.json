@@ -1,7 +1,7 @@
 {
   "name": "egg-client",
   "version": "1.0.0",
-  "description": "",
+  "description": null,
   "repository": "https://github.com/KaizIqbal/eggy",
   "author": "Kaiz Khatri",
   "scripts": {
@@ -37,5 +37,7 @@
     "babel-plugin-styled-components": "^1.10.6",
     "typescript": "^3.7.4"
   },
-  "keywords": []
+  "keywords": [
+    "cursor"
+  ]
 }

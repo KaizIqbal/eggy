@@ -3,6 +3,7 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useUserEggs from "../../../hooks/userEggs";
 import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
+import PublishEgg from "../PublishEgg/PublishEgg.component";
 import { Button } from "../DeleteEgg/DeleteEgg.styles";
 
 // ##### COMPONENT PROPS TYPE #####
@@ -52,7 +53,9 @@ const UserEggList: React.FunctionComponent<IEggListProps> = props => {
             >
               Update
             </Button>
+
             <DeleteEgg id={egg.id} />
+            <PublishEgg id={egg.id} isPublished={egg.isPublished} />
           </li>
         ))}
       </InfiniteScroll>
