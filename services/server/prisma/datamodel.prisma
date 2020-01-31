@@ -31,11 +31,11 @@ type Egg {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   user: User!
-  cursors: [Cursor]
   cursorTypes: [cursorType]  @scalarList(strategy: RELATION)
 }
 
 type Cursor {
   id: ID! @id
   name: String!
+  egg: Egg!
 }

@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Fri Jan 31 2020 11:19:12 GMT+0000 (Coordinated Universal Time)
+# timestamp: Fri Jan 31 2020 11:29:12 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -21,6 +21,7 @@ type BatchPayload {
 type Cursor implements Node {
   id: ID!
   name: String!
+  egg: Egg!
 }
 
 """A connection to a list of items."""
@@ -36,11 +37,7 @@ type CursorConnection {
 input CursorCreateInput {
   id: ID
   name: String!
-}
-
-input CursorCreateManyInput {
-  create: [CursorCreateInput!]
-  connect: [CursorWhereUniqueInput!]
+  egg: EggCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -62,97 +59,6 @@ enum CursorOrderByInput {
 type CursorPreviousValues {
   id: ID!
   name: String!
-}
-
-input CursorScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [CursorScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [CursorScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [CursorScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
 }
 
 type CursorSubscriptionPayload {
@@ -197,48 +103,13 @@ enum cursorType {
   LINUX
 }
 
-input CursorUpdateDataInput {
-  name: String
-}
-
 input CursorUpdateInput {
   name: String
-}
-
-input CursorUpdateManyDataInput {
-  name: String
-}
-
-input CursorUpdateManyInput {
-  create: [CursorCreateInput!]
-  connect: [CursorWhereUniqueInput!]
-  set: [CursorWhereUniqueInput!]
-  disconnect: [CursorWhereUniqueInput!]
-  delete: [CursorWhereUniqueInput!]
-  update: [CursorUpdateWithWhereUniqueNestedInput!]
-  updateMany: [CursorUpdateManyWithWhereNestedInput!]
-  deleteMany: [CursorScalarWhereInput!]
-  upsert: [CursorUpsertWithWhereUniqueNestedInput!]
+  egg: EggUpdateOneRequiredInput
 }
 
 input CursorUpdateManyMutationInput {
   name: String
-}
-
-input CursorUpdateManyWithWhereNestedInput {
-  where: CursorScalarWhereInput!
-  data: CursorUpdateManyDataInput!
-}
-
-input CursorUpdateWithWhereUniqueNestedInput {
-  where: CursorWhereUniqueInput!
-  data: CursorUpdateDataInput!
-}
-
-input CursorUpsertWithWhereUniqueNestedInput {
-  where: CursorWhereUniqueInput!
-  update: CursorUpdateDataInput!
-  create: CursorCreateInput!
 }
 
 input CursorWhereInput {
@@ -330,6 +201,7 @@ input CursorWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  egg: EggWhereInput
 }
 
 input CursorWhereUniqueInput {
@@ -345,7 +217,6 @@ type Egg implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   user: User!
-  cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor!]
   cursorTypes: [cursorType!]!
 }
 
@@ -369,7 +240,11 @@ input EggCreateInput {
   isPublished: Boolean
   cursorTypes: EggCreatecursorTypesInput
   user: UserCreateOneInput!
-  cursors: CursorCreateManyInput
+}
+
+input EggCreateOneInput {
+  create: EggCreateInput
+  connect: EggWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -444,18 +319,36 @@ input EggUpdatecursorTypesInput {
   set: [cursorType!]
 }
 
+input EggUpdateDataInput {
+  title: String
+  isPublished: Boolean
+  cursorTypes: EggUpdatecursorTypesInput
+  user: UserUpdateOneRequiredInput
+}
+
 input EggUpdateInput {
   title: String
   isPublished: Boolean
   cursorTypes: EggUpdatecursorTypesInput
   user: UserUpdateOneRequiredInput
-  cursors: CursorUpdateManyInput
 }
 
 input EggUpdateManyMutationInput {
   title: String
   isPublished: Boolean
   cursorTypes: EggUpdatecursorTypesInput
+}
+
+input EggUpdateOneRequiredInput {
+  create: EggCreateInput
+  connect: EggWhereUniqueInput
+  update: EggUpdateDataInput
+  upsert: EggUpsertNestedInput
+}
+
+input EggUpsertNestedInput {
+  update: EggUpdateDataInput!
+  create: EggCreateInput!
 }
 
 input EggWhereInput {
@@ -596,9 +489,6 @@ input EggWhereInput {
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
   user: UserWhereInput
-  cursors_every: CursorWhereInput
-  cursors_some: CursorWhereInput
-  cursors_none: CursorWhereInput
 }
 
 input EggWhereUniqueInput {
@@ -612,24 +502,24 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createEgg(data: EggCreateInput!): Egg!
-  createUser(data: UserCreateInput!): User!
   createCursor(data: CursorCreateInput!): Cursor!
-  updateEgg(data: EggUpdateInput!, where: EggWhereUniqueInput!): Egg
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  createUser(data: UserCreateInput!): User!
+  createEgg(data: EggCreateInput!): Egg!
   updateCursor(data: CursorUpdateInput!, where: CursorWhereUniqueInput!): Cursor
-  deleteEgg(where: EggWhereUniqueInput!): Egg
-  deleteUser(where: UserWhereUniqueInput!): User
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateEgg(data: EggUpdateInput!, where: EggWhereUniqueInput!): Egg
   deleteCursor(where: CursorWhereUniqueInput!): Cursor
-  upsertEgg(where: EggWhereUniqueInput!, create: EggCreateInput!, update: EggUpdateInput!): Egg!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteEgg(where: EggWhereUniqueInput!): Egg
   upsertCursor(where: CursorWhereUniqueInput!, create: CursorCreateInput!, update: CursorUpdateInput!): Cursor!
-  updateManyEggs(data: EggUpdateManyMutationInput!, where: EggWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertEgg(where: EggWhereUniqueInput!, create: EggCreateInput!, update: EggUpdateInput!): Egg!
   updateManyCursors(data: CursorUpdateManyMutationInput!, where: CursorWhereInput): BatchPayload!
-  deleteManyEggs(where: EggWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyEggs(data: EggUpdateManyMutationInput!, where: EggWhereInput): BatchPayload!
   deleteManyCursors(where: CursorWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyEggs(where: EggWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -669,15 +559,15 @@ enum Permission {
 }
 
 type Query {
-  eggs(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Egg]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor]!
-  egg(where: EggWhereUniqueInput!): Egg
-  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  eggs(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Egg]!
   cursor(where: CursorWhereUniqueInput!): Cursor
-  eggsConnection(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EggConnection!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  user(where: UserWhereUniqueInput!): User
+  egg(where: EggWhereUniqueInput!): Egg
   cursorsConnection(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CursorConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  eggsConnection(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EggConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -687,9 +577,9 @@ type Query {
 }
 
 type Subscription {
-  egg(where: EggSubscriptionWhereInput): EggSubscriptionPayload
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   cursor(where: CursorSubscriptionWhereInput): CursorSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  egg(where: EggSubscriptionWhereInput): EggSubscriptionPayload
 }
 
 type User implements Node {
