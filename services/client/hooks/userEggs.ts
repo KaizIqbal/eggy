@@ -3,7 +3,9 @@ import { GET_USER_EGGS_CURSOR } from "../graphql/Query";
 import updateEggCache from "../utils/updateEggCache";
 
 function useUserEggs() {
-  const { data, loading, fetchMore, error } = useQuery(GET_USER_EGGS_CURSOR);
+  const { data, loading, fetchMore, error } = useQuery(GET_USER_EGGS_CURSOR, {
+    fetchPolicy: "cache-and-network"
+  });
 
   if (loading) return { loading };
   if (error) return { error };
