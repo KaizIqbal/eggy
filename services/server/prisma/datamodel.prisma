@@ -7,6 +7,11 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
+enum cursorType {
+  WINDOW
+  LINUX
+}
+
 type User {
   id: ID! @id
   name: String!
@@ -26,4 +31,11 @@ type Egg {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   user: User!
+  cursors: [Cursor]
+}
+
+type Cursor {
+  id: ID! @id
+  name: String!
+  cursorTypes: [cursorType]  @scalarList(strategy: RELATION)
 }
