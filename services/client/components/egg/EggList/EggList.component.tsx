@@ -31,7 +31,9 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
         endMessage={<p>There not more eggs</p>}
       >
         {eggs.map(egg => (
-          <li key={egg.id}>{egg.title}</li>
+          <li key={egg.id}>
+            <h4>{egg.title}</h4> <p>by {egg.user.name}</p>
+          </li>
         ))}
       </InfiniteScroll>
     </div>

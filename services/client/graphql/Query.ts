@@ -18,6 +18,9 @@ const GET_EGGS_CURSOR = gql`
         node {
           id
           title
+          user {
+            name
+          }
         }
       }
       pageInfo {
@@ -36,6 +39,7 @@ const GET_USER_EGGS_CURSOR = gql`
         node {
           id
           title
+          isPublished
         }
       }
       pageInfo {
