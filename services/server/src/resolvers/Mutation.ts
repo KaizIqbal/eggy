@@ -97,7 +97,31 @@ const Mutation = {
       info
     );
   },
+  async createCursor(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
 
+    // seprate EggId and cursordata
+    const eggId = args.eggId;
+    delete args.eggId;
+
+    const cursor = await ctx.db.mutation.createCursor(
+      {
+        data: {
+          // Provide relationship between Egg and Cursor
+          egg: {
+            connect: {
+              id: eggId
+            }
+          },
+          ...args
+        }
+      },
+      info
+    );
+
+    return cursor;
+  },
   async signup(parent, args, ctx, info) {
     // 1.lowercase their email
     args.email = args.email.toLowerCase();
