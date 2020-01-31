@@ -36,6 +36,15 @@ const PUBLISH_EGG_MUTATION = gql`
   }
 `;
 
+// Mutation for Unpublishing Egg
+const UNPUBLISH_EGG_MUTATION = gql`
+  mutation unPublish($id: ID!) {
+    unPublish(id: $id) {
+      id
+    }
+  }
+`;
+
 // Mutation for Signup user
 
 const SIGNUP_MUTATION = gql`
@@ -119,6 +128,7 @@ export {
   DELETE_EGG_MUTATION,
   UPDATE_EGG_MUTATION,
   PUBLISH_EGG_MUTATION,
+  UNPUBLISH_EGG_MUTATION,
   SIGNUP_MUTATION,
   LOGIN_MUTATION,
   LOGOUT_MUTATION,
