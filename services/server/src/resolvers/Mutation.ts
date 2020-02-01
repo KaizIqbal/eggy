@@ -6,6 +6,7 @@ import authoriaztion from "../utils/auth";
 const { hasPermission } = require("../utils/hasPermission");
 const { loggedIn } = require("../utils/loggedIn");
 const { checkPublish } = require("../utils/checkPublish");
+const { verifyUserName } = require("../utils/verifyUserName");
 
 const Mutation = {
   async createEgg(parent, args, ctx, info) {
@@ -132,9 +133,14 @@ const Mutation = {
   async signup(parent, args, ctx, info) {
     // 1.lowercase their email
     args.email = args.email.toLowerCase();
+
     // 2.hash their password
     const password = await bcrypt.hash(args.password, 10);
-    // 3.create user in database
+
+    // 3. check username contains symbol except "_" and add "@" at beggining
+    verifyUserName(args);
+
+    // 4.create user in database
     let user = await ctx.db.mutation.createUser(
       {
         data: {
@@ -146,14 +152,13 @@ const Mutation = {
       info
     );
 
-    // 4.Auth the user
+    // 5.Auth the user
     await authoriaztion(user, ctx);
 
-    // 5.return user
-
+    // 6.return user
     return user;
   },
-  async login(parent, args, ctx, info) {
+  async signin(parent, args, ctx, info) {
     // Deconstruct the email and password
     const { email, password } = args;
 
@@ -179,7 +184,7 @@ const Mutation = {
     // 5.return the user
     return user;
   },
-  logout(parent, args, ctx, info) {
+  signout(parent, args, ctx, info) {
     try {
       ctx.response.clearCookie("auth", {
         domain: process.env.DOMAIN,
