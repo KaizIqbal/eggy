@@ -18,6 +18,7 @@ const GET_EGGS_CURSOR = gql`
         node {
           id
           title
+          cursorTypes
           user {
             name
           }

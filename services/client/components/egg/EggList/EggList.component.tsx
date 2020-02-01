@@ -21,6 +21,7 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
   const eggsCount = hasNextPage ? eggs.length + 1 : eggs.length;
   const loadMoreEggs = loading ? () => {} : loadMore;
 
+  console.log(eggs);
   return (
     <div>
       <InfiniteScroll
@@ -33,6 +34,10 @@ const EggList: React.FunctionComponent<IEggListProps> = props => {
         {eggs.map(egg => (
           <li key={egg.id}>
             <h4>{egg.title}</h4> <p>by {egg.user.name}</p>
+            Available for:
+            {egg.cursorTypes.map(cursorType => (
+              <p key={cursorType}>{cursorType}</p>
+            ))}
           </li>
         ))}
       </InfiniteScroll>
