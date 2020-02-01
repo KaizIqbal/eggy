@@ -31,7 +31,7 @@ type Egg {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   user: User!
-  cursorTypes: [cursorType]  @scalarList(strategy: RELATION)
+  cursorTypes: [cursorType]!  @scalarList(strategy: RELATION)
 }
 
 type Cursor {
