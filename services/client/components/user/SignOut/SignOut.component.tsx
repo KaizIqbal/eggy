@@ -1,25 +1,25 @@
 import { useMutation } from "@apollo/react-hooks";
 import Router from "next/router";
 import React from "react";
-import { LOGOUT_MUTATION } from "../../../graphql/Mutation";
+import { SIGNOUT_MUTATION } from "../../../graphql/Mutation";
 import { ME_QUERY } from "../../../graphql/Query";
 import { Button } from "../styles";
 
 // ##### COMPONENT PROPS TYPE #####
-interface ILogOutProps {}
+interface ISignOutProps {}
 
 // ##### COMPONENT #####
-const LogOut: React.FunctionComponent<ILogOutProps> = props => {
+const SignOut: React.FunctionComponent<ISignOutProps> = props => {
   // ##### HOOKS #####
 
   // logOut Mutation hook
-  const [logOut, { error }] = useMutation(LOGOUT_MUTATION, {
+  const [signOut, { error }] = useMutation(SIGNOUT_MUTATION, {
     refetchQueries: [
       {
         query: ME_QUERY
       }
     ],
-    onCompleted: ({ logout }) => {
+    onCompleted: ({ signOut }) => {
       try {
         Router.push({
           pathname: "/"
@@ -34,8 +34,8 @@ const LogOut: React.FunctionComponent<ILogOutProps> = props => {
 
   //Handle onClick on Button
   const onClick = () => {
-    if (window.confirm("Are you sure you want to Logout!")) {
-      logOut();
+    if (window.confirm("Are you sure you want to Signout!")) {
+      signOut();
     }
   };
   // ##### RENDER #####
@@ -46,9 +46,9 @@ const LogOut: React.FunctionComponent<ILogOutProps> = props => {
   // else render form
   return (
     <Button type="button" onClick={onClick}>
-      Logout
+      Signout
     </Button>
   );
 };
 
-export default LogOut;
+export default SignOut;
