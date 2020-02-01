@@ -2,8 +2,8 @@ import gql from "graphql-tag";
 
 // Mutation for createEgg
 const CREATE_EGG_MUTATION = gql`
-  mutation createEgg($title: String!) {
-    createEgg(title: $title) {
+  mutation createEgg($cursorTypes: [cursorType]!, $title: String!) {
+    createEgg(cursorTypes: $cursorTypes, title: $title) {
       id
     }
   }

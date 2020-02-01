@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { CREATE_EGG_MUTATION } from "../../../graphql/Mutation";
 import { GET_EGGS_CURSOR } from "../../../graphql/Query";
 import { Form } from "./CreateEgg.styles";
+import { possibleCursorTypes } from "../../../graphql/constraint";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ICreateEggProps {}
@@ -73,6 +74,19 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
 
         <br />
 
+        {possibleCursorTypes.map(cursorType => (
+          <label key={cursorType} htmlFor={`cursorType-${cursorType}`}>
+            <input
+              id={`cursorType-${cursorType}`}
+              type="checkbox"
+              value={cursorType}
+              name="cursorTypes"
+              ref={register({ required: true })}
+            />
+            {cursorType}
+          </label>
+        ))}
+        <br />
         {/* Submition */}
         <button type="submit">Submit</button>
       </fieldset>
