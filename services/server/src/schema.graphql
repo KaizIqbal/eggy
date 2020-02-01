@@ -5,7 +5,7 @@ type SuccessMessage{
 
 type Mutation {
   # Eggs
-  createEgg(title: String!): Egg!
+  createEgg(title: String! cursorTypes: [cursorType]!): Egg!
   updateEgg(id:ID! title: String): Egg!
   deleteEgg(id:ID!): Egg!
 
@@ -21,7 +21,7 @@ type Mutation {
   logout: SuccessMessage
 
   requestReset(email:String!): SuccessMessage
-  resetPassword(resetToken:String! ,password:String! ,confirmPassword:String!): User!
+  resetPassword(resetToken:String! ,passwordSelect:String! ,confirmPassword:String!): User!
 
   updatePermissions(permissions:[Permission] ,userId:ID!): User
 }

@@ -12,6 +12,10 @@ const Mutation = {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
 
+    // deconstruct cursorType and delete from args
+    const cursorTypes = args.cursorTypes;
+    delete args.cursorTypes;
+
     const egg = await ctx.db.mutation.createEgg(
       {
         data: {
@@ -20,6 +24,9 @@ const Mutation = {
             connect: {
               id: ctx.request.userId
             }
+          },
+          cursorTypes: {
+            set: cursorTypes
           },
           ...args
         }

@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Fri Jan 31 2020 11:29:12 GMT+0000 (Coordinated Universal Time)
+# timestamp: Sat Feb 01 2020 04:07:14 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
