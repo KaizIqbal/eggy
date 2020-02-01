@@ -8,4 +8,7 @@ const possiblePermissions = [
   "PERMISSIONUPDATE"
 ];
 
-export { possiblePermissions };
+// ##### USER PERMISSION #####
+const possibleCursorTypes = ["LINUX", "WINDOW"];
+
+export { possiblePermissions, possibleCursorTypes };
