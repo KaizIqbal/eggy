@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import useUser from "../../../hooks/user";
-import LogOut from "../LogOut/LogOut.component";
+import SignOut from "../../user/SignOut/SignOut.component";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -28,7 +28,7 @@ const User: React.FunctionComponent<IUserProps> = props => {
           <a>{me.name}</a>
         </Link>
         <br />
-        <LogOut />
+        <SignOut />
       </p>
     );
 };

@@ -10,7 +10,7 @@ import UserEggList from "./egg/UserEggList/UserEggList.component";
 import UpdateEgg from "./egg/UpdateEgg/UpdateEgg.component";
 
 // User Components
-import LogIn from "./user/LogIn/LogIn.component";
+import SignIn from "./user/SignIn/SignIn.component";
 import SignUp from "./user/SignUp/SignUp.component";
 import RequestReset from "./user/RequestReset/RequestReset.component";
 import Reset from "./user/Reset/Reset.component";
@@ -25,7 +25,7 @@ export {
   UserEggList,
   UpdateEgg,
   SignUp,
-  LogIn,
+  SignIn,
   RequestReset,
   Reset,
   Permissions

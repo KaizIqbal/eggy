@@ -2,27 +2,27 @@ import { useMutation } from "@apollo/react-hooks";
 import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { LOGIN_MUTATION } from "../../../graphql/Mutation";
+import { SIGNIN_MUTATION } from "../../../graphql/Mutation";
 import { ME_QUERY } from "../../../graphql/Query";
-import { Form } from "../styles";
 import useUser from "../../../hooks/user";
+import { Form } from "../styles";
 
 // ##### COMPONENT PROPS TYPE #####
-interface ILogInProps {}
+interface ISignInProps {}
 
 // ##### COMPONENT #####
-const LogIn: React.FunctionComponent<ILogInProps> = props => {
+const SignIn: React.FunctionComponent<ISignInProps> = props => {
   // ##### HOOKS #####
   // for checking user already login or not
   const { me } = useUser();
-  // logIn Mutation hook
-  const [logIn, { loading, error }] = useMutation(LOGIN_MUTATION, {
+  // signIn Mutation hook
+  const [signIn, { loading, error }] = useMutation(SIGNIN_MUTATION, {
     refetchQueries: [
       {
         query: ME_QUERY
       }
     ],
-    onCompleted: ({ login }) => {
+    onCompleted: () => {
       try {
         Router.push({
           pathname: "/"
@@ -44,7 +44,7 @@ const LogIn: React.FunctionComponent<ILogInProps> = props => {
     try {
       e.preventDefault();
       // createEgg Mutation call with data
-      await logIn({ variables: { ...values } });
+      await signIn({ variables: { ...values } });
       // Reset Form
       e.target.reset();
     } catch (error) {
@@ -96,10 +96,10 @@ const LogIn: React.FunctionComponent<ILogInProps> = props => {
         </label>
         <br />
         {/* Submition */}
-        <button type="submit">LogIn</button>
+        <button type="submit">Signin</button>
       </fieldset>
     </Form>
   );
 };
 
-export default LogIn;
+export default SignIn;
