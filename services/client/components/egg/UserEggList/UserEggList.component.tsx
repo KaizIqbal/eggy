@@ -47,7 +47,10 @@ const UserEggList: React.FunctionComponent<IEggListProps> = props => {
                       id: egg.id
                     }
                   },
-                  `/u/egg/update/${egg.id}`
+                  "/u/egg/update/",
+                  {
+                    shallow: true
+                  }
                 );
               }}
             >

@@ -48,34 +48,38 @@ const UNPUBLISH_EGG_MUTATION = gql`
 // Mutation for Signup user
 
 const SIGNUP_MUTATION = gql`
-  mutation signUp($email: String!, $name: String!, $password: String!) {
-    signup(email: $email, name: $name, password: $password) {
+  mutation signUp(
+    $email: String!
+    $username: String!
+    $name: String!
+    $password: String!
+  ) {
+    signup(
+      email: $email
+      name: $name
+      username: $username
+      password: $password
+    ) {
       id
-      email
-      name
-      password
-      permissions
     }
   }
 `;
 
 // Mutation for Login user
 
-const LOGIN_MUTATION = gql`
-  mutation logIn($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+const SIGNIN_MUTATION = gql`
+  mutation sigIn($email: String!, $password: String!) {
+    signin(email: $email, password: $password) {
       id
-      email
-      name
     }
   }
 `;
 
 // Mutation for Login user
 
-const LOGOUT_MUTATION = gql`
-  mutation logOut {
-    logout {
+const SIGNOUT_MUTATION = gql`
+  mutation signOut {
+    signout {
       message
     }
   }
@@ -130,8 +134,8 @@ export {
   PUBLISH_EGG_MUTATION,
   UNPUBLISH_EGG_MUTATION,
   SIGNUP_MUTATION,
-  LOGIN_MUTATION,
-  LOGOUT_MUTATION,
+  SIGNIN_MUTATION,
+  SIGNOUT_MUTATION,
   REQUEST_RESET_MUTATION,
   RESET_PASSWORD_MUTATION,
   UPDATE_PERMISSION_MUTATION

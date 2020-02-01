@@ -72,6 +72,21 @@ const SignUp: React.FunctionComponent<ISignUpProps> = props => {
 
         <br />
 
+        {/* Insert username  */}
+        <label htmlFor="username">
+          Username
+          <input
+            type="username"
+            id="username"
+            name="username"
+            placeholder="username"
+            ref={register({ required: true })}
+          />
+          {errors.title && "Username is required"}
+        </label>
+
+        <br />
+
         {/* Insert email  */}
         <label htmlFor="email">
           Email
