@@ -7,7 +7,7 @@ const Me = () => {
       <Link href="/u/egg/add">
         <a>+Add Egg</a>
       </Link>
-      <UserEggList />
+      <UserEggList username="323" />
     </PleaseSignIn>
   );
 };

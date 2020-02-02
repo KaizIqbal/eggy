@@ -2,8 +2,8 @@ import gql from "graphql-tag";
 
 // Query For fetch Egg by id
 const EGG_QUERY = gql`
-  query egg($id: ID!) {
-    egg(where: { id: $id }) {
+  query egg($eggname: String!) {
+    egg(where: { eggname: $eggname }) {
       id
       title
     }
@@ -40,6 +40,7 @@ const GET_USER_EGGS_CURSOR = gql`
         node {
           id
           title
+          eggname
           isPublished
         }
       }

@@ -7,7 +7,7 @@ import { Form } from "./UpdateEgg.styles";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IUpdateEggProps {
-  id: string;
+  eggname: any;
 }
 
 // ##### COMPONENT #####
@@ -18,7 +18,7 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
   const { loading: fetching, error: fetchingError, data: fetchData } = useQuery(
     EGG_QUERY,
     {
-      variables: { id: props.id }
+      variables: { eggname: props.eggname }
     }
   );
 
@@ -48,7 +48,7 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
     try {
       e.preventDefault();
       // UpdateEgg Mutation call with data
-      await UpdateEgg({ variables: { id: props.id, ...values } });
+      await UpdateEgg({ variables: { eggname: props.eggname, ...values } });
     } catch (error) {
       // Reset Form
       e.target.reset();
