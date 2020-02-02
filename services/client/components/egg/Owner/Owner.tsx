@@ -15,14 +15,16 @@ interface IEggOwnerProps {
 const EggOwner: React.FunctionComponent<IEggOwnerProps> = props => {
   // ##### HOOKS #####
 
-  const { me, error } = useUser();
+  const { me, loading, error } = useUser();
 
   // ##### RENDER #####
 
   if (error) return <p>Error! ${error.message}</p>;
 
+  if (loading) return <p>Loading...</p>;
+
   // user not hve permission so render public page
-  if (me.username !== props.username) {
+  if (!me || me.username !== props.username) {
     return Router.push("/[user]/[egg]", `/${props.username}/${props.eggname}`);
   }
 

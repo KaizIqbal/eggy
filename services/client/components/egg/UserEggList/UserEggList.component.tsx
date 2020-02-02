@@ -39,7 +39,10 @@ const UserEggList: React.FunctionComponent<IEggListProps> = props => {
       >
         {eggs.map(egg => (
           <li key={egg.id}>
-            <Link href="/[user]/[egg]" as={`/${props.username}/${egg.eggname}`}>
+            <Link
+              href="/[user]/[egg]/workshop"
+              as={`/${props.username}/${egg.eggname}/workshop`}
+            >
               <a>{egg.title}</a>
             </Link>
             <Button

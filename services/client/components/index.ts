@@ -18,6 +18,9 @@ import RequestReset from "./user/RequestReset/RequestReset.component";
 import Reset from "./user/Reset/Reset.component";
 import Permissions from "./user/Permission/Permission.component";
 
+// Workshop Components
+import Workshop from "./workshop/Workshop";
+
 export {
   Page,
   PleaseSignIn,
@@ -32,5 +35,6 @@ export {
   Owner,
   RequestReset,
   Reset,
-  Permissions
+  Permissions,
+  Workshop
 };
