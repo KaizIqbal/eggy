@@ -1,9 +1,10 @@
 import { useMutation } from "@apollo/react-hooks";
+import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { SIGNUP_MUTATION } from "../../../graphql/Mutation";
-import { Form } from "../styles";
 import { ME_QUERY } from "../../../graphql/Query";
+import { Form } from "../styles";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ISignUpProps {}
@@ -19,12 +20,8 @@ const SignUp: React.FunctionComponent<ISignUpProps> = props => {
         query: ME_QUERY
       }
     ],
-    onCompleted: ({ signup }) => {
-      try {
-        // console.log(signup);
-      } catch (error) {
-        console.error(error);
-      }
+    onCompleted: () => {
+      Router.back();
     }
   });
 

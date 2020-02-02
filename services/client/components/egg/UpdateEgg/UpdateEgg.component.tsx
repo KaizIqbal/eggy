@@ -8,6 +8,7 @@ import {
   GET_USER_EGGS_CURSOR
 } from "../../../graphql/Query";
 import { Form } from "./UpdateEgg.styles";
+import Router from "next/router";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IUpdateEggProps {
@@ -36,12 +37,8 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
         query: GET_USER_EGGS_CURSOR
       }
     ],
-    onCompleted: ({ updateEgg }) => {
-      try {
-        // console.log(updateEgg);
-      } catch (error) {
-        console.error(error);
-      }
+    onCompleted: () => {
+      Router.back();
     }
   });
 

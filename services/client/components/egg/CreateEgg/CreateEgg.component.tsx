@@ -5,6 +5,7 @@ import { CREATE_EGG_MUTATION } from "../../../graphql/Mutation";
 import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../../graphql/Query";
 import { Form } from "./CreateEgg.styles";
 import { possibleCursorTypes } from "../../../graphql/constraint";
+import Router from "next/router";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ICreateEggProps {}
@@ -23,12 +24,8 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
         query: GET_USER_EGGS_CURSOR
       }
     ],
-    onCompleted: ({ createEgg }) => {
-      try {
-        // console.log(createEgg);
-      } catch (error) {
-        console.error(error);
-      }
+    onCompleted: () => {
+      Router.back();
     }
   });
 
