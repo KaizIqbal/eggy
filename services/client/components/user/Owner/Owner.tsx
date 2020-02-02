@@ -1,5 +1,6 @@
 import React from "react";
 import useUser from "../../../hooks/user";
+import PublicPage from "../Public/Public";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -19,13 +20,13 @@ const Owner: React.FunctionComponent<IOwnerProps> = props => {
 
   if (error) return <p>Error! ${error.message}</p>;
 
-  // user is Owner so have permission to perform egg operation
-  if (me.username === props.username) {
-    return props.children;
+  // user not have permission or user not login so render public page
+  if (!me || me.username !== props.username) {
+    return <PublicPage username={props.username} />;
   }
 
-  // user not hve permission so render public page
-  return <p>{props.username} public page</p>;
+  // user is Owner so have permission to perform egg operation
+  return props.children;
 };
 
 export default Owner;
