@@ -23,14 +23,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = props => {
       }
     ],
     onCompleted: () => {
-      try {
-        Router.push({
-          pathname: "/"
-        });
-        // console.log(login);
-      } catch (error) {
-        console.error(error);
-      }
+      Router.back();
     }
   });
 

@@ -20,13 +20,9 @@ const SignOut: React.FunctionComponent<ISignOutProps> = props => {
       }
     ],
     onCompleted: ({ signOut }) => {
-      try {
-        Router.push({
-          pathname: "/"
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      Router.push({
+        pathname: "/"
+      });
     }
   });
 
