@@ -1,6 +1,6 @@
 // layout Components
 import Page from "./layout/Page/Page.component";
-import PleaseLogIn from "./layout/PleaseLogIn/PleaseLogIn.component";
+import PleaseSignIn from "./layout/PleaseSignIn";
 
 // Egg Components
 import CreateEgg from "./egg/CreateEgg/CreateEgg.component";
@@ -19,7 +19,7 @@ import Permissions from "./user/Permission/Permission.component";
 
 export {
   Page,
-  PleaseLogIn,
+  PleaseSignIn,
   CreateEgg,
   EggDetail,
   EggList,

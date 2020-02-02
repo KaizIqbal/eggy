@@ -1,11 +1,11 @@
-import { PleaseLogIn, Permissions } from "../../components";
+import { PleaseSignIn, Permissions } from "../../components";
 
 // ##### PAGE #####
 const PermissionsPage = () => (
   <div>
-    <PleaseLogIn>
+    <PleaseSignIn>
       <Permissions />
-    </PleaseLogIn>
+    </PleaseSignIn>
   </div>
 );
 
