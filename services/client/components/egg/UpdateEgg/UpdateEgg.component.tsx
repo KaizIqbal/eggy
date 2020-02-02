@@ -2,7 +2,11 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { UPDATE_EGG_MUTATION } from "../../../graphql/Mutation";
-import { EGG_QUERY, GET_EGGS_CURSOR } from "../../../graphql/Query";
+import {
+  EGG_QUERY,
+  GET_EGGS_CURSOR,
+  GET_USER_EGGS_CURSOR
+} from "../../../graphql/Query";
 import { Form } from "./UpdateEgg.styles";
 
 // ##### COMPONENT PROPS TYPE #####
@@ -27,6 +31,9 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
     refetchQueries: [
       {
         query: GET_EGGS_CURSOR
+      },
+      {
+        query: GET_USER_EGGS_CURSOR
       }
     ],
     onCompleted: ({ updateEgg }) => {
