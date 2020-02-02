@@ -14,11 +14,12 @@ interface IOwnerProps {
 const Owner: React.FunctionComponent<IOwnerProps> = props => {
   // ##### HOOKS #####
 
-  const { me, error } = useUser();
+  const { me, loading, error } = useUser();
 
   // ##### RENDER #####
 
   if (error) return <p>Error! ${error.message}</p>;
+  if (loading) return <p>loading....</p>;
 
   // user not have permission or user not login so render public page
   if (!me || me.username !== props.username) {
