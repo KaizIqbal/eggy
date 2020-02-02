@@ -57,6 +57,7 @@ const ME_QUERY = gql`
       id
       name
       email
+      username
     }
   }
 `;
