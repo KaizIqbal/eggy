@@ -5,8 +5,7 @@ import { EggDetail } from "../../../components";
 const Egg = () => {
   const router = useRouter();
   console.log(router.query);
-  return <p>Egg</p>;
-  // <EggDetail id={query.id} />;
+  return <EggDetail eggname={router.query.egg} />;
 };
 
 export default Egg;

@@ -5,7 +5,7 @@ import { EGG_QUERY } from "../../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IEggDetailProps {
-  id: string;
+  eggname: any;
 }
 
 // ##### COMPONENT #####
@@ -13,11 +13,10 @@ const EggDetail: React.FunctionComponent<IEggDetailProps> = props => {
   // ##### HOOKS #####
   // Fetch data by id using Query Hook
   const { loading, error, data } = useQuery(EGG_QUERY, {
-    variables: { id: props.id }
+    variables: { eggname: props.eggname }
   });
 
   // ##### RENDER #####
-  if (!props.id || !data.egg) return <p>No Egg Found</p>;
   // Fetching Egg Details
   if (loading) return <p>Fetching data about Egg...</p>;
 
@@ -25,7 +24,9 @@ const EggDetail: React.FunctionComponent<IEggDetailProps> = props => {
   if (error) return <p>Error: {error.message}</p>;
 
   // if egg is empty
+  if (!props.eggname || !data.egg) return <p>No Egg Found</p>;
 
+  // Return Egg Details
   return (
     <div>
       {/* Update Header */}
