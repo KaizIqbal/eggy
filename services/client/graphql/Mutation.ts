@@ -24,8 +24,8 @@ const DELETE_EGG_MUTATION = gql`
 
 // Mutation for UpdateEgg
 const UPDATE_EGG_MUTATION = gql`
-  mutation updateEgg($id: ID!, $title: String!) {
-    updateEgg(id: $id, title: $title) {
+  mutation updateEgg($eggname: String!, $title: String!) {
+    updateEgg(eggname: $eggname, title: $title) {
       id
     }
   }

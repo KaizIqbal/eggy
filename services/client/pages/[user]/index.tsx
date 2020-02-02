@@ -7,10 +7,13 @@ const Me = () => {
   return (
     <PleaseSignIn>
       <Owner username={router.query.user}>
-        <UserEggList />
-        {/* <Link href="/u/egg/add">
-        <a>+Add Egg</a>
-      </Link> */}
+        {/* Dynamic routes for add egg to user with username */}
+        <Link href="/[user]/add" as={`/${router.query.user}/add`}>
+          <a>+Add Egg</a>
+        </Link>
+
+        {/* List of user egg with operations */}
+        <UserEggList username={router.query.user} />
       </Owner>
     </PleaseSignIn>
   );

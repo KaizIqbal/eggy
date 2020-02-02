@@ -5,10 +5,13 @@ import useUserEggs from "../../../hooks/userEggs";
 import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
 import PublishEgg from "../PublishEgg/PublishEgg.component";
 import { Button } from "../DeleteEgg/DeleteEgg.styles";
+import Link from "next/link";
 
 // ##### COMPONENT PROPS TYPE #####
 
-interface IEggListProps {}
+interface IEggListProps {
+  username: any;
+}
 
 // ##### COMPONENT #####
 
@@ -36,21 +39,15 @@ const UserEggList: React.FunctionComponent<IEggListProps> = props => {
       >
         {eggs.map(egg => (
           <li key={egg.id}>
-            {egg.title}
+            <Link href="/[user]/[egg]" as={`/${props.username}/${egg.eggname}`}>
+              <a>{egg.title}</a>
+            </Link>
             <Button
               type="button"
               onClick={() => {
                 Router.push(
-                  {
-                    pathname: "/u/egg/update",
-                    query: {
-                      id: egg.id
-                    }
-                  },
-                  "/u/egg/update/",
-                  {
-                    shallow: true
-                  }
+                  "/[user]/[egg]/update",
+                  `/${props.username}/${egg.eggname}/update`
                 );
               }}
             >
