@@ -28,6 +28,7 @@ type User {
 type Egg {
   id: ID! @id
   title: String!
+  eggname: String! @unique
   isPublished: Boolean! @default(value: false)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
