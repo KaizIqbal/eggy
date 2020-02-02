@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Sat Feb 01 2020 09:07:41 GMT+0000 (Coordinated Universal Time)
+# timestamp: Sun Feb 02 2020 02:35:21 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -213,6 +213,7 @@ scalar DateTime
 type Egg implements Node {
   id: ID!
   title: String!
+  eggname: String!
   isPublished: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -237,6 +238,7 @@ input EggCreatecursorTypesInput {
 input EggCreateInput {
   id: ID
   title: String!
+  eggname: String!
   isPublished: Boolean
   cursorTypes: EggCreatecursorTypesInput
   user: UserCreateOneInput!
@@ -261,6 +263,8 @@ enum EggOrderByInput {
   id_DESC
   title_ASC
   title_DESC
+  eggname_ASC
+  eggname_DESC
   isPublished_ASC
   isPublished_DESC
   createdAt_ASC
@@ -272,6 +276,7 @@ enum EggOrderByInput {
 type EggPreviousValues {
   id: ID!
   title: String!
+  eggname: String!
   isPublished: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -321,6 +326,7 @@ input EggUpdatecursorTypesInput {
 
 input EggUpdateDataInput {
   title: String
+  eggname: String
   isPublished: Boolean
   cursorTypes: EggUpdatecursorTypesInput
   user: UserUpdateOneRequiredInput
@@ -328,6 +334,7 @@ input EggUpdateDataInput {
 
 input EggUpdateInput {
   title: String
+  eggname: String
   isPublished: Boolean
   cursorTypes: EggUpdatecursorTypesInput
   user: UserUpdateOneRequiredInput
@@ -335,6 +342,7 @@ input EggUpdateInput {
 
 input EggUpdateManyMutationInput {
   title: String
+  eggname: String
   isPublished: Boolean
   cursorTypes: EggUpdatecursorTypesInput
 }
@@ -440,6 +448,46 @@ input EggWhereInput {
 
   """All values not ending with the given string."""
   title_not_ends_with: String
+  eggname: String
+
+  """All values that are not equal to given value."""
+  eggname_not: String
+
+  """All values that are contained in given list."""
+  eggname_in: [String!]
+
+  """All values that are not contained in given list."""
+  eggname_not_in: [String!]
+
+  """All values less than the given value."""
+  eggname_lt: String
+
+  """All values less than or equal the given value."""
+  eggname_lte: String
+
+  """All values greater than the given value."""
+  eggname_gt: String
+
+  """All values greater than or equal the given value."""
+  eggname_gte: String
+
+  """All values containing the given string."""
+  eggname_contains: String
+
+  """All values not containing the given string."""
+  eggname_not_contains: String
+
+  """All values starting with the given string."""
+  eggname_starts_with: String
+
+  """All values not starting with the given string."""
+  eggname_not_starts_with: String
+
+  """All values ending with the given string."""
+  eggname_ends_with: String
+
+  """All values not ending with the given string."""
+  eggname_not_ends_with: String
   isPublished: Boolean
 
   """All values that are not equal to given value."""
@@ -493,6 +541,7 @@ input EggWhereInput {
 
 input EggWhereUniqueInput {
   id: ID
+  eggname: String
 }
 
 """

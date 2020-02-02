@@ -13,6 +13,12 @@ const Mutation = {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
 
+    // Checking eggname contains special symbols
+    var regex = /^\w+$/;
+    if (!regex.test(args.eggname)) {
+      throw new Error("eggname is Invalid");
+    }
+
     // deconstruct cursorType and delete from args
     const cursorTypes = args.cursorTypes;
     delete args.cursorTypes;
@@ -44,13 +50,13 @@ const Mutation = {
     // first take copy in updates
     const updates = { ...args };
     // remove id from updates
-    delete updates.id;
+    delete updates.eggname;
     // run the update Query
     return ctx.db.mutation.updateEgg(
       {
         data: updates,
         where: {
-          id: args.id
+          eggname: args.eggname
         }
       },
       info
