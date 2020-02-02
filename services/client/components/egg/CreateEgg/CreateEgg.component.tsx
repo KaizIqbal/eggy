@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { CREATE_EGG_MUTATION } from "../../../graphql/Mutation";
-import { GET_EGGS_CURSOR } from "../../../graphql/Query";
+import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../../graphql/Query";
 import { Form } from "./CreateEgg.styles";
 import { possibleCursorTypes } from "../../../graphql/constraint";
 
@@ -18,6 +18,9 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
     refetchQueries: [
       {
         query: GET_EGGS_CURSOR
+      },
+      {
+        query: GET_USER_EGGS_CURSOR
       }
     ],
     onCompleted: ({ createEgg }) => {
