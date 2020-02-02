@@ -3,6 +3,7 @@ import Page from "./layout/Page/Page.component";
 import PleaseSignIn from "./layout/PleaseSignIn";
 
 // Egg Components
+import EggOwner from "./egg/Owner/Owner";
 import CreateEgg from "./egg/CreateEgg/CreateEgg.component";
 import EggDetail from "./egg/EggDetail/EggDetail.component";
 import EggList from "./egg/EggList/EggList.component";
@@ -20,6 +21,7 @@ import Permissions from "./user/Permission/Permission.component";
 export {
   Page,
   PleaseSignIn,
+  EggOwner,
   CreateEgg,
   EggDetail,
   EggList,
