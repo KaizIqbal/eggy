@@ -59,6 +59,21 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading}>
+        {/* Insert eggname for Routing */}
+        <label htmlFor="eggname">
+          Egg
+          <input
+            type="eggname"
+            id="eggname"
+            name="eggname"
+            placeholder="Sweet"
+            ref={register({ required: true })}
+          />
+          {errors.title && "Your input is required"}
+        </label>
+
+        <br />
+
         {/* Insert Title of Egg */}
         <label htmlFor="title">
           Title
@@ -66,7 +81,7 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
             type="text"
             id="title"
             name="title"
-            placeholder="Title"
+            placeholder="Sweet Cursor"
             ref={register({ required: true })}
           />
           {errors.title && "Your input is required"}
