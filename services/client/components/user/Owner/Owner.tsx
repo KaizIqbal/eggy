@@ -1,17 +1,16 @@
-import Link from "next/link";
 import React from "react";
 import useUser from "../../../hooks/user";
 
 // ##### COMPONENT PROPS TYPE #####
 
-interface IUserProps {
+interface IOwnerProps {
   children: any;
   username: any;
 }
 
 // ##### COMPONENT #####
 
-const User: React.FunctionComponent<IUserProps> = props => {
+const Owner: React.FunctionComponent<IOwnerProps> = props => {
   // ##### HOOKS #####
 
   const { me, error } = useUser();
@@ -20,13 +19,13 @@ const User: React.FunctionComponent<IUserProps> = props => {
 
   if (error) return <p>Error! ${error.message}</p>;
 
-  // user is Owner so have permission to edit update
+  // user is Owner so have permission to perform egg operation
   if (me.username === props.username) {
     return props.children;
   }
 
-  // else user public page
-  return <p>{props.username} Public page</p>;
+  // user not hve permission so render public page
+  return <p>{props.username} public page</p>;
 };
 
-export default User;
+export default Owner;
