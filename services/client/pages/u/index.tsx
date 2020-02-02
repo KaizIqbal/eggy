@@ -1,14 +1,14 @@
-import { PleaseLogIn, UserEggList } from "../../components";
+import { PleaseSignIn, UserEggList } from "../../components";
 import Link from "next/link";
 //##### PAGE #####
 const Me = () => {
   return (
-    <PleaseLogIn>
+    <PleaseSignIn>
       <Link href="/u/egg/add">
         <a>+Add Egg</a>
       </Link>
       <UserEggList />
-    </PleaseLogIn>
+    </PleaseSignIn>
   );
 };
 
