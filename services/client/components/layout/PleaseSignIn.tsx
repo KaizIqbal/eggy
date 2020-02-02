@@ -1,13 +1,13 @@
-import useUser from "../../../hooks/user";
+import useUser from "../../hooks/user";
 import React from "react";
 
 // ##### COMPONENT PROPS TYPE #####
-interface IPleaseLogInProps {
+interface IPleaseSignInProps {
   children: any;
 }
 
 // ##### COMPONENT #####
-const PleaseLogIn: React.FunctionComponent<IPleaseLogInProps> = props => {
+const PleaseSignIn: React.FunctionComponent<IPleaseSignInProps> = props => {
   // ##### HOOKS #####
 
   const { me, loading, error } = useUser();
@@ -18,9 +18,9 @@ const PleaseLogIn: React.FunctionComponent<IPleaseLogInProps> = props => {
   if (error) return <p>${error.message}</p>;
 
   if (!me) {
-    return <p>Please Login to Continue</p>;
+    return <p>Please Signin to Continue</p>;
   }
 
   return props.children;
 };
-export default PleaseLogIn;
+export default PleaseSignIn;
