@@ -1,12 +1,12 @@
-import { CreateEgg, PleaseLogIn } from "../../../components";
+import { CreateEgg, PleaseSignIn } from "../../../components";
 
 // ##### PAGE #####
 const AddEggPage = () => (
   <div>
-    <PleaseLogIn>
+    <PleaseSignIn>
       <h1>Create Egg Form</h1>
       <CreateEgg />
-    </PleaseLogIn>
+    </PleaseSignIn>
   </div>
 );
 
