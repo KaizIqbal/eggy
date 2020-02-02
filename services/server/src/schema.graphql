@@ -5,8 +5,8 @@ type SuccessMessage{
 
 type Mutation {
   # Eggs
-  createEgg(title: String! cursorTypes: [cursorType]!): Egg!
-  updateEgg(id:ID! title: String): Egg!
+  createEgg(title: String! eggname:String! cursorTypes: [cursorType]!): Egg!
+  updateEgg(eggname:String! title: String): Egg!
   deleteEgg(id:ID!): Egg!
 
   publish(id:ID!): Egg!
