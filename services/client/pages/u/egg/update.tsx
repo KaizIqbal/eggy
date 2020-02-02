@@ -1,12 +1,12 @@
-import { UpdateEgg, PleaseLogIn } from "../../../components";
+import { UpdateEgg, PleaseSignIn } from "../../../components";
 
 // ##### PAGE #####
 const UpdateEggPage = ({ query }) => (
   <div>
-    <PleaseLogIn>
+    <PleaseSignIn>
       <h1>Update Egg Form</h1>
       <UpdateEgg id={query.id} />
-    </PleaseLogIn>
+    </PleaseSignIn>
   </div>
 );
 
