@@ -64,7 +64,7 @@ const Mutation = {
   },
 
   async deleteEgg(parent, args, ctx, info) {
-    const where = { id: args.id };
+    const where = { eggname: args.eggname };
     // 1.find egg
     const egg = await ctx.db.query.egg({ where }, `{id title user{ id }}`);
 
