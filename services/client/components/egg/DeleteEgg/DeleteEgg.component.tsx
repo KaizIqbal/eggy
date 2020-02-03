@@ -6,7 +6,7 @@ import { Button } from "./DeleteEgg.styles";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IDeleteEggProps {
-  id: string;
+  eggname: string;
 }
 
 // ##### COMPONENT #####
@@ -15,7 +15,7 @@ const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
 
   // DeleteEgg Mutation hook
   const [deleteEgg, { error }] = useMutation(DELETE_EGG_MUTATION, {
-    variables: { id: props.id },
+    variables: { eggname: props.eggname },
     refetchQueries: [
       {
         query: GET_EGGS_CURSOR
