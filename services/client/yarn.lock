@@ -2999,10 +2999,10 @@ graphql-tag@^2.4.2:
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.1.tgz#10aa41f1cd8fae5373eaf11f1f67260a3cad5e02"
   integrity sha512-jApXqWBzNXQ8jYa/HLkZJaVw9jgwNqZkywa2zfFn16Iv1Zb7ELNHkJaXHR7Quvd5SIGsy6Ny7SUKATgnu05uEg==
 
-graphql@14.5.8:
-  version "14.5.8"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.5.8.tgz#504f3d3114cb9a0a3f359bbbcf38d9e5bf6a6b3c"
-  integrity sha512-MMwmi0zlVLQKLdGiMfWkgQD7dY/TUKt4L+zgJ/aR0Howebod3aNgP5JkgvAULiR2HPVZaP2VEElqtdidHweLkg==
+graphql@14.6.0:
+  version "14.6.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.6.0.tgz#57822297111e874ea12f5cd4419616930cd83e49"
+  integrity sha512-VKzfvHEKybTKjQVpTFrA5yUq2S9ihcZvfJAtsDBBCuV6wauPu1xl/f9ehgVf0FcEJJs4vz6ysb/ZMkGigQZseg==
   dependencies:
     iterall "^1.2.2"
 
@@ -4987,10 +4987,10 @@ react-error-overlay@5.1.6:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.6.tgz#0cd73407c5d141f9638ae1e0c63e7b2bf7e9929d"
   integrity sha512-X1Y+0jR47ImDVr54Ab6V9eGk0Hnu7fVWGeHQSOXHf/C2pF9c6uy3gef8QUeuUiWlNb0i08InPSE5a/KJzNzw1Q==
 
-react-hook-form@4.6.2:
-  version "4.6.2"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-4.6.2.tgz#e7ed94b14c4e542ceb9cf7a579147c01dc0fb3c9"
-  integrity sha512-o2ykewu1Snf5z85w80XUFx8kC7wuqlaOZCvqWVTGIahhgHb+fOYiTi0I2hgEtw3avsxIsKtJZWSis2grM8RVHg==
+react-hook-form@4.8.1:
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-4.8.1.tgz#2bcf332a72933337f3773f2265ec477260c45e50"
+  integrity sha512-3DFNKCB+a1RDq7nuQXjvHqzWl6Mt80USts6j47duI0Jn+07T+liXh7JuIOne+Fnb59kSGWCSHMvT0ytqNo7YOg==
 
 react-infinite-scroll-component@5.0.4:
   version "5.0.4"
