@@ -57,7 +57,7 @@ const UserEggList: React.FunctionComponent<IEggListProps> = props => {
               Update
             </Button>
 
-            <DeleteEgg id={egg.id} />
+            <DeleteEgg eggname={egg.eggname} />
             <PublishEgg id={egg.id} isPublished={egg.isPublished} />
           </li>
         ))}
