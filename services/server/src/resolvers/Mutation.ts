@@ -62,7 +62,6 @@ const Mutation = {
       info
     );
   },
-
   async deleteEgg(parent, args, ctx, info) {
     const where = { eggname: args.eggname };
     // 1.find egg
@@ -82,7 +81,13 @@ const Mutation = {
       throw new Error("You don't have permission to do that!");
     }
 
-    // 3.Delete It
+    // 3.Delete all cursors in egg first, also return count
+    await ctx.db.mutation.deleteManyCursors(
+      { where: { egg: { eggname: args.eggname } } },
+      `{count}`
+    );
+
+    // 4.Delete Egg
     return ctx.db.mutation.deleteEgg({ where }, info);
   },
   async publish(parent, args, ctx, info) {
