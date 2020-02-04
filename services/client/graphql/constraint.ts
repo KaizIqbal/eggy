@@ -8,7 +8,10 @@ const possiblePermissions = [
   "PERMISSIONUPDATE"
 ];
 
-// ##### USER PERMISSION #####
+// ##### CURSOR TYPES #####
 const possibleCursorTypes = ["LINUX", "WINDOW"];
 
-export { possiblePermissions, possibleCursorTypes };
+// ##### CURSORS #####
+const possibleCursors = ["Default", "X11"];
+
+export { possiblePermissions, possibleCursorTypes, possibleCursors };

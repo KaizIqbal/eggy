@@ -19,7 +19,7 @@ import Reset from "./user/Reset";
 import Permissions from "./user/Permission";
 
 // Workshop Components
-import Workshop from "./workshop/Workshop";
+import WorkshopPage from "./workshop/Workshop";
 
 export {
   Page,
@@ -36,5 +36,5 @@ export {
   RequestReset,
   Reset,
   Permissions,
-  Workshop
+  WorkshopPage as Workshop
 };

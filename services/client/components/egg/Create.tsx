@@ -63,7 +63,7 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
         <label htmlFor="eggname">
           Egg
           <input
-            type="eggname"
+            type="text"
             id="eggname"
             name="eggname"
             placeholder="Sweet"
