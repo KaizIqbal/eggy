@@ -115,7 +115,7 @@ const Mutation = {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
 
-    // seprate EggId and cursordata
+    // seprate EggId and cursor data
     const eggId = args.eggId;
     delete args.eggId;
 
