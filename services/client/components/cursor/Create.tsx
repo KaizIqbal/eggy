@@ -1,33 +1,23 @@
 import { useMutation } from "@apollo/react-hooks";
-import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { possibleCursorTypes } from "../../../graphql/constraint";
-import { CREATE_EGG_MUTATION } from "../../../graphql/Mutation";
-import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../../graphql/Query";
-import { Form } from "../../egg/CreateEgg/CreateEgg.styles";
+import { CREATE_CURSOR_MUTATION } from "../../graphql/Mutation";
+import { possibleCursors } from "../../graphql/constraint";
+import { Form } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
-interface ICreateEggProps {}
+interface ICreateEggProps {
+  eggId: string;
+}
 
 // ##### COMPONENT #####
 const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
   // ##### HOOKS #####
 
   // createEgg Mutation hook
-  const [createEgg, { loading, error }] = useMutation(CREATE_EGG_MUTATION, {
-    refetchQueries: [
-      {
-        query: GET_EGGS_CURSOR
-      },
-      {
-        query: GET_USER_EGGS_CURSOR
-      }
-    ],
-    onCompleted: () => {
-      Router.back();
-    }
-  });
+  const [createCursor, { loading, error }] = useMutation(
+    CREATE_CURSOR_MUTATION
+  );
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
@@ -39,7 +29,7 @@ const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
     try {
       e.preventDefault();
       // createEgg Mutation call with data
-      await createEgg({ variables: { ...values } });
+      await createCursor({ variables: { ...values, eggId: props.eggId } });
 
       // Reset Form
       e.target.reset();
@@ -59,51 +49,23 @@ const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading}>
-        {/* Insert eggname for Routing */}
-        <label htmlFor="eggname">
-          Egg
-          <input
-            type="eggname"
-            id="eggname"
-            name="eggname"
-            placeholder="Sweet"
-            ref={register({ required: true })}
-          />
+        {/* Insert cursor name */}
+        <label htmlFor="Cursor Name">
+          Select Cursor <br />
+          <select name="name" id="name" ref={register({ required: true })}>
+            {possibleCursors.map(cursor => (
+              <option key={cursor} value={cursor}>
+                {cursor}
+              </option>
+            ))}
+          </select>
           {errors.title && "Your input is required"}
         </label>
 
         <br />
 
-        {/* Insert Title of Egg */}
-        <label htmlFor="title">
-          Title
-          <input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Sweet Cursor"
-            ref={register({ required: true })}
-          />
-          {errors.title && "Your input is required"}
-        </label>
-
-        <br />
-
-        {possibleCursorTypes.map(cursorType => (
-          <label key={cursorType} htmlFor={`cursorType-${cursorType}`}>
-            <input
-              id={`cursorType-${cursorType}`}
-              type="checkbox"
-              value={cursorType}
-              name="cursorTypes"
-              ref={register({ required: true })}
-            />
-            {cursorType}
-          </label>
-        ))}
-        <br />
         {/* Submition */}
-        <button type="submit">Submit</button>
+        <button type="submit">Add</button>
       </fieldset>
     </Form>
   );

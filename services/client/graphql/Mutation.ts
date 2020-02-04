@@ -49,6 +49,15 @@ const UNPUBLISH_EGG_MUTATION = gql`
   }
 `;
 
+// Mutation for createCursor
+const CREATE_CURSOR_MUTATION = gql`
+  mutation createCursor($name: String!, $eggId: ID!) {
+    createCursor(name: $name, eggId: $eggId) {
+      id
+    }
+  }
+`;
+
 // Mutation for Signup user
 
 const SIGNUP_MUTATION = gql`
@@ -137,6 +146,7 @@ export {
   UPDATE_EGG_MUTATION,
   PUBLISH_EGG_MUTATION,
   UNPUBLISH_EGG_MUTATION,
+  CREATE_CURSOR_MUTATION,
   SIGNUP_MUTATION,
   SIGNIN_MUTATION,
   SIGNOUT_MUTATION,

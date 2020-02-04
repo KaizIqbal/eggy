@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Workshop, EggOwner } from "../../../../components";
 
 // ##### PAGE #####
-const Egg = () => {
+const WorkshopPage = () => {
   const router = useRouter();
   return (
     <EggOwner username={router.query.user} eggname={router.query.egg}>
@@ -11,4 +11,4 @@ const Egg = () => {
   );
 };
 
-export default Egg;
+export default WorkshopPage;
