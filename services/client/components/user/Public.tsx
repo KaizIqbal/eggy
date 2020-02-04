@@ -1,5 +1,4 @@
 import React from "react";
-import useUser from "../../../hooks/user";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -12,6 +11,7 @@ interface IUserPublicProps {
 const UserPublic: React.FunctionComponent<IUserPublicProps> = props => {
   // ##### RENDER #####
 
+  // TODO
   // user not hve permission so render public page
   return <p>{props.username} public page</p>;
 };

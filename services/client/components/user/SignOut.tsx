@@ -1,9 +1,9 @@
 import { useMutation } from "@apollo/react-hooks";
 import Router from "next/router";
 import React from "react";
-import { SIGNOUT_MUTATION } from "../../../graphql/Mutation";
-import { ME_QUERY } from "../../../graphql/Query";
-import { Button } from "../styles";
+import { SIGNOUT_MUTATION } from "../../graphql/Mutation";
+import { ME_QUERY } from "../../graphql/Query";
+import { Button } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ISignOutProps {}

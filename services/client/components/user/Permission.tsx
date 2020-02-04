@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import React, { useState } from "react";
-import { possiblePermissions } from "../../../graphql/constraint";
-import { UPDATE_PERMISSION_MUTATION } from "../../../graphql/Mutation";
-import { ALL_USER_QUERY } from "../../../graphql/Query";
-import { Button, Table } from "./Permissions.styles";
+import { possiblePermissions } from "../../graphql/constraint";
+import { UPDATE_PERMISSION_MUTATION } from "../../graphql/Mutation";
+import { ALL_USER_QUERY } from "../../graphql/Query";
+import { Button, Table } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IPermissionProps {}

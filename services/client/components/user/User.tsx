@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
-import useUser from "../../../hooks/user";
-import SignOut from "../../user/SignOut/SignOut.component";
+import useUser from "../../hooks/user";
+import SignOut from "../user/SignOut";
 
 // ##### COMPONENT PROPS TYPE #####
 

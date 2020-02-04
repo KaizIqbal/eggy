@@ -1,5 +1,5 @@
-import Nav from "../Nav/Nav.component";
 import { Fragment } from "react";
+import Nav from "./Nav";
 
 const Header = () => (
   <Fragment>

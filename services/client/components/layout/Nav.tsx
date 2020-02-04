@@ -1,5 +1,5 @@
-import User from "../../user/User/User.component";
 import Link from "next/link";
+import User from "../user/User";
 
 const Nav = () => (
   <>
