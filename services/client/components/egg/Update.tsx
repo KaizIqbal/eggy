@@ -8,7 +8,7 @@ import {
   GET_EGGS_CURSOR,
   GET_USER_EGGS_CURSOR
 } from "../../graphql/Query";
-import { Form } from "../styled/Form";
+import { Form } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IUpdateEggProps {

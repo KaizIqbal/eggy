@@ -3,7 +3,7 @@ import Router from "next/router";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useUserEggs from "../../hooks/userEggs";
-import { Button } from "../styled/Button";
+import { Button } from "../styled";
 import DeleteEgg from "./Delete";
 import PublishEgg from "./Publish";
 

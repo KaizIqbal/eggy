@@ -2,9 +2,9 @@ import { useMutation } from "@apollo/react-hooks";
 import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { SIGNUP_MUTATION } from "../../../graphql/Mutation";
-import { ME_QUERY } from "../../../graphql/Query";
-import { Form } from "../styles";
+import { SIGNUP_MUTATION } from "../../graphql/Mutation";
+import { ME_QUERY } from "../../graphql/Query";
+import { Form } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ISignUpProps {}

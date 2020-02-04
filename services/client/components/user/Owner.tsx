@@ -1,6 +1,6 @@
 import React from "react";
-import useUser from "../../../hooks/user";
-import PublicPage from "../Public/Public";
+import useUser from "../../hooks/user";
+import PublicPage from "./Public";
 
 // ##### COMPONENT PROPS TYPE #####
 

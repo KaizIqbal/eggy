@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { possibleCursorTypes } from "../../graphql/constraint";
 import { CREATE_EGG_MUTATION } from "../../graphql/Mutation";
 import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../graphql/Query";
-import { Form } from "../styled/Form";
+import { Form } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ICreateEggProps {}
