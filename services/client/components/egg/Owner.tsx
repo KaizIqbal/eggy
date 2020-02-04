@@ -1,5 +1,5 @@
 import React from "react";
-import useUser from "../../../hooks/user";
+import useUser from "../../hooks/user";
 import Router from "next/router";
 
 // ##### COMPONENT PROPS TYPE #####
