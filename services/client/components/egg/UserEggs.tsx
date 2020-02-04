@@ -1,11 +1,11 @@
+import Link from "next/link";
 import Router from "next/router";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import useUserEggs from "../../../hooks/userEggs";
-import DeleteEgg from "../DeleteEgg/DeleteEgg.component";
-import PublishEgg from "../PublishEgg/PublishEgg.component";
-import { Button } from "../DeleteEgg/DeleteEgg.styles";
-import Link from "next/link";
+import useUserEggs from "../../hooks/userEggs";
+import { Button } from "../styled/Button";
+import DeleteEgg from "./Delete";
+import PublishEgg from "./Publish";
 
 // ##### COMPONENT PROPS TYPE #####
 

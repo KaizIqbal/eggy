@@ -3,9 +3,9 @@ import React from "react";
 import {
   PUBLISH_EGG_MUTATION,
   UNPUBLISH_EGG_MUTATION
-} from "../../../graphql/Mutation";
-import { GET_USER_EGGS_CURSOR, GET_EGGS_CURSOR } from "../../../graphql/Query";
-import { Button } from "../../user/styles";
+} from "../../graphql/Mutation";
+import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../graphql/Query";
+import { Button } from "../styled/Button";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IPublishEggProps {

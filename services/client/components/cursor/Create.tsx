@@ -1,17 +1,17 @@
 import { useMutation } from "@apollo/react-hooks";
+import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { possibleCursorTypes } from "../../../graphql/constraint";
 import { CREATE_EGG_MUTATION } from "../../../graphql/Mutation";
 import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../../graphql/Query";
-import { Form } from "./CreateEgg.styles";
-import { possibleCursorTypes } from "../../../graphql/constraint";
-import Router from "next/router";
+import { Form } from "../../egg/CreateEgg/CreateEgg.styles";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ICreateEggProps {}
 
 // ##### COMPONENT #####
-const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
+const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
   // ##### HOOKS #####
 
   // createEgg Mutation hook
@@ -109,4 +109,4 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
   );
 };
 
-export default CreateEgg;
+export default CreateCursor;
