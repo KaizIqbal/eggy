@@ -5,7 +5,7 @@ import {
   UNPUBLISH_EGG_MUTATION
 } from "../../graphql/Mutation";
 import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../graphql/Query";
-import { Button } from "../styled/Button";
+import { Button } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IPublishEggProps {

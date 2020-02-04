@@ -1,29 +1,31 @@
 import { useMutation } from "@apollo/react-hooks";
+import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { REQUEST_RESET_MUTATION } from "../../../graphql/Mutation";
-import { Form } from "../styles";
+import { SIGNIN_MUTATION } from "../../graphql/Mutation";
+import { ME_QUERY } from "../../graphql/Query";
+import useUser from "../../hooks/user";
+import { Form } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
-interface IRequestResetProps {}
+interface ISignInProps {}
 
 // ##### COMPONENT #####
-const RequestReset: React.FunctionComponent<IRequestResetProps> = props => {
+const SignIn: React.FunctionComponent<ISignInProps> = props => {
   // ##### HOOKS #####
-
-  // RequestReset Mutation hook
-  const [requestReset, { loading, error, called }] = useMutation(
-    REQUEST_RESET_MUTATION,
-    {
-      onCompleted: data => {
-        try {
-          console.log(data);
-        } catch (error) {
-          console.error(error);
-        }
+  // for checking user already login or not
+  const { me } = useUser();
+  // signIn Mutation hook
+  const [signIn, { loading, error }] = useMutation(SIGNIN_MUTATION, {
+    refetchQueries: [
+      {
+        query: ME_QUERY
       }
+    ],
+    onCompleted: () => {
+      Router.back();
     }
-  );
+  });
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
@@ -35,7 +37,7 @@ const RequestReset: React.FunctionComponent<IRequestResetProps> = props => {
     try {
       e.preventDefault();
       // createEgg Mutation call with data
-      await requestReset({ variables: { ...values } });
+      await signIn({ variables: { ...values } });
       // Reset Form
       e.target.reset();
     } catch (error) {
@@ -47,15 +49,15 @@ const RequestReset: React.FunctionComponent<IRequestResetProps> = props => {
 
   // ##### RENDER #####
 
+  // TODO user already login push to the User Page
+  if (me) Router.push({ pathname: "/" });
+
   // if any error in form submiting
   if (error) return <p>Error: {error.message}</p>;
 
-  // Sucessfully Reset link sended
-  if (!error && !loading && called)
-    return <p>Reset Link Sended check your email</p>;
-
   // else render form
   return (
+    // Else Login Form
     <Form onSubmit={handleSubmit(onSubmit)} method="post">
       <fieldset disabled={loading}>
         {/* Insert email  */}
@@ -73,11 +75,24 @@ const RequestReset: React.FunctionComponent<IRequestResetProps> = props => {
 
         <br />
 
+        {/* Insert password  */}
+        <label htmlFor="password">
+          Password
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="password"
+            ref={register({ required: true })}
+          />
+          {errors.title && "Password is required"}
+        </label>
+        <br />
         {/* Submition */}
-        <button type="submit">RequestReset</button>
+        <button type="submit">Signin</button>
       </fieldset>
     </Form>
   );
 };
 
-export default RequestReset;
+export default SignIn;

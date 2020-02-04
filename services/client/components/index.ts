@@ -1,5 +1,5 @@
 // layout Components
-import Page from "./layout/Page/Page.component";
+import Page from "./layout/Page";
 import PleaseSignIn from "./layout/PleaseSignIn";
 
 // Egg Components
@@ -11,12 +11,12 @@ import UserEggList from "./egg/UserEggs";
 import UpdateEgg from "./egg/Update";
 
 // User Components
-import SignIn from "./user/SignIn/SignIn.component";
-import SignUp from "./user/SignUp/SignUp.component";
-import Owner from "./user/Owner/Owner";
-import RequestReset from "./user/RequestReset/RequestReset.component";
-import Reset from "./user/Reset/Reset.component";
-import Permissions from "./user/Permission/Permission.component";
+import SignIn from "./user/SignIn";
+import SignUp from "./user/SignUp";
+import Owner from "./user/Owner";
+import RequestReset from "./user/RequestReset";
+import Reset from "./user/Reset";
+import Permissions from "./user/Permission";
 
 // Workshop Components
 import Workshop from "./workshop/Workshop";
