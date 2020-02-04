@@ -1,6 +1,6 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import usePublishedEggs from "../../../hooks/publishedEggs";
+import usePublishedEggs from "../../hooks/publishedEggs";
 
 // ##### COMPONENT PROPS TYPE #####
 
