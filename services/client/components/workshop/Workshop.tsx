@@ -29,7 +29,7 @@ const WorkshopPage: React.FunctionComponent<IWorkshopProps> = props => {
       <h1>
         {props.username}'s Workshop for {props.eggname}
       </h1>
-      <CreateCursor eggId={data.egg.id} />
+      <CreateCursor eggId={data.egg.id} eggname={props.eggname} />
     </>
   );
 };
