@@ -15,6 +15,7 @@ const CURSORS_QUERY = gql`
   query cursors($eggname: String!) {
     cursors(eggname: $eggname) {
       name
+      frames
     }
   }
 `;

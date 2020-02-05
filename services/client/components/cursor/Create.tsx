@@ -3,8 +3,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { possibleCursors } from "../../graphql/constraint";
 import { CREATE_CURSOR_MUTATION } from "../../graphql/Mutation";
-import { Form } from "../styled";
 import useCursors from "../../hooks/cursors";
+import { Form } from "../styled";
+import { CURSORS_QUERY } from "../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ICreateEggProps {
@@ -18,7 +19,15 @@ const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
 
   // createEgg Mutation hook
   const [createCursor, { loading, error }] = useMutation(
-    CREATE_CURSOR_MUTATION
+    CREATE_CURSOR_MUTATION,
+    {
+      refetchQueries: [
+        {
+          query: CURSORS_QUERY,
+          variables: { eggname: props.eggname }
+        }
+      ]
+    }
   );
 
   //fetch cursors for how much added
@@ -30,10 +39,21 @@ const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
   // ##### HANDLING FUNCTION #####
 
   // Handle On Form Submit
-  const onSubmit = async (values, e) => {
+  const onSubmit = async (
+    values: Record<string, any>,
+    e: { preventDefault: () => void; target: { reset: { (): void; (): void } } }
+  ) => {
     try {
       e.preventDefault();
-      // createEgg Mutation call with data
+
+      // Check option available in list or not
+      if (!cursors.includes(values.name))
+        return window.alert(`Sorry, cursor "${values.name}" not found`);
+
+      // first convert frames to Integer Value
+      values.frames = parseInt(values.frames, 10);
+
+      // createCursor Mutation call with data
       await createCursor({ variables: { ...values, eggId: props.eggId } });
 
       // Reset Form
@@ -52,9 +72,9 @@ const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
   if (fetching) return <p>Fetching Egg</p>;
 
   // get only cursor name in data
-  const fetchedCursors = data.map(cursor => cursor.name);
+  const fetchedCursors = data.map((cursor: { name: string }) => cursor.name);
 
-  // generate list of remain cursors that not added
+  // generate list of remain cursors that not added to egg
   const cursors = possibleCursors.filter(
     cursor => !fetchedCursors.includes(cursor)
   );
@@ -78,7 +98,22 @@ const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
               </option>
             ))}
           </select>
-          {errors.title && "Your input is required"}
+          {errors.name && "Cursor Type required"}
+        </label>
+
+        <br />
+
+        {/* Insert cursor frames */}
+        <label htmlFor="Cursor Frames">
+          Frames <br />
+          <input
+            type="number"
+            max="60"
+            name="frames"
+            id="frames"
+            ref={register({ required: true })}
+          />
+          {errors.frames && "Frames is required "}
         </label>
 
         <br />

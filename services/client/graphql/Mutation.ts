@@ -51,8 +51,8 @@ const UNPUBLISH_EGG_MUTATION = gql`
 
 // Mutation for createCursor
 const CREATE_CURSOR_MUTATION = gql`
-  mutation createCursor($name: String!, $eggId: ID!) {
-    createCursor(name: $name, eggId: $eggId) {
+  mutation createCursor($name: String!, $frames: Int!, $eggId: ID!) {
+    createCursor(name: $name, frames: $frames, eggId: $eggId) {
       id
     }
   }
