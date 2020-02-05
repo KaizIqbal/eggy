@@ -1,13 +1,15 @@
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { CREATE_CURSOR_MUTATION } from "../../graphql/Mutation";
 import { possibleCursors } from "../../graphql/constraint";
+import { CREATE_CURSOR_MUTATION } from "../../graphql/Mutation";
 import { Form } from "../styled";
+import useCursors from "../../hooks/cursors";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ICreateEggProps {
   eggId: string;
+  eggname: string;
 }
 
 // ##### COMPONENT #####
@@ -18,6 +20,9 @@ const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
   const [createCursor, { loading, error }] = useMutation(
     CREATE_CURSOR_MUTATION
   );
+
+  //fetch cursors for how much added
+  const { data, loading: fetching } = useCursors({ eggname: props.eggname });
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
@@ -44,8 +49,22 @@ const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
 
   // if any error in form submiting
   if (error) return <p>Error: {error.message}</p>;
+  if (fetching) return <p>Fetching Egg</p>;
 
-  // else render form
+  // get only cursor name in data
+  const fetchedCursors = data.map(cursor => cursor.name);
+
+  // generate list of remain cursors that not added
+  const cursors = possibleCursors.filter(
+    cursor => !fetchedCursors.includes(cursor)
+  );
+
+  // No cursor for add is possible
+  if (cursors.length === 0) {
+    return <p>All Cursosrs satisfeid</p>;
+  }
+
+  // Render form
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading}>
@@ -53,7 +72,7 @@ const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
         <label htmlFor="Cursor Name">
           Select Cursor <br />
           <select name="name" id="name" ref={register({ required: true })}>
-            {possibleCursors.map(cursor => (
+            {cursors.map(cursor => (
               <option key={cursor} value={cursor}>
                 {cursor}
               </option>

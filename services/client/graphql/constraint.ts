@@ -12,6 +12,6 @@ const possiblePermissions = [
 const possibleCursorTypes = ["LINUX", "WINDOW"];
 
 // ##### CURSORS #####
-const possibleCursors = ["Default", "X11"];
+const possibleCursors = ["Default", "X11", "Wayland"];
 
 export { possiblePermissions, possibleCursorTypes, possibleCursors };
