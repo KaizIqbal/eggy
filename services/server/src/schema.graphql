@@ -32,6 +32,9 @@ type Query {
   publishedEggsConnection(after: String first: Int): EggConnection!
   userEggsConnection(after: String first: Int): EggConnection!
 
+  # cursor
+  cursors: [Cursor]!
+
   #User
   me: User
   users: [User]!
