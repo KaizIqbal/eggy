@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Sun Feb 02 2020 02:35:21 GMT+0000 (Coordinated Universal Time)
+# timestamp: Wed Feb 05 2020 09:55:21 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -21,6 +21,7 @@ type BatchPayload {
 type Cursor implements Node {
   id: ID!
   name: String!
+  frames: Int!
   egg: Egg!
 }
 
@@ -37,6 +38,7 @@ type CursorConnection {
 input CursorCreateInput {
   id: ID
   name: String!
+  frames: Int!
   egg: EggCreateOneInput!
 }
 
@@ -54,11 +56,14 @@ enum CursorOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  frames_ASC
+  frames_DESC
 }
 
 type CursorPreviousValues {
   id: ID!
   name: String!
+  frames: Int!
 }
 
 type CursorSubscriptionPayload {
@@ -105,11 +110,13 @@ enum cursorType {
 
 input CursorUpdateInput {
   name: String
+  frames: Int
   egg: EggUpdateOneRequiredInput
 }
 
 input CursorUpdateManyMutationInput {
   name: String
+  frames: Int
 }
 
 input CursorWhereInput {
@@ -201,6 +208,28 @@ input CursorWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  frames: Int
+
+  """All values that are not equal to given value."""
+  frames_not: Int
+
+  """All values that are contained in given list."""
+  frames_in: [Int!]
+
+  """All values that are not contained in given list."""
+  frames_not_in: [Int!]
+
+  """All values less than the given value."""
+  frames_lt: Int
+
+  """All values less than or equal the given value."""
+  frames_lte: Int
+
+  """All values greater than the given value."""
+  frames_gt: Int
+
+  """All values greater than or equal the given value."""
+  frames_gte: Int
   egg: EggWhereInput
 }
 
