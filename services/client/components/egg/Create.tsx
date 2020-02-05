@@ -35,7 +35,10 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
   // ##### HANDLING FUNCTION #####
 
   // Handle On Form Submit
-  const onSubmit = async (values, e) => {
+  const onSubmit = async (
+    values: Record<string, any>,
+    e: { preventDefault: () => void; target: { reset: { (): void; (): void } } }
+  ) => {
     try {
       e.preventDefault();
       // createEgg Mutation call with data
