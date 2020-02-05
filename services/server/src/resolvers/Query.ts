@@ -4,7 +4,20 @@ const { loggedIn } = require("../utils/loggedIn");
 
 const Query = {
   egg: forwardTo("db"),
-  cursors: forwardTo("db"),
+  cursors(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+    return ctx.db.query.cursors(
+      {
+        where: {
+          egg: {
+            eggname: args.eggname
+          }
+        }
+      },
+      info
+    );
+  },
   userEggsConnection(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);

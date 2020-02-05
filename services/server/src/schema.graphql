@@ -32,8 +32,8 @@ type Query {
   publishedEggsConnection(after: String first: Int): EggConnection!
   userEggsConnection(after: String first: Int): EggConnection!
 
-  # cursor
-  cursors: [Cursor]!
+  # Cursors
+  cursors(eggname: String!):[Cursor]!
 
   #User
   me: User
