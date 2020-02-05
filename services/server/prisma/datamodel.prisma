@@ -39,5 +39,6 @@ type Egg {
 type Cursor {
   id: ID! @id
   name: String!
+  frames: Int!
   egg: Egg!
 }
