@@ -116,11 +116,11 @@ const Mutation = {
       info
     );
   },
-  async createFlavour(parent, args, ctx, info) {
+  async createFlavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
 
-    // Checking flavour's name contains special symbols
+    // Checking flavor's name contains special symbols
     var regex = /^[a-zA-Z]+$/;
     if (!regex.test(args.name)) {
       throw new Error("flavour name is Invalid");
@@ -130,7 +130,7 @@ const Mutation = {
     const eggId = args.eggId;
     delete args.eggId;
 
-    const flavour = await ctx.db.mutation.createFlavour(
+    const flavor = await ctx.db.mutation.createFlavor(
       {
         data: {
           // Provide relationship between Flavour and Cursor
@@ -145,7 +145,7 @@ const Mutation = {
       info
     );
 
-    return flavour;
+    return flavor;
   },
   async createCursor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error

@@ -18,12 +18,12 @@ const Query = {
       info
     );
   },
-  flavours(parent, args, ctx, info) {
+  flavors(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
 
-    // return flavours in egg
-    return ctx.db.query.flavours(
+    // return flavors in egg
+    return ctx.db.query.flavors(
       {
         where: {
           egg: {

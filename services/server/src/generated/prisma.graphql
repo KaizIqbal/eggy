@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Thu Feb 06 2020 06:16:05 GMT+0000 (Coordinated Universal Time)
+# timestamp: Thu Feb 06 2020 10:36:29 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -9,7 +9,7 @@ type AggregateEgg {
   count: Int!
 }
 
-type AggregateFlavour {
+type AggregateFlavor {
   count: Int!
 }
 
@@ -26,7 +26,7 @@ type Cursor implements Node {
   id: ID!
   name: String!
   frames: Int!
-  flavour: Flavour!
+  flavor: Flavor!
 }
 
 """A connection to a list of items."""
@@ -43,7 +43,7 @@ input CursorCreateInput {
   id: ID
   name: String!
   frames: Int!
-  flavour: FlavourCreateOneInput!
+  flavor: FlavorCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -115,7 +115,7 @@ enum cursorType {
 input CursorUpdateInput {
   name: String
   frames: Int
-  flavour: FlavourUpdateOneRequiredInput
+  flavor: FlavorUpdateOneRequiredInput
 }
 
 input CursorUpdateManyMutationInput {
@@ -234,7 +234,7 @@ input CursorWhereInput {
 
   """All values greater than or equal the given value."""
   frames_gte: Int
-  flavour: FlavourWhereInput
+  flavor: FlavorWhereInput
 }
 
 input CursorWhereUniqueInput {
@@ -577,70 +577,70 @@ input EggWhereUniqueInput {
   eggname: String
 }
 
-type Flavour implements Node {
+type Flavor implements Node {
   id: ID!
   name: String!
   egg: Egg!
 }
 
 """A connection to a list of items."""
-type FlavourConnection {
+type FlavorConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [FlavourEdge]!
-  aggregate: AggregateFlavour!
+  edges: [FlavorEdge]!
+  aggregate: AggregateFlavor!
 }
 
-input FlavourCreateInput {
+input FlavorCreateInput {
   id: ID
   name: String!
   egg: EggCreateOneInput!
 }
 
-input FlavourCreateOneInput {
-  create: FlavourCreateInput
-  connect: FlavourWhereUniqueInput
+input FlavorCreateOneInput {
+  create: FlavorCreateInput
+  connect: FlavorWhereUniqueInput
 }
 
 """An edge in a connection."""
-type FlavourEdge {
+type FlavorEdge {
   """The item at the end of the edge."""
-  node: Flavour!
+  node: Flavor!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum FlavourOrderByInput {
+enum FlavorOrderByInput {
   id_ASC
   id_DESC
   name_ASC
   name_DESC
 }
 
-type FlavourPreviousValues {
+type FlavorPreviousValues {
   id: ID!
   name: String!
 }
 
-type FlavourSubscriptionPayload {
+type FlavorSubscriptionPayload {
   mutation: MutationType!
-  node: Flavour
+  node: Flavor
   updatedFields: [String!]
-  previousValues: FlavourPreviousValues
+  previousValues: FlavorPreviousValues
 }
 
-input FlavourSubscriptionWhereInput {
+input FlavorSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [FlavourSubscriptionWhereInput!]
+  AND: [FlavorSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [FlavourSubscriptionWhereInput!]
+  OR: [FlavorSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [FlavourSubscriptionWhereInput!]
+  NOT: [FlavorSubscriptionWhereInput!]
 
   """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
@@ -659,44 +659,44 @@ input FlavourSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: FlavourWhereInput
+  node: FlavorWhereInput
 }
 
-input FlavourUpdateDataInput {
+input FlavorUpdateDataInput {
   name: String
   egg: EggUpdateOneRequiredInput
 }
 
-input FlavourUpdateInput {
+input FlavorUpdateInput {
   name: String
   egg: EggUpdateOneRequiredInput
 }
 
-input FlavourUpdateManyMutationInput {
+input FlavorUpdateManyMutationInput {
   name: String
 }
 
-input FlavourUpdateOneRequiredInput {
-  create: FlavourCreateInput
-  connect: FlavourWhereUniqueInput
-  update: FlavourUpdateDataInput
-  upsert: FlavourUpsertNestedInput
+input FlavorUpdateOneRequiredInput {
+  create: FlavorCreateInput
+  connect: FlavorWhereUniqueInput
+  update: FlavorUpdateDataInput
+  upsert: FlavorUpsertNestedInput
 }
 
-input FlavourUpsertNestedInput {
-  update: FlavourUpdateDataInput!
-  create: FlavourCreateInput!
+input FlavorUpsertNestedInput {
+  update: FlavorUpdateDataInput!
+  create: FlavorCreateInput!
 }
 
-input FlavourWhereInput {
+input FlavorWhereInput {
   """Logical AND on all given filters."""
-  AND: [FlavourWhereInput!]
+  AND: [FlavorWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [FlavourWhereInput!]
+  OR: [FlavorWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [FlavourWhereInput!]
+  NOT: [FlavorWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -780,7 +780,7 @@ input FlavourWhereInput {
   egg: EggWhereInput
 }
 
-input FlavourWhereUniqueInput {
+input FlavorWhereUniqueInput {
   id: ID
   name: String
 }
@@ -793,29 +793,29 @@ scalar Long
 
 type Mutation {
   createCursor(data: CursorCreateInput!): Cursor!
-  createEgg(data: EggCreateInput!): Egg!
-  createFlavour(data: FlavourCreateInput!): Flavour!
   createUser(data: UserCreateInput!): User!
+  createFlavor(data: FlavorCreateInput!): Flavor!
+  createEgg(data: EggCreateInput!): Egg!
   updateCursor(data: CursorUpdateInput!, where: CursorWhereUniqueInput!): Cursor
-  updateEgg(data: EggUpdateInput!, where: EggWhereUniqueInput!): Egg
-  updateFlavour(data: FlavourUpdateInput!, where: FlavourWhereUniqueInput!): Flavour
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateFlavor(data: FlavorUpdateInput!, where: FlavorWhereUniqueInput!): Flavor
+  updateEgg(data: EggUpdateInput!, where: EggWhereUniqueInput!): Egg
   deleteCursor(where: CursorWhereUniqueInput!): Cursor
-  deleteEgg(where: EggWhereUniqueInput!): Egg
-  deleteFlavour(where: FlavourWhereUniqueInput!): Flavour
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteFlavor(where: FlavorWhereUniqueInput!): Flavor
+  deleteEgg(where: EggWhereUniqueInput!): Egg
   upsertCursor(where: CursorWhereUniqueInput!, create: CursorCreateInput!, update: CursorUpdateInput!): Cursor!
-  upsertEgg(where: EggWhereUniqueInput!, create: EggCreateInput!, update: EggUpdateInput!): Egg!
-  upsertFlavour(where: FlavourWhereUniqueInput!, create: FlavourCreateInput!, update: FlavourUpdateInput!): Flavour!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertFlavor(where: FlavorWhereUniqueInput!, create: FlavorCreateInput!, update: FlavorUpdateInput!): Flavor!
+  upsertEgg(where: EggWhereUniqueInput!, create: EggCreateInput!, update: EggUpdateInput!): Egg!
   updateManyCursors(data: CursorUpdateManyMutationInput!, where: CursorWhereInput): BatchPayload!
-  updateManyEggs(data: EggUpdateManyMutationInput!, where: EggWhereInput): BatchPayload!
-  updateManyFlavours(data: FlavourUpdateManyMutationInput!, where: FlavourWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyFlavors(data: FlavorUpdateManyMutationInput!, where: FlavorWhereInput): BatchPayload!
+  updateManyEggs(data: EggUpdateManyMutationInput!, where: EggWhereInput): BatchPayload!
   deleteManyCursors(where: CursorWhereInput): BatchPayload!
-  deleteManyEggs(where: EggWhereInput): BatchPayload!
-  deleteManyFlavours(where: FlavourWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyFlavors(where: FlavorWhereInput): BatchPayload!
+  deleteManyEggs(where: EggWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -856,17 +856,17 @@ enum Permission {
 
 type Query {
   cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor]!
-  eggs(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Egg]!
-  flavours(where: FlavourWhereInput, orderBy: FlavourOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Flavour]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  flavors(where: FlavorWhereInput, orderBy: FlavorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Flavor]!
+  eggs(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Egg]!
   cursor(where: CursorWhereUniqueInput!): Cursor
-  egg(where: EggWhereUniqueInput!): Egg
-  flavour(where: FlavourWhereUniqueInput!): Flavour
   user(where: UserWhereUniqueInput!): User
+  flavor(where: FlavorWhereUniqueInput!): Flavor
+  egg(where: EggWhereUniqueInput!): Egg
   cursorsConnection(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CursorConnection!
-  eggsConnection(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EggConnection!
-  flavoursConnection(where: FlavourWhereInput, orderBy: FlavourOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FlavourConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  flavorsConnection(where: FlavorWhereInput, orderBy: FlavorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FlavorConnection!
+  eggsConnection(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EggConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -877,9 +877,9 @@ type Query {
 
 type Subscription {
   cursor(where: CursorSubscriptionWhereInput): CursorSubscriptionPayload
-  egg(where: EggSubscriptionWhereInput): EggSubscriptionPayload
-  flavour(where: FlavourSubscriptionWhereInput): FlavourSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  flavor(where: FlavorSubscriptionWhereInput): FlavorSubscriptionPayload
+  egg(where: EggSubscriptionWhereInput): EggSubscriptionPayload
 }
 
 type User implements Node {
