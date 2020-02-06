@@ -32,12 +32,8 @@ const FlavourWorkshop: React.FunctionComponent<
       <h1>
         {props.username}'s Workshop for {props.eggname}
       </h1>
-      <CreateFlavor eggname={data.egg.eggname} />
-      <Flavors
-        username={props.username}
-        eggname={data.egg.eggname}
-        eggId={data.egg.id}
-      />
+      <CreateFlavor eggname={data.egg.eggname} eggId={data.egg.id} />
+      <Flavors username={props.username} eggname={data.egg.eggname} />
     </>
   );
 };

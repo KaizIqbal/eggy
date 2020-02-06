@@ -11,6 +11,16 @@ const EGG_QUERY = gql`
   }
 `;
 
+// Query For fetch Egg by id
+const FLAVOR_QUERY = gql`
+  query flavor($name: String!) {
+    flavor(where: { name: $name }) {
+      id
+      name
+    }
+  }
+`;
+
 // Query For fetch Cursors
 const CURSORS_QUERY = gql`
   query cursors($eggname: String!) {
@@ -23,8 +33,8 @@ const CURSORS_QUERY = gql`
 
 // Query For fetch all Flavours in Egg
 const FLAVORS_QUERY = gql`
-  query flavors($eggId: ID!) {
-    flavors(eggId: $eggId) {
+  query flavors($eggname: String!) {
+    flavors(eggname: $eggname) {
       id
       name
     }
@@ -98,6 +108,7 @@ const ALL_USER_QUERY = gql`
 
 export {
   EGG_QUERY,
+  FLAVOR_QUERY,
   CURSORS_QUERY,
   FLAVORS_QUERY,
   GET_EGGS_CURSOR,

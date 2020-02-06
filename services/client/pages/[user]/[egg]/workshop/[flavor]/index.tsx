@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { CursorWorkshop, EggOwner } from "../../../../components";
+import { CursorWorkshop, EggOwner } from "../../../../../components";
 
 // ##### PAGE #####
 const FlavorPage = () => {
