@@ -1,8 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import { possibleCursors } from "../../graphql/constraint";
 import useFlavours from "../../hooks/flavours";
-import { Form } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IFlavoursProps {
@@ -21,7 +18,7 @@ const Flavours: React.FunctionComponent<IFlavoursProps> = props => {
   return (
     <div>
       {data.map(flavour => (
-        <li key={flavour.id}>{flavour.title}</li>
+        <li key={flavour.id}>{flavour.name}</li>
       ))}
     </div>
   );
