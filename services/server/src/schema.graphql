@@ -16,7 +16,8 @@ type Mutation {
   createCursor(name:String! frames:Int! flavourId:ID!): Cursor!
 
   # Flavour
-  createFlavor(name:String! eggId:ID!): Flavor!  
+  createFlavor(name:String! eggId:ID!): Flavor!
+  updateFlavor(id:ID! name:String!): Flavor!  
   
   # Users
   signup(email:String! password:String! username: String! name:String!): User!
