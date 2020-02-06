@@ -28,7 +28,7 @@ const Query = {
       {
         where: {
           egg: {
-            id: args.eggId
+            eggname: args.eggname
           }
         }
       },
