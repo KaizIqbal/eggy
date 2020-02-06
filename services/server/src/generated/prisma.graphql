@@ -1,11 +1,15 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Wed Feb 05 2020 09:55:21 GMT+0000 (Coordinated Universal Time)
+# timestamp: Thu Feb 06 2020 03:17:09 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
 }
 
 type AggregateEgg {
+  count: Int!
+}
+
+type AggregateFlavour {
   count: Int!
 }
 
@@ -22,7 +26,7 @@ type Cursor implements Node {
   id: ID!
   name: String!
   frames: Int!
-  egg: Egg!
+  flavour: Flavour!
 }
 
 """A connection to a list of items."""
@@ -39,7 +43,7 @@ input CursorCreateInput {
   id: ID
   name: String!
   frames: Int!
-  egg: EggCreateOneInput!
+  flavour: FlavourCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -111,7 +115,7 @@ enum cursorType {
 input CursorUpdateInput {
   name: String
   frames: Int
-  egg: EggUpdateOneRequiredInput
+  flavour: FlavourUpdateOneRequiredInput
 }
 
 input CursorUpdateManyMutationInput {
@@ -230,7 +234,7 @@ input CursorWhereInput {
 
   """All values greater than or equal the given value."""
   frames_gte: Int
-  egg: EggWhereInput
+  flavour: FlavourWhereInput
 }
 
 input CursorWhereUniqueInput {
@@ -573,6 +577,261 @@ input EggWhereUniqueInput {
   eggname: String
 }
 
+type Flavour implements Node {
+  id: ID!
+  title: String!
+  flavourname: String!
+  egg: Egg!
+}
+
+"""A connection to a list of items."""
+type FlavourConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FlavourEdge]!
+  aggregate: AggregateFlavour!
+}
+
+input FlavourCreateInput {
+  id: ID
+  title: String!
+  flavourname: String!
+  egg: EggCreateOneInput!
+}
+
+input FlavourCreateOneInput {
+  create: FlavourCreateInput
+  connect: FlavourWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type FlavourEdge {
+  """The item at the end of the edge."""
+  node: Flavour!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FlavourOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  flavourname_ASC
+  flavourname_DESC
+}
+
+type FlavourPreviousValues {
+  id: ID!
+  title: String!
+  flavourname: String!
+}
+
+type FlavourSubscriptionPayload {
+  mutation: MutationType!
+  node: Flavour
+  updatedFields: [String!]
+  previousValues: FlavourPreviousValues
+}
+
+input FlavourSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FlavourSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FlavourSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FlavourSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FlavourWhereInput
+}
+
+input FlavourUpdateDataInput {
+  title: String
+  flavourname: String
+  egg: EggUpdateOneRequiredInput
+}
+
+input FlavourUpdateInput {
+  title: String
+  flavourname: String
+  egg: EggUpdateOneRequiredInput
+}
+
+input FlavourUpdateManyMutationInput {
+  title: String
+  flavourname: String
+}
+
+input FlavourUpdateOneRequiredInput {
+  create: FlavourCreateInput
+  connect: FlavourWhereUniqueInput
+  update: FlavourUpdateDataInput
+  upsert: FlavourUpsertNestedInput
+}
+
+input FlavourUpsertNestedInput {
+  update: FlavourUpdateDataInput!
+  create: FlavourCreateInput!
+}
+
+input FlavourWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FlavourWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FlavourWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FlavourWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  flavourname: String
+
+  """All values that are not equal to given value."""
+  flavourname_not: String
+
+  """All values that are contained in given list."""
+  flavourname_in: [String!]
+
+  """All values that are not contained in given list."""
+  flavourname_not_in: [String!]
+
+  """All values less than the given value."""
+  flavourname_lt: String
+
+  """All values less than or equal the given value."""
+  flavourname_lte: String
+
+  """All values greater than the given value."""
+  flavourname_gt: String
+
+  """All values greater than or equal the given value."""
+  flavourname_gte: String
+
+  """All values containing the given string."""
+  flavourname_contains: String
+
+  """All values not containing the given string."""
+  flavourname_not_contains: String
+
+  """All values starting with the given string."""
+  flavourname_starts_with: String
+
+  """All values not starting with the given string."""
+  flavourname_not_starts_with: String
+
+  """All values ending with the given string."""
+  flavourname_ends_with: String
+
+  """All values not ending with the given string."""
+  flavourname_not_ends_with: String
+  egg: EggWhereInput
+}
+
+input FlavourWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -581,23 +840,29 @@ scalar Long
 
 type Mutation {
   createCursor(data: CursorCreateInput!): Cursor!
-  createUser(data: UserCreateInput!): User!
   createEgg(data: EggCreateInput!): Egg!
+  createFlavour(data: FlavourCreateInput!): Flavour!
+  createUser(data: UserCreateInput!): User!
   updateCursor(data: CursorUpdateInput!, where: CursorWhereUniqueInput!): Cursor
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateEgg(data: EggUpdateInput!, where: EggWhereUniqueInput!): Egg
+  updateFlavour(data: FlavourUpdateInput!, where: FlavourWhereUniqueInput!): Flavour
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteCursor(where: CursorWhereUniqueInput!): Cursor
-  deleteUser(where: UserWhereUniqueInput!): User
   deleteEgg(where: EggWhereUniqueInput!): Egg
+  deleteFlavour(where: FlavourWhereUniqueInput!): Flavour
+  deleteUser(where: UserWhereUniqueInput!): User
   upsertCursor(where: CursorWhereUniqueInput!, create: CursorCreateInput!, update: CursorUpdateInput!): Cursor!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertEgg(where: EggWhereUniqueInput!, create: EggCreateInput!, update: EggUpdateInput!): Egg!
+  upsertFlavour(where: FlavourWhereUniqueInput!, create: FlavourCreateInput!, update: FlavourUpdateInput!): Flavour!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyCursors(data: CursorUpdateManyMutationInput!, where: CursorWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyEggs(data: EggUpdateManyMutationInput!, where: EggWhereInput): BatchPayload!
+  updateManyFlavours(data: FlavourUpdateManyMutationInput!, where: FlavourWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyCursors(where: CursorWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyEggs(where: EggWhereInput): BatchPayload!
+  deleteManyFlavours(where: FlavourWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -638,14 +903,17 @@ enum Permission {
 
 type Query {
   cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   eggs(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Egg]!
+  flavours(where: FlavourWhereInput, orderBy: FlavourOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Flavour]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   cursor(where: CursorWhereUniqueInput!): Cursor
-  user(where: UserWhereUniqueInput!): User
   egg(where: EggWhereUniqueInput!): Egg
+  flavour(where: FlavourWhereUniqueInput!): Flavour
+  user(where: UserWhereUniqueInput!): User
   cursorsConnection(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CursorConnection!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   eggsConnection(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EggConnection!
+  flavoursConnection(where: FlavourWhereInput, orderBy: FlavourOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FlavourConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -656,8 +924,9 @@ type Query {
 
 type Subscription {
   cursor(where: CursorSubscriptionWhereInput): CursorSubscriptionPayload
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   egg(where: EggSubscriptionWhereInput): EggSubscriptionPayload
+  flavour(where: FlavourSubscriptionWhereInput): FlavourSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User implements Node {
