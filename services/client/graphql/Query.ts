@@ -22,9 +22,9 @@ const CURSORS_QUERY = gql`
 `;
 
 // Query For fetch all Flavours in Egg
-const FLAVOURS_QUERY = gql`
-  query flavours($eggId: ID!) {
-    flavours(eggId: $eggId) {
+const FLAVORS_QUERY = gql`
+  query flavors($eggId: ID!) {
+    flavors(eggId: $eggId) {
       id
       name
     }
@@ -99,7 +99,7 @@ const ALL_USER_QUERY = gql`
 export {
   EGG_QUERY,
   CURSORS_QUERY,
-  FLAVOURS_QUERY,
+  FLAVORS_QUERY,
   GET_EGGS_CURSOR,
   GET_USER_EGGS_CURSOR,
   ME_QUERY,
