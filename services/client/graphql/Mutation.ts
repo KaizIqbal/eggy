@@ -59,9 +59,9 @@ const CREATE_CURSOR_MUTATION = gql`
 `;
 
 // Mutation for createCursor
-const CREATE_FLAVOUR_MUTATION = gql`
-  mutation createFlavour($name: String!, $eggId: ID!) {
-    createFlavour(name: $name, eggId: $eggId) {
+const CREATE_FLAVOR_MUTATION = gql`
+  mutation createFlavor($name: String!, $eggId: ID!) {
+    createFlavor(name: $name, eggId: $eggId) {
       id
     }
   }
@@ -150,7 +150,7 @@ export {
   PUBLISH_EGG_MUTATION,
   UNPUBLISH_EGG_MUTATION,
   CREATE_CURSOR_MUTATION,
-  CREATE_FLAVOUR_MUTATION,
+  CREATE_FLAVOR_MUTATION,
   SIGNUP_MUTATION,
   SIGNIN_MUTATION,
   SIGNOUT_MUTATION,
