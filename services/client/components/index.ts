@@ -19,11 +19,11 @@ import Reset from "./user/Reset";
 import Permissions from "./user/Permission";
 
 // Workshop Components
-import FlavourWorkshop from "./workshops/Flavour";
+import FlavorWorkshop from "./workshops/Flavor";
 import CursorWorkshop from "./workshops/Cursor";
 
 // Flavour Components
-import CreateFlavour from "./flavour/Create";
+import CreateFlavour from "./flavor/Create";
 
 export {
   Page,
@@ -41,6 +41,6 @@ export {
   RequestReset,
   Reset,
   Permissions,
-  FlavourWorkshop,
+  FlavorWorkshop,
   CursorWorkshop
 };

@@ -1,17 +1,17 @@
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { CREATE_FLAVOUR_MUTATION } from "../../graphql/Mutation";
+import { CREATE_FLAVOR_MUTATION } from "../../graphql/Mutation";
 import { Form } from "../styled";
-import { EGG_QUERY, FLAVOURS_QUERY } from "../../graphql/Query";
+import { EGG_QUERY, FLAVORS_QUERY } from "../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
-interface ICreateFlavourProps {
+interface ICreateFlavorProps {
   eggname: string;
 }
 
 // ##### COMPONENT #####
-const CreateFlavour: React.FunctionComponent<ICreateFlavourProps> = props => {
+const CreateFlavor: React.FunctionComponent<ICreateFlavorProps> = props => {
   // ##### HOOKS #####
 
   const { data, loading: fetching, error: fetchingError } = useQuery(
@@ -24,11 +24,11 @@ const CreateFlavour: React.FunctionComponent<ICreateFlavourProps> = props => {
   );
 
   // Mutation hooks for creating Flavour
-  const [createFlavour, { loading, error }] = useMutation(
-    CREATE_FLAVOUR_MUTATION,
+  const [createFlavor, { loading, error }] = useMutation(
+    CREATE_FLAVOR_MUTATION,
     {
       refetchQueries: [
-        { query: FLAVOURS_QUERY, variables: { eggId: data.egg.id } }
+        { query: FLAVORS_QUERY, variables: { eggId: data.egg.id } }
       ]
     }
   );
@@ -47,7 +47,7 @@ const CreateFlavour: React.FunctionComponent<ICreateFlavourProps> = props => {
       e.preventDefault();
 
       // createCursor Mutation call with data
-      await createFlavour({ variables: { ...values, eggId: data.egg.id } });
+      await createFlavor({ variables: { ...values, eggId: data.egg.id } });
 
       // Reset Form
       e.target.reset();
@@ -70,8 +70,8 @@ const CreateFlavour: React.FunctionComponent<ICreateFlavourProps> = props => {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset disabled={loading}>
         {/* Insert cursor frames */}
-        <label htmlFor="Flavour Name">
-          Flavour Name
+        <label htmlFor="Flavor Name">
+          Flavor Name
           <input
             type="text"
             name="name"
@@ -80,7 +80,7 @@ const CreateFlavour: React.FunctionComponent<ICreateFlavourProps> = props => {
             placeholder="Round"
             ref={register({ required: true })}
           />
-          {errors.name && "Flavour Name is required "}
+          {errors.name && "Flavor Name is required "}
         </label>
 
         <br />
@@ -92,4 +92,4 @@ const CreateFlavour: React.FunctionComponent<ICreateFlavourProps> = props => {
   );
 };
 
-export default CreateFlavour;
+export default CreateFlavor;

@@ -1,12 +1,12 @@
 import React from "react";
-import Flavours from "../flavour/Flavours";
+import Flavors from "../flavor/Flavors";
 import { useQuery } from "@apollo/react-hooks";
 import { EGG_QUERY } from "../../graphql/Query";
-import CreateFlavour from "../flavour/Create";
+import CreateFlavor from "../flavor/Create";
 
 // ##### COMPONENT PROPS TYPE #####
 
-interface IFlavourWorkshopProps {
+interface IFlavorWorkshopProps {
   username: any;
   eggname: any;
 }
@@ -14,7 +14,7 @@ interface IFlavourWorkshopProps {
 // ##### COMPONENT #####
 
 const FlavourWorkshop: React.FunctionComponent<
-  IFlavourWorkshopProps
+  IFlavorWorkshopProps
 > = props => {
   // ##### HOOKS #####
   const { data, loading, error } = useQuery(EGG_QUERY, {
@@ -32,8 +32,8 @@ const FlavourWorkshop: React.FunctionComponent<
       <h1>
         {props.username}'s Workshop for {props.eggname}
       </h1>
-      <CreateFlavour eggname={data.egg.eggname} />
-      <Flavours
+      <CreateFlavor eggname={data.egg.eggname} />
+      <Flavors
         username={props.username}
         eggname={data.egg.eggname}
         eggId={data.egg.id}

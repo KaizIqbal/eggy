@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { CursorWorkshop, EggOwner } from "../../../../components";
 
 // ##### PAGE #####
-const FlavourPage = () => {
+const FlavorPage = () => {
   const router = useRouter();
   return (
     <EggOwner username={router.query.user} eggname={router.query.egg}>
@@ -15,4 +15,4 @@ const FlavourPage = () => {
   );
 };
 
-export default FlavourPage;
+export default FlavorPage;
