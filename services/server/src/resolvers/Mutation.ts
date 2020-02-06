@@ -121,7 +121,7 @@ const Mutation = {
     loggedIn(ctx);
 
     // Checking flavour's name contains special symbols
-    var regex = /^\w+$/;
+    var regex = /^[a-zA-Z]+$/;
     if (!regex.test(args.name)) {
       throw new Error("flavour name is Invalid");
     }
