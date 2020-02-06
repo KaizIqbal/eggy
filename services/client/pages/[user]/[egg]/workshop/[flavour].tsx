@@ -1,17 +1,18 @@
 import { useRouter } from "next/router";
-import { FlavourWorkshop, EggOwner } from "../../../../components";
+import { CursorWorkshop, EggOwner } from "../../../../components";
 
 // ##### PAGE #####
-const WorkshopPage = () => {
+const FlavourPage = () => {
   const router = useRouter();
   return (
     <EggOwner username={router.query.user} eggname={router.query.egg}>
-      <FlavourWorkshop
+      <CursorWorkshop
         username={router.query.user}
         eggname={router.query.egg}
+        flavourname={router.query.flavour}
       />
     </EggOwner>
   );
 };
 
-export default WorkshopPage;
+export default FlavourPage;
