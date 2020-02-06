@@ -36,9 +36,16 @@ type Egg {
   cursorTypes: [cursorType]!  @scalarList(strategy: RELATION)
 }
 
+type Flavour {
+  id: ID! @id
+  title: String!
+  flavourname: String!
+  egg: Egg!
+}
+
 type Cursor {
   id: ID! @id
   name: String!
   frames: Int!
-  egg: Egg!
+  flavour: Flavour!
 }
