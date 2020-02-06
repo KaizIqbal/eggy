@@ -13,15 +13,6 @@ const CREATE_EGG_MUTATION = gql`
   }
 `;
 
-// Mutation for DeleteEgg
-const DELETE_EGG_MUTATION = gql`
-  mutation deleteEgg($eggname: String!) {
-    deleteEgg(eggname: $eggname) {
-      id
-    }
-  }
-`;
-
 // Mutation for UpdateEgg
 const UPDATE_EGG_MUTATION = gql`
   mutation updateEgg($eggname: String!, $title: String!) {
@@ -66,6 +57,25 @@ const CREATE_FLAVOR_MUTATION = gql`
     }
   }
 `;
+
+// Mutation for updateFlavor
+const UPDATE_FLAVOR_MUTATION = gql`
+  mutation updateFlavor($id: ID!, $name: String!) {
+    updateFlavor(id: $id, name: $name) {
+      id
+    }
+  }
+`;
+
+// Mutation for DeleteFlavor
+const DELETE_FLAVOR_MUTATION = gql`
+  mutation deleteFlavor($id: ID!) {
+    deleteFlavor(id: $id) {
+      id
+    }
+  }
+`;
+
 // Mutation for Signup user
 const SIGNUP_MUTATION = gql`
   mutation signUp(
@@ -145,12 +155,14 @@ const UPDATE_PERMISSION_MUTATION = gql`
 
 export {
   CREATE_EGG_MUTATION,
-  DELETE_EGG_MUTATION,
+  DELETE_FLAVOR_MUTATION as DELETE_EGG_MUTATION,
   UPDATE_EGG_MUTATION,
   PUBLISH_EGG_MUTATION,
   UNPUBLISH_EGG_MUTATION,
   CREATE_CURSOR_MUTATION,
   CREATE_FLAVOR_MUTATION,
+  UPDATE_FLAVOR_MUTATION,
+  DELETE_FLAVOR_MUTATION,
   SIGNUP_MUTATION,
   SIGNIN_MUTATION,
   SIGNOUT_MUTATION,
