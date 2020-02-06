@@ -116,6 +116,37 @@ const Mutation = {
       info
     );
   },
+  async createFlavour(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    // Checking flavour's name contains special symbols
+    var regex = /^\w+$/;
+    if (!regex.test(args.name)) {
+      throw new Error("flavour name is Invalid");
+    }
+
+    // seprate EggId and flavour data
+    const eggId = args.eggId;
+    delete args.eggId;
+
+    const flavour = await ctx.db.mutation.createFlavour(
+      {
+        data: {
+          // Provide relationship between Flavour and Cursor
+          egg: {
+            connect: {
+              id: eggId
+            }
+          },
+          ...args
+        }
+      },
+      info
+    );
+
+    return flavour;
+  },
   async createCursor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
