@@ -43,7 +43,7 @@ type Query {
 
   # Cursors
   flavor(where: FlavorWhereUniqueInput!): Flavor
-  flavors(eggId: ID!):[Flavor]!
+  flavors(eggname: String!):[Flavor]!
 
   #User
   me: User
