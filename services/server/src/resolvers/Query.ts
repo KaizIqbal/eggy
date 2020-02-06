@@ -18,6 +18,22 @@ const Query = {
       info
     );
   },
+  flavours(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    // return flavours in egg
+    return ctx.db.query.flavours(
+      {
+        where: {
+          egg: {
+            id: args.eggId
+          }
+        }
+      },
+      info
+    );
+  },
   userEggsConnection(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
