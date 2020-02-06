@@ -6,6 +6,7 @@ const EGG_QUERY = gql`
     egg(where: { eggname: $eggname }) {
       id
       title
+      eggname
     }
   }
 `;
@@ -25,8 +26,7 @@ const FLAVOURS_QUERY = gql`
   query flavours($eggId: ID!) {
     flavours(eggId: $eggId) {
       id
-      title
-      flavourname
+      name
     }
   }
 `;

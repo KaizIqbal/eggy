@@ -2,6 +2,7 @@ import React from "react";
 import Flavours from "../flavour/Flavours";
 import { useQuery } from "@apollo/react-hooks";
 import { EGG_QUERY } from "../../graphql/Query";
+import CreateFlavour from "../flavour/Create";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -29,6 +30,7 @@ const WorkshopPage: React.FunctionComponent<IWorkshopProps> = props => {
       <h1>
         {props.username}'s Workshop for {props.eggname}
       </h1>
+      <CreateFlavour eggname={data.egg.eggname} />
       <Flavours eggId={data.egg.id} />
     </>
   );
