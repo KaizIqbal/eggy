@@ -6,14 +6,16 @@ import CreateFlavour from "../flavour/Create";
 
 // ##### COMPONENT PROPS TYPE #####
 
-interface IWorkshopProps {
+interface IFlavourWorkshopProps {
   username: any;
   eggname: any;
 }
 
 // ##### COMPONENT #####
 
-const WorkshopPage: React.FunctionComponent<IWorkshopProps> = props => {
+const FlavourWorkshop: React.FunctionComponent<
+  IFlavourWorkshopProps
+> = props => {
   // ##### HOOKS #####
   const { data, loading, error } = useQuery(EGG_QUERY, {
     variables: {
@@ -31,9 +33,13 @@ const WorkshopPage: React.FunctionComponent<IWorkshopProps> = props => {
         {props.username}'s Workshop for {props.eggname}
       </h1>
       <CreateFlavour eggname={data.egg.eggname} />
-      <Flavours eggId={data.egg.id} />
+      <Flavours
+        username={props.username}
+        eggname={data.egg.eggname}
+        eggId={data.egg.id}
+      />
     </>
   );
 };
 
-export default WorkshopPage;
+export default FlavourWorkshop;
