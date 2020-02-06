@@ -58,8 +58,15 @@ const CREATE_CURSOR_MUTATION = gql`
   }
 `;
 
+// Mutation for createCursor
+const CREATE_FLAVOUR_MUTATION = gql`
+  mutation createFlavour($name: String!, $eggId: ID!) {
+    createFlavour(name: $name, eggId: $eggId) {
+      id
+    }
+  }
+`;
 // Mutation for Signup user
-
 const SIGNUP_MUTATION = gql`
   mutation signUp(
     $email: String!
@@ -79,7 +86,6 @@ const SIGNUP_MUTATION = gql`
 `;
 
 // Mutation for Login user
-
 const SIGNIN_MUTATION = gql`
   mutation sigIn($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
@@ -89,7 +95,6 @@ const SIGNIN_MUTATION = gql`
 `;
 
 // Mutation for Login user
-
 const SIGNOUT_MUTATION = gql`
   mutation signOut {
     signout {
@@ -99,7 +104,6 @@ const SIGNOUT_MUTATION = gql`
 `;
 
 // Mutation for Request reset token
-
 const REQUEST_RESET_MUTATION = gql`
   mutation requestReset($email: String!) {
     requestReset(email: $email) {
@@ -109,7 +113,6 @@ const REQUEST_RESET_MUTATION = gql`
 `;
 
 // Mutation for Request reset token
-
 const RESET_PASSWORD_MUTATION = gql`
   mutation resetPassword(
     $resetToken: String!
@@ -147,6 +150,7 @@ export {
   PUBLISH_EGG_MUTATION,
   UNPUBLISH_EGG_MUTATION,
   CREATE_CURSOR_MUTATION,
+  CREATE_FLAVOUR_MUTATION,
   SIGNUP_MUTATION,
   SIGNIN_MUTATION,
   SIGNOUT_MUTATION,
