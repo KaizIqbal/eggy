@@ -9,7 +9,7 @@ const FlavorPage = () => {
       <CursorWorkshop
         username={router.query.user}
         eggname={router.query.egg}
-        flavourname={router.query.flavour}
+        flavorname={router.query.flavor}
       />
     </EggOwner>
   );
