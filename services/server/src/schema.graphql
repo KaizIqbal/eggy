@@ -18,6 +18,8 @@ type Mutation {
   # Flavour
   createFlavor(name:String! eggId:ID!): Flavor!
   updateFlavor(id:ID! name:String!): Flavor!  
+  deleteFlavor(id:ID!): Flavor!  
+
   
   # Users
   signup(email:String! password:String! username: String! name:String!): User!
