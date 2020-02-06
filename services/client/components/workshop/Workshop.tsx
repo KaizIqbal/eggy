@@ -1,5 +1,5 @@
 import React from "react";
-import CreateCursor from "../cursor/Create";
+import Flavours from "../flavour/Flavours";
 import { useQuery } from "@apollo/react-hooks";
 import { EGG_QUERY } from "../../graphql/Query";
 
@@ -29,7 +29,7 @@ const WorkshopPage: React.FunctionComponent<IWorkshopProps> = props => {
       <h1>
         {props.username}'s Workshop for {props.eggname}
       </h1>
-      <CreateCursor eggId={data.egg.id} eggname={props.eggname} />
+      <Flavours eggId={data.egg.id} />
     </>
   );
 };

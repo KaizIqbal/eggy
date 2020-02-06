@@ -8,13 +8,12 @@ import { Form } from "../styled";
 import { CURSORS_QUERY } from "../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
-interface ICreateEggProps {
-  eggId: string;
+interface ICreateFlavourProps {
   eggname: string;
 }
 
 // ##### COMPONENT #####
-const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
+const CreateFlavour: React.FunctionComponent<ICreateFlavourProps> = props => {
   // ##### HOOKS #####
 
   // createEgg Mutation hook
@@ -125,4 +124,4 @@ const CreateCursor: React.FunctionComponent<ICreateEggProps> = props => {
   );
 };
 
-export default CreateCursor;
+export default CreateFlavour;
