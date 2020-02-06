@@ -16,7 +16,7 @@ type Mutation {
   createCursor(name:String! frames:Int! flavourId:ID!): Cursor!
 
   # Flavour
-  createFlavour(name:String! eggId:ID!): Flavour!  
+  createFlavor(name:String! eggId:ID!): Flavor!  
   
   # Users
   signup(email:String! password:String! username: String! name:String!): User!
@@ -39,7 +39,7 @@ type Query {
   cursors(eggname: String!):[Cursor]!
 
   # Cursors
-  flavours(eggId: ID!):[Flavour]!
+  flavors(eggId: ID!):[Flavor]!
 
   #User
   me: User
