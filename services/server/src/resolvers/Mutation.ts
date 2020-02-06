@@ -7,6 +7,7 @@ const { hasPermission } = require("../utils/hasPermission");
 const { loggedIn } = require("../utils/loggedIn");
 const { checkPublish } = require("../utils/checkPublish");
 const { verifyUserName } = require("../utils/verifyUserName");
+const { checkFlavorName } = require("../utils/checkFlavorName");
 
 const Mutation = {
   async createEgg(parent, args, ctx, info) {
@@ -121,10 +122,7 @@ const Mutation = {
     loggedIn(ctx);
 
     // Checking flavor's name contains special symbols
-    var regex = /^[a-zA-Z]+$/;
-    if (!regex.test(args.name)) {
-      throw new Error("flavour name is Invalid");
-    }
+    checkFlavorName(args);
 
     // seprate EggId and flavour data
     const eggId = args.eggId;
@@ -146,6 +144,27 @@ const Mutation = {
     );
 
     return flavor;
+  },
+  updateFlavor(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    // Checking flavor's name contains special symbols
+    checkFlavorName(args);
+
+    // first take copy in updates
+    const flavorId = args.id;
+    delete args.id;
+
+    return ctx.db.mutation.updateFlavor(
+      {
+        where: {
+          id: flavorId
+        },
+        data: { ...args }
+      },
+      info
+    );
   },
   async createCursor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
