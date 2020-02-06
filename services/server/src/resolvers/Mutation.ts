@@ -156,6 +156,7 @@ const Mutation = {
     const flavorId = args.id;
     delete args.id;
 
+    // return updated flavor by id
     return ctx.db.mutation.updateFlavor(
       {
         where: {
@@ -165,6 +166,13 @@ const Mutation = {
       },
       info
     );
+  },
+  deleteFlavor(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    // Delete flavor by id
+    return ctx.db.mutation.deleteFlavor({ where: { id: args.id } }, info);
   },
   async createCursor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
