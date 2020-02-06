@@ -1,12 +1,13 @@
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { CREATE_FLAVOR_MUTATION } from "../../graphql/Mutation";
+import { FLAVORS_QUERY } from "../../graphql/Query";
 import { Form } from "../styled";
-import { EGG_QUERY, FLAVORS_QUERY } from "../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ICreateFlavorProps {
+  eggId: string;
   eggname: string;
 }
 
@@ -14,21 +15,12 @@ interface ICreateFlavorProps {
 const CreateFlavor: React.FunctionComponent<ICreateFlavorProps> = props => {
   // ##### HOOKS #####
 
-  const { data, loading: fetching, error: fetchingError } = useQuery(
-    EGG_QUERY,
-    {
-      variables: {
-        eggname: props.eggname
-      }
-    }
-  );
-
   // Mutation hooks for creating Flavour
   const [createFlavor, { loading, error }] = useMutation(
     CREATE_FLAVOR_MUTATION,
     {
       refetchQueries: [
-        { query: FLAVORS_QUERY, variables: { eggId: data.egg.id } }
+        { query: FLAVORS_QUERY, variables: { eggname: props.eggname } }
       ]
     }
   );
@@ -46,8 +38,8 @@ const CreateFlavor: React.FunctionComponent<ICreateFlavorProps> = props => {
     try {
       e.preventDefault();
 
-      // createCursor Mutation call with data
-      await createFlavor({ variables: { ...values, eggId: data.egg.id } });
+      // createFlavor Mutation call with data
+      await createFlavor({ variables: { ...values, eggId: props.eggId } });
 
       // Reset Form
       e.target.reset();
@@ -62,8 +54,6 @@ const CreateFlavor: React.FunctionComponent<ICreateFlavorProps> = props => {
 
   // if any error in form submiting
   if (error) return <p>Error: {error.message}</p>;
-  if (fetchingError) return <p>{fetchingError.message}</p>;
-  if (fetching || loading) return <p>Fetching Egg......</p>;
 
   // Render form
   return (

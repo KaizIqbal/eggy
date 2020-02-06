@@ -1,12 +1,14 @@
+import Link from "next/link";
+import Router from "next/router";
 import React from "react";
 import useFlavors from "../../hooks/flavors";
-import Link from "next/link";
+import { Button } from "../styled";
+import DeleteFlavor from "./Delete";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IFlavorsProps {
   username: string;
   eggname: string;
-  eggId: string;
 }
 
 // ##### COMPONENT #####
@@ -14,7 +16,7 @@ const Flavors: React.FunctionComponent<IFlavorsProps> = props => {
   // ##### HOOKS #####
 
   //fetching all Flavours in Egg
-  const { data, loading } = useFlavors({ eggId: props.eggId });
+  const { data, loading } = useFlavors({ eggname: props.eggname });
 
   if (loading) return <p>Loading Flavors..........</p>;
   // ##### RENDER #####
@@ -28,6 +30,20 @@ const Flavors: React.FunctionComponent<IFlavorsProps> = props => {
           >
             <a>{flavor.name}</a>
           </Link>
+          <Button
+            type="button"
+            onClick={() => {
+              Router.push(
+                "/[user]/[egg]/workshop/[flavor]/update",
+                `/${props.username}/${props.eggname}/workshop/${
+                  flavor.name
+                }/update`
+              );
+            }}
+          >
+            Update
+          </Button>
+          <DeleteFlavor id={flavor.id} eggname={props.eggname} />
         </li>
       ))}
     </div>

@@ -23,7 +23,7 @@ import FlavorWorkshop from "./workshops/Flavor";
 import CursorWorkshop from "./workshops/Cursor";
 
 // Flavour Components
-import CreateFlavour from "./flavor/Create";
+import UpdateFlavor from "./flavor/Update";
 
 export {
   Page,
@@ -37,7 +37,7 @@ export {
   SignUp,
   SignIn,
   Owner,
-  CreateFlavour,
+  UpdateFlavor,
   RequestReset,
   Reset,
   Permissions,
