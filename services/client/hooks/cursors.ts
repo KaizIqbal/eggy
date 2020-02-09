@@ -1,10 +1,10 @@
 import { useQuery } from "@apollo/react-hooks";
 import { CURSORS_QUERY } from "../graphql/Query";
 
-function useCursors({ eggname }) {
+function useCursors({ flavorname }) {
   const { data, loading, error } = useQuery(CURSORS_QUERY, {
     variables: {
-      eggname: eggname
+      flavorname: flavorname
     }
   });
 

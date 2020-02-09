@@ -8,29 +8,32 @@ import { Form } from "../styled";
 import { CURSORS_QUERY } from "../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
-interface ICreateFlavourProps {
-  eggname: string;
+interface ICreateCursorProps {
+  flavorname: string;
+  flavorId: string;
 }
 
 // ##### COMPONENT #####
-const CreateFlavour: React.FunctionComponent<ICreateFlavourProps> = props => {
+const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
   // ##### HOOKS #####
 
-  // createEgg Mutation hook
+  // call Mutation for create Cursor
   const [createCursor, { loading, error }] = useMutation(
     CREATE_CURSOR_MUTATION,
     {
       refetchQueries: [
         {
           query: CURSORS_QUERY,
-          variables: { eggname: props.eggname }
+          variables: { flavorname: props.flavorname }
         }
       ]
     }
   );
 
   //fetch cursors for how much added
-  const { data, loading: fetching } = useCursors({ eggname: props.eggname });
+  const { data, loading: fetching } = useCursors({
+    flavorname: props.flavorname
+  });
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
@@ -53,7 +56,9 @@ const CreateFlavour: React.FunctionComponent<ICreateFlavourProps> = props => {
       values.frames = parseInt(values.frames, 10);
 
       // createCursor Mutation call with data
-      await createCursor({ variables: { ...values, eggId: props.eggId } });
+      await createCursor({
+        variables: { ...values, flavorId: props.flavorId }
+      });
 
       // Reset Form
       e.target.reset();
@@ -124,4 +129,4 @@ const CreateFlavour: React.FunctionComponent<ICreateFlavourProps> = props => {
   );
 };
 
-export default CreateFlavour;
+export default CreateCursor;
