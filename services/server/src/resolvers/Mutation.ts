@@ -178,17 +178,17 @@ const Mutation = {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
 
-    // seprate EggId and cursor data
-    const eggId = args.eggId;
-    delete args.eggId;
+    // seprate flavourId and cursor data
+    const flavourId = args.flavourId;
+    delete args.flavourId;
 
     const cursor = await ctx.db.mutation.createCursor(
       {
         data: {
-          // Provide relationship between Egg and Cursor
-          egg: {
+          // Provide relationship between Flavor and Cursor
+          flavor: {
             connect: {
-              id: eggId
+              id: flavourId
             }
           },
           ...args
@@ -198,6 +198,32 @@ const Mutation = {
     );
 
     return cursor;
+  },
+  updateCursor(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    // first take copy in updates
+    const cursorId = args.id;
+    delete args.id;
+
+    // return updated cursor by id
+    return ctx.db.mutation.updateCursor(
+      {
+        where: {
+          id: cursorId
+        },
+        data: { ...args }
+      },
+      info
+    );
+  },
+  deleteCursor(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    // Delete flavor by id
+    return ctx.db.mutation.deleteCursor({ where: { id: args.id } }, info);
   },
   async signup(parent, args, ctx, info) {
     // 1.lowercase their email
