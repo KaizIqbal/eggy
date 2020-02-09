@@ -178,9 +178,9 @@ const Mutation = {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
 
-    // seprate flavourId and cursor data
-    const flavourId = args.flavourId;
-    delete args.flavourId;
+    // seprate flavorId and cursor data
+    const flavorId = args.flavorId;
+    delete args.flavorId;
 
     const cursor = await ctx.db.mutation.createCursor(
       {
@@ -188,7 +188,7 @@ const Mutation = {
           // Provide relationship between Flavor and Cursor
           flavor: {
             connect: {
-              id: flavourId
+              id: flavorId
             }
           },
           ...args
