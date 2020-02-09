@@ -13,7 +13,7 @@ type Mutation {
   unPublish(id:ID!): Egg!
 
   # Cursors
-  createCursor(name:String! frames:Int! flavourId:ID!): Cursor!
+  createCursor(name:String! frames:Int! flavorId:ID!): Cursor!
   updateCursor(id:ID! name:String! frames:Int! ): Cursor!
   deleteCursor(id:ID!): Flavor!  
 
@@ -42,7 +42,7 @@ type Query {
 
   # Cursors
   cursor(where: CursorWhereUniqueInput!): Cursor
-  cursors(name: String!):[Cursor]!
+  cursors(flavorname: String!):[Cursor]!
 
   # Flavors
   flavor(where: FlavorWhereUniqueInput!): Flavor

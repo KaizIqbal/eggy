@@ -13,7 +13,7 @@ const Query = {
       {
         where: {
           flavor: {
-            name: args.name
+            name: args.flavorname
           }
         }
       },
