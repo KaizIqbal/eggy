@@ -42,8 +42,8 @@ const UNPUBLISH_EGG_MUTATION = gql`
 
 // Mutation for createCursor
 const CREATE_CURSOR_MUTATION = gql`
-  mutation createCursor($name: String!, $frames: Int!, $eggId: ID!) {
-    createCursor(name: $name, frames: $frames, eggId: $eggId) {
+  mutation createCursor($name: String!, $frames: Int!, $flavorId: ID!) {
+    createCursor(name: $name, frames: $frames, flavorId: $flavorId) {
       id
     }
   }
@@ -67,10 +67,19 @@ const UPDATE_FLAVOR_MUTATION = gql`
   }
 `;
 
-// Mutation for DeleteFlavor
+// Mutation for Delete Flavor
 const DELETE_FLAVOR_MUTATION = gql`
   mutation deleteFlavor($id: ID!) {
     deleteFlavor(id: $id) {
+      id
+    }
+  }
+`;
+
+// Mutation for Delete Cursor
+const DELETE_CURSOR_MUTATION = gql`
+  mutation deleteCursor($id: ID!) {
+    deleteCursor(id: $id) {
       id
     }
   }
@@ -163,6 +172,7 @@ export {
   CREATE_FLAVOR_MUTATION,
   UPDATE_FLAVOR_MUTATION,
   DELETE_FLAVOR_MUTATION,
+  DELETE_CURSOR_MUTATION,
   SIGNUP_MUTATION,
   SIGNIN_MUTATION,
   SIGNOUT_MUTATION,

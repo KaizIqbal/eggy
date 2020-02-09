@@ -1,6 +1,8 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FLAVOR_QUERY } from "../../graphql/Query";
+import CreateCursor from "../cursor/Create";
+import Cursors from "../cursor/Cursors";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -32,6 +34,8 @@ const CursorWorkshop: React.FunctionComponent<ICursorWorkshopProps> = props => {
       <h1>
         {props.username}'s Workshop for {props.eggname} {data.flavor.name}
       </h1>
+      <CreateCursor flavorname={data.flavor.name} flavorId={data.flavor.id} />
+      <Cursors flavorname={data.flavor.name} />
     </>
   );
 };
