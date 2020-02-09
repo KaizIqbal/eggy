@@ -14,6 +14,8 @@ type Mutation {
 
   # Cursors
   createCursor(name:String! frames:Int! flavourId:ID!): Cursor!
+  updateCursor(id:ID! name:String! frames:Int! ): Cursor!
+  deleteCursor(id:ID!): Flavor!  
 
   # Flavour
   createFlavor(name:String! eggId:ID!): Flavor!
@@ -39,9 +41,10 @@ type Query {
   userEggsConnection(after: String first: Int): EggConnection!
 
   # Cursors
-  cursors(eggname: String!):[Cursor]!
+  cursor(where: CursorWhereUniqueInput!): Cursor
+  cursors(name: String!):[Cursor]!
 
-  # Cursors
+  # Flavors
   flavor(where: FlavorWhereUniqueInput!): Flavor
   flavors(eggname: String!):[Flavor]!
 
