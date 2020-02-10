@@ -38,7 +38,7 @@ type Egg {
 
 type Flavor {
   id: ID! @id
-  name: String! @unique
+  name: String! 
   egg: Egg!
 }
 

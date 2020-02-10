@@ -41,11 +41,11 @@ type Query {
   userEggsConnection(after: String first: Int): EggConnection!
 
   # Cursors
-  cursor(where: CursorWhereUniqueInput!): Cursor
+  cursor(eggname: String! flavorname: String! cursorname: String!): Cursor
   cursors(flavorname: String!):[Cursor]!
 
   # Flavors
-  flavor(where: FlavorWhereUniqueInput!): Flavor
+  flavor(eggname: String! flavorname: String!): Flavor
   flavors(eggname: String!):[Flavor]!
 
   #User
