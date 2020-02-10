@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import { EggDetail } from "../../../components";
+import { Egg } from "../../../components";
 
 // ##### PAGE #####
-const Egg = () => {
+const EggPage = () => {
   const router = useRouter();
-  return <EggDetail eggname={router.query.egg} />;
+  return <Egg eggname={router.query.egg} />;
 };
 
-export default Egg;
+export default EggPage;
