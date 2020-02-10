@@ -1,41 +1,48 @@
 import React from "react";
-import Flavors from "../flavor/Flavors";
 import { useQuery } from "@apollo/react-hooks";
-import { EGG_QUERY } from "../../graphql/Query";
-import CreateFlavor from "../flavor/Create";
+import { FLAVOR_QUERY } from "../../graphql/Query";
+import CreateCursor from "../cursor/Create";
+import Cursors from "../cursor/Cursors";
 
 // ##### COMPONENT PROPS TYPE #####
 
 interface IFlavorWorkshopProps {
   username: any;
   eggname: any;
+  flavorname: any;
 }
 
 // ##### COMPONENT #####
 
-const FlavourWorkshop: React.FunctionComponent<
-  IFlavorWorkshopProps
-> = props => {
+const FlavorWorkshop: React.FunctionComponent<IFlavorWorkshopProps> = props => {
   // ##### HOOKS #####
-  const { data, loading, error } = useQuery(EGG_QUERY, {
+
+  const { data, loading, error } = useQuery(FLAVOR_QUERY, {
     variables: {
+      flavorname: props.flavorname,
       eggname: props.eggname
     }
   });
 
   // ##### RENDER #####
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
+  if (loading) return <p>Fetching Falvor......</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  if (!data) return <p>Flavor not found</p>;
 
   return (
     <>
       <h1>
-        {props.username}'s Workshop for {props.eggname}
+        {props.username}'s Workshop for {props.eggname} {data.flavor.name}
       </h1>
-      <CreateFlavor eggname={data.egg.eggname} eggId={data.egg.id} />
-      <Flavors username={props.username} eggname={data.egg.eggname} />
+      <CreateCursor flavorname={data.flavor.name} flavorId={data.flavor.id} />
+      <Cursors
+        username={props.username}
+        eggname={props.eggname}
+        flavorname={data.flavor.name}
+      />
     </>
   );
 };
 
-export default FlavourWorkshop;
+export default FlavorWorkshop;
