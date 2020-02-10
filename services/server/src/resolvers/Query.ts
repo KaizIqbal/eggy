@@ -4,8 +4,68 @@ const { loggedIn } = require("../utils/loggedIn");
 
 const Query = {
   egg: forwardTo("db"),
-  cursor: forwardTo("db"),
-  flavor: forwardTo("db"),
+  async cursor(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    //get one cursor id by cursors
+    const data = await ctx.db.query.cursors(
+      {
+        where: {
+          name: args.cursorname,
+          flavor: { name: args.flavorname, egg: { eggname: args.eggname } }
+        }
+      },
+      `{
+        id
+      }`
+    );
+
+    // data[0] for access first element in cursors array
+    // but it always return only one cursor always 😉
+
+    const cursor = await ctx.db.query.cursor(
+      {
+        where: {
+          id: data[0].id
+        }
+      },
+      info
+    );
+
+    return cursor;
+  },
+  async flavor(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    //get one cursor id by cursors
+    const data = await ctx.db.query.flavors(
+      {
+        where: {
+          name: args.flavorname,
+          egg: { eggname: args.eggname }
+        }
+      },
+      `{
+        id
+      }`
+    );
+
+    // data[0] for access first element in flavors array
+    // but it always return only one flavor always 😉
+
+    const flavor = await ctx.db.query.flavor(
+      {
+        where: {
+          id: data[0].id
+        }
+      },
+      info
+    );
+
+    return flavor;
+  },
   cursors(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
