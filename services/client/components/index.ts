@@ -5,7 +5,7 @@ import PleaseSignIn from "./layout/PleaseSignIn";
 // Egg Components
 import EggOwner from "./egg/Owner";
 import CreateEgg from "./egg/Create";
-import EggDetail from "./egg/Egg";
+import Egg from "./egg/Egg";
 import EggList from "./egg/PublishedEggs";
 import UserEggList from "./egg/UserEggs";
 import UpdateEgg from "./egg/Update";
@@ -21,6 +21,7 @@ import Permissions from "./user/Permission";
 // Workshop Components
 import FlavorWorkshop from "./workshops/Flavor";
 import CursorWorkshop from "./workshops/Cursor";
+import Workshop from "./workshops/Workshop";
 
 // Flavour Components
 import UpdateFlavor from "./flavor/Update";
@@ -30,7 +31,7 @@ export {
   PleaseSignIn,
   EggOwner,
   CreateEgg,
-  EggDetail,
+  Egg,
   EggList,
   UserEggList,
   UpdateEgg,
@@ -42,5 +43,6 @@ export {
   Reset,
   Permissions,
   FlavorWorkshop,
-  CursorWorkshop
+  CursorWorkshop,
+  Workshop
 };

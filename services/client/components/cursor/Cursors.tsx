@@ -1,9 +1,12 @@
 import React from "react";
 import useCursors from "../../hooks/cursors";
 import DeleteCursor from "./Delete";
+import Link from "next/link";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IFlavorsProps {
+  username: string;
+  eggname: string;
   flavorname: string;
 }
 
@@ -20,7 +23,14 @@ const Cursors: React.FunctionComponent<IFlavorsProps> = props => {
     <div>
       {data.map(cursor => (
         <li key={cursor.id}>
-          {cursor.name}
+          <Link
+            href="/[user]/[egg]/workshop/[flavor]/[cursor]"
+            as={`/${props.username}/${props.eggname}/workshop/${
+              props.flavorname
+            }/${cursor.name}`}
+          >
+            <a>{cursor.name}</a>
+          </Link>
 
           {/* <Button
             type="button"

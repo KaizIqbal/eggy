@@ -24,7 +24,7 @@ const FLAVOR_QUERY = gql`
 // Query For fetch Cursor by id
 const CURSOR_QUERY = gql`
   query cursor($name: String!) {
-    flavor(where: { name: $name }) {
+    cursor(where: { name: $name }) {
       id
       name
       frames

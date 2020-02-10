@@ -35,7 +35,11 @@ const CursorWorkshop: React.FunctionComponent<ICursorWorkshopProps> = props => {
         {props.username}'s Workshop for {props.eggname} {data.flavor.name}
       </h1>
       <CreateCursor flavorname={data.flavor.name} flavorId={data.flavor.id} />
-      <Cursors flavorname={data.flavor.name} />
+      <Cursors
+        username={props.username}
+        eggname={props.eggname}
+        flavorname={data.flavor.name}
+      />
     </>
   );
 };

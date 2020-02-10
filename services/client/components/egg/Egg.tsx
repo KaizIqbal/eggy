@@ -4,14 +4,14 @@ import React from "react";
 import { EGG_QUERY } from "../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
-interface IEggDetailProps {
+interface IEggProps {
   eggname: any;
 }
 
 // ##### COMPONENT #####
-const EggDetail: React.FunctionComponent<IEggDetailProps> = props => {
+const Egg: React.FunctionComponent<IEggProps> = props => {
   // ##### HOOKS #####
-  // Fetch data by id using Query Hook
+  // Fetch data by name using Query Hook
   const { loading, error, data } = useQuery(EGG_QUERY, {
     variables: { eggname: props.eggname }
   });
@@ -41,4 +41,4 @@ const EggDetail: React.FunctionComponent<IEggDetailProps> = props => {
   );
 };
 
-export default EggDetail;
+export default Egg;
