@@ -13,8 +13,8 @@ const EGG_QUERY = gql`
 
 // Query For fetch Flavor by id
 const FLAVOR_QUERY = gql`
-  query flavor($name: String!) {
-    flavor(where: { name: $name }) {
+  query flavor($eggname: String!, $flavorname: String!) {
+    flavor(eggname: $eggname, flavorname: $flavorname) {
       id
       name
     }
@@ -23,8 +23,12 @@ const FLAVOR_QUERY = gql`
 
 // Query For fetch Cursor by id
 const CURSOR_QUERY = gql`
-  query cursor($name: String!) {
-    cursor(where: { name: $name }) {
+  query cursor($eggname: String!, $flavorname: String!, $cursorname: String!) {
+    cursor(
+      eggname: $eggname
+      flavorname: $flavorname
+      cursorname: $cursorname
+    ) {
       id
       name
       frames

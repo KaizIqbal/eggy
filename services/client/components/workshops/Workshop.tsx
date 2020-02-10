@@ -1,34 +1,37 @@
-import { useQuery } from "@apollo/react-hooks";
 import React from "react";
-import { CURSOR_QUERY } from "../../graphql/Query";
+import Flavors from "../flavor/Flavors";
+import { useQuery } from "@apollo/react-hooks";
+import { EGG_QUERY } from "../../graphql/Query";
+import CreateFlavor from "../flavor/Create";
 
 // ##### COMPONENT PROPS TYPE #####
 
 interface IWorkshopProps {
-  cursorname: any;
+  username: any;
+  eggname: any;
 }
 
 // ##### COMPONENT #####
 
 const Workshop: React.FunctionComponent<IWorkshopProps> = props => {
   // ##### HOOKS #####
-
-  const { data, loading, error } = useQuery(CURSOR_QUERY, {
+  const { data, loading, error } = useQuery(EGG_QUERY, {
     variables: {
-      name: props.cursorname
+      eggname: props.eggname
     }
   });
 
   // ##### RENDER #####
-  if (loading) return <p>Fetching cursor......</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  if (!data) return <p>Cursor not found</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
 
   return (
     <>
-      <h1>{data.cursor.name}</h1>
-      <p>{data.cursor.frames}</p>
+      <h1>
+        {props.username}'s Workshop for {props.eggname}
+      </h1>
+      <CreateFlavor eggname={data.egg.eggname} eggId={data.egg.id} />
+      <Flavors username={props.username} eggname={data.egg.eggname} />
     </>
   );
 };
