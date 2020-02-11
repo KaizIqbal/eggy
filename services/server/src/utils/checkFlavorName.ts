@@ -5,4 +5,4 @@ function checkFlavorName(args: any) {
   }
 }
 
-exports.checkFlavorName = checkFlavorName;
+export default checkFlavorName;

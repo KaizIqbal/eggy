@@ -4,4 +4,4 @@ function loggedIn(ctx: any) {
   }
 }
 
-exports.loggedIn = loggedIn;
+export default loggedIn;
