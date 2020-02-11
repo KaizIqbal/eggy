@@ -1,5 +1,6 @@
-const { loggedIn } = require("../../utils/loggedIn");
-const { checkFlavorName } = require("../../utils/checkFlavorName");
+// Helper Functions
+import loggedIn from "../../utils/loggedIn";
+import checkFlavorName from "../../utils/checkFlavorName";
 
 export const flavrorMutations = {
   // ###### CREATE FLAVOR ######

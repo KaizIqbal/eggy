@@ -8,4 +8,4 @@ function verifyUserName(args: any) {
   args.username = "@" + args.username;
 }
 
-exports.verifyUserName = verifyUserName;
+export default verifyUserName;

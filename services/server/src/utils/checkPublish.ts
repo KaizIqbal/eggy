@@ -9,4 +9,4 @@ async function checkPublish(ctx: any, args: any) {
   }
 }
 
-exports.checkPublish = checkPublish;
+export default checkPublish;
