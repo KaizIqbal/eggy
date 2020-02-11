@@ -23,7 +23,7 @@ type Mutation {
   deleteFlavor(id:ID!): Flavor!  
 
   
-  # Users
+  # Auth
   signup(email:String! password:String! username: String! name:String!): User!
   signin(email:String! password:String!): User!
   signout: SuccessMessage
