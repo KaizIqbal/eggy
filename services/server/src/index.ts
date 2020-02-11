@@ -1,4 +1,4 @@
-//TODO enable for local development
+//TODO environments variables
 // require("dotenv").config({ path: "secret.env" });
 import * as coockieParser from "cookie-parser";
 import * as jwt from "jsonwebtoken";
