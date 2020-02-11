@@ -1,4 +1,5 @@
-const { loggedIn } = require("../../utils/loggedIn");
+// Helper Functions
+import loggedIn from "../../utils/loggedIn";
 
 export const cursorQueries = {
   // ###### FOR FETCH SINGLE CURSOR ######

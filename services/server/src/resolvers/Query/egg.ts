@@ -1,5 +1,7 @@
 import { forwardTo } from "prisma-binding";
-const { loggedIn } = require("../../utils/loggedIn");
+
+// Helper Functions
+import loggedIn from "../../utils/loggedIn";
 
 export const eggQueries = {
   // ###### FOR FETCH SINGLE EGG ######

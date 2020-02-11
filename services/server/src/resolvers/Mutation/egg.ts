@@ -1,5 +1,6 @@
-const { loggedIn } = require("../../utils/loggedIn");
-const { checkPublish } = require("../../utils/checkPublish");
+// Helper Functions
+import loggedIn from "../../utils/loggedIn";
+import checkPublish from "../../utils/checkPublish";
 
 export const eggMutations = {
   // ###### CREATE EGG ######

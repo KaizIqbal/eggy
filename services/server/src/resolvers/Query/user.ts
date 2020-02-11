@@ -1,4 +1,5 @@
-const { hasPermission } = require("../../utils/hasPermission");
+// Helper Functions
+import hasPermission from "../../utils/hasPermission";
 
 export const userQueries = {
   // ###### FOR FETCH CURRENT USER ######

@@ -1,11 +1,13 @@
 import * as bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
+
+// Helper Functions
 import { promisify } from "util";
 import { mailFormate, transport } from "../../mail";
 import authoriaztion from "../../utils/auth";
-const { verifyUserName } = require("../../utils/verifyUserName");
-const { hasPermission } = require("../../utils/hasPermission");
-const { loggedIn } = require("../../utils/loggedIn");
+import hasPermission from "../../utils/hasPermission";
+import loggedIn from "../../utils/loggedIn";
+import verifyUserName from "../../utils/verifyUserName";
 
 export const authMutations = {
   // ###### SIGN UP ######
