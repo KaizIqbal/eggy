@@ -1,91 +1,9 @@
 import gql from "graphql-tag";
 
-// Mutation for createEgg
-const CREATE_EGG_MUTATION = gql`
-  mutation createEgg(
-    $eggname: String!
-    $title: String!
-    $cursorTypes: [cursorType]!
-  ) {
-    createEgg(eggname: $eggname, title: $title, cursorTypes: $cursorTypes) {
-      id
-    }
-  }
-`;
+// ########## AUTH MUTATIONS ##########
 
-// Mutation for UpdateEgg
-const UPDATE_EGG_MUTATION = gql`
-  mutation updateEgg($eggname: String!, $title: String!) {
-    updateEgg(eggname: $eggname, title: $title) {
-      id
-    }
-  }
-`;
+// ##### SIGNUP #####
 
-// Mutation for Publishing Egg
-const PUBLISH_EGG_MUTATION = gql`
-  mutation publish($id: ID!) {
-    publish(id: $id) {
-      id
-    }
-  }
-`;
-
-// Mutation for Unpublishing Egg
-const UNPUBLISH_EGG_MUTATION = gql`
-  mutation unPublish($id: ID!) {
-    unPublish(id: $id) {
-      id
-    }
-  }
-`;
-
-// Mutation for createCursor
-const CREATE_CURSOR_MUTATION = gql`
-  mutation createCursor($name: String!, $frames: Int!, $flavorId: ID!) {
-    createCursor(name: $name, frames: $frames, flavorId: $flavorId) {
-      id
-    }
-  }
-`;
-
-// Mutation for createCursor
-const CREATE_FLAVOR_MUTATION = gql`
-  mutation createFlavor($name: String!, $eggId: ID!) {
-    createFlavor(name: $name, eggId: $eggId) {
-      id
-    }
-  }
-`;
-
-// Mutation for updateFlavor
-const UPDATE_FLAVOR_MUTATION = gql`
-  mutation updateFlavor($id: ID!, $name: String!) {
-    updateFlavor(id: $id, name: $name) {
-      id
-    }
-  }
-`;
-
-// Mutation for Delete Flavor
-const DELETE_FLAVOR_MUTATION = gql`
-  mutation deleteFlavor($id: ID!) {
-    deleteFlavor(id: $id) {
-      id
-    }
-  }
-`;
-
-// Mutation for Delete Cursor
-const DELETE_CURSOR_MUTATION = gql`
-  mutation deleteCursor($id: ID!) {
-    deleteCursor(id: $id) {
-      id
-    }
-  }
-`;
-
-// Mutation for Signup user
 const SIGNUP_MUTATION = gql`
   mutation signUp(
     $email: String!
@@ -104,7 +22,8 @@ const SIGNUP_MUTATION = gql`
   }
 `;
 
-// Mutation for Login user
+// ##### SIGNIN #####
+
 const SIGNIN_MUTATION = gql`
   mutation sigIn($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
@@ -113,7 +32,8 @@ const SIGNIN_MUTATION = gql`
   }
 `;
 
-// Mutation for Login user
+// ##### SIGNOUT #####
+
 const SIGNOUT_MUTATION = gql`
   mutation signOut {
     signout {
@@ -122,7 +42,8 @@ const SIGNOUT_MUTATION = gql`
   }
 `;
 
-// Mutation for Request reset token
+// ##### REQUEST FOR RESET PASSWORD #####
+
 const REQUEST_RESET_MUTATION = gql`
   mutation requestReset($email: String!) {
     requestReset(email: $email) {
@@ -131,7 +52,8 @@ const REQUEST_RESET_MUTATION = gql`
   }
 `;
 
-// Mutation for Request reset token
+// ##### RESET PASSWORD #####
+
 const RESET_PASSWORD_MUTATION = gql`
   mutation resetPassword(
     $resetToken: String!
@@ -150,7 +72,8 @@ const RESET_PASSWORD_MUTATION = gql`
   }
 `;
 
-// Update User permissions
+// ##### UPDATE USER'S PERMISSIONS #####
+
 const UPDATE_PERMISSION_MUTATION = gql`
   mutation updatePermissions($permissions: [Permission], $userId: ID!) {
     updatePermissions(permissions: $permissions, userId: $userId) {
@@ -162,21 +85,135 @@ const UPDATE_PERMISSION_MUTATION = gql`
   }
 `;
 
+// ########## EGG MUTATIONS ##########
+
+// ##### CREATE #####
+
+const CREATE_EGG_MUTATION = gql`
+  mutation createEgg(
+    $eggname: String!
+    $title: String!
+    $cursorTypes: [cursorType]!
+  ) {
+    createEgg(eggname: $eggname, title: $title, cursorTypes: $cursorTypes) {
+      id
+    }
+  }
+`;
+
+// ##### UPDATE #####
+
+const UPDATE_EGG_MUTATION = gql`
+  mutation updateEgg($eggname: String!, $title: String!) {
+    updateEgg(eggname: $eggname, title: $title) {
+      id
+    }
+  }
+`;
+
+// ##### DELETE #####
+
+const DELETE_EGG_MUTATION = gql`
+  mutation deleteEgg($eggname: String!) {
+    deleteEgg(eggname: $eggname) {
+      id
+    }
+  }
+`;
+
+// ##### PUBLISH #####
+
+const PUBLISH_EGG_MUTATION = gql`
+  mutation publish($id: ID!) {
+    publish(id: $id) {
+      id
+    }
+  }
+`;
+
+// ##### UNPUBLISH #####
+
+const UNPUBLISH_EGG_MUTATION = gql`
+  mutation unPublish($id: ID!) {
+    unPublish(id: $id) {
+      id
+    }
+  }
+`;
+
+// ########## FLAVOR MUTATIONS ##########
+
+// ##### CREATE #####
+
+const CREATE_FLAVOR_MUTATION = gql`
+  mutation createFlavor($name: String!, $eggId: ID!) {
+    createFlavor(name: $name, eggId: $eggId) {
+      id
+    }
+  }
+`;
+
+// ##### UPDATE #####
+
+const UPDATE_FLAVOR_MUTATION = gql`
+  mutation updateFlavor($id: ID!, $name: String!) {
+    updateFlavor(id: $id, name: $name) {
+      id
+    }
+  }
+`;
+
+// ##### DELETE #####
+
+const DELETE_FLAVOR_MUTATION = gql`
+  mutation deleteFlavor($id: ID!) {
+    deleteFlavor(id: $id) {
+      id
+    }
+  }
+`;
+
+// ########## CURSOR MUTATIONS ##########
+
+// ##### CREATE #####
+
+const CREATE_CURSOR_MUTATION = gql`
+  mutation createCursor($name: String!, $frames: Int!, $flavorId: ID!) {
+    createCursor(name: $name, frames: $frames, flavorId: $flavorId) {
+      id
+    }
+  }
+`;
+
+// ##### DELETE #####
+
+const DELETE_CURSOR_MUTATION = gql`
+  mutation deleteCursor($id: ID!) {
+    deleteCursor(id: $id) {
+      id
+    }
+  }
+`;
+
 export {
-  CREATE_EGG_MUTATION,
-  DELETE_FLAVOR_MUTATION as DELETE_EGG_MUTATION,
-  UPDATE_EGG_MUTATION,
-  PUBLISH_EGG_MUTATION,
-  UNPUBLISH_EGG_MUTATION,
-  CREATE_CURSOR_MUTATION,
-  CREATE_FLAVOR_MUTATION,
-  UPDATE_FLAVOR_MUTATION,
-  DELETE_FLAVOR_MUTATION,
-  DELETE_CURSOR_MUTATION,
+  // Auth
   SIGNUP_MUTATION,
   SIGNIN_MUTATION,
   SIGNOUT_MUTATION,
   REQUEST_RESET_MUTATION,
   RESET_PASSWORD_MUTATION,
-  UPDATE_PERMISSION_MUTATION
+  UPDATE_PERMISSION_MUTATION,
+  // Egg
+  CREATE_EGG_MUTATION,
+  DELETE_EGG_MUTATION,
+  UPDATE_EGG_MUTATION,
+  PUBLISH_EGG_MUTATION,
+  UNPUBLISH_EGG_MUTATION,
+  // Flavor
+  CREATE_FLAVOR_MUTATION,
+  UPDATE_FLAVOR_MUTATION,
+  DELETE_FLAVOR_MUTATION,
+  // Cursor
+  CREATE_CURSOR_MUTATION,
+  DELETE_CURSOR_MUTATION
 };
