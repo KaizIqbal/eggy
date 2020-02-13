@@ -83,13 +83,7 @@ export const eggMutations = {
       throw new Error("You don't have permission to do that!");
     }
 
-    // 3.Delete all cursors in egg first, also return count
-    await ctx.db.mutation.deleteManyCursors(
-      { where: { egg: { eggname: args.eggname } } },
-      `{count}`
-    );
-
-    // 4.Delete Egg
+    // 3.Delete Egg
     return ctx.db.mutation.deleteEgg({ where }, info);
   },
 

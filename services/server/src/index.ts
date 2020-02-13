@@ -10,7 +10,7 @@ const server = createServer();
 server.express.use(coockieParser());
 // Decode the token to get userId from each request
 server.express.use((req: any, res, next) => {
-  const { auth }: { auth: any } = req.cookies;
+  const { auth }: { auth: string } = req.cookies;
   if (auth) {
     const { _uid } = jwt.verify(auth, process.env.APP_SECRET);
     // put the userId onto the req for the further requests to access

@@ -21,8 +21,9 @@ type User {
   updatedAt: DateTime! @updatedAt
   password: String!
   resetToken: String
-  resetTokenExpiry: String
+  resetTokenExpiry: String 
   permissions:[Permission]  @scalarList(strategy: RELATION)
+  eggs: [Egg] @relation(name: "Eggs" onDelete: CASCADE)
 }
 
 type Egg {
@@ -32,19 +33,31 @@ type Egg {
   isPublished: Boolean! @default(value: false)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  user: User!
   cursorTypes: [cursorType]!  @scalarList(strategy: RELATION)
+  user: User! @relation(name: "Eggs")
+  flavors: [Flavor]  @relation(name: "Flavors" onDelete: CASCADE)
 }
 
 type Flavor {
   id: ID! @id
   name: String! 
-  egg: Egg!
+  egg: Egg!  @relation(name: "Flavors")
+  cursors: [Cursor]  @relation(name: "Cursors" onDelete: CASCADE)
 }
 
 type Cursor {
   id: ID! @id
   name: String!
   frames: Int!
-  flavor: Flavor!
+  flavor: Flavor! @relation(name: "Cursors")
+}
+
+type File {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String! @unique
 }
