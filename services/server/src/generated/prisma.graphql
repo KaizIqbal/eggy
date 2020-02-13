@@ -1,11 +1,15 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Mon Feb 10 2020 06:48:57 GMT+0000 (Coordinated Universal Time)
+# timestamp: Thu Feb 13 2020 04:04:10 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
 }
 
 type AggregateEgg {
+  count: Int!
+}
+
+type AggregateFile {
   count: Int!
 }
 
@@ -43,7 +47,18 @@ input CursorCreateInput {
   id: ID
   name: String!
   frames: Int!
-  flavor: FlavorCreateOneInput!
+  flavor: FlavorCreateOneWithoutCursorsInput!
+}
+
+input CursorCreateManyWithoutFlavorInput {
+  create: [CursorCreateWithoutFlavorInput!]
+  connect: [CursorWhereUniqueInput!]
+}
+
+input CursorCreateWithoutFlavorInput {
+  id: ID
+  name: String!
+  frames: Int!
 }
 
 """An edge in a connection."""
@@ -68,6 +83,119 @@ type CursorPreviousValues {
   id: ID!
   name: String!
   frames: Int!
+}
+
+input CursorScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CursorScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CursorScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CursorScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  frames: Int
+
+  """All values that are not equal to given value."""
+  frames_not: Int
+
+  """All values that are contained in given list."""
+  frames_in: [Int!]
+
+  """All values that are not contained in given list."""
+  frames_not_in: [Int!]
+
+  """All values less than the given value."""
+  frames_lt: Int
+
+  """All values less than or equal the given value."""
+  frames_lte: Int
+
+  """All values greater than the given value."""
+  frames_gt: Int
+
+  """All values greater than or equal the given value."""
+  frames_gte: Int
 }
 
 type CursorSubscriptionPayload {
@@ -115,12 +243,50 @@ enum cursorType {
 input CursorUpdateInput {
   name: String
   frames: Int
-  flavor: FlavorUpdateOneRequiredInput
+  flavor: FlavorUpdateOneRequiredWithoutCursorsInput
+}
+
+input CursorUpdateManyDataInput {
+  name: String
+  frames: Int
 }
 
 input CursorUpdateManyMutationInput {
   name: String
   frames: Int
+}
+
+input CursorUpdateManyWithoutFlavorInput {
+  create: [CursorCreateWithoutFlavorInput!]
+  connect: [CursorWhereUniqueInput!]
+  set: [CursorWhereUniqueInput!]
+  disconnect: [CursorWhereUniqueInput!]
+  delete: [CursorWhereUniqueInput!]
+  update: [CursorUpdateWithWhereUniqueWithoutFlavorInput!]
+  updateMany: [CursorUpdateManyWithWhereNestedInput!]
+  deleteMany: [CursorScalarWhereInput!]
+  upsert: [CursorUpsertWithWhereUniqueWithoutFlavorInput!]
+}
+
+input CursorUpdateManyWithWhereNestedInput {
+  where: CursorScalarWhereInput!
+  data: CursorUpdateManyDataInput!
+}
+
+input CursorUpdateWithoutFlavorDataInput {
+  name: String
+  frames: Int
+}
+
+input CursorUpdateWithWhereUniqueWithoutFlavorInput {
+  where: CursorWhereUniqueInput!
+  data: CursorUpdateWithoutFlavorDataInput!
+}
+
+input CursorUpsertWithWhereUniqueWithoutFlavorInput {
+  where: CursorWhereUniqueInput!
+  update: CursorUpdateWithoutFlavorDataInput!
+  create: CursorCreateWithoutFlavorInput!
 }
 
 input CursorWhereInput {
@@ -250,8 +416,9 @@ type Egg implements Node {
   isPublished: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
-  user: User!
   cursorTypes: [cursorType!]!
+  user: User!
+  flavors(where: FlavorWhereInput, orderBy: FlavorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Flavor!]
 }
 
 """A connection to a list of items."""
@@ -274,12 +441,36 @@ input EggCreateInput {
   eggname: String!
   isPublished: Boolean
   cursorTypes: EggCreatecursorTypesInput
-  user: UserCreateOneInput!
+  user: UserCreateOneWithoutEggsInput!
+  flavors: FlavorCreateManyWithoutEggInput
 }
 
-input EggCreateOneInput {
-  create: EggCreateInput
+input EggCreateManyWithoutUserInput {
+  create: [EggCreateWithoutUserInput!]
+  connect: [EggWhereUniqueInput!]
+}
+
+input EggCreateOneWithoutFlavorsInput {
+  create: EggCreateWithoutFlavorsInput
   connect: EggWhereUniqueInput
+}
+
+input EggCreateWithoutFlavorsInput {
+  id: ID
+  title: String!
+  eggname: String!
+  isPublished: Boolean
+  cursorTypes: EggCreatecursorTypesInput
+  user: UserCreateOneWithoutEggsInput!
+}
+
+input EggCreateWithoutUserInput {
+  id: ID
+  title: String!
+  eggname: String!
+  isPublished: Boolean
+  cursorTypes: EggCreatecursorTypesInput
+  flavors: FlavorCreateManyWithoutEggInput
 }
 
 """An edge in a connection."""
@@ -314,6 +505,185 @@ type EggPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   cursorTypes: [cursorType!]!
+}
+
+input EggScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EggScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EggScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EggScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  eggname: String
+
+  """All values that are not equal to given value."""
+  eggname_not: String
+
+  """All values that are contained in given list."""
+  eggname_in: [String!]
+
+  """All values that are not contained in given list."""
+  eggname_not_in: [String!]
+
+  """All values less than the given value."""
+  eggname_lt: String
+
+  """All values less than or equal the given value."""
+  eggname_lte: String
+
+  """All values greater than the given value."""
+  eggname_gt: String
+
+  """All values greater than or equal the given value."""
+  eggname_gte: String
+
+  """All values containing the given string."""
+  eggname_contains: String
+
+  """All values not containing the given string."""
+  eggname_not_contains: String
+
+  """All values starting with the given string."""
+  eggname_starts_with: String
+
+  """All values not starting with the given string."""
+  eggname_not_starts_with: String
+
+  """All values ending with the given string."""
+  eggname_ends_with: String
+
+  """All values not ending with the given string."""
+  eggname_not_ends_with: String
+  isPublished: Boolean
+
+  """All values that are not equal to given value."""
+  isPublished_not: Boolean
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type EggSubscriptionPayload {
@@ -357,20 +727,20 @@ input EggUpdatecursorTypesInput {
   set: [cursorType!]
 }
 
-input EggUpdateDataInput {
-  title: String
-  eggname: String
-  isPublished: Boolean
-  cursorTypes: EggUpdatecursorTypesInput
-  user: UserUpdateOneRequiredInput
-}
-
 input EggUpdateInput {
   title: String
   eggname: String
   isPublished: Boolean
   cursorTypes: EggUpdatecursorTypesInput
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutEggsInput
+  flavors: FlavorUpdateManyWithoutEggInput
+}
+
+input EggUpdateManyDataInput {
+  title: String
+  eggname: String
+  isPublished: Boolean
+  cursorTypes: EggUpdatecursorTypesInput
 }
 
 input EggUpdateManyMutationInput {
@@ -380,16 +750,60 @@ input EggUpdateManyMutationInput {
   cursorTypes: EggUpdatecursorTypesInput
 }
 
-input EggUpdateOneRequiredInput {
-  create: EggCreateInput
-  connect: EggWhereUniqueInput
-  update: EggUpdateDataInput
-  upsert: EggUpsertNestedInput
+input EggUpdateManyWithoutUserInput {
+  create: [EggCreateWithoutUserInput!]
+  connect: [EggWhereUniqueInput!]
+  set: [EggWhereUniqueInput!]
+  disconnect: [EggWhereUniqueInput!]
+  delete: [EggWhereUniqueInput!]
+  update: [EggUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [EggUpdateManyWithWhereNestedInput!]
+  deleteMany: [EggScalarWhereInput!]
+  upsert: [EggUpsertWithWhereUniqueWithoutUserInput!]
 }
 
-input EggUpsertNestedInput {
-  update: EggUpdateDataInput!
-  create: EggCreateInput!
+input EggUpdateManyWithWhereNestedInput {
+  where: EggScalarWhereInput!
+  data: EggUpdateManyDataInput!
+}
+
+input EggUpdateOneRequiredWithoutFlavorsInput {
+  create: EggCreateWithoutFlavorsInput
+  connect: EggWhereUniqueInput
+  update: EggUpdateWithoutFlavorsDataInput
+  upsert: EggUpsertWithoutFlavorsInput
+}
+
+input EggUpdateWithoutFlavorsDataInput {
+  title: String
+  eggname: String
+  isPublished: Boolean
+  cursorTypes: EggUpdatecursorTypesInput
+  user: UserUpdateOneRequiredWithoutEggsInput
+}
+
+input EggUpdateWithoutUserDataInput {
+  title: String
+  eggname: String
+  isPublished: Boolean
+  cursorTypes: EggUpdatecursorTypesInput
+  flavors: FlavorUpdateManyWithoutEggInput
+}
+
+input EggUpdateWithWhereUniqueWithoutUserInput {
+  where: EggWhereUniqueInput!
+  data: EggUpdateWithoutUserDataInput!
+}
+
+input EggUpsertWithoutFlavorsInput {
+  update: EggUpdateWithoutFlavorsDataInput!
+  create: EggCreateWithoutFlavorsInput!
+}
+
+input EggUpsertWithWhereUniqueWithoutUserInput {
+  where: EggWhereUniqueInput!
+  update: EggUpdateWithoutUserDataInput!
+  create: EggCreateWithoutUserInput!
 }
 
 input EggWhereInput {
@@ -570,6 +984,9 @@ input EggWhereInput {
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
   user: UserWhereInput
+  flavors_every: FlavorWhereInput
+  flavors_some: FlavorWhereInput
+  flavors_none: FlavorWhereInput
 }
 
 input EggWhereUniqueInput {
@@ -577,10 +994,386 @@ input EggWhereUniqueInput {
   eggname: String
 }
 
+type File implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String!
+}
+
+"""A connection to a list of items."""
+type FileConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FileEdge]!
+  aggregate: AggregateFile!
+}
+
+input FileCreateInput {
+  id: ID
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String!
+}
+
+"""An edge in a connection."""
+type FileEdge {
+  """The item at the end of the edge."""
+  node: File!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FileOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  filename_ASC
+  filename_DESC
+  mimetype_ASC
+  mimetype_DESC
+  encoding_ASC
+  encoding_DESC
+  url_ASC
+  url_DESC
+}
+
+type FilePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String!
+}
+
+type FileSubscriptionPayload {
+  mutation: MutationType!
+  node: File
+  updatedFields: [String!]
+  previousValues: FilePreviousValues
+}
+
+input FileSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FileSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FileSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FileSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FileWhereInput
+}
+
+input FileUpdateInput {
+  filename: String
+  mimetype: String
+  encoding: String
+  url: String
+}
+
+input FileUpdateManyMutationInput {
+  filename: String
+  mimetype: String
+  encoding: String
+  url: String
+}
+
+input FileWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FileWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FileWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FileWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  filename: String
+
+  """All values that are not equal to given value."""
+  filename_not: String
+
+  """All values that are contained in given list."""
+  filename_in: [String!]
+
+  """All values that are not contained in given list."""
+  filename_not_in: [String!]
+
+  """All values less than the given value."""
+  filename_lt: String
+
+  """All values less than or equal the given value."""
+  filename_lte: String
+
+  """All values greater than the given value."""
+  filename_gt: String
+
+  """All values greater than or equal the given value."""
+  filename_gte: String
+
+  """All values containing the given string."""
+  filename_contains: String
+
+  """All values not containing the given string."""
+  filename_not_contains: String
+
+  """All values starting with the given string."""
+  filename_starts_with: String
+
+  """All values not starting with the given string."""
+  filename_not_starts_with: String
+
+  """All values ending with the given string."""
+  filename_ends_with: String
+
+  """All values not ending with the given string."""
+  filename_not_ends_with: String
+  mimetype: String
+
+  """All values that are not equal to given value."""
+  mimetype_not: String
+
+  """All values that are contained in given list."""
+  mimetype_in: [String!]
+
+  """All values that are not contained in given list."""
+  mimetype_not_in: [String!]
+
+  """All values less than the given value."""
+  mimetype_lt: String
+
+  """All values less than or equal the given value."""
+  mimetype_lte: String
+
+  """All values greater than the given value."""
+  mimetype_gt: String
+
+  """All values greater than or equal the given value."""
+  mimetype_gte: String
+
+  """All values containing the given string."""
+  mimetype_contains: String
+
+  """All values not containing the given string."""
+  mimetype_not_contains: String
+
+  """All values starting with the given string."""
+  mimetype_starts_with: String
+
+  """All values not starting with the given string."""
+  mimetype_not_starts_with: String
+
+  """All values ending with the given string."""
+  mimetype_ends_with: String
+
+  """All values not ending with the given string."""
+  mimetype_not_ends_with: String
+  encoding: String
+
+  """All values that are not equal to given value."""
+  encoding_not: String
+
+  """All values that are contained in given list."""
+  encoding_in: [String!]
+
+  """All values that are not contained in given list."""
+  encoding_not_in: [String!]
+
+  """All values less than the given value."""
+  encoding_lt: String
+
+  """All values less than or equal the given value."""
+  encoding_lte: String
+
+  """All values greater than the given value."""
+  encoding_gt: String
+
+  """All values greater than or equal the given value."""
+  encoding_gte: String
+
+  """All values containing the given string."""
+  encoding_contains: String
+
+  """All values not containing the given string."""
+  encoding_not_contains: String
+
+  """All values starting with the given string."""
+  encoding_starts_with: String
+
+  """All values not starting with the given string."""
+  encoding_not_starts_with: String
+
+  """All values ending with the given string."""
+  encoding_ends_with: String
+
+  """All values not ending with the given string."""
+  encoding_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+}
+
+input FileWhereUniqueInput {
+  id: ID
+  url: String
+}
+
 type Flavor implements Node {
   id: ID!
   name: String!
   egg: Egg!
+  cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor!]
 }
 
 """A connection to a list of items."""
@@ -596,12 +1389,30 @@ type FlavorConnection {
 input FlavorCreateInput {
   id: ID
   name: String!
-  egg: EggCreateOneInput!
+  egg: EggCreateOneWithoutFlavorsInput!
+  cursors: CursorCreateManyWithoutFlavorInput
 }
 
-input FlavorCreateOneInput {
-  create: FlavorCreateInput
+input FlavorCreateManyWithoutEggInput {
+  create: [FlavorCreateWithoutEggInput!]
+  connect: [FlavorWhereUniqueInput!]
+}
+
+input FlavorCreateOneWithoutCursorsInput {
+  create: FlavorCreateWithoutCursorsInput
   connect: FlavorWhereUniqueInput
+}
+
+input FlavorCreateWithoutCursorsInput {
+  id: ID
+  name: String!
+  egg: EggCreateOneWithoutFlavorsInput!
+}
+
+input FlavorCreateWithoutEggInput {
+  id: ID
+  name: String!
+  cursors: CursorCreateManyWithoutFlavorInput
 }
 
 """An edge in a connection."""
@@ -623,6 +1434,97 @@ enum FlavorOrderByInput {
 type FlavorPreviousValues {
   id: ID!
   name: String!
+}
+
+input FlavorScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FlavorScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FlavorScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FlavorScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
 }
 
 type FlavorSubscriptionPayload {
@@ -662,30 +1564,68 @@ input FlavorSubscriptionWhereInput {
   node: FlavorWhereInput
 }
 
-input FlavorUpdateDataInput {
-  name: String
-  egg: EggUpdateOneRequiredInput
-}
-
 input FlavorUpdateInput {
   name: String
-  egg: EggUpdateOneRequiredInput
+  egg: EggUpdateOneRequiredWithoutFlavorsInput
+  cursors: CursorUpdateManyWithoutFlavorInput
+}
+
+input FlavorUpdateManyDataInput {
+  name: String
 }
 
 input FlavorUpdateManyMutationInput {
   name: String
 }
 
-input FlavorUpdateOneRequiredInput {
-  create: FlavorCreateInput
-  connect: FlavorWhereUniqueInput
-  update: FlavorUpdateDataInput
-  upsert: FlavorUpsertNestedInput
+input FlavorUpdateManyWithoutEggInput {
+  create: [FlavorCreateWithoutEggInput!]
+  connect: [FlavorWhereUniqueInput!]
+  set: [FlavorWhereUniqueInput!]
+  disconnect: [FlavorWhereUniqueInput!]
+  delete: [FlavorWhereUniqueInput!]
+  update: [FlavorUpdateWithWhereUniqueWithoutEggInput!]
+  updateMany: [FlavorUpdateManyWithWhereNestedInput!]
+  deleteMany: [FlavorScalarWhereInput!]
+  upsert: [FlavorUpsertWithWhereUniqueWithoutEggInput!]
 }
 
-input FlavorUpsertNestedInput {
-  update: FlavorUpdateDataInput!
-  create: FlavorCreateInput!
+input FlavorUpdateManyWithWhereNestedInput {
+  where: FlavorScalarWhereInput!
+  data: FlavorUpdateManyDataInput!
+}
+
+input FlavorUpdateOneRequiredWithoutCursorsInput {
+  create: FlavorCreateWithoutCursorsInput
+  connect: FlavorWhereUniqueInput
+  update: FlavorUpdateWithoutCursorsDataInput
+  upsert: FlavorUpsertWithoutCursorsInput
+}
+
+input FlavorUpdateWithoutCursorsDataInput {
+  name: String
+  egg: EggUpdateOneRequiredWithoutFlavorsInput
+}
+
+input FlavorUpdateWithoutEggDataInput {
+  name: String
+  cursors: CursorUpdateManyWithoutFlavorInput
+}
+
+input FlavorUpdateWithWhereUniqueWithoutEggInput {
+  where: FlavorWhereUniqueInput!
+  data: FlavorUpdateWithoutEggDataInput!
+}
+
+input FlavorUpsertWithoutCursorsInput {
+  update: FlavorUpdateWithoutCursorsDataInput!
+  create: FlavorCreateWithoutCursorsInput!
+}
+
+input FlavorUpsertWithWhereUniqueWithoutEggInput {
+  where: FlavorWhereUniqueInput!
+  update: FlavorUpdateWithoutEggDataInput!
+  create: FlavorCreateWithoutEggInput!
 }
 
 input FlavorWhereInput {
@@ -778,6 +1718,9 @@ input FlavorWhereInput {
   """All values not ending with the given string."""
   name_not_ends_with: String
   egg: EggWhereInput
+  cursors_every: CursorWhereInput
+  cursors_some: CursorWhereInput
+  cursors_none: CursorWhereInput
 }
 
 input FlavorWhereUniqueInput {
@@ -791,30 +1734,36 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createCursor(data: CursorCreateInput!): Cursor!
   createUser(data: UserCreateInput!): User!
-  createFlavor(data: FlavorCreateInput!): Flavor!
   createEgg(data: EggCreateInput!): Egg!
-  updateCursor(data: CursorUpdateInput!, where: CursorWhereUniqueInput!): Cursor
+  createFlavor(data: FlavorCreateInput!): Flavor!
+  createCursor(data: CursorCreateInput!): Cursor!
+  createFile(data: FileCreateInput!): File!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateFlavor(data: FlavorUpdateInput!, where: FlavorWhereUniqueInput!): Flavor
   updateEgg(data: EggUpdateInput!, where: EggWhereUniqueInput!): Egg
-  deleteCursor(where: CursorWhereUniqueInput!): Cursor
+  updateFlavor(data: FlavorUpdateInput!, where: FlavorWhereUniqueInput!): Flavor
+  updateCursor(data: CursorUpdateInput!, where: CursorWhereUniqueInput!): Cursor
+  updateFile(data: FileUpdateInput!, where: FileWhereUniqueInput!): File
   deleteUser(where: UserWhereUniqueInput!): User
-  deleteFlavor(where: FlavorWhereUniqueInput!): Flavor
   deleteEgg(where: EggWhereUniqueInput!): Egg
-  upsertCursor(where: CursorWhereUniqueInput!, create: CursorCreateInput!, update: CursorUpdateInput!): Cursor!
+  deleteFlavor(where: FlavorWhereUniqueInput!): Flavor
+  deleteCursor(where: CursorWhereUniqueInput!): Cursor
+  deleteFile(where: FileWhereUniqueInput!): File
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertFlavor(where: FlavorWhereUniqueInput!, create: FlavorCreateInput!, update: FlavorUpdateInput!): Flavor!
   upsertEgg(where: EggWhereUniqueInput!, create: EggCreateInput!, update: EggUpdateInput!): Egg!
-  updateManyCursors(data: CursorUpdateManyMutationInput!, where: CursorWhereInput): BatchPayload!
+  upsertFlavor(where: FlavorWhereUniqueInput!, create: FlavorCreateInput!, update: FlavorUpdateInput!): Flavor!
+  upsertCursor(where: CursorWhereUniqueInput!, create: CursorCreateInput!, update: CursorUpdateInput!): Cursor!
+  upsertFile(where: FileWhereUniqueInput!, create: FileCreateInput!, update: FileUpdateInput!): File!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  updateManyFlavors(data: FlavorUpdateManyMutationInput!, where: FlavorWhereInput): BatchPayload!
   updateManyEggs(data: EggUpdateManyMutationInput!, where: EggWhereInput): BatchPayload!
-  deleteManyCursors(where: CursorWhereInput): BatchPayload!
+  updateManyFlavors(data: FlavorUpdateManyMutationInput!, where: FlavorWhereInput): BatchPayload!
+  updateManyCursors(data: CursorUpdateManyMutationInput!, where: CursorWhereInput): BatchPayload!
+  updateManyFiles(data: FileUpdateManyMutationInput!, where: FileWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyFlavors(where: FlavorWhereInput): BatchPayload!
   deleteManyEggs(where: EggWhereInput): BatchPayload!
+  deleteManyFlavors(where: FlavorWhereInput): BatchPayload!
+  deleteManyCursors(where: CursorWhereInput): BatchPayload!
+  deleteManyFiles(where: FileWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -854,18 +1803,21 @@ enum Permission {
 }
 
 type Query {
-  cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  flavors(where: FlavorWhereInput, orderBy: FlavorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Flavor]!
   eggs(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Egg]!
-  cursor(where: CursorWhereUniqueInput!): Cursor
+  flavors(where: FlavorWhereInput, orderBy: FlavorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Flavor]!
+  cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor]!
+  files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File]!
   user(where: UserWhereUniqueInput!): User
-  flavor(where: FlavorWhereUniqueInput!): Flavor
   egg(where: EggWhereUniqueInput!): Egg
-  cursorsConnection(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CursorConnection!
+  flavor(where: FlavorWhereUniqueInput!): Flavor
+  cursor(where: CursorWhereUniqueInput!): Cursor
+  file(where: FileWhereUniqueInput!): File
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  flavorsConnection(where: FlavorWhereInput, orderBy: FlavorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FlavorConnection!
   eggsConnection(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EggConnection!
+  flavorsConnection(where: FlavorWhereInput, orderBy: FlavorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FlavorConnection!
+  cursorsConnection(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CursorConnection!
+  filesConnection(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FileConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -875,10 +1827,11 @@ type Query {
 }
 
 type Subscription {
-  cursor(where: CursorSubscriptionWhereInput): CursorSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  flavor(where: FlavorSubscriptionWhereInput): FlavorSubscriptionPayload
   egg(where: EggSubscriptionWhereInput): EggSubscriptionPayload
+  flavor(where: FlavorSubscriptionWhereInput): FlavorSubscriptionPayload
+  cursor(where: CursorSubscriptionWhereInput): CursorSubscriptionPayload
+  file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
 }
 
 type User implements Node {
@@ -892,6 +1845,7 @@ type User implements Node {
   resetToken: String
   resetTokenExpiry: String
   permissions: [Permission!]!
+  eggs(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Egg!]
 }
 
 """A connection to a list of items."""
@@ -913,15 +1867,27 @@ input UserCreateInput {
   resetToken: String
   resetTokenExpiry: String
   permissions: UserCreatepermissionsInput
+  eggs: EggCreateManyWithoutUserInput
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
+input UserCreateOneWithoutEggsInput {
+  create: UserCreateWithoutEggsInput
   connect: UserWhereUniqueInput
 }
 
 input UserCreatepermissionsInput {
   set: [Permission!]
+}
+
+input UserCreateWithoutEggsInput {
+  id: ID
+  name: String!
+  username: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: UserCreatepermissionsInput
 }
 
 """An edge in a connection."""
@@ -1004,16 +1970,6 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
-input UserUpdateDataInput {
-  name: String
-  username: String
-  email: String
-  password: String
-  resetToken: String
-  resetTokenExpiry: String
-  permissions: UserUpdatepermissionsInput
-}
-
 input UserUpdateInput {
   name: String
   username: String
@@ -1022,6 +1978,7 @@ input UserUpdateInput {
   resetToken: String
   resetTokenExpiry: String
   permissions: UserUpdatepermissionsInput
+  eggs: EggUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1034,20 +1991,30 @@ input UserUpdateManyMutationInput {
   permissions: UserUpdatepermissionsInput
 }
 
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
+input UserUpdateOneRequiredWithoutEggsInput {
+  create: UserCreateWithoutEggsInput
   connect: UserWhereUniqueInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
+  update: UserUpdateWithoutEggsDataInput
+  upsert: UserUpsertWithoutEggsInput
 }
 
 input UserUpdatepermissionsInput {
   set: [Permission!]
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpdateWithoutEggsDataInput {
+  name: String
+  username: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpsertWithoutEggsInput {
+  update: UserUpdateWithoutEggsDataInput!
+  create: UserCreateWithoutEggsInput!
 }
 
 input UserWhereInput {
@@ -1383,6 +2350,9 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   resetTokenExpiry_not_ends_with: String
+  eggs_every: EggWhereInput
+  eggs_some: EggWhereInput
+  eggs_none: EggWhereInput
 }
 
 input UserWhereUniqueInput {

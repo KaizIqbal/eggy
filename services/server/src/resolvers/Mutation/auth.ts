@@ -3,7 +3,7 @@ import { randomBytes } from "crypto";
 
 // Helper Functions
 import { promisify } from "util";
-import { mailFormate, transport } from "../../mail";
+import { mailFormate, transport } from "../../modules/mail";
 import authoriaztion from "../../utils/auth";
 import hasPermission from "../../utils/hasPermission";
 import loggedIn from "../../utils/loggedIn";
