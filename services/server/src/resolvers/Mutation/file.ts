@@ -15,8 +15,13 @@ export const fileMutations = {
     // creating Stream
     const stream = createReadStream();
 
-    console.log(stream, filename, mimetype, encoding);
-    const url = "test.test.com";
+    // fileApi call
+    const s3Response = await uploadToS3(filename, stream);
+
+    // get url from s3 Response
+    const url = s3Response.Location;
+
+    // add detail to prisma
     const file = await ctx.db.mutation.createFile(
       {
         data: {
@@ -29,6 +34,7 @@ export const fileMutations = {
       info
     );
 
+    // return File
     return file;
   }
 };
