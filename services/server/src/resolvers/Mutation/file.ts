@@ -16,19 +16,19 @@ export const fileMutations = {
     const stream = createReadStream();
 
     console.log(stream, filename, mimetype, encoding);
-    // const url = "test.test.com";
-    // const file = await ctx.db.mutation.createFile(
-    //   {
-    //     data: {
-    //       filename: filename,
-    //       mimetype: mimetype,
-    //       encoding: encoding,
-    //       url: url
-    //     }
-    //   },
-    //   info
-    // );
+    const url = "test.test.com";
+    const file = await ctx.db.mutation.createFile(
+      {
+        data: {
+          filename: filename,
+          mimetype: mimetype,
+          encoding: encoding,
+          url: url
+        }
+      },
+      info
+    );
 
-    return { id: "sdsdsdsd24234" };
+    return file;
   }
 };
