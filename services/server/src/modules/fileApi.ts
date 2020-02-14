@@ -1,30 +1,27 @@
 import * as uuid from "uuid";
 const AWS = require("aws-sdk");
 
-function uploadToS3(file: { filename: any; stream: any }) {
-  const s3bucket = new AWS.S3({
-    accessKeyId: process.env.IAM_USER_KEY,
-    secretAccessKey: process.env.IAM_USER_SECRET,
-    Bucket: process.env.BUCKET_NAME
-  });
-  s3bucket.createBucket(function() {
-    const key = uuid() + "-" + file.filename;
+const s3bucket = new AWS.S3({
+  accessKeyId: process.env.IAM_USER_KEY,
+  secretAccessKey: process.env.IAM_USER_SECRET,
+  Bucket: process.env.BUCKET_NAME
+});
 
-    const params = {
-      Bucket: process.env.BUCKET_NAME,
-      Key: key,
-      Body: file.stream
-    };
+function uploadToS3(filename: any, stream: any) {
+  // Generate unique name for each file
+  const key = uuid() + "-" + filename;
 
-    s3bucket.upload(params, function(err: any, data: any) {
-      if (err) {
-        console.log("error in callback");
-        console.log(err);
-      }
-      console.log("success");
-      console.log(data);
-    });
-  });
+  // Configure parameter
+  const params = {
+    Bucket: process.env.BUCKET_NAME,
+    Key: key,
+    Body: stream
+  };
+
+  // Uploading to S3
+  const s3Response = s3bucket.upload(params).promise();
+
+  return s3Response;
 }
 
 export default uploadToS3;
