@@ -195,6 +195,18 @@ const DELETE_CURSOR_MUTATION = gql`
   }
 `;
 
+// ########## FILE MUTATIONS ##########
+
+// ##### SINGLE UPLOAD #####
+
+const UPLOAD_MUTATION = gql`
+  mutation uploadFile($file: Upload!) {
+    uploadFile(file: $file) {
+      id
+    }
+  }
+`;
+
 export {
   // Auth
   SIGNUP_MUTATION,
@@ -215,5 +227,7 @@ export {
   DELETE_FLAVOR_MUTATION,
   // Cursor
   CREATE_CURSOR_MUTATION,
-  DELETE_CURSOR_MUTATION
+  DELETE_CURSOR_MUTATION,
+  // File
+  UPLOAD_MUTATION
 };

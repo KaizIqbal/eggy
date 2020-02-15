@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/react-hooks";
 import React from "react";
 import { CURSOR_QUERY } from "../../graphql/Query";
+import FileUpload from "../upload/File";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -33,6 +34,7 @@ const CursorWorkshop: React.FunctionComponent<ICursorWorkshopProps> = props => {
     <>
       <h1>{data.cursor.name}</h1>
       <p>{data.cursor.frames}</p>
+      <FileUpload />
     </>
   );
 };
