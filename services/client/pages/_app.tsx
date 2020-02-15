@@ -1,11 +1,12 @@
-import React from "react";
+import { ApolloProvider } from "@apollo/react-hooks";
+import { NormalizedCacheObject } from "apollo-cache-inmemory";
+import ApolloClient from "apollo-client";
 import App from "next/app";
 import Head from "next/head";
-import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { ApolloProvider } from "@apollo/react-hooks";
-import withApollo from "../hooks/withApollo";
-import { ApolloClient, NormalizedCacheObject } from "apollo-boost";
+import React from "react";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { Page } from "../components";
+import withApollo from "../hooks/withApollo";
 
 // ##### GLOBAL THEME #####
 // TODO:Edit Global Theme
