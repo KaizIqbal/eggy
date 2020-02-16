@@ -46,9 +46,7 @@
     "typescript": "^3.7.4"
   },
   "babel": {
-    "presets": [
-      "env"
-    ]
+    "presets": ["env"]
   },
   "keywords": []
 }
