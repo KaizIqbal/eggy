@@ -35,9 +35,13 @@ const CursorWorkshop: React.FunctionComponent<ICursorWorkshopProps> = props => {
       <h1>{data.cursor.name}</h1>
       <p>{data.cursor.id}</p>
       <p>{data.cursor.frames}</p>
+
+      {/* Display Cursor Image */}
       {data.cursor.source && (
         <img src={data.cursor.source.url} alt={data.cursor.name} />
       )}
+
+      {/* If Image urlnot exits render the form */}
       {!data.cursor.source && (
         <FileUpload
           eggname={props.eggname}
