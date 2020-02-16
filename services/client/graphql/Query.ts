@@ -124,6 +124,9 @@ const CURSOR_QUERY = gql`
       id
       name
       frames
+      source{
+        url
+      }
     }
   }
 `;
