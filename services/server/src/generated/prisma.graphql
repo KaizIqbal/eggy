@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Thu Feb 13 2020 04:04:10 GMT+0000 (Coordinated Universal Time)
+# timestamp: Sat Feb 15 2020 04:10:26 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -31,6 +31,7 @@ type Cursor implements Node {
   name: String!
   frames: Int!
   flavor: Flavor!
+  source: File
 }
 
 """A connection to a list of items."""
@@ -48,6 +49,7 @@ input CursorCreateInput {
   name: String!
   frames: Int!
   flavor: FlavorCreateOneWithoutCursorsInput!
+  source: FileCreateOneWithoutCursorInput
 }
 
 input CursorCreateManyWithoutFlavorInput {
@@ -55,10 +57,23 @@ input CursorCreateManyWithoutFlavorInput {
   connect: [CursorWhereUniqueInput!]
 }
 
+input CursorCreateOneWithoutSourceInput {
+  create: CursorCreateWithoutSourceInput
+  connect: CursorWhereUniqueInput
+}
+
 input CursorCreateWithoutFlavorInput {
   id: ID
   name: String!
   frames: Int!
+  source: FileCreateOneWithoutCursorInput
+}
+
+input CursorCreateWithoutSourceInput {
+  id: ID
+  name: String!
+  frames: Int!
+  flavor: FlavorCreateOneWithoutCursorsInput!
 }
 
 """An edge in a connection."""
@@ -244,6 +259,7 @@ input CursorUpdateInput {
   name: String
   frames: Int
   flavor: FlavorUpdateOneRequiredWithoutCursorsInput
+  source: FileUpdateOneWithoutCursorInput
 }
 
 input CursorUpdateManyDataInput {
@@ -273,14 +289,33 @@ input CursorUpdateManyWithWhereNestedInput {
   data: CursorUpdateManyDataInput!
 }
 
+input CursorUpdateOneRequiredWithoutSourceInput {
+  create: CursorCreateWithoutSourceInput
+  connect: CursorWhereUniqueInput
+  update: CursorUpdateWithoutSourceDataInput
+  upsert: CursorUpsertWithoutSourceInput
+}
+
 input CursorUpdateWithoutFlavorDataInput {
   name: String
   frames: Int
+  source: FileUpdateOneWithoutCursorInput
+}
+
+input CursorUpdateWithoutSourceDataInput {
+  name: String
+  frames: Int
+  flavor: FlavorUpdateOneRequiredWithoutCursorsInput
 }
 
 input CursorUpdateWithWhereUniqueWithoutFlavorInput {
   where: CursorWhereUniqueInput!
   data: CursorUpdateWithoutFlavorDataInput!
+}
+
+input CursorUpsertWithoutSourceInput {
+  update: CursorUpdateWithoutSourceDataInput!
+  create: CursorCreateWithoutSourceInput!
 }
 
 input CursorUpsertWithWhereUniqueWithoutFlavorInput {
@@ -401,6 +436,7 @@ input CursorWhereInput {
   """All values greater than or equal the given value."""
   frames_gte: Int
   flavor: FlavorWhereInput
+  source: FileWhereInput
 }
 
 input CursorWhereUniqueInput {
@@ -1002,6 +1038,7 @@ type File implements Node {
   mimetype: String!
   encoding: String!
   url: String!
+  cursor: Cursor!
 }
 
 """A connection to a list of items."""
@@ -1015,6 +1052,20 @@ type FileConnection {
 }
 
 input FileCreateInput {
+  id: ID
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String!
+  cursor: CursorCreateOneWithoutSourceInput!
+}
+
+input FileCreateOneWithoutCursorInput {
+  create: FileCreateWithoutCursorInput
+  connect: FileWhereUniqueInput
+}
+
+input FileCreateWithoutCursorInput {
   id: ID
   filename: String!
   mimetype: String!
@@ -1100,6 +1151,7 @@ input FileUpdateInput {
   mimetype: String
   encoding: String
   url: String
+  cursor: CursorUpdateOneRequiredWithoutSourceInput
 }
 
 input FileUpdateManyMutationInput {
@@ -1107,6 +1159,27 @@ input FileUpdateManyMutationInput {
   mimetype: String
   encoding: String
   url: String
+}
+
+input FileUpdateOneWithoutCursorInput {
+  create: FileCreateWithoutCursorInput
+  connect: FileWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: FileUpdateWithoutCursorDataInput
+  upsert: FileUpsertWithoutCursorInput
+}
+
+input FileUpdateWithoutCursorDataInput {
+  filename: String
+  mimetype: String
+  encoding: String
+  url: String
+}
+
+input FileUpsertWithoutCursorInput {
+  update: FileUpdateWithoutCursorDataInput!
+  create: FileCreateWithoutCursorInput!
 }
 
 input FileWhereInput {
@@ -1362,6 +1435,7 @@ input FileWhereInput {
 
   """All values not ending with the given string."""
   url_not_ends_with: String
+  cursor: CursorWhereInput
 }
 
 input FileWhereUniqueInput {
