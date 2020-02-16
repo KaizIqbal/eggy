@@ -3,17 +3,34 @@ import React from "react";
 import { UPLOAD_MUTATION } from "../../graphql/Mutation";
 import { Form } from "../styled";
 import { useForm } from "react-hook-form";
+import { CURSOR_QUERY } from "../../graphql/Query";
 
 // ##### COMPONENT PROPS TYPE #####
 
-interface IFileUploadProps {}
+interface IFileUploadProps {
+  cursorId: string;
+  eggname: string;
+  flavorname: string;
+  cursorname: string;
+}
 
 // ##### COMPONENT #####
 
 const FileUpload: React.FunctionComponent<IFileUploadProps> = props => {
   // ##### HOOKS #####
 
-  const [fileUpload, { error, loading }] = useMutation(UPLOAD_MUTATION);
+  const [fileUpload, { error, loading }] = useMutation(UPLOAD_MUTATION, {
+    refetchQueries: [
+      {
+        query: CURSOR_QUERY,
+        variables: {
+          eggname: props.eggname,
+          flavorname: props.flavorname,
+          cursorname: props.cursorname
+        }
+      }
+    ]
+  });
 
   // react form hook
   const { register, handleSubmit, errors } = useForm();
@@ -30,9 +47,9 @@ const FileUpload: React.FunctionComponent<IFileUploadProps> = props => {
 
       // get only one file from values
       const file = values.file[0];
-      console.log(file);
+
       // uploadFile Mutation
-      await fileUpload({ variables: { file } });
+      await fileUpload({ variables: { file: file, cursorId: props.cursorId } });
 
       // Reset Form
       e.target.reset();

@@ -33,8 +33,19 @@ const CursorWorkshop: React.FunctionComponent<ICursorWorkshopProps> = props => {
   return (
     <>
       <h1>{data.cursor.name}</h1>
+      <p>{data.cursor.id}</p>
       <p>{data.cursor.frames}</p>
-      <FileUpload />
+      {data.cursor.source && (
+        <img src={data.cursor.source.url} alt={data.cursor.name} />
+      )}
+      {!data.cursor.source && (
+        <FileUpload
+          eggname={props.eggname}
+          flavorname={props.flavorname}
+          cursorname={props.cursorname}
+          cursorId={data.cursor.id}
+        />
+      )}
     </>
   );
 };

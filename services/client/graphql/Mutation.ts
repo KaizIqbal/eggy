@@ -200,8 +200,8 @@ const DELETE_CURSOR_MUTATION = gql`
 // ##### SINGLE UPLOAD #####
 
 const UPLOAD_MUTATION = gql`
-  mutation uploadFile($file: Upload!) {
-    uploadFile(file: $file) {
+  mutation uploadFile($file: Upload!, $cursorId: ID!) {
+    uploadFile(file: $file, cursorId: $cursorId) {
       id
     }
   }
