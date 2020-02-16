@@ -18,6 +18,8 @@ export const fileMutations = {
     // fileApi call
     const s3Response = await uploadToS3(filename, stream);
 
+    console.log(s3Response);
+
     // get url from s3 Response
     const url = s3Response.Location;
 
@@ -28,7 +30,8 @@ export const fileMutations = {
           filename: filename,
           mimetype: mimetype,
           encoding: encoding,
-          url: url
+          url: url,
+          cursor: { connect: { id: args.cursorId } }
         }
       },
       info

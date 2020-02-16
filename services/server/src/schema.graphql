@@ -9,7 +9,7 @@ type SuccessMessage{
 type Mutation {
 
   # File
-  uploadFile(file: Upload!): File!
+  uploadFile(file: Upload! cursorId:ID!): File!
   
   # Eggs
   createEgg(title: String! eggname:String! cursorTypes: [cursorType]!): Egg!

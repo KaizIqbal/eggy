@@ -50,6 +50,7 @@ type Cursor {
   name: String!
   frames: Int!
   flavor: Flavor! @relation(name: "Cursors")
+  source: File @relation(name: "File" link: INLINE onDelete: CASCADE)
 }
 
 type File {
@@ -60,4 +61,5 @@ type File {
   mimetype: String!
   encoding: String!
   url: String! @unique
+  cursor: Cursor! @relation(name: "File")
 }
