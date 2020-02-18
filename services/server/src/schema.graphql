@@ -10,6 +10,7 @@ type Mutation {
 
   # File
   uploadFile(file: Upload! cursorId:ID!): File!
+  deleteFile(fileId: ID!): File!
   
   # Eggs
   createEgg(title: String! eggname:String! cursorTypes: [cursorType]!): Egg!
