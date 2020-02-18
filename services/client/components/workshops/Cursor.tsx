@@ -1,7 +1,8 @@
 import { useQuery } from "@apollo/react-hooks";
 import React from "react";
 import { CURSOR_QUERY } from "../../graphql/Query";
-import FileUpload from "../upload/File";
+import FileUpload from "../file/Upload";
+import DeleteFile from "../file/Delete";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -18,9 +19,7 @@ const CursorWorkshop: React.FunctionComponent<ICursorWorkshopProps> = props => {
 
   const { data, loading, error } = useQuery(CURSOR_QUERY, {
     variables: {
-      eggname: props.eggname,
-      flavorname: props.flavorname,
-      cursorname: props.cursorname
+      ...props
     }
   });
 
@@ -36,9 +35,12 @@ const CursorWorkshop: React.FunctionComponent<ICursorWorkshopProps> = props => {
       <p>{data.cursor.id}</p>
       <p>{data.cursor.frames}</p>
 
-      {/* Display Cursor Image */}
+      {/* Display Cursor  */}
       {data.cursor.source && (
-        <img src={data.cursor.source.url} alt={data.cursor.name} />
+        <>
+          <img src={data.cursor.source.url} alt={data.cursor.name} />
+          <DeleteFile names={{ ...props }} id={data.cursor.source.id} />
+        </>
       )}
 
       {/* If Image urlnot exits render the form */}

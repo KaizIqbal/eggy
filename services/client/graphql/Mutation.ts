@@ -207,6 +207,14 @@ const UPLOAD_MUTATION = gql`
   }
 `;
 
+const DELETE_FILE_MUTATION = gql`
+  mutation deleteFile($fileId: ID!) {
+    deleteFile(fileId: $fileId) {
+      id
+    }
+  }
+`;
+
 export {
   // Auth
   SIGNUP_MUTATION,
@@ -229,5 +237,6 @@ export {
   CREATE_CURSOR_MUTATION,
   DELETE_CURSOR_MUTATION,
   // File
-  UPLOAD_MUTATION
+  UPLOAD_MUTATION,
+  DELETE_FILE_MUTATION
 };
