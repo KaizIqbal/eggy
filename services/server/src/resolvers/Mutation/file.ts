@@ -1,4 +1,4 @@
-import * as fileApi from "../../modules/fileApi";
+import { uploadToS3, deleteFromS3 } from "../../modules/fileApi";
 import loggedIn from "../../utils/loggedIn";
 
 export const fileMutations = {
@@ -49,7 +49,7 @@ export const fileMutations = {
       name;
 
     // fileApi call
-    const s3Response = await fileApi.uploadToS3(key, stream);
+    const s3Response = await uploadToS3(key, stream);
 
     // get url from s3 Response
     const url = s3Response.Location;
@@ -88,7 +88,7 @@ export const fileMutations = {
     }
 
     // Deletng from S3
-    const s3Response = await fileApi.deleteFromS3(data.key);
+    const s3Response = await deleteFromS3(data.key);
 
     if (s3Response.deletedMarker) {
       throw new Error("ERROR: File not deleted");
@@ -101,6 +101,8 @@ export const fileMutations = {
     );
   }
 };
+
+// ########### HELPER FUNCTION ###########
 
 function getFileExtension(filename) {
   let ext = /[.]/.exec(filename) ? /[^.]+$/.exec(filename)[0] : "";
