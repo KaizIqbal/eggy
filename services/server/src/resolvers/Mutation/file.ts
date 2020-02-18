@@ -1,6 +1,5 @@
 import * as fileApi from "../../modules/fileApi";
 import loggedIn from "../../utils/loggedIn";
-import uuid = require("uuid");
 
 export const fileMutations = {
   async uploadFile(parent, args, ctx, info) {
@@ -16,8 +15,38 @@ export const fileMutations = {
     // creating Stream
     const stream = createReadStream();
 
-    // Generate unique name for each file
-    const key = uuid() + "-" + filename;
+    // Fetch names from database for S3 file structure
+    const data = await ctx.db.query.cursor(
+      { where: { id: args.cursorId } },
+      `{
+        name
+        flavor {
+          name
+          egg {
+            eggname
+            user {
+              username
+            }
+          }
+        }
+      }`
+    );
+
+    const name = data.name + getFileExtension(filename);
+
+    if (!data) {
+      throw new Error("Something Went Wrong");
+    }
+
+    // Generating S3 file strucutre
+    const key =
+      data.flavor.egg.user.username +
+      "/" +
+      data.flavor.egg.eggname +
+      "/" +
+      data.flavor.name +
+      "/" +
+      name;
 
     // fileApi call
     const s3Response = await fileApi.uploadToS3(key, stream);
@@ -30,7 +59,7 @@ export const fileMutations = {
       {
         data: {
           key: key,
-          filename: filename,
+          filename: name,
           mimetype: mimetype,
           encoding: encoding,
           url: url,
@@ -72,3 +101,11 @@ export const fileMutations = {
     );
   }
 };
+
+function getFileExtension(filename) {
+  let ext = /[.]/.exec(filename) ? /[^.]+$/.exec(filename)[0] : "";
+  if (ext !== "") {
+    ext = "." + ext;
+  }
+  return ext;
+}
