@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Sat Feb 15 2020 04:10:26 GMT+0000 (Coordinated Universal Time)
+# timestamp: Tue Feb 18 2020 04:21:18 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -1034,6 +1034,7 @@ type File implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  key: String!
   filename: String!
   mimetype: String!
   encoding: String!
@@ -1053,6 +1054,7 @@ type FileConnection {
 
 input FileCreateInput {
   id: ID
+  key: String!
   filename: String!
   mimetype: String!
   encoding: String!
@@ -1067,6 +1069,7 @@ input FileCreateOneWithoutCursorInput {
 
 input FileCreateWithoutCursorInput {
   id: ID
+  key: String!
   filename: String!
   mimetype: String!
   encoding: String!
@@ -1089,6 +1092,8 @@ enum FileOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
+  key_ASC
+  key_DESC
   filename_ASC
   filename_DESC
   mimetype_ASC
@@ -1103,6 +1108,7 @@ type FilePreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  key: String!
   filename: String!
   mimetype: String!
   encoding: String!
@@ -1147,6 +1153,7 @@ input FileSubscriptionWhereInput {
 }
 
 input FileUpdateInput {
+  key: String
   filename: String
   mimetype: String
   encoding: String
@@ -1155,6 +1162,7 @@ input FileUpdateInput {
 }
 
 input FileUpdateManyMutationInput {
+  key: String
   filename: String
   mimetype: String
   encoding: String
@@ -1171,6 +1179,7 @@ input FileUpdateOneWithoutCursorInput {
 }
 
 input FileUpdateWithoutCursorDataInput {
+  key: String
   filename: String
   mimetype: String
   encoding: String
@@ -1275,6 +1284,46 @@ input FileWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
   filename: String
 
   """All values that are not equal to given value."""

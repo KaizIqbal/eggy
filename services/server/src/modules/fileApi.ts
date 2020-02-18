@@ -1,4 +1,3 @@
-import * as uuid from "uuid";
 const AWS = require("aws-sdk");
 
 const s3bucket = new AWS.S3({
@@ -7,10 +6,7 @@ const s3bucket = new AWS.S3({
   Bucket: process.env.BUCKET_NAME
 });
 
-function uploadToS3(filename: any, stream: any) {
-  // Generate unique name for each file
-  const key = uuid() + "-" + filename;
-
+export function uploadToS3(key: any, stream: any) {
   // Configure parameter
   const params = {
     Bucket: process.env.BUCKET_NAME,
@@ -25,4 +21,15 @@ function uploadToS3(filename: any, stream: any) {
   return s3Response;
 }
 
-export default uploadToS3;
+export function deleteFromS3(key: any) {
+  // Configure parameter
+  const params = {
+    Bucket: process.env.BUCKET_NAME,
+    Key: key
+  };
+
+  // Deleting from S3
+  const s3Response = s3bucket.deleteObject(params).promise();
+
+  return s3Response;
+}

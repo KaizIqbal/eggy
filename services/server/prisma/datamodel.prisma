@@ -57,6 +57,7 @@ type File {
   id: ID! @id
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+  key: String!
   filename: String!
   mimetype: String!
   encoding: String!
