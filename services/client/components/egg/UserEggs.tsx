@@ -42,6 +42,7 @@ const UserEggList: React.FunctionComponent<IEggListProps> = props => {
             <Link
               href="/[user]/[egg]/workshop"
               as={`/${props.username}/${egg.eggname}/workshop`}
+              shallow={true}
             >
               <a>{egg.title}</a>
             </Link>
