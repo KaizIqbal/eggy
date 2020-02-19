@@ -24,7 +24,7 @@ const User: React.FunctionComponent<IUserProps> = props => {
   if (me)
     return (
       <p>
-        <Link href="/[user]" as={`/${me.username}`}>
+        <Link href="/[user]" as={`/${me.username}`} shallow={true}>
           <a>{me.name}</a>
         </Link>
         <br />
