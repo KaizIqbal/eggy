@@ -1,9 +1,9 @@
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
-import { UPLOAD_MUTATION } from "../../graphql/Mutation";
-import { Form } from "../styled";
 import { useForm } from "react-hook-form";
+import { UPLOAD_MUTATION } from "../../graphql/Mutation";
 import { CURSOR_QUERY } from "../../graphql/Query";
+import { Form } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
 

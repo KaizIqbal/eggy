@@ -1,5 +1,5 @@
 import React from "react";
-import useUser from "../../hooks/user";
+import useUser from "../../hooks/graphql/user";
 import PublicPage from "./Public";
 
 // ##### COMPONENT PROPS TYPE #####
