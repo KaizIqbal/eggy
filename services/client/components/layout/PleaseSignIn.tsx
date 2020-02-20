@@ -1,5 +1,5 @@
 import React from "react";
-import useUser from "../../hooks/user";
+import useUser from "../../hooks/graphql/user";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IPleaseSignInProps {

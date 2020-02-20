@@ -4,7 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { SIGNIN_MUTATION } from "../../graphql/Mutation";
 import { ME_QUERY } from "../../graphql/Query";
-import useUser from "../../hooks/user";
+import useUser from "../../hooks/graphql/user";
 import { Form } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
