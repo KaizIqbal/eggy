@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import useUser from "../../hooks/user";
+import useUser from "../../hooks/graphql/user";
 import SignOut from "../user/SignOut";
 
 // ##### COMPONENT PROPS TYPE #####

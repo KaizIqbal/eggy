@@ -1,5 +1,5 @@
-import React from "react";
 import { useQuery } from "@apollo/react-hooks";
+import React from "react";
 import { FLAVOR_QUERY } from "../../graphql/Query";
 import CreateCursor from "../cursor/Create";
 import Cursors from "../cursor/Cursors";

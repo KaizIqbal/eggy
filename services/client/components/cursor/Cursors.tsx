@@ -1,7 +1,7 @@
-import React from "react";
-import useCursors from "../../hooks/cursors";
-import DeleteCursor from "./Delete";
 import Link from "next/link";
+import React from "react";
+import useCursors from "../../hooks/graphql/cursors";
+import DeleteCursor from "./Delete";
 
 // ##### COMPONENT PROPS TYPE #####
 interface IFlavorsProps {

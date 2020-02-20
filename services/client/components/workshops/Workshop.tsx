@@ -1,8 +1,8 @@
-import React from "react";
-import Flavors from "../flavor/Flavors";
 import { useQuery } from "@apollo/react-hooks";
+import React from "react";
 import { EGG_QUERY } from "../../graphql/Query";
 import CreateFlavor from "../flavor/Create";
+import Flavors from "../flavor/Flavors";
 
 // ##### COMPONENT PROPS TYPE #####
 

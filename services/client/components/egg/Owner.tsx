@@ -1,6 +1,6 @@
-import React from "react";
-import useUser from "../../hooks/user";
 import Router from "next/router";
+import React from "react";
+import useUser from "../../hooks/graphql/user";
 
 // ##### COMPONENT PROPS TYPE #####
 

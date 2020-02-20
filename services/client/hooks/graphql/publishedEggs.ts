@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/react-hooks";
-import { GET_EGGS_CURSOR } from "../graphql/Query";
-import updateEggCache from "../utils/updateEggCache";
+import { GET_EGGS_CURSOR } from "../../graphql/Query";
+import updateEggCache from "../../utils/updateEggCache";
 
 function usePublishedEggs() {
   const { data, loading, fetchMore, error } = useQuery(GET_EGGS_CURSOR, {

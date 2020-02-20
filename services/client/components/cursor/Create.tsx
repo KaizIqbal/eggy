@@ -3,9 +3,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { possibleCursors } from "../../graphql/constraint";
 import { CREATE_CURSOR_MUTATION } from "../../graphql/Mutation";
-import useCursors from "../../hooks/cursors";
-import { Form } from "../styled";
 import { CURSORS_QUERY } from "../../graphql/Query";
+import useCursors from "../../hooks/graphql/cursors";
+import { Form } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ICreateCursorProps {
