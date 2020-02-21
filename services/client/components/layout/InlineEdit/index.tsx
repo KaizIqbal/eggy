@@ -59,7 +59,7 @@ function InlineEdit(props) {
         ref={inputRef}
         // set the width to the input length multiplied by the x height
         // it's not quite right but gets it close
-        style={{ minWidth: Math.ceil(inputValue.length) + "ch" }}
+        size={inputValue.length}
         value={inputValue}
         isActive={isInputActive}
         onChange={e => {

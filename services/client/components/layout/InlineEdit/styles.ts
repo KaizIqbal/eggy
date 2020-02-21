@@ -28,12 +28,14 @@ const hidden = css`
 
 const InlineEditText = styled.span<{ isHidden: boolean }>`
   ${InlineEditStyle}
-  ${props => (!props.isHidden ? activeInput : hidden)}
+  ${props => (!props.isHidden ? activeText : hidden)}
 `;
 
-const InlineEditInput = styled.input<{ isActive: boolean }>`
+const InlineEditInput = styled.input<{ isActive: boolean; size: number }>`
   ${InlineEditStyle}
+
   ${props => (props.isActive ? activeInput : hidden)}
+  min-width: ${props => Math.ceil(props.size) + "ch"}
 `;
 
 export { InlineEditText, InlineEditInput };
