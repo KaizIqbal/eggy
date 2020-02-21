@@ -28,27 +28,12 @@ const hidden = css`
 
 const InlineEditText = styled.span<{ isHidden: boolean }>`
   ${InlineEditStyle}
-  ${props =>
-    !props.isHidden
-      ? css`
-          border-bottom: 1px solid #666666;
-          text-align: left;
-        `
-      : css`
-          display: none;
-        `}
+  ${props => (!props.isHidden ? activeInput : hidden)}
 `;
 
 const InlineEditInput = styled.input<{ isActive: boolean }>`
   ${InlineEditStyle}
-  ${props =>
-    props.isActive
-      ? css`
-          cursor: pointer;
-        `
-      : css`
-          display: none;
-        `}
+  ${props => (props.isActive ? activeInput : hidden)}
 `;
 
 export { InlineEditText, InlineEditInput };
