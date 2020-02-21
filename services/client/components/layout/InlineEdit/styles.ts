@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-// input text
+//  these make sure it can work in any text element
 const InlineEditStyle = css`
   text-align: left;
   font: inherit;
@@ -26,20 +26,29 @@ const hidden = css`
   display: none;
 `;
 
-const InlineEditText = styled.span`
+const InlineEditText = styled.span<{ isHidden: boolean }>`
   ${InlineEditStyle}
+  ${props =>
+    !props.isHidden
+      ? css`
+          border-bottom: 1px solid #666666;
+          text-align: left;
+        `
+      : css`
+          display: none;
+        `}
 `;
 
-const InlineEditInput = styled.input`
+const InlineEditInput = styled.input<{ isActive: boolean }>`
   ${InlineEditStyle}
+  ${props =>
+    props.isActive
+      ? css`
+          cursor: pointer;
+        `
+      : css`
+          display: none;
+        `}
 `;
-const InlineSpan = styled.span``;
 
-export {
-  InlineSpan,
-  InlineEditText,
-  InlineEditInput,
-  activeInput,
-  activeText,
-  hidden
-};
+export { InlineEditText, InlineEditInput };

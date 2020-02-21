@@ -2,14 +2,7 @@ import DOMPurify from "dompurify";
 import React, { useEffect, useRef, useState } from "react";
 import useKeypress from "../../../hooks/layout/inlineEdit/useKeypressed";
 import useOnClickOutside from "../../../hooks/layout/inlineEdit/useOnClickOutside";
-import {
-  InlineEditInput,
-  InlineEditText,
-  hidden,
-  activeText,
-  activeInput,
-  InlineSpan
-} from "./styles";
+import { InlineEditInput, InlineEditText } from "./styles";
 
 function InlineEdit(props) {
   const [isInputActive, setIsInputActive] = useState(false);
@@ -53,11 +46,11 @@ function InlineEdit(props) {
   }, [enter, esc]); // watch the Enter and Escape key presses
 
   return (
-    <InlineSpan ref={wrapperRef}>
+    <span ref={wrapperRef}>
       <InlineEditText
         ref={textRef}
+        isHidden={isInputActive}
         onClick={() => setIsInputActive(true)}
-        className={`${!isInputActive ? activeText : hidden}`}
       >
         {props.text}
       </InlineEditText>
@@ -68,13 +61,13 @@ function InlineEdit(props) {
         // it's not quite right but gets it close
         style={{ minWidth: Math.ceil(inputValue.length) + "ch" }}
         value={inputValue}
+        isActive={isInputActive}
         onChange={e => {
           // sanitize the input a little
           setInputValue(DOMPurify.sanitize(e.target.value));
         }}
-        className={`${isInputActive ? activeInput : hidden}`}
       />
-    </InlineSpan>
+    </span>
   );
 }
 
