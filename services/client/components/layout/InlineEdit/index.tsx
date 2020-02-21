@@ -54,7 +54,6 @@ function InlineEdit(props) {
       >
         {props.text}
       </InlineEditText>
-
       <InlineEditInput
         ref={inputRef}
         // set the width to the input length multiplied by the x height
@@ -62,9 +61,14 @@ function InlineEdit(props) {
         size={inputValue.length}
         value={inputValue}
         isActive={isInputActive}
+        maxLength={props.maxLength}
         onChange={e => {
-          // sanitize the input a little
-          setInputValue(DOMPurify.sanitize(e.target.value));
+          const value = e.target.value;
+
+          if (value.match(props.regex)) {
+            // sanitize the input a little
+            setInputValue(DOMPurify.sanitize(value));
+          }
         }}
       />
     </span>
