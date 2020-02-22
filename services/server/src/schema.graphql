@@ -6,6 +6,13 @@ type SuccessMessage{
   message: String
 }
 
+# UNKNOWN is Special Name for hanlding `renameCursor` mutation
+enum cursorName {
+  Default
+  X11
+  Wayland
+}
+
 type Mutation {
 
   # File
@@ -21,8 +28,9 @@ type Mutation {
   unPublish(id:ID!): Egg!
 
   # Cursors
-  createCursor(name:String! frames:Int! flavorId:ID!): Cursor!
-  updateCursor(id:ID! name:String! frames:Int! ): Cursor!
+  createCursor(name:cursorName! frames:Int! flavorId:ID!): Cursor!
+  updateCursor(id:ID! name:cursorName! frames:Int! ): Cursor!
+  renameCursor(id:ID! flavorId:ID! name:cursorName!  ): Cursor!
   deleteCursor(id:ID!): Flavor!  
 
   # Flavour
@@ -49,7 +57,7 @@ type Query {
   userEggsConnection(after: String first: Int): EggConnection!
 
   # Cursors
-  cursor(eggname: String! flavorname: String! cursorname: String!): Cursor
+  cursor(eggname: String! flavorname: String! cursorname:cursorName!): Cursor
   cursors(flavorname: String!):[Cursor]!
 
   # Flavors

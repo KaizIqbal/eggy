@@ -2,6 +2,8 @@ import { uploadToS3, deleteFromS3 } from "../../modules/fileApi";
 import loggedIn from "../../utils/loggedIn";
 
 export const fileMutations = {
+  // ################################################ UPLOAD FILE ################################################
+
   async uploadFile(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
@@ -72,6 +74,9 @@ export const fileMutations = {
     // return File
     return file;
   },
+
+  // ################################################ DELETE FILE ################################################
+
   async deleteFile(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);

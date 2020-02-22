@@ -3,7 +3,7 @@ import loggedIn from "../../utils/loggedIn";
 import checkPublish from "../../utils/checkPublish";
 
 export const eggMutations = {
-  // ###### CREATE EGG ######
+  // ################################################ CREATE EGG ################################################
 
   async createEgg(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
@@ -40,7 +40,7 @@ export const eggMutations = {
     return egg;
   },
 
-  // ###### UPDATE EGG ######
+  // ################################################ UPDATE EGG ################################################
 
   updateEgg(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
@@ -62,7 +62,7 @@ export const eggMutations = {
     );
   },
 
-  // ###### DELETE EGG ######
+  // ################################################ DELETE EGG ################################################
 
   async deleteEgg(parent, args, ctx, info) {
     const where = { eggname: args.eggname };
@@ -87,7 +87,7 @@ export const eggMutations = {
     return ctx.db.mutation.deleteEgg({ where }, info);
   },
 
-  // ###### PUBLISH EGG ######
+  // ################################################ PUBLISH EGG ################################################
 
   async publish(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
@@ -103,7 +103,7 @@ export const eggMutations = {
     );
   },
 
-  // ###### UNPUBLISH EGG ######
+  // ################################################ UNPUBLISH EGG ################################################
 
   async unPublish(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error

@@ -3,7 +3,7 @@ import loggedIn from "../../utils/loggedIn";
 import checkFlavorName from "../../utils/checkFlavorName";
 
 export const flavrorMutations = {
-  // ###### CREATE FLAVOR ######
+  // ################################################ CREATE FLAVOR ################################################
 
   async createFlavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
@@ -34,7 +34,7 @@ export const flavrorMutations = {
     return flavor;
   },
 
-  // ###### UPDATE FLAVOR ######
+  // ################################################ UPDATE FLAVOR ################################################
 
   updateFlavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
@@ -59,7 +59,7 @@ export const flavrorMutations = {
     );
   },
 
-  // ###### DELEtE FLAVOR ######
+  // ################################################ DELETE FLAVOR ################################################
 
   deleteFlavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
