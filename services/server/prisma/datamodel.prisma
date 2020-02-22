@@ -15,7 +15,6 @@ enum cursorName {
   Default
   X11
   Wayland
-  UNKNOWN
 }
 
 type User {
