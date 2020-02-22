@@ -2,6 +2,8 @@
 import loggedIn from "../../utils/loggedIn";
 
 export const flavorQueries = {
+  // ################################################ FOR FETCH SINGLE FLAVOR ################################################
+
   async flavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
@@ -33,6 +35,9 @@ export const flavorQueries = {
 
     return flavor;
   },
+
+  // ################################################ FOR FETCH FLAVORS IN EGG ################################################
+
   flavors(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
