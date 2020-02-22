@@ -2,7 +2,7 @@
 import loggedIn from "../../utils/loggedIn";
 
 export const cursorQueries = {
-  // ###### FOR FETCH SINGLE CURSOR ######
+  // ################################################ FOR FETCH SINGLE CURSOR ################################################
 
   async cursor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
@@ -36,7 +36,7 @@ export const cursorQueries = {
     return cursor;
   },
 
-  // ###### FOR FETCH CURSORS ######
+  // ################################################ FOR FETCH CURSORS ################################################
 
   cursors(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error

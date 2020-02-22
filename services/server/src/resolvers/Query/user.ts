@@ -2,7 +2,7 @@
 import hasPermission from "../../utils/hasPermission";
 
 export const userQueries = {
-  // ###### FOR FETCH CURRENT USER ######
+  // ################################################ FOR FETCH CURRENT USER ################################################
 
   me(parent, args, ctx, info) {
     // check if there is current user ID
@@ -17,7 +17,7 @@ export const userQueries = {
     );
   },
 
-  // ###### FOR FETCH ALL USERS ######
+  // ################################################ FOR FETCH ALL USERS ################################################
 
   users(parent, args, ctx, info) {
     // 1. If they are logged In

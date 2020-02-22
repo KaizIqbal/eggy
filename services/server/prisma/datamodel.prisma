@@ -11,6 +11,12 @@ enum cursorType {
   WINDOW
   LINUX
 }
+enum cursorName {
+  Default
+  X11
+  Wayland
+  UNKNOWN
+}
 
 type User {
   id: ID! @id
@@ -47,7 +53,7 @@ type Flavor {
 
 type Cursor {
   id: ID! @id
-  name: String!
+  name: cursorName!
   frames: Int!
   flavor: Flavor! @relation(name: "Cursors")
   source: File @relation(name: "File" link: INLINE onDelete: CASCADE)

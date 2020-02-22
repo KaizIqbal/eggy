@@ -10,7 +10,7 @@ import loggedIn from "../../utils/loggedIn";
 import verifyUserName from "../../utils/verifyUserName";
 
 export const authMutations = {
-  // ###### SIGN UP ######
+  // ################################################ SIGN UP ################################################
 
   async signup(parent, args, ctx, info) {
     // 1.lowercase their email
@@ -41,7 +41,7 @@ export const authMutations = {
     return user;
   },
 
-  // ###### SIGN IN ######
+  // ################################################ SIGN IN ################################################
 
   async signin(parent, args, ctx, info) {
     // Deconstruct the email and password
@@ -70,7 +70,7 @@ export const authMutations = {
     return user;
   },
 
-  // ###### SIGN OUT ######
+  // ################################################ SIGN OUT ################################################
 
   signout(parent, args, ctx, info) {
     try {
@@ -84,7 +84,7 @@ export const authMutations = {
     }
   },
 
-  // ###### REQUEST FOR PASSWORD FORGET ######
+  // ################################################ REQUEST FOR PASSWORD FORGET ################################################
 
   async requestReset(parent, args, ctx, info) {
     // 1. Check if this is a real user
@@ -128,7 +128,7 @@ export const authMutations = {
     }
   },
 
-  // ###### RESET PASSWORD ######
+  // ################################################ RESET PASSWORD ################################################
 
   async resetPassword(parent, args, ctx, info) {
     // 1. Check the password match
@@ -172,7 +172,7 @@ export const authMutations = {
     return updatedUser;
   },
 
-  // ###### FOR UPDATING USER'S PERMISSSIONS ######
+  // ################################################ FOR UPDATING USER'S PERMISSSIONS ################################################
 
   async updatePermissions(parent, args, ctx, info) {
     // 1. check if they are logged in
