@@ -6,13 +6,6 @@ type SuccessMessage{
   message: String
 }
 
-# UNKNOWN is Special Name for hanlding `renameCursor` mutation
-enum cursorName {
-  Default
-  X11
-  Wayland
-}
-
 type Mutation {
 
   # File
