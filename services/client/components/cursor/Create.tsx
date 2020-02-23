@@ -41,32 +41,18 @@ const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
   // ##### HANDLING FUNCTION #####
 
   // Handle On Form Submit
-  const onSubmit = async (
-    values: Record<string, any>,
-    e: { preventDefault: () => void; target: { reset: { (): void; (): void } } }
-  ) => {
-    try {
-      e.preventDefault();
+  const onSubmit = async (values, e) => {
+    e.preventDefault();
+    // first convert frames to Integer Value
+    values.frames = parseInt(values.frames, 10);
 
-      // Check option available in list or not
-      if (!cursors.includes(values.name))
-        return window.alert(`Sorry, cursor "${values.name}" not found`);
+    // createCursor Mutation call with data
+    await createCursor({
+      variables: { ...values, flavorId: props.flavorId }
+    });
 
-      // first convert frames to Integer Value
-      values.frames = parseInt(values.frames, 10);
-
-      // createCursor Mutation call with data
-      await createCursor({
-        variables: { ...values, flavorId: props.flavorId }
-      });
-
-      // Reset Form
-      e.target.reset();
-    } catch (error) {
-      // Reset Form
-      e.target.reset();
-      console.error(error);
-    }
+    // Reset Form
+    e.target.reset();
   };
 
   // ##### RENDER #####
@@ -76,7 +62,7 @@ const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
   if (fetching) return <p>Fetching Egg</p>;
 
   // get only cursor name in data
-  const fetchedCursors = data.map((cursor: { name: string }) => cursor.name);
+  const fetchedCursors = data.map((cursor: { name: any }) => cursor.name);
 
   // generate list of remain cursors that not added to egg
   const cursors = possibleCursors.filter(

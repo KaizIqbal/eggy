@@ -31,7 +31,11 @@ const CursorWorkshop: React.FunctionComponent<ICursorWorkshopProps> = props => {
 
   return (
     <>
-      <CursorName name={data.cursor.name} />
+      <CursorName
+        name={data.cursor.name}
+        id={data.cursor.id}
+        flavorId={data.cursor.flavor.id}
+      />
 
       <p>{data.cursor.frames}</p>
 

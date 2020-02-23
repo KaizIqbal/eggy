@@ -5,17 +5,19 @@ import useOnClickOutside from "../../../hooks/layout/inlineEdit/useOnClickOutsid
 import { InlineEditInput, InlineEditText } from "./styles";
 
 // ##### COMPONENT PROPS TYPE #####
-interface InlineEditProps {
+interface InlineSelectEditProps {
   text: string;
   onSetText: (text: string) => void;
+  readonly options: any;
 
-  readonly emptyText: string;
-  readonly maxLength: number;
+  readonly emptyText: any;
   readonly regex: RegExp;
 }
 
 // ##### COMPONENT #####
-const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
+const InlineSelectEdit: React.FunctionComponent<
+  InlineSelectEditProps
+> = props => {
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(props.text);
 
@@ -23,7 +25,6 @@ const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
   const textRef = useRef(null);
   const inputRef = useRef(null);
 
-  const enter = useKeypress("Enter");
   const esc = useKeypress("Escape");
 
   // check to see if the user clicked outside of this component
@@ -49,24 +50,13 @@ const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
 
   useEffect(() => {
     if (isInputActive) {
-      // if Enter is pressed, save the text and case the editor
-      if (enter) {
-        props.onSetText(inputValue);
-        setIsInputActive(false);
-
-        // if input is empty
-        if (inputValue.length === 0) {
-          setInputValue(props.emptyText);
-          props.onSetText(props.emptyText);
-        }
-      }
       // if Escape is pressed, revert the text and close the editor
       if (esc) {
         setInputValue(props.text);
         setIsInputActive(false);
       }
     }
-  }, [enter, esc]); // watch the Enter and Escape key presses
+  }, [esc]); // watch the Enter and Escape key presses
 
   return (
     <>
@@ -80,25 +70,23 @@ const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
         </InlineEditText>
         <InlineEditInput
           ref={inputRef}
-          // set the width to the input length multiplied by the x height
-          // it's not quite right but gets it close
-          size={inputValue.length}
-          value={inputValue}
+          defaultValue={inputValue}
           isActive={isInputActive}
-          maxLength={props.maxLength}
           placeholder={props.emptyText}
           onChange={e => {
-            const value = e.target.value;
-
-            if (value.match(props.regex)) {
-              // sanitize the input a little
-              setInputValue(DOMPurify.sanitize(value));
-            }
+            // sanitize the input a little
+            setInputValue(DOMPurify.sanitize(e.target.value));
           }}
-        />
+        >
+          {Object.keys(props.options).map(key => (
+            <option key={key} value={key}>
+              {props.options[key]}
+            </option>
+          ))}
+        </InlineEditInput>
       </span>
     </>
   );
 };
 
-export default InlineEdit;
+export default InlineSelectEdit;
