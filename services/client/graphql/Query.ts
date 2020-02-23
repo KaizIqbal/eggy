@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-// ########## USER QUERIES ##########
+// ################################################ USER QUERIES ################################################
 
 // ##### ME! #####
 
@@ -28,7 +28,7 @@ const ALL_USER_QUERY = gql`
   }
 `;
 
-// ########## EGG QUERIES ##########
+// ################################################ EGG QUERIES ################################################
 
 // ##### FETCH SINGLE EGG #####
 
@@ -86,7 +86,7 @@ const GET_USER_EGGS_CURSOR = gql`
   }
 `;
 
-// ########## FLAVOR QUERIES ##########
+// ################################################ FLAVOR QUERIES ################################################
 
 // ##### FETCH SINGLE FLAVOR #####
 
@@ -110,12 +110,16 @@ const FLAVORS_QUERY = gql`
   }
 `;
 
-// ########## CURSOR QUERIES ##########
+// ################################################ CURSOR QUERIES ################################################
 
 // ##### FETCH SINGLE CURSOR #####
 
 const CURSOR_QUERY = gql`
-  query cursor($eggname: String!, $flavorname: String!, $cursorname: String!) {
+  query cursor(
+    $eggname: String!
+    $flavorname: String!
+    $cursorname: cursorName!
+  ) {
     cursor(
       eggname: $eggname
       flavorname: $flavorname
