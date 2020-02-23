@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-// ########## AUTH MUTATIONS ##########
+// ################################################ AUTH MUTATIONS ################################################
 
 // ##### SIGNUP #####
 
@@ -85,7 +85,7 @@ const UPDATE_PERMISSION_MUTATION = gql`
   }
 `;
 
-// ########## EGG MUTATIONS ##########
+// ################################################ EGG MUTATIONS ################################################
 
 // ##### CREATE #####
 
@@ -141,7 +141,7 @@ const UNPUBLISH_EGG_MUTATION = gql`
   }
 `;
 
-// ########## FLAVOR MUTATIONS ##########
+// ################################################ FLAVOR MUTATIONS ################################################
 
 // ##### CREATE #####
 
@@ -173,12 +173,12 @@ const DELETE_FLAVOR_MUTATION = gql`
   }
 `;
 
-// ########## CURSOR MUTATIONS ##########
+// ################################################ CURSOR MUTATIONS ################################################
 
 // ##### CREATE #####
 
 const CREATE_CURSOR_MUTATION = gql`
-  mutation createCursor($name: String!, $frames: Int!, $flavorId: ID!) {
+  mutation createCursor($name: cursorName!, $frames: Int!, $flavorId: ID!) {
     createCursor(name: $name, frames: $frames, flavorId: $flavorId) {
       id
     }
@@ -195,7 +195,17 @@ const DELETE_CURSOR_MUTATION = gql`
   }
 `;
 
-// ########## FILE MUTATIONS ##########
+// ##### RENAME CURSOR #####
+
+const RENAME_CURSOR_MUTATION = gql`
+  mutation reanameCursor($id: ID!, $flavorId: ID!, $name: cursorName!) {
+    renameCursor(id: $id, flavorId: $flavorId, name: $name) {
+      id
+    }
+  }
+`;
+
+// ################################################ FILE MUTATIONS ################################################
 
 // ##### SINGLE UPLOAD #####
 
@@ -236,6 +246,7 @@ export {
   // Cursor
   CREATE_CURSOR_MUTATION,
   DELETE_CURSOR_MUTATION,
+  RENAME_CURSOR_MUTATION,
   // File
   UPLOAD_MUTATION,
   DELETE_FILE_MUTATION
