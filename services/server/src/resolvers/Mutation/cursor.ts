@@ -16,7 +16,7 @@ export const cursorMutations = {
       {
         where: { name: args.name }
       },
-      `{id}`
+      info
     );
 
     if (data[0]) {
@@ -90,26 +90,30 @@ export const cursorMutations = {
       {
         where: { name: args.name, flavor: { id: flavorId } }
       },
-      `{
-        id
-      }`
-    );
-
-    // if cursor already available
-    if (data[0]) {
-      throw new Error("Cursor already available");
-    }
-
-    // TODO Update S3 files
-    updateCursor = ctx.db.mutation.updateCursor(
-      {
-        where: {
-          id: cursorId
-        },
-        data: { ...args }
-      },
       info
     );
+    // if cursor already available
+    if (data[0]) {
+      // Same Cursor so do nothing
+      if (data[0].id === cursorId) {
+        updateCursor = data[0];
+      } else {
+        throw new Error("Cursor already available");
+      }
+    }
+    // Normal Rename
+    else {
+      // TODO Update S3 files
+      updateCursor = ctx.db.mutation.updateCursor(
+        {
+          where: {
+            id: cursorId
+          },
+          data: { ...args }
+        },
+        info
+      );
+    }
 
     // return updated cursor by id
     return updateCursor;
