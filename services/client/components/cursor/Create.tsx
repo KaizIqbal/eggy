@@ -1,10 +1,9 @@
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { possibleCursors } from "../../graphql/constraint";
 import { CREATE_CURSOR_MUTATION } from "../../graphql/Mutation";
 import { CURSORS_QUERY } from "../../graphql/Query";
-import useCursors from "../../hooks/graphql/cursors";
+import useAvailableCursors from "../../hooks/graphql/availableCursors";
 import { Form } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
@@ -31,7 +30,7 @@ const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
   );
 
   //fetch cursors for how much added
-  const { data, loading: fetching } = useCursors({
+  const { fetching, availableCursors } = useAvailableCursors({
     flavorname: props.flavorname
   });
 
@@ -61,16 +60,8 @@ const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
   if (error) return <p>Error: {error.message}</p>;
   if (fetching) return <p>Fetching Egg</p>;
 
-  // get only cursor name in data
-  const fetchedCursors = data.map((cursor: { name: any }) => cursor.name);
-
-  // generate list of remain cursors that not added to egg
-  const cursors = possibleCursors.filter(
-    cursor => !fetchedCursors.includes(cursor)
-  );
-
   // No cursor for add is possible
-  if (cursors.length === 0) {
+  if (availableCursors.length === 0) {
     return <p>All Cursosrs satisfeid</p>;
   }
 
@@ -82,7 +73,7 @@ const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
         <label htmlFor="Cursor Name">
           Select Cursor <br />
           <select name="name" id="name" ref={register({ required: true })}>
-            {cursors.map(cursor => (
+            {availableCursors.map(cursor => (
               <option key={cursor} value={cursor}>
                 {cursor}
               </option>

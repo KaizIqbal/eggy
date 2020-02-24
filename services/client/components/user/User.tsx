@@ -18,7 +18,8 @@ const User: React.FunctionComponent<IUserProps> = props => {
 
   // ##### RENDER #####
 
-  if (loading || !me) return props.children;
+  if (loading) return <p>Loading....</p>;
+  if (!me) return props.children;
   if (error) return <p>Error! ${error.message}</p>;
 
   if (me)
