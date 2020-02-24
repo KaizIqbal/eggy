@@ -6,14 +6,13 @@ import { RENAME_CURSOR_MUTATION } from "../../graphql/Mutation";
 
 // ##### COMPONENT PROPS TYPE #####
 interface ICursorEditProps {
-  name: string;
+  name: any;
   id: string;
   flavorId: string;
 }
 
 // ##### COMPONENT #####
 const CursorEdit: React.FunctionComponent<ICursorEditProps> = props => {
-  console.log(props);
   // ##### INLINE EDIT HOOKS #####
   // set cursor name default in inline Component
   const [cursorName, setCursorName] = useState(props.name);

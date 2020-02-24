@@ -128,6 +128,9 @@ const CURSOR_QUERY = gql`
       id
       name
       frames
+      flavor {
+        id
+      }
       source {
         id
         url
