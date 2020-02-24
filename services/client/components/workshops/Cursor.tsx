@@ -1,13 +1,13 @@
 import { useQuery } from "@apollo/react-hooks";
 import React from "react";
 import { CURSOR_QUERY } from "../../graphql/Query";
-import CursorName from "../cursor/CursorNameEdit";
 import DeleteFile from "../file/Delete";
 import FileUpload from "../file/Upload";
 
 // ##### COMPONENT PROPS TYPE #####
 
 interface ICursorWorkshopProps {
+  username: any;
   eggname: any;
   flavorname: any;
   cursorname: any;
@@ -25,18 +25,12 @@ const CursorWorkshop: React.FunctionComponent<ICursorWorkshopProps> = props => {
 
   // ##### RENDER #####
   if (loading) return <p>Fetching cursor......</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
   if (!data) return <p>Cursor not found</p>;
+
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <>
-      <CursorName
-        name={data.cursor.name}
-        id={data.cursor.id}
-        flavorId={data.cursor.flavor.id}
-      />
-
       <p>{data.cursor.frames}</p>
 
       {/* Display Cursor  */}
