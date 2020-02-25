@@ -4,6 +4,7 @@ import { Owner, UserEggList } from "../../components";
 //##### PAGE #####
 const Me = () => {
   const router = useRouter();
+  console.log(router.query);
   return (
     <Owner username={router.query.user}>
       {/* Dynamic routes for add egg to user with username */}
