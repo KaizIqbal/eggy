@@ -1,7 +1,7 @@
 import Link from "../layout/Link";
 import React from "react";
 import useUser from "../../hooks/graphql/user";
-import SignOut from "../user/SignOut";
+import SignOut from "../auth/SignOut";
 import paths from "../../paths";
 
 // ##### COMPONENT PROPS TYPE #####
