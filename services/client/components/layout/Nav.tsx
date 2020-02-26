@@ -1,26 +1,19 @@
-import Link from "next/link";
+import Link from "./Link";
+import paths from "../../paths";
 import User from "../user/User";
 
 const Nav = () => {
   return (
     <>
       <br />
-      <Link href="/">
-        <a>Home!</a>
-      </Link>
+      <Link to={paths.home}>Home</Link>
       <br />
-      <Link href="/basket">
-        <a>Basket</a>
-      </Link>
+      <Link to={paths.basket}>Basket</Link>
       <User>
         <br />
-        <Link href="/signup">
-          <a>Signup</a>
-        </Link>
+        <Link to={paths.signin}>Signin</Link>
         <br />
-        <Link href="/signin">
-          <a>Signin</a>
-        </Link>
+        <Link to={paths.signup}>Signup</Link>
       </User>
     </>
   );

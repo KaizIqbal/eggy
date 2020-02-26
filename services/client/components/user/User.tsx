@@ -1,7 +1,8 @@
-import Link from "next/link";
+import Link from "../layout/Link";
 import React from "react";
 import useUser from "../../hooks/graphql/user";
 import SignOut from "../user/SignOut";
+import paths from "../../paths";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -25,9 +26,7 @@ const User: React.FunctionComponent<IUserProps> = props => {
   if (me)
     return (
       <p>
-        <Link href="/[user]" as={`/${me.username}`} shallow={true}>
-          <a>{me.name}</a>
-        </Link>
+        <Link to={paths.user(me.username)}>{me.name}</Link>
         <br />
         <SignOut />
       </p>

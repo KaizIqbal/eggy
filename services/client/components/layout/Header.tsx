@@ -1,10 +1,12 @@
 import { Fragment } from "react";
 import Nav from "./Nav";
+import paths from "../../paths";
+import Link from "./Link";
 
 const Header = () => (
   <Fragment>
     <div>
-      <a href="/">Eggy</a>
+      <Link to={paths.home}>Eggy</Link>
       <Nav />
     </div>
     <div>
