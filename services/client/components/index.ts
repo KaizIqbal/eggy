@@ -10,12 +10,14 @@ import EggList from "./egg/PublishedEggs";
 import UserEggList from "./egg/UserEggs";
 import UpdateEgg from "./egg/Update";
 
+// Auth Components
+import SignIn from "./auth/SignIn";
+import SignUp from "./auth/SignUp";
+import RequestReset from "./auth/RequestReset";
+import Reset from "./auth/Reset";
+
 // User Components
-import SignIn from "./user/SignIn";
-import SignUp from "./user/SignUp";
 import Owner from "./user/Owner";
-import RequestReset from "./user/RequestReset";
-import Reset from "./user/Reset";
 import Permissions from "./user/Permission";
 
 // Workshop Components
