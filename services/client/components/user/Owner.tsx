@@ -1,6 +1,7 @@
 import React from "react";
 import useUser from "../../hooks/graphql/user";
 import PublicPage from "./Public";
+import Head from "next/head";
 
 // ##### COMPONENT PROPS TYPE #####
 
@@ -27,7 +28,14 @@ const Owner: React.FunctionComponent<IOwnerProps> = props => {
   }
 
   // user is Owner so have permission to perform egg operation
-  return props.children;
+  return (
+    <>
+      <Head>
+        <title>Eggy | {me.username}</title>
+      </Head>
+      {props.children}
+    </>
+  );
 };
 
 export default Owner;

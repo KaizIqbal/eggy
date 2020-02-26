@@ -7,6 +7,7 @@ import React from "react";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { Page } from "../components";
 import withApollo from "../hooks/withApollo";
+import Router from "next/router";
 
 // ##### GLOBAL THEME #####
 // TODO:Edit Global Theme
