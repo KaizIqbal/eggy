@@ -1,4 +1,5 @@
-import Link from "next/link";
+import Link from "../layout/Link";
+import paths from "../../paths";
 import Router from "next/router";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -39,13 +40,7 @@ const UserEggList: React.FunctionComponent<IEggListProps> = props => {
       >
         {eggs.map(egg => (
           <li key={egg.id}>
-            <Link
-              href="/[user]/[egg]/workshop"
-              as={`/${props.username}/${egg.eggname}/workshop`}
-              shallow={true}
-            >
-              <a>{egg.title}</a>
-            </Link>
+            <Link to={paths.egg(props.username, egg.eggname)}>{egg.title}</Link>
             <Button
               type="button"
               onClick={() => {
