@@ -3,6 +3,7 @@ export default {
   signin: "/signin",
   signup: "/signup",
   basket: "/basket",
+  request: "/signin/request",
 
   // paths can be functions for dynamic routes
   user(username: string) {

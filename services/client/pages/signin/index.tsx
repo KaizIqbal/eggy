@@ -1,11 +1,15 @@
-import { SignIn } from "../../components";
+import { Signin } from "../../components";
+import paths from "../../paths";
+import Link from "../../components/layout/Link";
 
 // ##### PAGE #####
-const SignInPage = props => (
-  <div>
-    <SignIn />
-    <a href="/login/request">forgot Password</a>
-  </div>
+const SigninPage = props => (
+  <>
+    <Signin />
+    <Link to={paths.request}>
+      <a>Forget Password</a>
+    </Link>
+  </>
 );
 
-export default SignInPage;
+export default SigninPage;
