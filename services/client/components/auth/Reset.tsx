@@ -1,21 +1,34 @@
-import { useMutation } from "@apollo/react-hooks";
-import Router from "next/router";
 import React from "react";
-import { useForm } from "react-hook-form";
+import Router from "next/router";
+
+// Graphql Query & Mutation
 import { RESET_PASSWORD_MUTATION } from "../../graphql/Mutation";
 import { ME_QUERY } from "../../graphql/Query";
+
+// Hooks libraries
+import { useMutation } from "@apollo/react-hooks";
+import { useForm } from "react-hook-form";
+
+// styled components
 import { Form } from "../styled";
 
-// ##### COMPONENT PROPS TYPE #####
+// ################################################ COMPONENT PROPS TYPE ###############################################
+
 interface IResetProps {
   token: string;
 }
 
-// ##### COMPONENT #####
-const Reset: React.FunctionComponent<IResetProps> = props => {
-  // ##### HOOKS #####
+type FormData = {
+  password: string;
+  confirmPassword: string;
+};
 
-  // RequestReset Mutation hook
+// ################################################ COMPONENT ################################################
+
+const Reset: React.FunctionComponent<IResetProps> = props => {
+  // ################################################ HOOKS ################################################
+
+  // resetPassword Mutation hook
   const [resetPassword, { loading, error }] = useMutation(
     RESET_PASSWORD_MUTATION,
     {
@@ -23,50 +36,58 @@ const Reset: React.FunctionComponent<IResetProps> = props => {
         {
           query: ME_QUERY
         }
-      ]
+      ],
+      onCompleted: () => {
+        // Redirect to the Signin Page
+        Router.push({
+          pathname: "/signin"
+        });
+      }
     }
   );
 
   // react form hook
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, watch, errors } = useForm<FormData>();
+  // ################################################ HANDLING FUNCTION ################################################
 
-  // ##### HANDLING FUNCTION #####
+  // ################ Form submition #################
+  // #                                               #
+  // #     1. call mutation                          #
+  // #     2. reset form                             #
+  // #     3. push Router                            #
+  // #     4. handle error                           #
+  // #                                               #
+  // #################################################
 
-  // Handle On Form Submit
   const onSubmit = async (values, e) => {
     try {
       e.preventDefault();
-      // createEgg Mutation call with data
       await resetPassword({
         variables: {
           resetToken: props.token,
-          password: values.password,
-          confirmPassword: values.confirmPassword
+          ...values
         }
       });
-      // Reset Form
-      e.target.reset();
 
-      // Redirect to the Home page
-      Router.push({
-        pathname: "/"
-      });
+      e.target.reset();
     } catch (error) {
       // Reset Form
       e.target.reset();
-      Router.push({
-        pathname: "/login"
-      });
       console.error(error);
     }
   };
 
-  // ##### RENDER #####
+  // ################################################ RENDER #####################################################
 
-  // if any error in form submiting
+  // ################## Render flow ##################
+  // #                                               #
+  // #     (error) => handle the Graphql error       #
+  // #     else => Render Component                  #
+  // #                                               #
+  // #################################################
+
   if (error) return <p>Error: {error.message}</p>;
 
-  // else render form
   return (
     <Form onSubmit={handleSubmit(onSubmit)} method="post">
       <fieldset disabled={loading}>
@@ -78,13 +99,17 @@ const Reset: React.FunctionComponent<IResetProps> = props => {
             id="password"
             name="password"
             placeholder="password"
-            ref={register({ required: true })}
+            minLength={8}
+            ref={register({
+              required: "Password is required"
+            })}
           />
-          {errors.title && "Password is required"}
+          {errors.password && errors.password.message}
         </label>
+
         <br />
 
-        {/* Insert password  */}
+        {/* Insert confirmPassword  */}
         <label htmlFor="password">
           Confirm Password
           <input
@@ -92,11 +117,18 @@ const Reset: React.FunctionComponent<IResetProps> = props => {
             id="confirmPassword"
             name="confirmPassword"
             placeholder="confirmPassword"
-            ref={register({ required: true })}
+            minLength={8}
+            ref={register({
+              required: "Confirm Password is Required",
+              validate: value =>
+                value === watch("password") || "Passwords don't match."
+            })}
           />
-          {errors.title && "Password is required"}
+          {errors.confirmPassword && errors.confirmPassword.message}
         </label>
+
         <br />
+
         {/* Submition */}
         <button type="submit">Reset Password</button>
       </fieldset>

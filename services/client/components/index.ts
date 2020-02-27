@@ -11,8 +11,8 @@ import UserEggList from "./egg/UserEggs";
 import UpdateEgg from "./egg/Update";
 
 // Auth Components
-import SignIn from "./auth/SignIn";
-import SignUp from "./auth/SignUp";
+import Signin from "./auth/Signin";
+import Signup from "./auth/Signup";
 import RequestReset from "./auth/RequestReset";
 import Reset from "./auth/Reset";
 
@@ -37,8 +37,8 @@ export {
   EggList,
   UserEggList,
   UpdateEgg,
-  SignUp,
-  SignIn,
+  Signup,
+  Signin,
   Owner,
   UpdateFlavor,
   RequestReset,
