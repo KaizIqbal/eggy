@@ -66,8 +66,6 @@ const RESET_PASSWORD_MUTATION = gql`
       confirmPassword: $confirmPassword
     ) {
       id
-      email
-      name
     }
   }
 `;
