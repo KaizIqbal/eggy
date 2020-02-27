@@ -1,9 +1,9 @@
-import { SignUp } from "../components";
+import { Signup } from "../components";
 
 // ##### PAGE #####
 const SignUpPage = props => (
   <div>
-    <SignUp />
+    <Signup />
   </div>
 );
 

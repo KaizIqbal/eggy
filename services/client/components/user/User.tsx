@@ -1,7 +1,7 @@
 import Link from "../layout/Link";
 import React from "react";
 import useUser from "../../hooks/graphql/user";
-import SignOut from "../auth/SignOut";
+import Signout from "../auth/Signout";
 import paths from "../../paths";
 
 // ##### COMPONENT PROPS TYPE #####
@@ -28,7 +28,7 @@ const User: React.FunctionComponent<IUserProps> = props => {
       <p>
         <Link to={paths.user(me.username)}>{me.name}</Link>
         <br />
-        <SignOut />
+        <Signout />
       </p>
     );
 };
