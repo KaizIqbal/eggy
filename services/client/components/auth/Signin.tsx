@@ -15,13 +15,17 @@ import { useForm } from "react-hook-form";
 // styled components
 import { Form } from "../styled";
 
-// ################################################ COMPONENT PROPS TYPE ####################################
+// ################################################ COMPONENT'S TYPE ####################################
 
-interface ISigninProps {}
+interface IProps {}
+
+type FormData = {
+  email: string;
+  password: string;
+};
 
 // ################################################ COMPONENT ###############################################
-
-const Signin: React.FunctionComponent<ISigninProps> = props => {
+const Signin: React.FunctionComponent<IProps> = props => {
   // ################################################ HOOKS ################################################
 
   // check user already signin or not
@@ -40,7 +44,7 @@ const Signin: React.FunctionComponent<ISigninProps> = props => {
   });
 
   // react form hook
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm<FormData>();
 
   // ################################################ HANDLING FUNCTION ################################################
 
@@ -92,9 +96,9 @@ const Signin: React.FunctionComponent<ISigninProps> = props => {
             id="email"
             name="email"
             placeholder="email"
-            ref={register({ required: true })}
+            ref={register({ required: "Email is required" })}
           />
-          {errors.email && "Email is required"}
+          {errors.email && errors.email.message}
         </label>
 
         <br />
@@ -107,9 +111,9 @@ const Signin: React.FunctionComponent<ISigninProps> = props => {
             id="password"
             name="password"
             placeholder="password"
-            ref={register({ required: true })}
+            ref={register({ required: "Password is required" })}
           />
-          {errors.password && "Password is required"}
+          {errors.password && errors.password.message}
         </label>
         <br />
 

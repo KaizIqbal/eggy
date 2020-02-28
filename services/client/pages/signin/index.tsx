@@ -1,9 +1,18 @@
-import { Signin } from "../../components";
+import { NextPage } from "next";
+
+// Paths
 import paths from "../../paths";
+
+// Components
+import { Signin } from "../../components";
 import Link from "../../components/layout/Link";
 
-// ##### PAGE #####
-const SigninPage = props => (
+// ################################################ NEXT PAGE PROPS ################################################
+
+interface IProps {}
+
+// ################################################ NEXT PAGE ################################################
+const SigninPage: NextPage<IProps> = props => (
   <>
     <Signin />
     <Link to={paths.request}>

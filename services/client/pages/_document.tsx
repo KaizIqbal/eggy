@@ -1,5 +1,7 @@
 import React from "react";
 import Document, { Head, Main, NextScript } from "next/document";
+
+// styled component
 import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document<any> {

@@ -1,10 +1,21 @@
+import { NextPage } from "next";
+
+// Components
 import { Reset } from "../../components";
 
-// ##### PAGE #####
-const ResetPage = ({ query }) => {
+// ################################################ NEXT PAGE PROPS ################################################
+
+interface IProps {
+  query: {
+    token?: string;
+  };
+}
+
+// ################################################ NEXT PAGE ################################################
+const ResetPage: NextPage<IProps> = ({ query: { token } }) => {
   return (
     <div>
-      <Reset token={query.token} />
+      <Reset token={token} />
     </div>
   );
 };

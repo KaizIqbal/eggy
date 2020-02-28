@@ -11,9 +11,12 @@ import { useMutation } from "@apollo/react-hooks";
 // styled components
 import { Button } from "../styled";
 
-// ################################################ COMPONENT ###############################################
+// ################################################ COMPONENT'S TYPE ####################################
 
-const Signout = () => {
+interface IProps {}
+
+// ################################################ COMPONENT ###############################################
+const Signout: React.FunctionComponent<IProps> = props => {
   // ################################################ HOOKS ################################################
 
   // signout Mutation hook
@@ -22,12 +25,7 @@ const Signout = () => {
       {
         query: ME_QUERY
       }
-    ],
-    onCompleted: () => {
-      Router.push({
-        pathname: "/"
-      });
-    }
+    ]
   });
 
   // ################################################ HANDLING FUNCTION ################################################
