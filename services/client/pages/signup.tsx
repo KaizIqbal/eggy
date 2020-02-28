@@ -1,10 +1,17 @@
+import { NextPage } from "next";
+
+// Components
 import { Signup } from "../components";
 
-// ##### PAGE #####
-const SignUpPage = props => (
+// ################################################ NEXT PAGE PROPS ################################################
+
+interface IProps {}
+
+// ################################################ NEXT PAGE ################################################
+const SignupPage: NextPage<IProps> = props => (
   <div>
     <Signup />
   </div>
 );
 
-export default SignUpPage;
+export default SignupPage;

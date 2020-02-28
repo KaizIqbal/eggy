@@ -12,9 +12,9 @@ import { useForm } from "react-hook-form";
 // styled components
 import { Form } from "../styled";
 
-// ################################################ COMPONENT PROPS TYPE ###############################################
+// ################################################ COMPONENT'S TYPE ###############################################
 
-interface IResetProps {
+interface IProps {
   token: string;
 }
 
@@ -24,8 +24,7 @@ type FormData = {
 };
 
 // ################################################ COMPONENT ################################################
-
-const Reset: React.FunctionComponent<IResetProps> = props => {
+const Reset: React.FunctionComponent<IProps> = props => {
   // ################################################ HOOKS ################################################
 
   // resetPassword Mutation hook

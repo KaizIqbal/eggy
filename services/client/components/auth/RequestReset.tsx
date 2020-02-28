@@ -1,12 +1,25 @@
-import { useMutation } from "@apollo/react-hooks";
 import React from "react";
-import { useForm } from "react-hook-form";
+
+// Graphql Query & Mutation
 import { REQUEST_RESET_MUTATION } from "../../graphql/Mutation";
+
+// Hooks libraries
+import { useMutation } from "@apollo/react-hooks";
+import { useForm } from "react-hook-form";
+
+// styled components
 import { Form } from "../styled";
 
-// ################################################ COMPONENT ###############################################
+// ################################################ COMPONENT'S TYPE ####################################
 
-const RequestReset = () => {
+interface IProps {}
+
+type FormData = {
+  email: string;
+};
+
+// ################################################ COMPONENT ###############################################
+const RequestReset: React.FunctionComponent<IProps> = props => {
   // ################################################ HOOKS ################################################
 
   // requestReset Mutation hook
@@ -24,7 +37,7 @@ const RequestReset = () => {
   );
 
   // react form hook
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm<FormData>();
 
   // ################################################ HANDLING FUNCTION ################################################
 
@@ -76,9 +89,9 @@ const RequestReset = () => {
             id="email"
             name="email"
             placeholder="email"
-            ref={register({ required: true })}
+            ref={register({ required: "Email is required" })}
           />
-          {errors.email && "Email is required"}
+          {errors.email && errors.email.message}
         </label>
 
         <br />
