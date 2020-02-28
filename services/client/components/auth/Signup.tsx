@@ -12,9 +12,19 @@ import { useForm } from "react-hook-form";
 // styled components
 import { Form } from "../styled";
 
-// ################################################ COMPONENT ###############################################
+// ################################################ COMPONENT'S TYPE ####################################
 
-const Signup = () => {
+interface IProps {}
+
+type FormData = {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+};
+
+// ################################################ COMPONENT ###############################################
+const Signup: React.FunctionComponent<IProps> = props => {
   // ################################################ HOOKS ################################################
 
   // signup Mutation hook
@@ -30,7 +40,7 @@ const Signup = () => {
   });
 
   // react form hook
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm<FormData>();
 
   // ################################################ HANDLING FUNCTION ################################################
 
@@ -77,10 +87,11 @@ const Signup = () => {
             type="text"
             id="name"
             name="name"
+            pattern="[A-Za-z]+"
             placeholder="name"
-            ref={register({ required: true })}
+            ref={register({ required: "Name is required" })}
           />
-          {errors.name && "Username is required"}
+          {errors.name && errors.name.message}
         </label>
 
         <br />
@@ -92,10 +103,11 @@ const Signup = () => {
             type="username"
             id="username"
             name="username"
+            pattern="[A-Za-z0-9_]+"
             placeholder="username"
-            ref={register({ required: true })}
+            ref={register({ required: "Username is required" })}
           />
-          {errors.username && "Username is required"}
+          {errors.username && errors.username.message}
         </label>
 
         <br />
@@ -108,9 +120,9 @@ const Signup = () => {
             id="email"
             name="email"
             placeholder="email"
-            ref={register({ required: true })}
+            ref={register({ required: "Email is required" })}
           />
-          {errors.email && "Email is required"}
+          {errors.email && errors.email.message}
         </label>
 
         <br />
@@ -123,9 +135,12 @@ const Signup = () => {
             id="password"
             name="password"
             placeholder="password"
-            ref={register({ required: true, minLength: 8 })}
+            minLength={8}
+            ref={register({
+              required: "Password is required"
+            })}
           />
-          {errors.password && "Password is required"}
+          {errors.password && errors.password.message}
         </label>
 
         <br />

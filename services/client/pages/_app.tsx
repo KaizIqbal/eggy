@@ -1,15 +1,23 @@
 import { ApolloProvider } from "@apollo/react-hooks";
 import { NormalizedCacheObject } from "apollo-cache-inmemory";
+
+// Apollo Client
 import ApolloClient from "apollo-client";
 import App from "next/app";
 import Head from "next/head";
 import React from "react";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { Page } from "../components";
-import withApollo from "../hooks/withApollo";
-import Router from "next/router";
 
-// ##### GLOBAL THEME #####
+// Styled Component
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+
+// Components
+import { Page } from "../components";
+
+// Custom Hooks
+import withApollo from "../hooks/withApollo";
+import AuthContextProvider from "../contexts/authContext";
+
+// ################################################ GLOBAL THEME ################################################
 // TODO:Edit Global Theme
 export interface ITheme {
   niceBlack: string;
@@ -30,14 +38,16 @@ const GlobalStyle = createGlobalStyle<IThemeWrapper>`
   }
 `;
 
-// ##### COMPONENT PROPS TYPE #####
+// ################################################ COMPONENT PROPS TYPE ################################################
+
 // since "apollo" isn't a native Next.js prop we have to declare it's type.
 interface IProps {
   apollo: ApolloClient<NormalizedCacheObject>;
 }
 
-// ##### COMPONENT #####
+// ################################################ COMPONENT ################################################
 // adds our custom props interface to the generic App base class.
+
 class MyApp extends App<IProps> {
   // This is expose query to user
   static async getInitialProps({ Component, ctx }) {
@@ -50,13 +60,13 @@ class MyApp extends App<IProps> {
     return { pageProps };
   }
 
-  // ##### RENDER #####
+  // ################################################ RENDER ################################################
   render() {
     // instead of creating a client here, we use the rehydrated apollo client provided by our own withApollo provider.
     const { Component, pageProps, apollo } = this.props;
 
     return (
-      <React.Fragment>
+      <>
         <Head>
           <meta
             name="viewport"
@@ -75,13 +85,15 @@ class MyApp extends App<IProps> {
         {/* adds the apollo provider to provide it's children with the apollo scope. */}
         <ApolloProvider client={apollo}>
           <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <Page>
-              <Component {...pageProps} />
-            </Page>
+            <AuthContextProvider>
+              <GlobalStyle />
+              <Page>
+                <Component {...pageProps} />
+              </Page>
+            </AuthContextProvider>
           </ThemeProvider>
         </ApolloProvider>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -18,6 +18,12 @@ export default {
       as: `/${username}/${eggname}/workshop`
     };
   },
+  addEgg(username: string) {
+    return {
+      href: "/[user]/add",
+      as: `/${username}/add`
+    };
+  },
   eggUpdate(username: string, eggname: string) {
     return {
       href: "/[user]/[egg]/workshop",
