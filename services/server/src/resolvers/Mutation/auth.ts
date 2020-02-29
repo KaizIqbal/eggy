@@ -118,7 +118,7 @@ export const authMutations = {
         html: mailFormate(
           `Your Password reset token is here! \n\n <a href="${
             process.env.FRONTEND_URL
-          }/login/reset?token=${resetToken}">Click here to reset</a>`
+          }/signin/reset?token=${resetToken}">Click here to reset</a>`
         )
       });
       // 4.Return the message
