@@ -12,7 +12,7 @@ server.express.use(coockieParser());
 server.express.use((req: any, res, next) => {
   const { auth }: { auth: string } = req.cookies;
   if (auth) {
-    const { _uid } = jwt.verify(auth, process.env.APP_SECRET);
+    const { _uid }: any = jwt.verify(auth, process.env.APP_SECRET);
     // put the userId onto the req for the further requests to access
     req.userId = _uid;
   }
