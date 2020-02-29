@@ -4,6 +4,7 @@ export default {
   signup: "/signup",
   basket: "/basket",
   request: "/signin/request",
+  dashboard: "/dashboard",
 
   // paths can be functions for dynamic routes
   user(username: string) {
@@ -18,10 +19,10 @@ export default {
       as: `/${username}/${eggname}/workshop`
     };
   },
-  addEgg(username: string) {
+  newEgg(username: string) {
     return {
-      href: "/[user]/add",
-      as: `/${username}/add`
+      href: "/[user]/new",
+      as: `/${username}/new`
     };
   },
   eggUpdate(username: string, eggname: string) {

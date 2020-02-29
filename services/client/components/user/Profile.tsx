@@ -1,12 +1,5 @@
 import React from "react";
 
-// Paths
-import paths from "../../paths";
-
-// Components
-import Link from "../layout/Link";
-import UserEggList from "../egg/UserEggs";
-
 // ################################################ COMPONENT'S TYPE ####################################
 
 interface IProps {
@@ -19,16 +12,7 @@ const UserProfile: React.FunctionComponent<IProps> = ({ username }) => {
   // TODO
 
   // ################################################ RENDER #####################################################
-
-  return (
-    <>
-      <Link to={paths.addEgg(username)}>
-        <a title="Add Egg">+Add Egg</a>
-      </Link>
-      {/* List of user egg with operations */}
-      <UserEggList username={username} />
-    </>
-  );
+  return <p>{username} public page</p>;
 };
 
 export default UserProfile;
