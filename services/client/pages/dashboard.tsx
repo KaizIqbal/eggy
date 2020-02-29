@@ -1,32 +1,34 @@
+import { useContext } from "react";
 import { NextPage } from "next";
 
-// hooks libraries
-import { useRouter } from "next/router";
+// custom context
+import { AuthContext } from "../contexts/authContext";
 
 // Components
-import { UserProfile } from "../../components";
+import { UserDashboard } from "../components";
+import Router from "next/router";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const Me: NextPage<IProps> = props => {
+const Dashboard: NextPage<IProps> = props => {
   // ################################################ HOOKS ################################################
 
-  const {
-    query: { user }
-  } = useRouter();
-
+  const { auth, userData, loading } = useContext(AuthContext);
   // ################################################ RENDER ################################################
 
   // ####################### Render flow ########################
   // #                                                          #
-  // #     User Profile Component                               #
+  // #     user signin => User Dashboard Page                   #
   // #                                                          #
   // ############################################################
 
-  return <UserProfile username={user} />;
+  if (auth) return <UserDashboard username={userData.username} />;
+  if (loading) return <p>Loading......</p>;
+  if (!loading) return <p>Checking Authorization</p>;
+  return Router.push("/");
 };
 
-export default Me;
+export default Dashboard;

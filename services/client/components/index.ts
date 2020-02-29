@@ -17,8 +17,8 @@ import RequestReset from "./auth/RequestReset";
 import Reset from "./auth/Reset";
 
 // User Components
-import UserPublic from "./user/Public";
 import UserProfile from "./user/Profile";
+import UserDashboard from "./user/Dashboard";
 import Owner from "./user/Owner";
 import Permissions from "./user/Permission";
 
@@ -31,8 +31,8 @@ import Workshop from "./workshops/Workshop";
 import UpdateFlavor from "./flavor/Update";
 
 export {
-  UserPublic,
   UserProfile,
+  UserDashboard,
   Page,
   PleaseSignIn,
   EggOwner,
