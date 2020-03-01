@@ -6,7 +6,9 @@ import { AuthContext } from "../contexts/authContext";
 
 // Components
 import { UserDashboard } from "../components";
-import Router from "next/router";
+
+// Helper function
+import { auth } from "../utils/auth";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
@@ -15,8 +17,8 @@ interface IProps {}
 // ################################################ NEXT PAGE ################################################
 const Dashboard: NextPage<IProps> = props => {
   // ################################################ HOOKS ################################################
+  const { userData } = useContext(AuthContext);
 
-  const { auth, userData, loading } = useContext(AuthContext);
   // ################################################ RENDER ################################################
 
   // ####################### Render flow ########################
@@ -25,10 +27,21 @@ const Dashboard: NextPage<IProps> = props => {
   // #                                                          #
   // ############################################################
 
-  if (auth) return <UserDashboard username={userData.username} />;
-  if (loading) return <p>Loading......</p>;
-  if (!loading) return <p>Checking Authorization</p>;
-  return Router.push("/");
+  return userData ? (
+    <>
+      <UserDashboard username={userData.username} />
+    </>
+  ) : (
+    <>
+      <p>Loading......</p>
+    </>
+  );
+};
+
+Dashboard.getInitialProps = async ctx => {
+  // Check user's session
+  const token = auth(ctx);
+  return { token };
 };
 
 export default Dashboard;

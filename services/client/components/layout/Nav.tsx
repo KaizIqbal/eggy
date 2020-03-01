@@ -1,8 +1,19 @@
+import React from "react";
+
+// Components
 import Link from "./Link";
-import paths from "../../paths";
 import User from "../user/User";
 
-const Nav = () => {
+// Contains all routes
+import paths from "../../paths";
+
+// ################################################ COMPONENT'S TYPE ####################################
+
+interface IProps {}
+
+// ################################################ COMPONENT ###############################################
+const Nav: React.FunctionComponent<IProps> = props => {
+  // ################################################ RENDER #####################################################
   return (
     <>
       <br />

@@ -5,15 +5,15 @@ import Router from "next/router";
 import { ME_QUERY } from "../../graphql/Query";
 import { SIGNIN_MUTATION } from "../../graphql/Mutation";
 
-// Custom Hooks
-import useUser from "../../hooks/graphql/user";
-
 // Hooks libraries
 import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "react-hook-form";
 
 // styled components
 import { Form } from "../styled";
+
+// Contains all routes
+import paths from "../../paths";
 
 // ################################################ COMPONENT'S TYPE ####################################
 
@@ -28,9 +28,6 @@ type FormData = {
 const Signin: React.FunctionComponent<IProps> = props => {
   // ################################################ HOOKS ################################################
 
-  // check user already signin or not
-  const { me } = useUser();
-
   // signin Mutation hook
   const [signin, { loading, error }] = useMutation(SIGNIN_MUTATION, {
     refetchQueries: [
@@ -39,7 +36,7 @@ const Signin: React.FunctionComponent<IProps> = props => {
       }
     ],
     onCompleted: () => {
-      Router.back();
+      Router.push(paths.dashboard);
     }
   });
 
@@ -66,7 +63,6 @@ const Signin: React.FunctionComponent<IProps> = props => {
     } catch (error) {
       // Reset Form
       e.target.reset();
-      console.error(error);
     }
   };
 
@@ -79,8 +75,6 @@ const Signin: React.FunctionComponent<IProps> = props => {
   // #     else => Render Component                  #
   // #                                               #
   // #################################################
-
-  if (me) Router.push({ pathname: "/" });
 
   if (error) return <p>Error: {error.message}</p>;
 
