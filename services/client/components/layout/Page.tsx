@@ -1,15 +1,20 @@
-import React, { Component } from "react";
-import Header from "./Header";
+import React from "react";
 
-class Page extends Component {
-  render() {
-    return (
-      <div>
-        <Header />
-        {this.props.children}
-      </div>
-    );
-  }
-}
+// Components
+import Header from "./Header";
+// ################################################ COMPONENT'S TYPE ####################################
+
+interface IProps {}
+
+// ################################################ COMPONENT ###############################################
+const Page: React.FunctionComponent<IProps> = props => {
+  // ################################################ RENDER #####################################################
+  return (
+    <div>
+      <Header />
+      {props.children}
+    </div>
+  );
+};
 
 export default Page;
