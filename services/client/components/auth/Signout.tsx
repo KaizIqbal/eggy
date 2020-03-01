@@ -11,6 +11,9 @@ import { useMutation } from "@apollo/react-hooks";
 // styled components
 import { Button } from "../styled";
 
+// Contains all routes
+import paths from "../../paths";
+
 // ################################################ COMPONENT'S TYPE ####################################
 
 interface IProps {}
@@ -25,7 +28,10 @@ const Signout: React.FunctionComponent<IProps> = props => {
       {
         query: ME_QUERY
       }
-    ]
+    ],
+    onCompleted: () => {
+      Router.replace(paths.home);
+    }
   });
 
   // ################################################ HANDLING FUNCTION ################################################
