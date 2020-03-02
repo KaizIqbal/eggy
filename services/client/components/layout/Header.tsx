@@ -4,6 +4,8 @@ import React from "react";
 import Nav from "./Nav";
 import Link from "./Link";
 
+import AuthContextProvider from "../../contexts/authContext";
+
 // Contains all routes
 import paths from "../../paths";
 
@@ -18,7 +20,9 @@ const Header: React.FunctionComponent<IProps> = props => {
     <>
       <div>
         <Link to={paths.home}>Eggy</Link>
-        <Nav />
+        <AuthContextProvider>
+          <Nav />
+        </AuthContextProvider>
       </div>
       <div>
         <p>Search</p>

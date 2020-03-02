@@ -23,14 +23,7 @@ const User: React.FunctionComponent<IUserProps> = props => {
   if (!me) return props.children;
   if (error) return <p>Error! ${error.message}</p>;
 
-  if (me)
-    return (
-      <p>
-        <Link to={paths.user(me.username)}>{me.name}</Link>
-        <br />
-        <Signout />
-      </p>
-    );
+  if (me) return <p>..</p>;
 };
 
 export default User;
