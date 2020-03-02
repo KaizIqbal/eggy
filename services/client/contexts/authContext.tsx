@@ -14,7 +14,7 @@ const AuthContextProvider: React.FunctionComponent<
 > = props => {
   // ################################################ HOOKS  ################################################
 
-  const { me } = useUser();
+  const { me, loading } = useUser();
 
   // Initialize userData from local storage if not it is me that's is null
   const [userData, setUserData] = useState(undefined);
@@ -24,13 +24,13 @@ const AuthContextProvider: React.FunctionComponent<
       const localData = localStorage.getItem("user");
       return localData ? JSON.parse(localData) : [];
     });
-  }, []);
+  }, [me]);
 
   // Call every times when "me,auth" is changed
 
   useEffect(() => {
     // If user logged in so store data in local storage
-    if (me) {
+    if (me !== undefined) {
       localStorage.setItem("user", JSON.stringify(me));
     }
     // else if user is not logged in so clear the local storage
@@ -41,7 +41,7 @@ const AuthContextProvider: React.FunctionComponent<
 
   // ################################################ RENDER ################################################
   return (
-    <AuthContext.Provider value={{ userData: userData }}>
+    <AuthContext.Provider value={{ userData: userData, loading: loading }}>
       {props.children}
     </AuthContext.Provider>
   );
