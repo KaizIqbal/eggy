@@ -35,8 +35,8 @@ const Signin: React.FunctionComponent<IProps> = props => {
         query: ME_QUERY
       }
     ],
-    onCompleted: ({ data }) => {
-      Router.push(paths.dashboard);
+    onCompleted: () => {
+      Router.push(paths.basket);
     }
   });
 
