@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
 
 // Components
+import { Signout } from "../index";
 import Link from "./Link";
+
+// custom context
+import { AuthContext } from "../../contexts/authContext";
 
 // Contains all routes
 import paths from "../../paths";
-import { AuthContext } from "../../contexts/authContext";
 
-import Signout from "../auth/Signout";
 // ################################################ COMPONENT'S TYPE ####################################
 
 interface IProps {}
@@ -27,6 +29,10 @@ const Nav: React.FunctionComponent<IProps> = props => {
       {userData ? (
         <>
           <a href={paths.dashboard}>{userData.name}</a>
+          <br />
+          <Link to={paths.user(userData.username)}>
+            {userData.name}'s Public Profile
+          </Link>
 
           <br />
           <Signout />

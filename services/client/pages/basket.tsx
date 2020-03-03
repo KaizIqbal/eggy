@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 
 // Components
-import { EggList } from "../components";
+import { PublicBasket } from "../components";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
@@ -12,7 +12,7 @@ const Basket: NextPage<IProps> = props => {
   return (
     <div>
       <h1>Eggs</h1>
-      <EggList />
+      <PublicBasket />
     </div>
   );
 };

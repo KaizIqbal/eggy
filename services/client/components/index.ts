@@ -1,20 +1,25 @@
-// layout Components
+// Layout Components
 import Page from "./layout/Page";
 import PleaseSignIn from "./layout/PleaseSignIn";
 
-// Egg Components
-import EggOwner from "./egg/Owner";
-import CreateEgg from "./egg/Create";
-import Egg from "./egg/Egg";
-import EggList from "./egg/PublishedEggs";
-import UserEggList from "./egg/UserEggs";
-import UpdateEgg from "./egg/Update";
+// Basket Components
+import PublicBasket from "./basket/PublicBasket";
+import DashboardBasket from "./basket/DashboardBasket";
 
 // Auth Components
-import Signin from "./auth/Signin";
 import Signup from "./auth/Signup";
+import Signin from "./auth/Signin";
 import RequestReset from "./auth/RequestReset";
 import Reset from "./auth/Reset";
+import Signout from "./auth/Signout";
+
+// Egg Components
+import Egg from "./egg/Egg";
+import EggOwner from "./egg/Owner";
+import CreateEgg from "./egg/Create";
+import UpdateEgg from "./egg/Update";
+import DeleteEgg from "./egg/Delete";
+import PublishEgg from "./egg/Publish";
 
 // User Components
 import UserProfile from "./user/Profile";
@@ -31,24 +36,34 @@ import Workshop from "./workshops/Workshop";
 import UpdateFlavor from "./flavor/Update";
 
 export {
-  UserProfile,
-  UserDashboard,
+  // layout Components
   Page,
   PleaseSignIn,
-  EggOwner,
-  CreateEgg,
-  Egg,
-  EggList,
-  UserEggList,
-  UpdateEgg,
+  // Basket Components
+  PublicBasket,
+  DashboardBasket,
+  // Auth Components
   Signup,
   Signin,
-  Owner,
-  UpdateFlavor,
   RequestReset,
   Reset,
+  Signout,
+  // Egg Components
+  Egg,
+  EggOwner,
+  CreateEgg,
+  UpdateEgg,
+  DeleteEgg,
+  PublishEgg,
+  // User Components
+  UserProfile,
+  UserDashboard,
+  Owner,
   Permissions,
+  // Workshop Components
   FlavorWorkshop,
   CursorWorkshop,
-  Workshop
+  Workshop,
+  // Flavour Components
+  UpdateFlavor
 };
