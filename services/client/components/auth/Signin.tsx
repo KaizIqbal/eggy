@@ -36,7 +36,7 @@ const Signin: React.FunctionComponent<IProps> = props => {
       }
     ],
     onCompleted: () => {
-      Router.push(paths.basket);
+      Router.replace(paths.basket);
     }
   });
 
