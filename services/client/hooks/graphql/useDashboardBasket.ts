@@ -1,8 +1,12 @@
 import { useQuery } from "@apollo/react-hooks";
+
+// Mutation & Query
 import { GET_USER_EGGS_CURSOR } from "../../graphql/Query";
+
+// Utils
 import updateEggCache from "../../utils/updateEggCache";
 
-function useUserEggs() {
+function useDashboardBasket() {
   const { data, loading, fetchMore, error } = useQuery(GET_USER_EGGS_CURSOR, {
     fetchPolicy: "cache-and-network"
   });
@@ -30,4 +34,4 @@ function useUserEggs() {
     error
   };
 }
-export default useUserEggs;
+export default useDashboardBasket;
