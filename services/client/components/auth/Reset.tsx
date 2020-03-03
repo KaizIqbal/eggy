@@ -12,6 +12,9 @@ import { useForm } from "react-hook-form";
 // styled components
 import { Form } from "../styled";
 
+// Contains all routes
+import paths from "../../paths";
+
 // ################################################ COMPONENT'S TYPE ###############################################
 
 interface IProps {
@@ -37,10 +40,8 @@ const Reset: React.FunctionComponent<IProps> = props => {
         }
       ],
       onCompleted: () => {
-        // Redirect to the Signin Page
-        Router.push({
-          pathname: "/signin"
-        });
+        // Redirect to the Basket Page
+        Router.push(paths.basket);
       }
     }
   );

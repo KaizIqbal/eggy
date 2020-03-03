@@ -9,6 +9,7 @@ import { UserDashboard } from "../components";
 
 // Helper function
 import { auth } from "../utils/auth";
+import Head from "next/head";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
@@ -29,6 +30,9 @@ const Dashboard: NextPage<IProps> = props => {
 
   return userData ? (
     <>
+      <Head>
+        <title> Eggy | {userData.name}'s Dashboard</title>
+      </Head>
       <UserDashboard username={userData.username} />
     </>
   ) : (
