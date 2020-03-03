@@ -26,7 +26,8 @@ const Nav: React.FunctionComponent<IProps> = props => {
       <br />
       {userData ? (
         <>
-          <Link to={paths.user(userData.username)}>{userData.name}</Link>
+          <a href={paths.dashboard}>{userData.name}</a>
+
           <br />
           <Signout />
         </>
