@@ -1,33 +1,37 @@
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import Router from "next/router";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { UPDATE_EGG_MUTATION } from "../../graphql/Mutation";
-import {
-  EGG_QUERY,
-  GET_EGGS_CURSOR,
-  GET_USER_EGGS_CURSOR
-} from "../../graphql/Query";
-import { Form } from "../styled";
+import React, { useState } from "react";
 
-// ##### COMPONENT PROPS TYPE #####
-interface IUpdateEggProps {
-  eggname: any;
+// Graphql Query & Mutation
+import { UPDATE_EGG_MUTATION } from "../../graphql/Mutation";
+import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../graphql/Query";
+
+// Hooks libraries
+import { useMutation } from "@apollo/react-hooks";
+import { useForm } from "react-hook-form";
+
+// Components
+import { Popup } from "../index";
+
+// Styled Components
+import { Form, Button } from "../styled";
+
+// ################################################ COMPONENT'S TYPE ####################################
+
+interface IProps {
+  egg: any;
 }
 
-// ##### COMPONENT #####
-const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
-  // ##### HOOKS #####
+type FormData = {
+  title: string;
+};
 
-  // Fetch data by id using Query Hook
-  const { loading: fetching, error: fetchingError, data: fetchData } = useQuery(
-    EGG_QUERY,
-    {
-      variables: { eggname: props.eggname }
-    }
-  );
+// ################################################ COMPONENT ###############################################
+const UpdateEgg: React.FunctionComponent<IProps> = props => {
+  // ################################################ HOOKS ################################################
 
-  // UpdateEgg Mutation hook
+  // For storing Popup State
+  const [popup, setPopup] = useState(false);
+
+  // updateEgg Mutation hook
   const [UpdateEgg, { loading, error }] = useMutation(UPDATE_EGG_MUTATION, {
     refetchQueries: [
       {
@@ -36,23 +40,33 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
       {
         query: GET_USER_EGGS_CURSOR
       }
-    ],
-    onCompleted: () => {
-      Router.back();
-    }
+    ]
   });
 
   // react form hook
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm<FormData>();
 
-  // ##### HANDLE FUNCTION #####
+  // ################################################ HANDLING FUNCTION ################################################
+
+  // ################ Form submition #################
+  // #                                               #
+  // #     1. call mutation                          #
+  // #     2. reset form                             #
+  // #     3. close popup                            #
+  // #     4. handle error                           #
+  // #                                               #
+  // #################################################
 
   // Handle On Form Submit
   const onSubmit = async (values, e) => {
     try {
       e.preventDefault();
-      // UpdateEgg Mutation call with data
-      await UpdateEgg({ variables: { eggname: props.eggname, ...values } });
+
+      await UpdateEgg({ variables: { eggname: props.egg.eggname, ...values } });
+
+      e.target.reset();
+
+      setPopup(false);
     } catch (error) {
       // Reset Form
       e.target.reset();
@@ -60,44 +74,59 @@ const UpdateEgg: React.FunctionComponent<IUpdateEggProps> = props => {
     }
   };
 
-  // ##### RENDER #####
+  // ################ Popup toggle ###################
+  // #                                               #
+  // #     For Toggling Popup state                  #
+  // #                                               #
+  // #################################################
 
-  // Fetching Egg Details
-  if (fetching) return <p>Loading...</p>;
+  const togglePopup = () => {
+    setPopup(!popup);
+  };
 
-  // if any error in fetching Data
-  if (fetchingError) return <p>Error: {fetchingError.message}</p>;
+  // ################################################ RENDER #####################################################
 
-  // if Data is not existed
-  if (!fetchData.egg) return <p>No Egg Found</p>;
+  // ####################### Render flow ########################
+  // #                                                          #
+  // #     (error) => handle the Graphql error                  #
+  // #     else => Render Form inside Popup Component by using  #
+  // #             local state                                  #
+  // #                                                          #
+  // ############################################################
 
-  // if any error in form submiting
   if (error) return <p>Error: {error.message}</p>;
 
-  //else render form
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset disabled={loading}>
-        {/* Insert Title of Egg */}
-        <label htmlFor="title">
-          Title
-          <input
-            defaultValue={fetchData.egg.title}
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Title"
-            ref={register({ required: true })}
-          />
-          {errors.title && "Your input is required"}
-        </label>
+    <>
+      <Button onClick={togglePopup}>Edit</Button>
+      {popup ? (
+        <Popup closePopup={togglePopup}>
+          <br />
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <fieldset disabled={loading}>
+              {/* Edit Title of Egg */}
+              <label htmlFor="title">
+                Title
+                <input
+                  defaultValue={props.egg.title}
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="Title"
+                  ref={register({ required: "Your input is required" })}
+                />
+                {errors.title && errors.title.message}
+              </label>
 
-        <br />
+              <br />
 
-        {/* Submition */}
-        <button type="submit">Updat{loading ? "ing" : "e"}</button>
-      </fieldset>
-    </Form>
+              {/* Submition */}
+              <button type="submit">Updat{loading ? "ing" : "e"}</button>
+            </fieldset>
+          </Form>
+        </Popup>
+      ) : null}
+    </>
   );
 };
 

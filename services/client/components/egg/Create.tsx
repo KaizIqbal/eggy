@@ -1,18 +1,38 @@
-import { useMutation } from "@apollo/react-hooks";
-import Router from "next/router";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { possibleCursorTypes } from "../../graphql/constraint";
+import React, { useState } from "react";
+
+// Graphql Query & Mutation
 import { CREATE_EGG_MUTATION } from "../../graphql/Mutation";
 import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../graphql/Query";
-import { Form } from "../styled";
 
-// ##### COMPONENT PROPS TYPE #####
-interface ICreateEggProps {}
+// Hooks libraries
+import { useMutation } from "@apollo/react-hooks";
+import { useForm } from "react-hook-form";
 
-// ##### COMPONENT #####
-const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
-  // ##### HOOKS #####
+// Helper Constraint
+import { possibleCursorTypes } from "../../graphql/constraint";
+
+// Components
+import { Popup } from "../index";
+
+// Styled Components
+import { Form, Button } from "../styled";
+
+// ################################################ COMPONENT'S TYPE ####################################
+
+interface IProps {}
+
+type FormData = {
+  eggname: string;
+  title: string;
+  cursorTypes: string;
+};
+
+// ################################################ COMPONENT ###############################################
+const CreateEgg: React.FunctionComponent<IProps> = props => {
+  // ################################################ HOOKS ################################################
+
+  // For storing Popup State
+  const [popup, setPopup] = useState(false);
 
   // createEgg Mutation hook
   const [createEgg, { loading, error }] = useMutation(CREATE_EGG_MUTATION, {
@@ -23,29 +43,33 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
       {
         query: GET_USER_EGGS_CURSOR
       }
-    ],
-    onCompleted: () => {
-      Router.back();
-    }
+    ]
   });
 
   // react form hook
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm<FormData>();
 
-  // ##### HANDLING FUNCTION #####
+  // ################################################ HANDLING FUNCTION ################################################
+
+  // ################ Form submition #################
+  // #                                               #
+  // #     1. call mutation                          #
+  // #     2. reset form                             #
+  // #     3. close popup                            #
+  // #     4. handle error                           #
+  // #                                               #
+  // #################################################
 
   // Handle On Form Submit
-  const onSubmit = async (
-    values: Record<string, any>,
-    e: { preventDefault: () => void; target: { reset: { (): void; (): void } } }
-  ) => {
+  const onSubmit = async (values, e) => {
     try {
       e.preventDefault();
-      // createEgg Mutation call with data
+
       await createEgg({ variables: { ...values } });
 
-      // Reset Form
       e.target.reset();
+
+      setPopup(false);
     } catch (error) {
       // Reset Form
       e.target.reset();
@@ -53,62 +77,90 @@ const CreateEgg: React.FunctionComponent<ICreateEggProps> = props => {
     }
   };
 
-  // ##### RENDER #####
+  // ################ Popup toggle ###################
+  // #                                               #
+  // #     For Toggling Popup state                  #
+  // #                                               #
+  // #################################################
 
-  // if any error in form submiting
+  const togglePopup = () => {
+    setPopup(!popup);
+  };
+
+  // ################################################ RENDER #####################################################
+
+  // ####################### Render flow ########################
+  // #                                                          #
+  // #     (error) => handle the Graphql error                  #
+  // #     else => Render Form inside Popup Component by using  #
+  // #             local state                                  #
+  // #                                                          #
+  // ############################################################
+
   if (error) return <p>Error: {error.message}</p>;
 
-  // else render form
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset disabled={loading}>
-        {/* Insert eggname for Routing */}
-        <label htmlFor="eggname">
-          Egg
-          <input
-            type="text"
-            id="eggname"
-            name="eggname"
-            placeholder="Sweet"
-            ref={register({ required: true })}
-          />
-          {errors.title && "Your input is required"}
-        </label>
+    <>
+      <Button onClick={togglePopup}>+ Add Egg</Button>
+      {popup ? (
+        <Popup closePopup={togglePopup}>
+          <br />
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <fieldset disabled={loading}>
+              {/* Insert eggname for Routing */}
+              <label htmlFor="eggname">
+                Egg
+                <input
+                  type="text"
+                  id="eggname"
+                  name="eggname"
+                  pattern="[A-Za-z0-9_]+"
+                  placeholder="Sweet"
+                  ref={register({ required: "Your input is required" })}
+                />
+                {errors.eggname && errors.eggname.message}
+              </label>
 
-        <br />
+              <br />
 
-        {/* Insert Title of Egg */}
-        <label htmlFor="title">
-          Title
-          <input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Sweet Cursor"
-            ref={register({ required: true })}
-          />
-          {errors.title && "Your input is required"}
-        </label>
+              {/* Insert Title of Egg */}
+              <label htmlFor="title">
+                Title
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="Sweet Cursor"
+                  ref={register({ required: "Your input is required" })}
+                />
+                {errors.title && errors.title.message}
+              </label>
 
-        <br />
+              <br />
 
-        {possibleCursorTypes.map(cursorType => (
-          <label key={cursorType} htmlFor={`cursorType-${cursorType}`}>
-            <input
-              id={`cursorType-${cursorType}`}
-              type="checkbox"
-              value={cursorType}
-              name="cursorTypes"
-              ref={register({ required: true })}
-            />
-            {cursorType}
-          </label>
-        ))}
-        <br />
-        {/* Submition */}
-        <button type="submit">Submit</button>
-      </fieldset>
-    </Form>
+              <label htmlFor="cursorTypes">
+                {possibleCursorTypes.map(cursorType => (
+                  <label key={cursorType} htmlFor={`cursorType-${cursorType}`}>
+                    <input
+                      id={`cursorType-${cursorType}`}
+                      type="checkbox"
+                      value={cursorType}
+                      name="cursorTypes"
+                      ref={register({ required: "Your input is required" })}
+                    />
+                    {cursorType}
+                  </label>
+                ))}
+                {errors.cursorTypes && errors.cursorTypes.message}
+              </label>
+              <br />
+              {/* Submition */}
+              <button type="submit">Submit</button>
+            </fieldset>
+          </Form>
+        </Popup>
+      ) : null}
+    </>
   );
 };
 
