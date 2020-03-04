@@ -1,6 +1,8 @@
 // Layout Components
 import Page from "./layout/Page";
 import PleaseSignIn from "./layout/PleaseSignIn";
+import InlineEdit from "./layout/InlineEdit";
+import Popup from "./layout/Popup";
 
 // Basket Components
 import PublicBasket from "./basket/PublicBasket";
@@ -39,6 +41,8 @@ export {
   // layout Components
   Page,
   PleaseSignIn,
+  InlineEdit,
+  Popup,
   // Basket Components
   PublicBasket,
   DashboardBasket,

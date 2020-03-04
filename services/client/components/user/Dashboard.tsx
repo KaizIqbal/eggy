@@ -1,11 +1,7 @@
 import React from "react";
 
-// Paths
-import paths from "../../paths";
-
 // Components
-import Link from "../layout/Link";
-import { DashboardBasket } from "../index";
+import { DashboardBasket, CreateEgg } from "../index";
 
 // ################################################ COMPONENT'S TYPE ####################################
 
@@ -22,7 +18,7 @@ const Dashboard: React.FunctionComponent<IProps> = ({ username }) => {
 
   return (
     <>
-      <Link to={paths.newEgg(username)}>+Add Egg</Link>
+      <CreateEgg />
       {/* List all user's Eggs*/}
       <DashboardBasket username={username} />
     </>
