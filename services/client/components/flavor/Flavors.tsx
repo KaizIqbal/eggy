@@ -24,25 +24,8 @@ const Flavors: React.FunctionComponent<IFlavorsProps> = props => {
     <div>
       {data.map(flavor => (
         <li key={flavor.id}>
-          <Link
-            href="/[user]/[egg]/workshop/[flavor]"
-            as={`/${props.username}/${props.eggname}/workshop/${flavor.name}`}
-          >
-            <a>{flavor.name}</a>
-          </Link>
-          <Button
-            type="button"
-            onClick={() => {
-              Router.push(
-                "/[user]/[egg]/workshop/[flavor]/update",
-                `/${props.username}/${props.eggname}/workshop/${
-                  flavor.name
-                }/update`
-              );
-            }}
-          >
-            Update
-          </Button>
+          {flavor.name}
+
           <DeleteFlavor id={flavor.id} eggname={props.eggname} />
         </li>
       ))}

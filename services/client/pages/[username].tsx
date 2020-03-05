@@ -4,7 +4,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 // Components
-import { UserProfile } from "../../components";
+import { UserProfile } from "../components";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
@@ -15,7 +15,7 @@ const Me: NextPage<IProps> = props => {
   // ################################################ HOOKS ################################################
 
   const {
-    query: { user }
+    query: { username }
   } = useRouter();
 
   // ################################################ RENDER ################################################
@@ -26,7 +26,7 @@ const Me: NextPage<IProps> = props => {
   // #                                                          #
   // ############################################################
 
-  return <UserProfile username={user} />;
+  return <UserProfile username={username} />;
 };
 
 export default Me;

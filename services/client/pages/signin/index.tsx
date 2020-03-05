@@ -15,10 +15,10 @@ interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
 const SigninPage: NextPage<IProps> = props => (
-  <>
+  <div>
     <Signin />
     <Link to={paths.request}>Forget Password</Link>
-  </>
+  </div>
 );
 
 SigninPage.getInitialProps = async ctx => {
