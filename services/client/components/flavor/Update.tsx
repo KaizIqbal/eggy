@@ -38,10 +38,10 @@ const UpdateFlavor: React.FunctionComponent<IUpdateFlavorProps> = props => {
         }
       ],
       onCompleted: () => {
-        Router.push(
-          "/[user]/[egg]/workshop",
-          `/${props.username}/${props.eggname}/workshop`
-        );
+        // Router.push(
+        //   "/[username]/[egg]/workshop",
+        //   `/${props.username}/${props.eggname}/workshop`
+        // );
       }
     }
   );
