@@ -1,51 +1,56 @@
-import { useContext } from "react";
-import Head from "next/head";
+import React, { useContext } from "react";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 
 // custom context
-import { AuthContext } from "../contexts/authContext";
+import { AuthContext } from "../../../contexts/authContext";
 
 // Components
-import { UserDashboard } from "../components";
+import {} from "../../../components";
 
 // Helper function
-import { dashboardAuth } from "../utils/auth";
+import { workshopAuth } from "../../../utils/auth";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const Dashboard: NextPage<IProps> = props => {
+const WorkshopPage: NextPage<IProps> = props => {
   // ################################################ HOOKS ################################################
+
+  const {
+    query: { eggname }
+  } = useRouter();
+
   const { userData } = useContext(AuthContext);
 
   // ################################################ RENDER ################################################
 
   // ####################### Render flow ########################
   // #                                                          #
-  // #     user signin => User Dashboard Page                   #
+  // #     user signin => Render Workshop                       #
+  // #     else => Render Egg                                   #
   // #                                                          #
   // ############################################################
 
   return userData ? (
     <div>
-      <Head>
-        <title> Eggy | {userData.name}'s Dashboard</title>
-      </Head>
-      <UserDashboard username={userData.username} />
+      <p>{eggname} Workshop </p>
     </div>
   ) : (
     <div>
+      {console.log("loading...")}
       <p>Loading......</p>
     </div>
   );
 };
 
-Dashboard.getInitialProps = async ctx => {
+// Middleware for checking Authentication
+WorkshopPage.getInitialProps = async (ctx: { query }) => {
   // Check user's session
-  const token = dashboardAuth(ctx);
+  const token = workshopAuth(ctx, ctx.query.eggname);
   return { token };
 };
 
-export default Dashboard;
+export default WorkshopPage;

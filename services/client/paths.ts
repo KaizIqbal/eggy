@@ -9,20 +9,14 @@ export default {
   // paths can be functions for dynamic routes
   user(username: string) {
     return {
-      href: "/[user]",
+      href: "/[username]",
       as: `/${username}`
     };
   },
-  egg(username: string, eggname: string) {
+  egg(eggname: string) {
     return {
-      href: "/[user]/[egg]/workshop",
-      as: `/${username}/${eggname}/workshop`
-    };
-  },
-  eggUpdate(username: string, eggname: string) {
-    return {
-      href: "/[user]/[egg]/workshop",
-      as: `/${username}/${eggname}/workshop`
+      href: "/e/[eggname]",
+      as: `/e/${eggname}`
     };
   }
 };

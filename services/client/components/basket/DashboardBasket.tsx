@@ -51,7 +51,7 @@ const DashboardBasket: React.FunctionComponent<IProps> = props => {
       >
         {eggs.map(egg => (
           <li key={egg.id}>
-            <Link to={paths.egg(props.username, egg.eggname)}>{egg.title}</Link>
+            <Link to={paths.egg(egg.eggname)}>{egg.title}</Link>
             <UpdateEgg egg={egg} />
             <DeleteEgg eggname={egg.eggname} />
             <PublishEgg id={egg.id} isPublished={egg.isPublished} />

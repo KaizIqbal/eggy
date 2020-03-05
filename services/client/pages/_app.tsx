@@ -2,10 +2,10 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { NormalizedCacheObject } from "apollo-cache-inmemory";
 
 // Apollo Client
-import ApolloClient from "apollo-client";
+import React from "react";
 import App from "next/app";
 import Head from "next/head";
-import React from "react";
+import ApolloClient from "apollo-client";
 
 // Styled Component
 import { createGlobalStyle, ThemeProvider } from "styled-components";

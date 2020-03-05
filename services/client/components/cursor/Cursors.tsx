@@ -23,28 +23,8 @@ const Cursors: React.FunctionComponent<IFlavorsProps> = props => {
     <div>
       {data.map(cursor => (
         <li key={cursor.id}>
-          <Link
-            href="/[user]/[egg]/workshop/[flavor]/[cursor]"
-            as={`/${props.username}/${props.eggname}/workshop/${
-              props.flavorname
-            }/${cursor.name}`}
-          >
-            <a>{cursor.name}</a>
-          </Link>
+          {cursor.name}
 
-          {/* <Button
-            type="button"
-            onClick={() => {
-              Router.push(
-                "/[user]/[egg]/workshop/[flavor]/update",
-                `/${props.username}/${props.eggname}/workshop/${
-                  flavor.name
-                }/update`
-              );
-            }}
-          >
-            Update
-          </Button> */}
           <DeleteCursor id={cursor.id} flavorname={props.flavorname} />
         </li>
       ))}

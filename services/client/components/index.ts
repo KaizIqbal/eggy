@@ -17,7 +17,6 @@ import Signout from "./auth/Signout";
 
 // Egg Components
 import Egg from "./egg/Egg";
-import EggOwner from "./egg/Owner";
 import CreateEgg from "./egg/Create";
 import UpdateEgg from "./egg/Update";
 import DeleteEgg from "./egg/Delete";
@@ -54,7 +53,6 @@ export {
   Signout,
   // Egg Components
   Egg,
-  EggOwner,
   CreateEgg,
   UpdateEgg,
   DeleteEgg,
