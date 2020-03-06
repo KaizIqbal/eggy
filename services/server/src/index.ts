@@ -31,11 +31,12 @@ server.express.use(async (req: any, res, next) => {
         id: req.userId
       }
     },
-    "{id ,permissions, name ,email}"
+    "{id ,permissions, firstName,lastName ,email}"
   );
   req.user = user;
   next();
 });
+
 server.start(
   {
     cors: {
