@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
 // custom context
 import { AuthContext } from "../../../contexts/authContext";
 
 // Components
-import {} from "../../../components";
+import { Workshop } from "../../../components";
 
 // Helper function
 import { workshopAuth } from "../../../utils/auth";
@@ -35,14 +36,16 @@ const WorkshopPage: NextPage<IProps> = props => {
   // ############################################################
 
   return userData ? (
-    <div>
-      <p>{eggname} Workshop </p>
-    </div>
+    <>
+      <Workshop eggname={eggname} username={userData.username} />
+    </>
   ) : (
-    <div>
-      {console.log("loading...")}
+    <>
+      <Head>
+        <title>Loading.. - Eggy Workshop</title>
+      </Head>
       <p>Loading......</p>
-    </div>
+    </>
   );
 };
 

@@ -29,12 +29,12 @@ const Dashboard: NextPage<IProps> = props => {
   // ############################################################
 
   return userData ? (
-    <div>
+    <>
       <Head>
-        <title> Eggy | {userData.name}'s Dashboard</title>
+        <title>{userData.name}'s Dashboard - Eggy</title>
       </Head>
       <UserDashboard username={userData.username} />
-    </div>
+    </>
   ) : (
     <div>
       <p>Loading......</p>

@@ -1,8 +1,14 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
+// Components
+import Link from "../layout/Link";
+
 // Custom Hooks
 import usePublicBasket from "../../hooks/graphql/usePublicBasket";
+
+// Contains all routes
+import paths from "../../paths";
 
 // ################################################ COMPONENT'S TYPE ####################################
 
@@ -42,7 +48,10 @@ const PublicBasket: React.FunctionComponent<IProps> = props => {
       >
         {eggs.map(egg => (
           <li key={egg.id}>
-            <h4>{egg.title}</h4> <p>by {egg.user.name}</p>
+            <Link to={paths.egg(egg.eggname)}>
+              <h4>{egg.title}</h4>
+            </Link>
+            <p>by {egg.user.name}</p>
             Available for:
             {egg.cursorTypes.map(cursorType => (
               <p key={cursorType}>{cursorType}</p>

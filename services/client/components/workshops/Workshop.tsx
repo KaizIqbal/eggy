@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/react-hooks";
 import React from "react";
+import Head from "next/head";
 import { EGG_QUERY } from "../../graphql/Query";
 import CreateFlavor from "../flavor/Create";
 import Flavors from "../flavor/Flavors";
@@ -27,6 +28,9 @@ const Workshop: React.FunctionComponent<IWorkshopProps> = props => {
 
   return (
     <>
+      <Head>
+        <title>{data.egg.title} - Eggy Workshop</title>
+      </Head>
       <h1>
         {props.username}'s Workshop for {props.eggname}
       </h1>

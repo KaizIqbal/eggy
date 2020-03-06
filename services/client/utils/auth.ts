@@ -1,18 +1,26 @@
-import Router from "next/router";
 import nextCookie from "next-cookies";
 import paths from "../paths";
 
-export const dashboardAuth = ctx => {
+export const signinAuth = ctx => {
   const { auth } = nextCookie(ctx);
-  if (ctx.req && !auth) {
-    ctx.res.writeHead(302, { Location: paths.signin });
+  if (ctx.req && auth) {
+    ctx.res.writeHead(302, { Location: paths.dashboard });
     ctx.res.end();
     ctx.res.finished = true;
     return;
   }
 
-  if (!auth) {
-    Router.push(paths.signin);
+  return auth;
+};
+
+export const dashboardAuth = ctx => {
+  const { auth } = nextCookie(ctx);
+
+  if (ctx.req && !auth) {
+    ctx.res.writeHead(302, { Location: paths.signin });
+    ctx.res.end();
+    ctx.res.finished = true;
+    return;
   }
 
   return auth;
@@ -25,10 +33,6 @@ export const workshopAuth = (ctx, eggname) => {
     ctx.res.end();
     ctx.res.finished = true;
     return;
-  }
-
-  if (!auth) {
-    Router.push(paths.egg(eggname));
   }
 
   return auth;
