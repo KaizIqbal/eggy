@@ -18,7 +18,15 @@ const Egg: React.FunctionComponent<IEggProps> = props => {
 
   // ##### RENDER #####
   // Fetching Egg Details
-  if (loading) return <p>Fetching data about Egg...</p>;
+  if (loading)
+    return (
+      <>
+        <Head>
+          <title>Loading.. - Eggy</title>
+        </Head>
+        <p>Fetching data about Egg...</p>
+      </>
+    );
 
   // if any error in fetching Data
   if (error) return <p>Error: {error.message}</p>;
@@ -31,7 +39,7 @@ const Egg: React.FunctionComponent<IEggProps> = props => {
     <div>
       {/* Update Header */}
       <Head>
-        <title>Eggy | {data.egg.title}</title>
+        <title>{data.egg.title} - Eggy</title>
       </Head>
 
       {/* Details */}
