@@ -29,4 +29,19 @@ const Me: NextPage<IProps> = props => {
   return <UserProfile username={username} />;
 };
 
+Me.getInitialProps = async ({ res, query }) => {
+  const slug: any = query.username;
+
+  // If slug is valid
+  // Checking by @ at starting of the slug then it is username
+  if (slug.startsWith("@")) {
+    return {};
+  }
+
+  // if not then redirected to search
+  res.writeHead(302, { Location: `/s/${slug}` });
+  res.end();
+  res.finished = true;
+  return;
+};
 export default Me;

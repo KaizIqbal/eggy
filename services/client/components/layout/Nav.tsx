@@ -16,9 +16,10 @@ interface IProps {}
 
 // ################################################ COMPONENT ###############################################
 const Nav: React.FunctionComponent<IProps> = props => {
-  const { userData } = useContext(AuthContext);
+  const { userData, loading } = useContext(AuthContext);
 
   // ################################################ RENDER #####################################################
+
   return (
     <>
       <br />
@@ -26,13 +27,15 @@ const Nav: React.FunctionComponent<IProps> = props => {
       <br />
       <Link to={paths.basket}>Basket</Link>
       <br />
-      {userData ? (
+      {loading ? (
+        <p>Loading user data...</p>
+      ) : userData ? (
         <>
-          <a href={paths.dashboard}>{userData.name}</a>
+          {userData.name}
           <br />
-          <Link to={paths.user(userData.username)}>
-            {userData.name}'s Public Profile
-          </Link>
+          <Link to={paths.dashboard}>Dashboard</Link>
+          <br />
+          <Link to={paths.user(userData.username)}>Profile</Link>
 
           <br />
           <Signout />
