@@ -13,7 +13,10 @@ interface ICreateCursorProps {
 }
 
 // ##### COMPONENT #####
-const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
+const CreateCursor: React.FunctionComponent<ICreateCursorProps> = ({
+  flavorname,
+  flavorId
+}) => {
   // ##### HOOKS #####
 
   // call Mutation for create Cursor
@@ -23,7 +26,7 @@ const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
       refetchQueries: [
         {
           query: CURSORS_QUERY,
-          variables: { flavorname: props.flavorname }
+          variables: { flavorname: flavorname }
         }
       ]
     }
@@ -31,7 +34,8 @@ const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
 
   //fetch cursors for how much added
   const { fetching, availableCursors } = useAvailableCursors({
-    flavorname: props.flavorname
+    flavorname,
+    filter: true
   });
 
   // react form hook
@@ -40,14 +44,14 @@ const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
   // ##### HANDLING FUNCTION #####
 
   // Handle On Form Submit
-  const onSubmit = async (values, e) => {
+  const onSubmit = async (values: any, e: any) => {
     e.preventDefault();
     // first convert frames to Integer Value
     values.frames = parseInt(values.frames, 10);
 
     // createCursor Mutation call with data
     await createCursor({
-      variables: { ...values, flavorId: props.flavorId }
+      variables: { ...values, flavorId: flavorId }
     });
 
     // Reset Form
@@ -61,6 +65,9 @@ const CreateCursor: React.FunctionComponent<ICreateCursorProps> = props => {
   if (fetching) return <p>Fetching Egg</p>;
 
   // No cursor for add is possible
+  if (availableCursors === undefined) {
+    return <p>Something went wrong!</p>;
+  }
   if (availableCursors.length === 0) {
     return <p>All Cursosrs satisfeid</p>;
   }

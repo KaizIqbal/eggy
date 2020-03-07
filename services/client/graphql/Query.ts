@@ -8,7 +8,8 @@ const ME_QUERY = gql`
   query me {
     me {
       id
-      name
+      firstName
+      lastName
       email
       username
     }
@@ -21,7 +22,8 @@ const ALL_USER_QUERY = gql`
   query users {
     users {
       id
-      name
+      firstName
+      lastName
       email
       permissions
     }
@@ -53,7 +55,8 @@ const GET_EGGS_CURSOR = gql`
           title
           cursorTypes
           user {
-            name
+            firstName
+            lastName
           }
         }
       }

@@ -1,3 +1,4 @@
+import React from "react";
 import { NextPage } from "next";
 
 // Components
@@ -15,7 +16,7 @@ import { signinAuth } from "../../utils/auth";
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const SigninPage: NextPage<IProps> = props => (
+const SigninPage: NextPage<IProps> = _props => (
   <div>
     <Signin />
     <Link to={paths.request}>Forget Password</Link>

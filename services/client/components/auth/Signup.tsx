@@ -17,14 +17,15 @@ import { Form } from "../styled";
 interface IProps {}
 
 type FormData = {
-  name: string;
+  firstName: string;
+  lastName: string;
   username: string;
   email: string;
   password: string;
 };
 
 // ################################################ COMPONENT ###############################################
-const Signup: React.FunctionComponent<IProps> = props => {
+const Signup: React.FunctionComponent<IProps> = _props => {
   // ################################################ HOOKS ################################################
 
   // signup Mutation hook
@@ -35,7 +36,7 @@ const Signup: React.FunctionComponent<IProps> = props => {
       }
     ],
     onCompleted: () => {
-      Router.back();
+      Router.push("/");
     }
   });
 
@@ -52,7 +53,7 @@ const Signup: React.FunctionComponent<IProps> = props => {
   // #                                               #
   // #################################################
 
-  const onSubmit = async (values, e) => {
+  const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
       // createEgg Mutation call with data
@@ -80,18 +81,34 @@ const Signup: React.FunctionComponent<IProps> = props => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)} method="post">
       <fieldset disabled={loading}>
-        {/* Insert name  */}
-        <label htmlFor="name">
-          Name
+        {/* Insert First Name  */}
+        <label htmlFor="firstName">
+          First Name
           <input
             type="text"
-            id="name"
-            name="name"
+            id="firstName"
+            name="firstName"
             pattern="[A-Za-z]+"
-            placeholder="name"
-            ref={register({ required: "Name is required" })}
+            placeholder="John"
+            ref={register({ required: "First Name is required" })}
           />
-          {errors.name && errors.name.message}
+          {errors.firstName && errors.firstName.message}
+        </label>
+
+        <br />
+
+        {/* Insert Last Name  */}
+        <label htmlFor="lastName">
+          Last Name
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            pattern="[A-Za-z]+"
+            placeholder="Wrick"
+            ref={register({ required: "Last Name is required" })}
+          />
+          {errors.lastName && errors.lastName.message}
         </label>
 
         <br />

@@ -19,7 +19,7 @@ import paths from "../../paths";
 interface IProps {}
 
 // ################################################ COMPONENT ###############################################
-const Signout: React.FunctionComponent<IProps> = props => {
+const Signout: React.FunctionComponent<IProps> = _props => {
   // ################################################ HOOKS ################################################
 
   // signout Mutation hook

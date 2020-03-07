@@ -1,9 +1,12 @@
 import React from "react";
+import Router from "next/router";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 // Components
 import { UpdateEgg, DeleteEgg, PublishEgg } from "../index";
-import Link from "../layout/Link";
+
+// Styled Components
+import { Button } from "../styled";
 
 // Custom Hooks
 import useDashboardBasket from "../../hooks/graphql/useDashboardBasket";
@@ -18,7 +21,7 @@ interface IProps {
 }
 
 // ################################################ COMPONENT ###############################################
-const DashboardBasket: React.FunctionComponent<IProps> = props => {
+const DashboardBasket: React.FunctionComponent<IProps> = _props => {
   // ################################################ HOOKS ################################################
 
   const { eggs, error, loading, loadMore, hasNextPage } = useDashboardBasket();
@@ -44,14 +47,24 @@ const DashboardBasket: React.FunctionComponent<IProps> = props => {
     <div>
       <InfiniteScroll
         dataLength={eggsCount}
-        next={loadMoreEggs}
+        next={() => loadMoreEggs}
         hasMore={hasNextPage}
         loader={<p>Loading...</p>}
         endMessage={<p>There not more eggs</p>}
       >
-        {eggs.map(egg => (
+        {eggs.map((egg: any) => (
           <li key={egg.id}>
-            <Link to={paths.eggWorkshops(egg.eggname)}>{egg.title}</Link>
+            {egg.title + " "}
+            <Button
+              onClick={() => {
+                Router.push(
+                  "/egg/[eggname]/workshop",
+                  `/egg/${egg.eggname}/workshop`
+                );
+              }}
+            >
+              Workshop
+            </Button>
             <UpdateEgg egg={egg} />
             <DeleteEgg eggname={egg.eggname} />
             <PublishEgg id={egg.id} isPublished={egg.isPublished} />

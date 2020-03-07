@@ -6,14 +6,16 @@ import gql from "graphql-tag";
 
 const SIGNUP_MUTATION = gql`
   mutation signup(
+    $firstName: String!
+    $lastName: String!
     $email: String!
     $username: String!
-    $name: String!
     $password: String!
   ) {
     signup(
+      firstName: $firstName
+      lastName: $lastName
       email: $email
-      name: $name
       username: $username
       password: $password
     ) {
@@ -77,7 +79,8 @@ const UPDATE_PERMISSION_MUTATION = gql`
     updatePermissions(permissions: $permissions, userId: $userId) {
       id
       permissions
-      name
+      firstName
+      lastName
       email
     }
   }

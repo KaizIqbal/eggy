@@ -41,19 +41,19 @@ const PublicBasket: React.FunctionComponent<IProps> = props => {
     <div>
       <InfiniteScroll
         dataLength={eggsCount}
-        next={loadMoreEggs}
+        next={() => loadMoreEggs}
         hasMore={hasNextPage}
         loader={<p>Loading...</p>}
         endMessage={<p>There not more eggs</p>}
       >
-        {eggs.map(egg => (
+        {eggs.map((egg: any) => (
           <li key={egg.id}>
             <Link to={paths.egg(egg.eggname)}>
               <h4>{egg.title}</h4>
             </Link>
-            <p>by {egg.user.name}</p>
+            <p>by {egg.user.firstName + " " + egg.user.lastName}</p>
             Available for:
-            {egg.cursorTypes.map(cursorType => (
+            {egg.cursorTypes.map((cursorType: string) => (
               <p key={cursorType}>{cursorType}</p>
             ))}
           </li>
