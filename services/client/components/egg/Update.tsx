@@ -58,7 +58,7 @@ const UpdateEgg: React.FunctionComponent<IProps> = props => {
   // #################################################
 
   // Handle On Form Submit
-  const onSubmit = async (values, e) => {
+  const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
 

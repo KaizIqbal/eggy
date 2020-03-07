@@ -29,7 +29,7 @@ export const dashboardAuth = ctx => {
 export const workshopAuth = (ctx, eggname) => {
   const { auth } = nextCookie(ctx);
   if (ctx.req && !auth) {
-    ctx.res.writeHead(302, { Location: `/e/${eggname}` });
+    ctx.res.writeHead(302, { Location: `/egg/${eggname}` });
     ctx.res.end();
     ctx.res.finished = true;
     return;

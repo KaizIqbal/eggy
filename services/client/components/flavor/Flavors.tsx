@@ -22,7 +22,7 @@ const Flavors: React.FunctionComponent<IFlavorsProps> = props => {
   // ##### RENDER #####
   return (
     <div>
-      {data.map(flavor => (
+      {data.map((flavor: any) => (
         <li key={flavor.id}>
           {flavor.name}
 

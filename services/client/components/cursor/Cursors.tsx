@@ -21,7 +21,7 @@ const Cursors: React.FunctionComponent<IFlavorsProps> = props => {
   // ##### RENDER #####
   return (
     <div>
-      {data.map(cursor => (
+      {data.map((cursor: any) => (
         <li key={cursor.id}>
           {cursor.name}
 

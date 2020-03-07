@@ -1,3 +1,4 @@
+import React from "react";
 import { NextPage } from "next";
 
 // Components
@@ -8,7 +9,7 @@ import { RequestReset } from "../../components";
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const RequestResetPage: NextPage<IProps> = props => (
+const RequestResetPage: NextPage<IProps> = _props => (
   <div>
     <RequestReset />
   </div>

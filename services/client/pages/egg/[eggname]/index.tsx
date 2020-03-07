@@ -1,20 +1,29 @@
+import React from "react";
 import { NextPage } from "next";
-
-// hooks libraries
 import { useRouter } from "next/router";
 
 // Components
-import {} from "../../components";
+import { Egg } from "../../../components";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const SearchPage: NextPage<IProps> = props => {
+const EggPage: NextPage<IProps> = _props => {
+  // ################################################ HOOKS ################################################
+
+  const {
+    query: { eggname }
+  } = useRouter();
+
   // ################################################ RENDER ################################################
 
-  return <h1>Search Page</h1>;
+  return (
+    <>
+      <Egg eggname={eggname} />
+    </>
+  );
 };
 
-export default SearchPage;
+export default EggPage;

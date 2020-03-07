@@ -1,3 +1,4 @@
+import React from "react";
 import { NextPage } from "next";
 
 // hooks libraries
@@ -11,7 +12,7 @@ import {} from "../../components";
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const SearchResultPage: NextPage<IProps> = props => {
+const SearchResultPage: NextPage<IProps> = _props => {
   // ################################################ HOOKS ################################################
 
   const {

@@ -21,7 +21,7 @@ const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
 
   const wrapperRef = useRef(null);
   const textRef = useRef(null);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const enter = useKeypress("Enter");
   const esc = useKeypress("Escape");
@@ -43,7 +43,7 @@ const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
   // focus the cursor in the input field on edit start
   useEffect(() => {
     if (isInputActive) {
-      inputRef.current.focus();
+      inputRef.current!.focus();
     }
   }, [isInputActive]);
 

@@ -8,11 +8,10 @@ import { RENAME_CURSOR_MUTATION } from "../../graphql/Mutation";
 interface ICursorEditProps {
   name: any;
   id: string;
-  flavorId: string;
 }
 
 // ##### COMPONENT #####
-const CursorEdit: React.FunctionComponent<ICursorEditProps> = props => {
+const EggTitleEdit: React.FunctionComponent<ICursorEditProps> = props => {
   // ##### INLINE EDIT HOOKS #####
   // set cursor name default in inline Component
   const [cursorName, setCursorName] = useState(props.name);
@@ -38,9 +37,9 @@ const CursorEdit: React.FunctionComponent<ICursorEditProps> = props => {
     // if it change so update
     if (cursorName !== props.name) {
       console.log("sending...");
-      await renameCursor({
-        variables: { id: props.id, flavorId: props.flavorId, name: cursorName }
-      });
+      // await renameCursor({
+      //   variables: { id: props.id, flavorId: props.flavorId, name: cursorName }
+      // });
     }
   };
 
@@ -60,4 +59,4 @@ const CursorEdit: React.FunctionComponent<ICursorEditProps> = props => {
   );
 };
 
-export default CursorEdit;
+export default EggTitleEdit;

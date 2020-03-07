@@ -5,7 +5,7 @@ export default {
   basket: "/basket",
   request: "/signin/request",
   dashboard: "/dashboard",
-  search: "/s",
+  search: "/search",
 
   // paths can be functions for dynamic routes
   user(username: string) {
@@ -16,14 +16,14 @@ export default {
   },
   egg(eggname: string) {
     return {
-      href: "/e/[eggname]",
-      as: `/e/${eggname}`
+      href: "/egg/[eggname]",
+      as: `/egg/${eggname}`
     };
   },
-  eggWorkshops(eggname: string) {
+  eggWorkshop(eggname: string) {
     return {
-      href: "/e/[eggname]/workshop",
-      as: `/e/${eggname}/workshop`
+      href: "/egg/[eggname]/workshop",
+      as: `/egg/${eggname}/workshop`
     };
   }
 };

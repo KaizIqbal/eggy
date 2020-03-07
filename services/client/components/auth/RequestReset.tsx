@@ -19,7 +19,7 @@ type FormData = {
 };
 
 // ################################################ COMPONENT ###############################################
-const RequestReset: React.FunctionComponent<IProps> = props => {
+const RequestReset: React.FunctionComponent<IProps> = _props => {
   // ################################################ HOOKS ################################################
 
   // requestReset Mutation hook
@@ -49,7 +49,7 @@ const RequestReset: React.FunctionComponent<IProps> = props => {
   // #                                               #
   // #################################################
 
-  const onSubmit = async (values, e) => {
+  const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
 

@@ -1,7 +1,11 @@
 import { useQuery } from "@apollo/react-hooks";
 import { FLAVORS_QUERY } from "../../graphql/Query";
 
-function useCursors({ eggname }) {
+interface IArguments {
+  eggname: string;
+}
+
+function useCursors({ eggname }: IArguments) {
   const { data, loading, error } = useQuery(FLAVORS_QUERY, {
     variables: {
       eggname: eggname

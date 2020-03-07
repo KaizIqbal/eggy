@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import Head from "next/head";
+import React, { useContext } from "react";
 import { NextPage } from "next";
+import Head from "next/head";
 
 // custom context
 import { AuthContext } from "../contexts/authContext";
@@ -16,7 +16,7 @@ import { dashboardAuth } from "../utils/auth";
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const Dashboard: NextPage<IProps> = props => {
+const Dashboard: NextPage<IProps> = _props => {
   // ################################################ HOOKS ################################################
   const { userData } = useContext(AuthContext);
 
@@ -31,7 +31,7 @@ const Dashboard: NextPage<IProps> = props => {
   return userData ? (
     <>
       <Head>
-        <title>{userData.name}'s Dashboard - Eggy</title>
+        <title>{userData.firstName}'s Dashboard - Eggy</title>
       </Head>
       <UserDashboard username={userData.username} />
     </>

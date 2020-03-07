@@ -1,7 +1,11 @@
 import { useQuery } from "@apollo/react-hooks";
 import { CURSORS_QUERY } from "../../graphql/Query";
 
-function useCursors({ flavorname }) {
+interface IArguments {
+  flavorname: string;
+}
+
+function useCursors({ flavorname }: IArguments) {
   const { data, loading, error } = useQuery(CURSORS_QUERY, {
     variables: {
       flavorname: flavorname

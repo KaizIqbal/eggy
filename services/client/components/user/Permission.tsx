@@ -6,10 +6,10 @@ import { ALL_USER_QUERY } from "../../graphql/Query";
 import { Button, Table } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
-interface IPermissionProps {}
+interface IProps {}
 
 // ##### COMPONENT #####
-const Permissions: React.FunctionComponent<IPermissionProps> = props => {
+const Permissions: React.FunctionComponent<IProps> = _props => {
   // ##### HOOKS #####
 
   const { data, loading, error } = useQuery(ALL_USER_QUERY);
@@ -35,7 +35,7 @@ const Permissions: React.FunctionComponent<IPermissionProps> = props => {
           </tr>
         </thead>
         <tbody>
-          {data.users.map(user => (
+          {data.users.map((user: any) => (
             <UserPermissions user={user} key={user.id} />
           ))}
         </tbody>
@@ -76,7 +76,7 @@ const UserPermissions: React.FunctionComponent<IUserProps> = props => {
 
   // ##### HANDLE FUNCTION #####
 
-  const handlePermissionChange = async e => {
+  const handlePermissionChange = async (e: any) => {
     const checkbox = e.target;
 
     // take copy of current permissions

@@ -14,7 +14,7 @@ import paths from "../../paths";
 interface IProps {}
 
 // ################################################ COMPONENT ###############################################
-const Header: React.FunctionComponent<IProps> = props => {
+const Header: React.FunctionComponent<IProps> = _props => {
   // ################################################ RENDER #####################################################
   return (
     <>

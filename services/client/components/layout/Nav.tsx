@@ -15,7 +15,7 @@ import paths from "../../paths";
 interface IProps {}
 
 // ################################################ COMPONENT ###############################################
-const Nav: React.FunctionComponent<IProps> = props => {
+const Nav: React.FunctionComponent<IProps> = _props => {
   const { userData, loading } = useContext(AuthContext);
 
   // ################################################ RENDER #####################################################
@@ -31,7 +31,8 @@ const Nav: React.FunctionComponent<IProps> = props => {
         <p>Loading user data...</p>
       ) : userData ? (
         <>
-          {userData.name}
+          {userData.firstName}
+
           <br />
           <Link to={paths.dashboard}>Dashboard</Link>
           <br />

@@ -27,7 +27,7 @@ function usePublicBasket() {
     });
   };
   return {
-    eggs: data.publishedEggsConnection.edges.map(({ node }) => node),
+    eggs: data.publishedEggsConnection.edges.map(({ node }: any) => node),
     hasNextPage: data.publishedEggsConnection.pageInfo.hasNextPage,
     loading,
     loadMore,
