@@ -25,7 +25,7 @@ type FormData = {
 };
 
 // ################################################ COMPONENT ###############################################
-const Signin: React.FunctionComponent<IProps> = props => {
+const Signin: React.FunctionComponent<IProps> = _props => {
   // ################################################ HOOKS ################################################
 
   // signin Mutation hook
@@ -53,7 +53,7 @@ const Signin: React.FunctionComponent<IProps> = props => {
   // #                                               #
   // #################################################
 
-  const onSubmit = async (values, e) => {
+  const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
 

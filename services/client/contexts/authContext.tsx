@@ -1,17 +1,25 @@
 import React, { createContext, useState, useEffect } from "react";
 import useUser from "../hooks/graphql/user";
 
-export const AuthContext = createContext(null);
+interface IData {
+  userData: any;
+  loading: any;
+}
+
+const initialData: IData = {
+  userData: undefined,
+  loading: undefined
+};
+
+export const AuthContext = createContext(initialData);
 
 // ################################################ COMPONENT'S TYPE ####################################
 
-interface IAuthContextProviderProps {}
+interface IProps {}
 
 // ################################################ COMPONENT ###############################################
 
-const AuthContextProvider: React.FunctionComponent<
-  IAuthContextProviderProps
-> = props => {
+const AuthContextProvider: React.FunctionComponent<IProps> = props => {
   // ################################################ HOOKS  ################################################
 
   const { me, loading } = useUser();
@@ -27,7 +35,7 @@ const AuthContextProvider: React.FunctionComponent<
 
   // ################################################ RENDER ################################################
   return (
-    <AuthContext.Provider value={{ userData: userData, loading: loading }}>
+    <AuthContext.Provider value={{ userData, loading }}>
       {props.children}
     </AuthContext.Provider>
   );

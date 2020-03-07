@@ -28,7 +28,7 @@ type FormData = {
 };
 
 // ################################################ COMPONENT ###############################################
-const CreateEgg: React.FunctionComponent<IProps> = props => {
+const CreateEgg: React.FunctionComponent<IProps> = _props => {
   // ################################################ HOOKS ################################################
 
   // For storing Popup State
@@ -61,7 +61,7 @@ const CreateEgg: React.FunctionComponent<IProps> = props => {
   // #################################################
 
   // Handle On Form Submit
-  const onSubmit = async (values, e) => {
+  const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
 

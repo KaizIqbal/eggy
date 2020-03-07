@@ -11,7 +11,7 @@ import { UserProfile } from "../components";
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const Me: NextPage<IProps> = props => {
+const Me: NextPage<IProps> = _props => {
   // ################################################ HOOKS ################################################
 
   const {
@@ -29,7 +29,7 @@ const Me: NextPage<IProps> = props => {
   return <UserProfile username={username} />;
 };
 
-Me.getInitialProps = async ({ res, query }) => {
+Me.getInitialProps = async ({ res, query }: any) => {
   const slug: any = query.username;
 
   // If slug is valid
@@ -39,7 +39,7 @@ Me.getInitialProps = async ({ res, query }) => {
   }
 
   // if not then redirected to search
-  res.writeHead(302, { Location: `/s/${slug}` });
+  res.writeHead(302, { Location: `/search/${slug}` });
   res.end();
   res.finished = true;
   return;

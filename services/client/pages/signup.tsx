@@ -1,3 +1,4 @@
+import React from "react";
 import { NextPage } from "next";
 
 // Components
@@ -8,7 +9,7 @@ import { Signup } from "../components";
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const SignupPage: NextPage<IProps> = props => (
+const SignupPage: NextPage<IProps> = _props => (
   <div>
     <Signup />
   </div>

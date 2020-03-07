@@ -1,7 +1,12 @@
 import useCursors from "./cursors";
 import { possibleCursors } from "../../graphql/constraint";
 
-function useAvailableCursors({ flavorname, filter = true }) {
+interface IArguments {
+  flavorname: string;
+  filter: boolean;
+}
+
+function useAvailableCursors({ flavorname, filter }: IArguments) {
   //fetch cursors for how much added
   const { data, loading: fetching } = useCursors({
     flavorname: flavorname

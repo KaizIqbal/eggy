@@ -1,3 +1,4 @@
+import React from "react";
 import { NextPage } from "next";
 
 // Components
@@ -7,7 +8,7 @@ import { Reset } from "../../components";
 
 interface IProps {
   query: {
-    token?: string;
+    token: string;
   };
 }
 

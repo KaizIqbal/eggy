@@ -17,7 +17,7 @@ import { workshopAuth } from "../../../utils/auth";
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const WorkshopPage: NextPage<IProps> = props => {
+const WorkshopPage: NextPage<IProps> = _props => {
   // ################################################ HOOKS ################################################
 
   const {
@@ -50,7 +50,7 @@ const WorkshopPage: NextPage<IProps> = props => {
 };
 
 // Middleware for checking Authentication
-WorkshopPage.getInitialProps = async (ctx: { query }) => {
+WorkshopPage.getInitialProps = async (ctx: { query: any }) => {
   // Check user's session
   const token = workshopAuth(ctx, ctx.query.eggname);
   return { token };
