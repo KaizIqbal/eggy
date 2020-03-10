@@ -13,8 +13,9 @@ type Mutation {
   deleteFile(fileId: ID!): File!
   
   # Eggs
-  createEgg(title: String! eggname:String! cursorTypes: [cursorType]!): Egg!
+  createEgg(title: String! cursorTypes: [cursorType]!): Egg!
   updateEgg(eggname:String! title: String): Egg!
+  renameEgg(id:ID! title:String!): Egg!
   deleteEgg(eggname:String!): Egg!
 
   publish(id:ID!): Egg!
