@@ -19,6 +19,7 @@ import Signout from "./auth/Signout";
 import Egg from "./egg/Egg";
 import CreateEgg from "./egg/Create";
 import UpdateEgg from "./egg/Update";
+import RenameEgg from "./egg/Rename";
 import DeleteEgg from "./egg/Delete";
 import PublishEgg from "./egg/Publish";
 
@@ -55,6 +56,7 @@ export {
   Egg,
   CreateEgg,
   UpdateEgg,
+  RenameEgg,
   DeleteEgg,
   PublishEgg,
   // User Components

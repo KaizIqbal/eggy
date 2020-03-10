@@ -91,12 +91,8 @@ const UPDATE_PERMISSION_MUTATION = gql`
 // ##### CREATE #####
 
 const CREATE_EGG_MUTATION = gql`
-  mutation createEgg(
-    $eggname: String!
-    $title: String!
-    $cursorTypes: [cursorType]!
-  ) {
-    createEgg(eggname: $eggname, title: $title, cursorTypes: $cursorTypes) {
+  mutation createEgg($title: String!, $cursorTypes: [cursorType]!) {
+    createEgg(title: $title, cursorTypes: $cursorTypes) {
       id
     }
   }
@@ -107,6 +103,16 @@ const CREATE_EGG_MUTATION = gql`
 const UPDATE_EGG_MUTATION = gql`
   mutation updateEgg($eggname: String!, $title: String!) {
     updateEgg(eggname: $eggname, title: $title) {
+      id
+    }
+  }
+`;
+
+// ##### RENAME #####
+
+const RENAME_EGG_MUTATION = gql`
+  mutation renameEgg($id: ID!, $title: String!) {
+    renameEgg(id: $id, title: $title) {
       id
     }
   }
@@ -237,6 +243,7 @@ export {
   // Egg
   CREATE_EGG_MUTATION,
   DELETE_EGG_MUTATION,
+  RENAME_EGG_MUTATION,
   UPDATE_EGG_MUTATION,
   PUBLISH_EGG_MUTATION,
   UNPUBLISH_EGG_MUTATION,

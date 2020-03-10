@@ -9,7 +9,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "react-hook-form";
 
 // Components
-import { Popup } from "../index";
+import { Popup, RenameEgg } from "../index";
 
 // Styled Components
 import { Form, Button } from "../styled";
@@ -102,6 +102,7 @@ const UpdateEgg: React.FunctionComponent<IProps> = props => {
       {popup ? (
         <Popup closePopup={togglePopup}>
           <br />
+          <RenameEgg id={props.egg.id} title={props.egg.title} />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <fieldset disabled={loading}>
               {/* Edit Title of Egg */}

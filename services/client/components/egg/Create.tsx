@@ -107,22 +107,7 @@ const CreateEgg: React.FunctionComponent<IProps> = _props => {
           <br />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <fieldset disabled={loading}>
-              {/* Insert eggname for Routing */}
-              <label htmlFor="eggname">
-                Egg
-                <input
-                  type="text"
-                  id="eggname"
-                  name="eggname"
-                  pattern="[A-Za-z0-9_]+"
-                  placeholder="Sweet"
-                  ref={register({ required: "Your input is required" })}
-                />
-                {errors.eggname && errors.eggname.message}
-              </label>
-
-              <br />
-
+          
               {/* Insert Title of Egg */}
               <label htmlFor="title">
                 Title
