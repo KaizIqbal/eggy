@@ -11,7 +11,7 @@ interface InlineEditProps {
 
   readonly emptyText: string;
   readonly maxLength: number;
-  readonly regex: RegExp;
+  readonly regex?: RegExp;
 }
 
 // ##### COMPONENT #####
