@@ -1,7 +1,7 @@
-import * as shortid from "shortid";
 // Helper Functions
 import loggedIn from "../../utils/loggedIn";
 import checkPublish from "../../utils/checkPublish";
+import generateEggName from "../../utils/generateEggName";
 
 export const eggMutations = {
   // ################################################ CREATE EGG ################################################
@@ -10,12 +10,8 @@ export const eggMutations = {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
 
-    // generating "eggname" fron "title" and attach to the "args"
-    // 1 => remove all special character expect white space
-    // 2 => replce white spaces with "-"
-
-    args.eggname = args.title.replace(/[^a-zA-Z0-9 ]/g, "");
-    args.eggname = args.eggname.replace(/\s/g, "-");
+    // Generating unique eggname based on `title`
+    generateEggName(args);
 
     // deconstruct cursorType and delete from args
     const cursorTypes = args.cursorTypes;
@@ -73,17 +69,8 @@ export const eggMutations = {
     const eggId = args.id;
     delete args.id;
 
-    // generating "eggname" fron "title" and attach to the "args"
-    // 1 => remove all special character expect white space
-    // 2 => replace white spaces with "-"
-    // 3 => generate id and add to end with prefix `-`
-
-    args.eggname = args.title.replace(/[^a-zA-Z0-9 ]/g, "");
-    args.eggname = args.eggname.replace(/\s/g, "-");
-
-    args.eggname = args.eggname + "-" + shortid.generate();
-
-    console.log(args);
+    // Generating unique eggname based on `title`
+    generateEggName(args);
 
     // return => updated Egg
 
