@@ -1,3 +1,4 @@
+import * as shortid from "shortid";
 // Helper Functions
 import loggedIn from "../../utils/loggedIn";
 import checkPublish from "../../utils/checkPublish";
@@ -9,11 +10,12 @@ export const eggMutations = {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
 
-    // Checking eggname contains special symbols
-    var regex = /^\w+$/;
-    if (!regex.test(args.eggname)) {
-      throw new Error("eggname is Invalid");
-    }
+    // generating "eggname" fron "title" and attach to the "args"
+    // 1 => remove all special character expect white space
+    // 2 => replce white spaces with "-"
+
+    args.eggname = args.title.replace(/[^a-zA-Z0-9 ]/g, "");
+    args.eggname = args.eggname.replace(/\s/g, "-");
 
     // deconstruct cursorType and delete from args
     const cursorTypes = args.cursorTypes;
@@ -56,6 +58,41 @@ export const eggMutations = {
         data: updates,
         where: {
           eggname: args.eggname
+        }
+      },
+      info
+    );
+  },
+
+  // ################################################ RENAME EGG ################################################
+
+  async renameEgg(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    loggedIn(ctx);
+
+    const eggId = args.id;
+    delete args.id;
+
+    // generating "eggname" fron "title" and attach to the "args"
+    // 1 => remove all special character expect white space
+    // 2 => replace white spaces with "-"
+    // 3 => generate id and add to end with prefix `-`
+
+    args.eggname = args.title.replace(/[^a-zA-Z0-9 ]/g, "");
+    args.eggname = args.eggname.replace(/\s/g, "-");
+
+    args.eggname = args.eggname + "-" + shortid.generate();
+
+    console.log(args);
+
+    // return => updated Egg
+
+    console.log(args);
+    return ctx.db.mutation.updateEgg(
+      {
+        data: { ...args },
+        where: {
+          id: eggId
         }
       },
       info
