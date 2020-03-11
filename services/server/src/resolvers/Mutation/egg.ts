@@ -10,6 +10,11 @@ export const eggMutations = {
     // Checking user logged in or not if not then throw Error
     loggedIn(ctx);
 
+    // Remove unnecessary space from title
+    // example "   This is   a  DOG     " =>  "This is a DOG"
+    args.title = args.title.trim();
+    args.title = args.title.replace(/  +/g, " ");
+
     // Generating unique eggname based on `title`
     generateEggName(args);
 
@@ -46,12 +51,23 @@ export const eggMutations = {
 
     // first take copy in updates
     const updates = { ...args };
-    // remove id from updates
+
+    // remove egganme from updates
     delete updates.eggname;
+
+    // deconstruct cursorType and delete from updates
+    const cursorTypes = updates.cursorTypes;
+    delete updates.cursorTypes;
+
     // run the update Query
     return ctx.db.mutation.updateEgg(
       {
-        data: updates,
+        data: {
+          cursorTypes: {
+            set: cursorTypes
+          },
+          ...updates
+        },
         where: {
           eggname: args.eggname
         }
@@ -69,12 +85,16 @@ export const eggMutations = {
     const eggId = args.id;
     delete args.id;
 
+    // Remove unnecessary space from title
+    // example "   This is   a  DOG     " =>  "This is a DOG"
+    args.title = args.title.trim();
+    args.title = args.title.replace(/  +/g, " ");
+
     // Generating unique eggname based on `title`
     generateEggName(args);
 
     // return => updated Egg
 
-    console.log(args);
     return ctx.db.mutation.updateEgg(
       {
         data: { ...args },
