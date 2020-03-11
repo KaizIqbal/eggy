@@ -14,7 +14,7 @@ type Mutation {
   
   # Eggs
   createEgg(title: String! cursorTypes: [cursorType]!): Egg!
-  updateEgg(eggname:String! title: String): Egg!
+  updateEgg(eggname:String! cursorTypes: [cursorType]!): Egg!
   renameEgg(id:ID! title:String!): Egg!
   deleteEgg(eggname:String!): Egg!
 
