@@ -101,8 +101,8 @@ const CREATE_EGG_MUTATION = gql`
 // ##### UPDATE #####
 
 const UPDATE_EGG_MUTATION = gql`
-  mutation updateEgg($eggname: String!, $title: String!) {
-    updateEgg(eggname: $eggname, title: $title) {
+  mutation updateEgg($eggname: String!, $cursorTypes: [cursorType]!) {
+    updateEgg(eggname: $eggname, cursorTypes: $cursorTypes) {
       id
     }
   }
