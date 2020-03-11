@@ -14,6 +14,9 @@ import { Popup, RenameEgg } from "../index";
 // Styled Components
 import { Form, Button } from "../styled";
 
+// Helper
+import { possibleCursorTypes } from "../../graphql/constraint";
+
 // ################################################ COMPONENT'S TYPE ####################################
 
 interface IProps {
@@ -22,6 +25,7 @@ interface IProps {
 
 type FormData = {
   title: string;
+  cursorTypes: string;
 };
 
 // ################################################ COMPONENT ###############################################
@@ -65,8 +69,6 @@ const UpdateEgg: React.FunctionComponent<IProps> = props => {
       await UpdateEgg({ variables: { eggname: props.egg.eggname, ...values } });
 
       e.target.reset();
-
-      setPopup(false);
     } catch (error) {
       // Reset Form
       e.target.reset();
@@ -105,22 +107,25 @@ const UpdateEgg: React.FunctionComponent<IProps> = props => {
           <RenameEgg id={props.egg.id} title={props.egg.title} />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <fieldset disabled={loading}>
-              {/* Edit Title of Egg */}
-              <label htmlFor="title">
-                Title
-                <input
-                  defaultValue={props.egg.title}
-                  type="text"
-                  id="title"
-                  name="title"
-                  placeholder="Title"
-                  ref={register({ required: "Your input is required" })}
-                />
-                {errors.title && errors.title.message}
+              <label htmlFor="cursorTypes">
+                {possibleCursorTypes.map((cursorType, index) => (
+                  <label key={cursorType} htmlFor={`cursorType-${cursorType}`}>
+                    <input
+                      id={`cursorType-${cursorType}`}
+                      type="checkbox"
+                      value={cursorType}
+                      defaultChecked={
+                        props.egg.cursorTypes[index] === cursorType
+                      }
+                      name="cursorTypes"
+                      ref={register({ required: "Your input is required" })}
+                    />
+                    {cursorType}
+                  </label>
+                ))}
+                {errors.cursorTypes && errors.cursorTypes.message}
               </label>
-
               <br />
-
               {/* Submition */}
               <button type="submit">Updat{loading ? "ing" : "e"}</button>
             </fieldset>

@@ -78,6 +78,7 @@ const GET_USER_EGGS_CURSOR = gql`
           id
           title
           eggname
+          cursorTypes
           isPublished
         }
       }
