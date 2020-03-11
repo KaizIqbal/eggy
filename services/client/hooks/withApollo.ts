@@ -6,8 +6,8 @@ import { createUploadLink } from "apollo-upload-client";
 
 const uri =
   process.env.NODE_ENV === "development"
-    ? "https://lhohz.sse.codesandbox.io/"
-    : "https://lhohz.sse.codesandbox.io/";
+    ? "https://1fst7.sse.codesandbox.io"
+    : "https://1fst7.sse.codesandbox.io";
 
 const link = createUploadLink({
   fetchOptions: {

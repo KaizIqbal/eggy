@@ -64,7 +64,6 @@ const CreateEgg: React.FunctionComponent<IProps> = _props => {
   const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
-
       await createEgg({ variables: { ...values } });
 
       e.target.reset();
@@ -107,7 +106,6 @@ const CreateEgg: React.FunctionComponent<IProps> = _props => {
           <br />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <fieldset disabled={loading}>
-          
               {/* Insert Title of Egg */}
               <label htmlFor="title">
                 Title

@@ -30,6 +30,8 @@ const RenameEgg: React.FunctionComponent<IProps> = props => {
     ]
   });
 
+  const regex = /^[^\s]+(\s+[^\s]+)*$/;
+
   // ################################################ HELPER HOOKS ################################################
 
   useEffect(() => {
@@ -44,6 +46,11 @@ const RenameEgg: React.FunctionComponent<IProps> = props => {
 
   // ################################################ HANDLING FUNCTION ################################################
   const _handleRename = async (text: any) => {
+    // Remove unnecessary space from title
+    // example "   This is   a  DOG     " =>  "This is a DOG"
+    text = text.trim();
+    text = text.replace(/  +/g, " ");
+
     // set the state
     setTitle(text);
   };
@@ -57,6 +64,7 @@ const RenameEgg: React.FunctionComponent<IProps> = props => {
         emptyText={title}
         onSetText={_handleRename}
         maxLength={20}
+        regex={regex}
       />
       {loading ? " Saving ..." : null}
       {error ? `${error}` : null}
