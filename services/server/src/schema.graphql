@@ -13,8 +13,8 @@ type Mutation {
   deleteFile(fileId: ID!): File!
   
   # Eggs
-  createEgg(title: String! cursorTypes: [cursorType]!): Egg!
-  updateEgg(eggname:String! cursorTypes: [cursorType]!): Egg!
+  createEgg(title: String! platforms: [Platform]!): Egg!
+  updateEgg(eggname:String! platforms: [Platform]!): Egg!
   renameEgg(id:ID! title:String!): Egg!
   deleteEgg(eggname:String!): Egg!
 
