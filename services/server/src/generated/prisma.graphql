@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Fri Mar 06 2020 09:33:46 GMT+0000 (Coordinated Universal Time)
+# timestamp: Thu Mar 12 2020 02:44:30 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -226,11 +226,6 @@ input CursorSubscriptionWhereInput {
   node: CursorWhereInput
 }
 
-enum cursorType {
-  WINDOW
-  LINUX
-}
-
 input CursorUpdateInput {
   name: cursorName
   frames: Int
@@ -398,7 +393,7 @@ type Egg implements Node {
   isPublished: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
-  cursorTypes: [cursorType!]!
+  platforms: [Platform!]!
   user: User!
   flavors(where: FlavorWhereInput, orderBy: FlavorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Flavor!]
 }
@@ -413,16 +408,12 @@ type EggConnection {
   aggregate: AggregateEgg!
 }
 
-input EggCreatecursorTypesInput {
-  set: [cursorType!]
-}
-
 input EggCreateInput {
   id: ID
   title: String!
   eggname: String!
   isPublished: Boolean
-  cursorTypes: EggCreatecursorTypesInput
+  platforms: EggCreateplatformsInput
   user: UserCreateOneWithoutEggsInput!
   flavors: FlavorCreateManyWithoutEggInput
 }
@@ -437,12 +428,16 @@ input EggCreateOneWithoutFlavorsInput {
   connect: EggWhereUniqueInput
 }
 
+input EggCreateplatformsInput {
+  set: [Platform!]
+}
+
 input EggCreateWithoutFlavorsInput {
   id: ID
   title: String!
   eggname: String!
   isPublished: Boolean
-  cursorTypes: EggCreatecursorTypesInput
+  platforms: EggCreateplatformsInput
   user: UserCreateOneWithoutEggsInput!
 }
 
@@ -451,7 +446,7 @@ input EggCreateWithoutUserInput {
   title: String!
   eggname: String!
   isPublished: Boolean
-  cursorTypes: EggCreatecursorTypesInput
+  platforms: EggCreateplatformsInput
   flavors: FlavorCreateManyWithoutEggInput
 }
 
@@ -486,7 +481,7 @@ type EggPreviousValues {
   isPublished: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
-  cursorTypes: [cursorType!]!
+  platforms: [Platform!]!
 }
 
 input EggScalarWhereInput {
@@ -705,15 +700,11 @@ input EggSubscriptionWhereInput {
   node: EggWhereInput
 }
 
-input EggUpdatecursorTypesInput {
-  set: [cursorType!]
-}
-
 input EggUpdateInput {
   title: String
   eggname: String
   isPublished: Boolean
-  cursorTypes: EggUpdatecursorTypesInput
+  platforms: EggUpdateplatformsInput
   user: UserUpdateOneRequiredWithoutEggsInput
   flavors: FlavorUpdateManyWithoutEggInput
 }
@@ -722,14 +713,14 @@ input EggUpdateManyDataInput {
   title: String
   eggname: String
   isPublished: Boolean
-  cursorTypes: EggUpdatecursorTypesInput
+  platforms: EggUpdateplatformsInput
 }
 
 input EggUpdateManyMutationInput {
   title: String
   eggname: String
   isPublished: Boolean
-  cursorTypes: EggUpdatecursorTypesInput
+  platforms: EggUpdateplatformsInput
 }
 
 input EggUpdateManyWithoutUserInput {
@@ -756,11 +747,15 @@ input EggUpdateOneRequiredWithoutFlavorsInput {
   upsert: EggUpsertWithoutFlavorsInput
 }
 
+input EggUpdateplatformsInput {
+  set: [Platform!]
+}
+
 input EggUpdateWithoutFlavorsDataInput {
   title: String
   eggname: String
   isPublished: Boolean
-  cursorTypes: EggUpdatecursorTypesInput
+  platforms: EggUpdateplatformsInput
   user: UserUpdateOneRequiredWithoutEggsInput
 }
 
@@ -768,7 +763,7 @@ input EggUpdateWithoutUserDataInput {
   title: String
   eggname: String
   isPublished: Boolean
-  cursorTypes: EggUpdatecursorTypesInput
+  platforms: EggUpdateplatformsInput
   flavors: FlavorUpdateManyWithoutEggInput
 }
 
@@ -1869,6 +1864,11 @@ enum Permission {
   EGGUPDATE
   EGGDELETE
   PERMISSIONUPDATE
+}
+
+enum Platform {
+  WINDOW
+  LINUX
 }
 
 type Query {
