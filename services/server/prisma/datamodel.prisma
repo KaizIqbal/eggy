@@ -7,7 +7,7 @@ enum Permission {
   PERMISSIONUPDATE
 }
 
-enum cursorType {
+enum Platform {
   WINDOW
   LINUX
 }
@@ -39,7 +39,7 @@ type Egg {
   isPublished: Boolean! @default(value: false)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  cursorTypes: [cursorType]!  @scalarList(strategy: RELATION)
+  platforms: [Platform]!  @scalarList(strategy: RELATION)
   user: User! @relation(name: "Eggs")
   flavors: [Flavor]  @relation(name: "Flavors" onDelete: CASCADE)
 }

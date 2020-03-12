@@ -18,9 +18,9 @@ export const eggMutations = {
     // Generating unique eggname based on `title`
     generateEggName(args);
 
-    // deconstruct cursorType and delete from args
-    const cursorTypes = args.cursorTypes;
-    delete args.cursorTypes;
+    // deconstruct platforms and delete from args
+    const platforms = args.platforms;
+    delete args.platforms;
 
     const egg = await ctx.db.mutation.createEgg(
       {
@@ -31,8 +31,8 @@ export const eggMutations = {
               id: ctx.request.userId
             }
           },
-          cursorTypes: {
-            set: cursorTypes
+          platforms: {
+            set: platforms
           },
           ...args
         }
@@ -55,16 +55,16 @@ export const eggMutations = {
     // remove egganme from updates
     delete updates.eggname;
 
-    // deconstruct cursorType and delete from updates
-    const cursorTypes = updates.cursorTypes;
-    delete updates.cursorTypes;
+    // deconstruct platforms and delete from updates
+    const platforms = updates.platforms;
+    delete updates.platforms;
 
     // run the update Query
     return ctx.db.mutation.updateEgg(
       {
         data: {
-          cursorTypes: {
-            set: cursorTypes
+          platforms: {
+            set: platforms
           },
           ...updates
         },
