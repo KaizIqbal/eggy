@@ -15,7 +15,7 @@ import { Popup, RenameEgg } from "../index";
 import { Form, Button } from "../styled";
 
 // Helper
-import { possibleCursorTypes } from "../../graphql/constraint";
+import { possiblePlatforms } from "../../graphql/constraint";
 
 // ################################################ COMPONENT'S TYPE ####################################
 
@@ -25,7 +25,7 @@ interface IProps {
 
 type FormData = {
   title: string;
-  cursorTypes: string;
+  platforms: string;
 };
 
 // ################################################ COMPONENT ###############################################
@@ -107,23 +107,21 @@ const UpdateEgg: React.FunctionComponent<IProps> = props => {
           <RenameEgg id={props.egg.id} title={props.egg.title} />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <fieldset disabled={loading}>
-              <label htmlFor="cursorTypes">
-                {possibleCursorTypes.map((cursorType, index) => (
-                  <label key={cursorType} htmlFor={`cursorType-${cursorType}`}>
+              <label htmlFor="platforms">
+                {possiblePlatforms.map((platform, index) => (
+                  <label key={platform} htmlFor={`platform-${platform}`}>
                     <input
-                      id={`cursorType-${cursorType}`}
+                      id={`platform-${platform}`}
                       type="checkbox"
-                      value={cursorType}
-                      defaultChecked={
-                        props.egg.cursorTypes[index] === cursorType
-                      }
-                      name="cursorTypes"
+                      value={platform}
+                      defaultChecked={props.egg.platforms[index] === platform}
+                      name="platforms"
                       ref={register({ required: "Your input is required" })}
                     />
-                    {cursorType}
+                    {platform}
                   </label>
                 ))}
-                {errors.cursorTypes && errors.cursorTypes.message}
+                {errors.platforms && errors.platforms.message}
               </label>
               <br />
               {/* Submition */}

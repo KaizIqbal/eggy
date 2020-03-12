@@ -9,7 +9,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "react-hook-form";
 
 // Helper Constraint
-import { possibleCursorTypes } from "../../graphql/constraint";
+import { possiblePlatforms } from "../../graphql/constraint";
 
 // Components
 import { Popup } from "../index";
@@ -24,7 +24,7 @@ interface IProps {}
 type FormData = {
   eggname: string;
   title: string;
-  cursorTypes: string;
+  platforms: string;
 };
 
 // ################################################ COMPONENT ###############################################
@@ -121,20 +121,20 @@ const CreateEgg: React.FunctionComponent<IProps> = _props => {
 
               <br />
 
-              <label htmlFor="cursorTypes">
-                {possibleCursorTypes.map(cursorType => (
-                  <label key={cursorType} htmlFor={`cursorType-${cursorType}`}>
+              <label htmlFor="platforms">
+                {possiblePlatforms.map(platform => (
+                  <label key={platform} htmlFor={`platform-${platform}`}>
                     <input
-                      id={`cursorType-${cursorType}`}
+                      id={`platform-${platform}`}
                       type="checkbox"
-                      value={cursorType}
-                      name="cursorTypes"
+                      value={platform}
+                      name="platforms"
                       ref={register({ required: "Your input is required" })}
                     />
-                    {cursorType}
+                    {platform}
                   </label>
                 ))}
-                {errors.cursorTypes && errors.cursorTypes.message}
+                {errors.platforms && errors.platforms.message}
               </label>
               <br />
               {/* Submition */}
