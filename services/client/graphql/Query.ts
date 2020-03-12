@@ -53,7 +53,7 @@ const GET_EGGS_CURSOR = gql`
         node {
           id
           title
-          cursorTypes
+          platforms
           user {
             firstName
             lastName
@@ -78,7 +78,7 @@ const GET_USER_EGGS_CURSOR = gql`
           id
           title
           eggname
-          cursorTypes
+          platforms
           isPublished
         }
       }

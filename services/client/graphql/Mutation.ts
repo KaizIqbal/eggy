@@ -91,8 +91,8 @@ const UPDATE_PERMISSION_MUTATION = gql`
 // ##### CREATE #####
 
 const CREATE_EGG_MUTATION = gql`
-  mutation createEgg($title: String!, $cursorTypes: [cursorType]!) {
-    createEgg(title: $title, cursorTypes: $cursorTypes) {
+  mutation createEgg($title: String!, $platforms: [Platform]!) {
+    createEgg(title: $title, platforms: $platforms) {
       id
     }
   }
@@ -101,8 +101,8 @@ const CREATE_EGG_MUTATION = gql`
 // ##### UPDATE #####
 
 const UPDATE_EGG_MUTATION = gql`
-  mutation updateEgg($eggname: String!, $cursorTypes: [cursorType]!) {
-    updateEgg(eggname: $eggname, cursorTypes: $cursorTypes) {
+  mutation updateEgg($eggname: String!, $platforms: [Platform]!) {
+    updateEgg(eggname: $eggname, platforms: $platforms) {
       id
     }
   }
