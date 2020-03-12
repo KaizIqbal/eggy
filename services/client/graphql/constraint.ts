@@ -8,10 +8,10 @@ const possiblePermissions = [
   "PERMISSIONUPDATE"
 ];
 
-// ##### CURSOR TYPES #####
-const possibleCursorTypes = ["LINUX", "WINDOW"];
+// ##### PLATFORMS #####
+const possiblePlatforms = ["LINUX", "WINDOW"];
 
 // ##### CURSORS #####
 const possibleCursors = ["Default", "X11", "Wayland"];
 
-export { possiblePermissions, possibleCursorTypes, possibleCursors };
+export { possiblePermissions, possiblePlatforms, possibleCursors };
