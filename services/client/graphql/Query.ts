@@ -46,9 +46,9 @@ const EGG_QUERY = gql`
 
 // ##### FETCH PUBLISHED EGGS / PUBLIC EGG #####
 
-const GET_EGGS_CURSOR = gql`
+const PUBLIC_BASKET_QUERY = gql`
   query eggs($first: Int = 7, $cursor: String) {
-    publishedEggsConnection(first: $first, after: $cursor) {
+    publicBasket(first: $first, after: $cursor) {
       edges {
         node {
           id
@@ -68,11 +68,11 @@ const GET_EGGS_CURSOR = gql`
   }
 `;
 
-// ##### FETCH USER'S EGG #####
+// ##### FETCH USER'S EGG / DASHBOARD EGGS #####
 
-const GET_USER_EGGS_CURSOR = gql`
+const USER_BASKET_QUERY = gql`
   query eggs($first: Int = 7, $cursor: String) {
-    userEggsConnection(first: $first, after: $cursor) {
+    userBasket(first: $first, after: $cursor) {
       edges {
         node {
           id
@@ -161,8 +161,8 @@ export {
   ALL_USER_QUERY,
   // Egg
   EGG_QUERY,
-  GET_EGGS_CURSOR,
-  GET_USER_EGGS_CURSOR,
+  PUBLIC_BASKET_QUERY,
+  USER_BASKET_QUERY,
   // Flavor
   FLAVOR_QUERY,
   FLAVORS_QUERY,

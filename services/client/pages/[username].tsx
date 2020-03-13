@@ -17,7 +17,6 @@ const Me: NextPage<IProps> = _props => {
   const {
     query: { username }
   } = useRouter();
-
   // ################################################ RENDER ################################################
 
   // ####################### Render flow ########################
@@ -30,8 +29,7 @@ const Me: NextPage<IProps> = _props => {
 };
 
 Me.getInitialProps = async ({ res, query }: any) => {
-  const slug: any = query.username;
-
+  const slug = query.username;
   // If slug is valid
   // Checking by @ at starting of the slug then it is username
   if (slug.startsWith("@")) {
