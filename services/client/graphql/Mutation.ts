@@ -19,7 +19,7 @@ const SIGNUP_MUTATION = gql`
       username: $username
       password: $password
     ) {
-      id
+      accessToken
     }
   }
 `;
@@ -29,7 +29,7 @@ const SIGNUP_MUTATION = gql`
 const SIGNIN_MUTATION = gql`
   mutation signin($email: String!, $password: String!) {
     signin(email: $email, password: $password) {
-      id
+      accessToken
     }
   }
 `;
@@ -67,7 +67,7 @@ const RESET_PASSWORD_MUTATION = gql`
       password: $password
       confirmPassword: $confirmPassword
     ) {
-      id
+      accessToken
     }
   }
 `;

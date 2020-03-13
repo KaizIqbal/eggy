@@ -1,25 +1,25 @@
 import { useQuery } from "@apollo/react-hooks";
 
 // Mutation & Query
-import { GET_USER_EGGS_CURSOR } from "../../graphql/Query";
+import { USER_BASKET_QUERY } from "../../graphql/Query";
 
 // Utils
 import updateEggCache from "../../utils/updateEggCache";
 
 function useDashboardBasket() {
-  const { data, loading, fetchMore, error } = useQuery(GET_USER_EGGS_CURSOR, {
+  const { data, loading, fetchMore, error } = useQuery(USER_BASKET_QUERY, {
     fetchPolicy: "cache-and-network"
   });
 
   if (loading) return { loading };
   if (error) return { error };
-  if (loading && !data.userEggsConnection) return { loading, eggs: [] };
+  if (loading && !data.userBasket) return { loading, eggs: [] };
 
   const loadMore = () => {
     return fetchMore({
-      query: GET_USER_EGGS_CURSOR,
+      query: USER_BASKET_QUERY,
       variables: {
-        cursor: data.userEggsConnection.pageInfo.endCursor
+        cursor: data.userBasket.pageInfo.endCursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         return updateEggCache(fetchMoreResult, previousResult);
@@ -27,8 +27,8 @@ function useDashboardBasket() {
     });
   };
   return {
-    eggs: data.userEggsConnection.edges.map(({ node }) => node),
-    hasNextPage: data.userEggsConnection.pageInfo.hasNextPage,
+    eggs: data.userBasket.edges.map(({ node }: any) => node),
+    hasNextPage: data.userBasket.pageInfo.hasNextPage,
     loading,
     loadMore,
     error
