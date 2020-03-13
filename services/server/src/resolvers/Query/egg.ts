@@ -1,7 +1,7 @@
 import { forwardTo } from "prisma-binding";
 
 // Helper Functions
-import loggedIn from "../../utils/loggedIn";
+import isAuth from "../../utils/isAuth";
 
 export const eggQueries = {
   // ################################################ FOR FETCH SINGLE EGG ################################################
@@ -10,9 +10,9 @@ export const eggQueries = {
 
   // ################################################ FOR FETCH USER'S EGGS ################################################
 
-  userEggsConnection(parent, args, ctx, info) {
+  userBasket(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     return ctx.db.query.eggsConnection(
       {
@@ -27,7 +27,7 @@ export const eggQueries = {
 
   // ################################################ FOR FETCH PUBLIC/PUBLISH EGGS ################################################
 
-  publishedEggsConnection(parent, args, ctx, info) {
+  publicBasket(parent, args, ctx, info) {
     return ctx.db.query.eggsConnection(
       {
         where: {

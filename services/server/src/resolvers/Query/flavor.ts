@@ -1,12 +1,12 @@
 // Helper Functions
-import loggedIn from "../../utils/loggedIn";
+import isAuth from "../../utils/isAuth";
 
 export const flavorQueries = {
   // ################################################ FOR FETCH SINGLE FLAVOR ################################################
 
   async flavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     //get one cursor id by cursors
     const data = await ctx.db.query.flavors(
@@ -40,7 +40,7 @@ export const flavorQueries = {
 
   flavors(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // return flavors in egg
     return ctx.db.query.flavors(

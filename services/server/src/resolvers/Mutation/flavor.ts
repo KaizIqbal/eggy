@@ -1,5 +1,5 @@
 // Helper Functions
-import loggedIn from "../../utils/loggedIn";
+import isAuth from "../../utils/isAuth";
 import checkFlavorName from "../../utils/checkFlavorName";
 
 export const flavrorMutations = {
@@ -7,7 +7,7 @@ export const flavrorMutations = {
 
   async createFlavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // Checking flavor's name contains special symbols
     checkFlavorName(args);
@@ -38,7 +38,7 @@ export const flavrorMutations = {
 
   updateFlavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // Checking flavor's name contains special symbols
     checkFlavorName(args);
@@ -63,7 +63,7 @@ export const flavrorMutations = {
 
   deleteFlavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // Delete flavor by id
     return ctx.db.mutation.deleteFlavor({ where: { id: args.id } }, info);
