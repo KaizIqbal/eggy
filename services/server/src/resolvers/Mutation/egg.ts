@@ -1,5 +1,5 @@
 // Helper Functions
-import loggedIn from "../../utils/loggedIn";
+import isAuth from "../../utils/isAuth";
 import checkPublish from "../../utils/checkPublish";
 import generateEggName from "../../utils/generateEggName";
 
@@ -8,7 +8,7 @@ export const eggMutations = {
 
   async createEgg(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // Remove unnecessary space from title
     // example "   This is   a  DOG     " =>  "This is a DOG"
@@ -47,7 +47,7 @@ export const eggMutations = {
 
   updateEgg(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // first take copy in updates
     const updates = { ...args };
@@ -80,7 +80,7 @@ export const eggMutations = {
 
   async renameEgg(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     const eggId = args.id;
     delete args.id;
@@ -117,7 +117,7 @@ export const eggMutations = {
     const ownsEgg = egg.user.id === ctx.request.userId;
 
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     const hasDeletePermissions = ctx.request.user.permissions.some(
       (permission: string) => ["ADMIN", "EGGDELETE"].includes(permission)
@@ -135,7 +135,7 @@ export const eggMutations = {
 
   async publish(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
     await checkPublish(ctx, args);
 
     return ctx.db.mutation.updateEgg(
@@ -151,7 +151,7 @@ export const eggMutations = {
 
   async unPublish(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
     await checkPublish(ctx, args);
 
     return ctx.db.mutation.updateEgg(

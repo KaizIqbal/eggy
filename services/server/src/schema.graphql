@@ -52,8 +52,8 @@ type Mutation {
 type Query {
   # Eggs 
   egg(where: EggWhereUniqueInput!): Egg
-  publishedEggsConnection(after: String first: Int): EggConnection!
-  userEggsConnection(after: String first: Int): EggConnection!
+  publicBasket(after: String first: Int): EggConnection!
+  userBasket(after: String first: Int): EggConnection!
 
   # Cursors
   cursor(eggname: String! flavorname: String! cursorname:cursorName!): Cursor

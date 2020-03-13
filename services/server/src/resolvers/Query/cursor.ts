@@ -1,12 +1,12 @@
 // Helper Functions
-import loggedIn from "../../utils/loggedIn";
+import isAuth from "../../utils/isAuth";
 
 export const cursorQueries = {
   // ################################################ FOR FETCH SINGLE CURSOR ################################################
 
   async cursor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     //get one cursor id by cursors
     const data = await ctx.db.query.cursors(
@@ -40,7 +40,7 @@ export const cursorQueries = {
 
   cursors(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
     return ctx.db.query.cursors(
       {
         where: {

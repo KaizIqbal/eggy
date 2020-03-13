@@ -9,7 +9,7 @@ import {
   createRefreshToken
 } from "../../utils/authorization";
 import hasPermission from "../../utils/hasPermission";
-import loggedIn from "../../utils/loggedIn";
+import isAuth from "../../utils/isAuth";
 import verifyUserName from "../../utils/verifyUserName";
 
 export const authMutations = {
@@ -200,7 +200,7 @@ export const authMutations = {
 
   async updatePermissions(parent, args, ctx, info) {
     // 1. check if they are logged in
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // 2. Query the current user
     const currentuser = await ctx.db.query.user(
