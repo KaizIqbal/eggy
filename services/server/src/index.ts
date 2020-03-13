@@ -30,7 +30,7 @@ server.express.use((req: any, res, next) => {
       const { userId }: any = verify(token, process.env.ACCESS_TOKEN_SECRET);
       req.userId = userId;
     } catch (error) {
-      next();
+      return next();
     }
   }
   next();

@@ -1,12 +1,12 @@
 import { uploadToS3, deleteFromS3 } from "../../modules/fileApi";
-import loggedIn from "../../utils/loggedIn";
+import isAuth from "../../utils/isAuth";
 
 export const fileMutations = {
   // ################################################ UPLOAD FILE ################################################
 
   async uploadFile(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     if (!args.file) {
       throw new Error("ERROR: No file received.");
@@ -79,7 +79,7 @@ export const fileMutations = {
 
   async deleteFile(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // fetching key from id in databse
     const data = await ctx.db.query.file(

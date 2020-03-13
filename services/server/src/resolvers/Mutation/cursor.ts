@@ -1,12 +1,12 @@
 // Helper Functions
-import loggedIn from "../../utils/loggedIn";
+import isAuth from "../../utils/isAuth";
 
 export const cursorMutations = {
   // ################################################ CREATE CURSOR ################################################
 
   async createCursor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // seprate flavorId and cursor data
     const flavorId = args.flavorId;
@@ -45,7 +45,7 @@ export const cursorMutations = {
 
   updateCursor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // separate data from args
     const cursorId = args.id;
@@ -67,7 +67,7 @@ export const cursorMutations = {
 
   deleteCursor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     // Delete flavor by id
     return ctx.db.mutation.deleteCursor({ where: { id: args.id } }, info);
@@ -76,7 +76,7 @@ export const cursorMutations = {
   // ################################################ RENAME CURSOR ################################################
   async renameCursor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
-    loggedIn(ctx);
+    isAuth(ctx);
 
     let updateCursor;
 
