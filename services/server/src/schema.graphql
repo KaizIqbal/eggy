@@ -2,8 +2,13 @@
 
 scalar Upload
 
-type SuccessMessage{
+type SuccessMessage {
   message: String
+}
+
+type AuthPayload {
+  accessToken: String!
+  user: User!
 }
 
 type Mutation {
@@ -34,12 +39,12 @@ type Mutation {
 
   
   # Auth
-  signup(firstName:String! lastName:String! username: String! email:String! password:String!): User!
-  signin(email:String! password:String!): User!
+  signup(firstName:String! lastName:String! username: String! email:String! password:String!): AuthPayload!
+  signin(email:String! password:String!): AuthPayload!
   signout: SuccessMessage
 
   requestReset(email:String!): SuccessMessage
-  resetPassword(resetToken:String! ,password:String! ,confirmPassword:String!): User!
+  resetPassword(resetToken:String! ,password:String! ,confirmPassword:String!): AuthPayload!
 
   updatePermissions(permissions:[Permission] ,userId:ID!): User
 }
