@@ -1,25 +1,25 @@
 import { useQuery } from "@apollo/react-hooks";
 
 // Mutation & Query
-import { GET_EGGS_CURSOR } from "../../graphql/Query";
+import { PUBLIC_BASKET_QUERY } from "../../graphql/Query";
 
 // Utils
 import updateEggCache from "../../utils/updateEggCache";
 
 function usePublicBasket() {
-  const { data, loading, fetchMore, error } = useQuery(GET_EGGS_CURSOR, {
+  const { data, loading, fetchMore, error } = useQuery(PUBLIC_BASKET_QUERY, {
     fetchPolicy: "cache-and-network"
   });
 
   if (loading) return { loading };
   if (error) return { error };
-  if (loading && !data.publishedEggsConnection) return { loading, eggs: [] };
+  if (loading && !data.publicBasket) return { loading, eggs: [] };
 
   const loadMore = () => {
     return fetchMore({
-      query: GET_EGGS_CURSOR,
+      query: PUBLIC_BASKET_QUERY,
       variables: {
-        cursor: data.publishedEggsConnection.pageInfo.endCursor
+        cursor: data.publicBasket.pageInfo.endCursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         return updateEggCache(fetchMoreResult, previousResult);
@@ -27,8 +27,8 @@ function usePublicBasket() {
     });
   };
   return {
-    eggs: data.publishedEggsConnection.edges.map(({ node }: any) => node),
-    hasNextPage: data.publishedEggsConnection.pageInfo.hasNextPage,
+    eggs: data.publicBasket.edges.map(({ node }: any) => node),
+    hasNextPage: data.publicBasket.pageInfo.hasNextPage,
     loading,
     loadMore,
     error
