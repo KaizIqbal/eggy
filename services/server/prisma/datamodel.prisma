@@ -28,7 +28,8 @@ type User {
   password: String!
   resetToken: String
   resetTokenExpiry: String 
-  permissions:[Permission]  @scalarList(strategy: RELATION)
+  tokenVersion: Int! @default(value: 0)
+  permissions: [Permission]  @scalarList(strategy: RELATION)
   eggs: [Egg] @relation(name: "Eggs" onDelete: CASCADE)
 }
 
