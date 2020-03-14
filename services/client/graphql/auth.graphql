@@ -1,0 +1,72 @@
+# ################################################ AUTH MUTATIONS ################################################
+
+# ##### SIGNUP #####
+mutation Signup(
+  $firstName: String!
+  $lastName: String!
+  $email: String!
+  $username: String!
+  $password: String!
+) {
+  signup(
+    firstName: $firstName
+    lastName: $lastName
+    email: $email
+    username: $username
+    password: $password
+  ) {
+    accessToken
+  }
+}
+
+
+# ##### SIGNIN #####
+mutation Signin($email: String!, $password: String!) {
+  signin(email: $email, password: $password) {
+    accessToken
+  }
+}
+
+
+# ##### SIGNOUT #####
+mutation Signout {
+  signout {
+    message
+  }
+}
+
+
+# ##### REQUEST FOR RESET PASSWORD #####
+mutation RequestReset($email: String!) {
+  requestReset(email: $email) {
+    message
+  }
+}
+
+
+# ##### RESET PASSWORD #####
+mutation ResetPassword(
+  $resetToken: String!
+  $password: String!
+  $confirmPassword: String!
+) {
+  resetPassword(
+    resetToken: $resetToken
+    password: $password
+    confirmPassword: $confirmPassword
+  ) {
+    accessToken
+  }
+}
+
+
+# ##### UPDATE USER'S PERMISSIONS #####
+mutation UpdatePermissions($permissions: [Permission], $userId: ID!) {
+  updatePermissions(permissions: $permissions, userId: $userId) {
+    id
+    permissions
+    firstName
+    lastName
+    email
+  }
+}
