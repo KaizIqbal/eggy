@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Thu Mar 12 2020 02:44:30 GMT+0000 (Coordinated Universal Time)
+# timestamp: Sat Mar 14 2020 03:34:49 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -1914,6 +1914,7 @@ type User implements Node {
   password: String!
   resetToken: String
   resetTokenExpiry: String
+  tokenVersion: Int!
   permissions: [Permission!]!
   eggs(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Egg!]
 }
@@ -1937,6 +1938,7 @@ input UserCreateInput {
   password: String!
   resetToken: String
   resetTokenExpiry: String
+  tokenVersion: Int
   permissions: UserCreatepermissionsInput
   eggs: EggCreateManyWithoutUserInput
 }
@@ -1959,6 +1961,7 @@ input UserCreateWithoutEggsInput {
   password: String!
   resetToken: String
   resetTokenExpiry: String
+  tokenVersion: Int
   permissions: UserCreatepermissionsInput
 }
 
@@ -1992,6 +1995,8 @@ enum UserOrderByInput {
   resetToken_DESC
   resetTokenExpiry_ASC
   resetTokenExpiry_DESC
+  tokenVersion_ASC
+  tokenVersion_DESC
 }
 
 type UserPreviousValues {
@@ -2005,6 +2010,7 @@ type UserPreviousValues {
   password: String!
   resetToken: String
   resetTokenExpiry: String
+  tokenVersion: Int!
   permissions: [Permission!]!
 }
 
@@ -2053,6 +2059,7 @@ input UserUpdateInput {
   password: String
   resetToken: String
   resetTokenExpiry: String
+  tokenVersion: Int
   permissions: UserUpdatepermissionsInput
   eggs: EggUpdateManyWithoutUserInput
 }
@@ -2065,6 +2072,7 @@ input UserUpdateManyMutationInput {
   password: String
   resetToken: String
   resetTokenExpiry: String
+  tokenVersion: Int
   permissions: UserUpdatepermissionsInput
 }
 
@@ -2087,6 +2095,7 @@ input UserUpdateWithoutEggsDataInput {
   password: String
   resetToken: String
   resetTokenExpiry: String
+  tokenVersion: Int
   permissions: UserUpdatepermissionsInput
 }
 
@@ -2468,6 +2477,28 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   resetTokenExpiry_not_ends_with: String
+  tokenVersion: Int
+
+  """All values that are not equal to given value."""
+  tokenVersion_not: Int
+
+  """All values that are contained in given list."""
+  tokenVersion_in: [Int!]
+
+  """All values that are not contained in given list."""
+  tokenVersion_not_in: [Int!]
+
+  """All values less than the given value."""
+  tokenVersion_lt: Int
+
+  """All values less than or equal the given value."""
+  tokenVersion_lte: Int
+
+  """All values greater than the given value."""
+  tokenVersion_gt: Int
+
+  """All values greater than or equal the given value."""
+  tokenVersion_gte: Int
   eggs_every: EggWhereInput
   eggs_some: EggWhereInput
   eggs_none: EggWhereInput

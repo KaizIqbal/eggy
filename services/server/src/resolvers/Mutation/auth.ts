@@ -11,6 +11,7 @@ import {
 import hasPermission from "../../utils/hasPermission";
 import isAuth from "../../utils/isAuth";
 import verifyUserName from "../../utils/verifyUserName";
+import { sendRefreshToken } from "../../utils/sendRefreshToken";
 
 export const authMutations = {
   // ################################################ SIGN UP ################################################
@@ -38,11 +39,7 @@ export const authMutations = {
     // send `refreshToken` as coockie
     // send `accessToken` as query data
 
-    ctx.response.cookie("_euid", createRefreshToken(user), {
-      domain: process.env.DOMAIN,
-      secure: true,
-      httpOnly: true
-    });
+    sendRefreshToken(ctx.response, createRefreshToken(user));
 
     // 6.return user
     return { user, accessToken: createAccessToken(user) };
@@ -76,11 +73,7 @@ export const authMutations = {
     // send `refreshToken` as coockie
     // send `accessToken` as query data
 
-    ctx.response.cookie("_euid", createRefreshToken(user), {
-      domain: process.env.DOMAIN,
-      secure: true,
-      httpOnly: true
-    });
+    sendRefreshToken(ctx.response, createRefreshToken(user));
 
     // 5.return the user
     return { user, accessToken: createAccessToken(user) };
@@ -186,11 +179,7 @@ export const authMutations = {
     // send `refreshToken` as coockie
     // send `accessToken` as query data
 
-    ctx.response.cookie("_euid", createRefreshToken(user), {
-      domain: process.env.DOMAIN,
-      secure: true,
-      httpOnly: true
-    });
+    sendRefreshToken(ctx.response, createRefreshToken(user));
 
     // 7 => return user
     return { user: updatedUser, accessToken: createAccessToken(user) };
@@ -209,7 +198,9 @@ export const authMutations = {
           id: ctx.request.userId
         }
       },
-      info
+      `{
+        permissions
+      }`
     );
 
     // 3. Check if they have permission to do this
@@ -222,6 +213,56 @@ export const authMutations = {
           permissions: {
             set: args.permissions
           }
+        },
+        where: {
+          id: args.userId
+        }
+      },
+      info
+    );
+  },
+
+  // ################################################ FOR REVOKING USER SESSION ################################################
+
+  async revokeRefreshTokenForUser(parent, args, ctx, info) {
+    // 1. check if they are logged in
+    isAuth(ctx);
+
+    // 2. Query the current user
+    const currentuser = await ctx.db.query.user(
+      {
+        where: {
+          id: ctx.request.userId
+        }
+      },
+      `{
+        permissions
+      }`
+    );
+
+    // 3. Check if they have permission to do this
+    hasPermission(currentuser, ["ADMIN"]);
+
+    // 4. Query the user that Session will be Revoked
+    const revokeUser = await ctx.db.query.user(
+      {
+        where: {
+          id: args.userId
+        }
+      },
+      `{
+        tokenVersion
+      }`
+    );
+
+    // 5. Revoke all session
+    const tokenVersion: number = revokeUser.tokenVersion + 1;
+
+    // 6. send updated user
+    return ctx.db.mutation.updateUser(
+      {
+        data: {
+          tokenVersion
         },
         where: {
           id: args.userId
