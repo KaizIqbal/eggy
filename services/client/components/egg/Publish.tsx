@@ -4,7 +4,7 @@ import {
   PUBLISH_EGG_MUTATION,
   UNPUBLISH_EGG_MUTATION
 } from "../../graphql/Mutation";
-import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../graphql/Query";
+import { PUBLIC_BASKET_QUERY, USER_BASKET_QUERY } from "../../graphql/Query";
 import { Button } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
@@ -25,10 +25,10 @@ const PublishEgg: React.FunctionComponent<IPublishEggProps> = props => {
     variables: { id: props.id },
     refetchQueries: [
       {
-        query: GET_USER_EGGS_CURSOR
+        query: PUBLIC_BASKET_QUERY
       },
       {
-        query: GET_EGGS_CURSOR
+        query: USER_BASKET_QUERY
       }
     ]
   });
@@ -40,10 +40,10 @@ const PublishEgg: React.FunctionComponent<IPublishEggProps> = props => {
     variables: { id: props.id },
     refetchQueries: [
       {
-        query: GET_USER_EGGS_CURSOR
+        query: PUBLIC_BASKET_QUERY
       },
       {
-        query: GET_EGGS_CURSOR
+        query: USER_BASKET_QUERY
       }
     ]
   });

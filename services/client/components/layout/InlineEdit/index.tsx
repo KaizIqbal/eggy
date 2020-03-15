@@ -74,8 +74,7 @@ const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
         <InlineEditText
           ref={textRef}
           isHidden={isInputActive}
-          onClick={() => setIsInputActive(true)}
-        >
+          onClick={() => setIsInputActive(true)}>
           {props.text}
         </InlineEditText>
         <InlineEditInput
@@ -89,7 +88,9 @@ const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
           placeholder={props.emptyText}
           onChange={e => {
             const value = e.target.value;
-
+            if (props.regex === undefined) {
+              return;
+            }
             if (value.match(props.regex)) {
               // sanitize the input a little
               setInputValue(DOMPurify.sanitize(value));

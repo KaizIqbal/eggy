@@ -1,7 +1,7 @@
 import nextCookie from "next-cookies";
 import paths from "../paths";
 
-export const signinAuth = ctx => {
+export const signinAuth = (ctx: any) => {
   const { auth } = nextCookie(ctx);
   if (ctx.req && auth) {
     ctx.res.writeHead(302, { Location: paths.dashboard });
@@ -13,7 +13,7 @@ export const signinAuth = ctx => {
   return auth;
 };
 
-export const dashboardAuth = ctx => {
+export const dashboardAuth = (ctx: any) => {
   const { auth } = nextCookie(ctx);
 
   if (ctx.req && !auth) {
@@ -26,7 +26,7 @@ export const dashboardAuth = ctx => {
   return auth;
 };
 
-export const workshopAuth = (ctx, eggname) => {
+export const workshopAuth = (ctx: any, eggname: string) => {
   const { auth } = nextCookie(ctx);
   if (ctx.req && !auth) {
     ctx.res.writeHead(302, { Location: `/egg/${eggname}` });

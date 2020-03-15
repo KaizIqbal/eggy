@@ -1,8 +1,8 @@
-import Link from "next/link";
-import Router from "next/router";
+// import Link from "next/link";
+// import Router from "next/router";
 import React from "react";
 import useFlavors from "../../hooks/graphql/flavors";
-import { Button } from "../styled";
+// import { Button } from "../styled";
 import DeleteFlavor from "./Delete";
 
 // ##### COMPONENT PROPS TYPE #####
