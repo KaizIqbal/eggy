@@ -4,10 +4,18 @@ import * as coockieParser from "cookie-parser";
 import { verify } from "jsonwebtoken";
 import createServer from "./createServer";
 import db from "./db";
+import * as cors from "cors";
 import { createAccessToken, createRefreshToken } from "./utils/authorization";
 import { sendRefreshToken } from "./utils/sendRefreshToken";
 
 const server = createServer();
+
+server.express.use(
+  cors({
+    credentials: true,
+    origin: process.env.FRONTEND_URL
+  })
+);
 
 server.express.use(coockieParser());
 
@@ -25,6 +33,7 @@ server.express.use(coockieParser());
 // Refreshing the `RefreshToken`
 server.express.post("/refresh_token", async (req, res) => {
   const token = req.cookies._euid;
+
   if (!token) {
     return res.send({ ok: false, accessToken: "" });
   }
@@ -90,10 +99,7 @@ server.express.use(async (req: any, _, next) => {
 
 server.start(
   {
-    cors: {
-      credentials: true,
-      origin: process.env.FRONTEND_URL
-    }
+    cors: false
   },
   ({ port }) => {
     console.log(`🚀 Server running on http://localhost:${port}`);
