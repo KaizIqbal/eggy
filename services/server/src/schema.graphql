@@ -64,7 +64,7 @@ type Query {
   flavor(eggname: String! flavorname: String!): Flavor
   flavors(eggname: String!):[Flavor]!
 
-  #User
+  # User
   me: User
   users: [User]!
 
