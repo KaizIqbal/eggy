@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import Router from "next/router";
+// import Router from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { UPDATE_FLAVOR_MUTATION } from "../../graphql/Mutation";
@@ -52,7 +52,7 @@ const UpdateFlavor: React.FunctionComponent<IUpdateFlavorProps> = props => {
   // ##### HANDLE FUNCTION #####
 
   // Handle On Form Submit
-  const onSubmit = async (values, e) => {
+  const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
 

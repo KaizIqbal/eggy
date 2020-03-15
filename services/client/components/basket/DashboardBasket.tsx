@@ -12,7 +12,7 @@ import { Button } from "../styled";
 import useDashboardBasket from "../../hooks/graphql/useDashboardBasket";
 
 // Contains all routes
-import paths from "../../paths";
+// import paths from "../../paths";
 
 // ################################################ COMPONENT'S TYPE ####################################
 
@@ -50,8 +50,7 @@ const DashboardBasket: React.FunctionComponent<IProps> = _props => {
         next={() => loadMoreEggs}
         hasMore={hasNextPage}
         loader={<p>Loading...</p>}
-        endMessage={<p>There not more eggs</p>}
-      >
+        endMessage={<p>There not more eggs</p>}>
         {eggs.map((egg: any) => (
           <li key={egg.id}>
             {egg.title + " "}
@@ -61,8 +60,7 @@ const DashboardBasket: React.FunctionComponent<IProps> = _props => {
                   "/egg/[eggname]/workshop",
                   `/egg/${egg.eggname}/workshop`
                 );
-              }}
-            >
+              }}>
               Workshop
             </Button>
             <UpdateEgg egg={egg} />

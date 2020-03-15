@@ -15,7 +15,7 @@ import paths from "../../paths";
 interface IProps {}
 
 // ################################################ COMPONENT ###############################################
-const PublicBasket: React.FunctionComponent<IProps> = props => {
+const PublicBasket: React.FunctionComponent<IProps> = _props => {
   // ################################################ HOOKS ################################################
 
   const { eggs, error, loading, loadMore, hasNextPage } = usePublicBasket();
@@ -44,8 +44,7 @@ const PublicBasket: React.FunctionComponent<IProps> = props => {
         next={() => loadMoreEggs}
         hasMore={hasNextPage}
         loader={<p>Loading...</p>}
-        endMessage={<p>There not more eggs</p>}
-      >
+        endMessage={<p>There not more eggs</p>}>
         {eggs.map((egg: any) => (
           <li key={egg.id}>
             <Link to={paths.egg(egg.eggname)}>

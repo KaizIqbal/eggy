@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/react-hooks";
 import React from "react";
 import { DELETE_EGG_MUTATION } from "../../graphql/Mutation";
-import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../graphql/Query";
+import { PUBLIC_BASKET_QUERY, USER_BASKET_QUERY } from "../../graphql/Query";
 import { Button } from "../styled";
 
 // ##### COMPONENT PROPS TYPE #####
@@ -18,10 +18,10 @@ const DeleteEgg: React.FunctionComponent<IDeleteEggProps> = props => {
     variables: { eggname: props.eggname },
     refetchQueries: [
       {
-        query: GET_EGGS_CURSOR
+        query: PUBLIC_BASKET_QUERY
       },
       {
-        query: GET_USER_EGGS_CURSOR
+        query: USER_BASKET_QUERY
       }
     ]
   });
