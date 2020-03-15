@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 // Graphql Query & Mutation
 import { UPDATE_EGG_MUTATION } from "../../graphql/Mutation";
-import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../graphql/Query";
+import { USER_BASKET_QUERY, PUBLIC_BASKET_QUERY } from "../../graphql/Query";
 
 // Hooks libraries
 import { useMutation } from "@apollo/react-hooks";
@@ -39,10 +39,10 @@ const UpdateEgg: React.FunctionComponent<IProps> = props => {
   const [UpdateEgg, { loading, error }] = useMutation(UPDATE_EGG_MUTATION, {
     refetchQueries: [
       {
-        query: GET_EGGS_CURSOR
+        query: USER_BASKET_QUERY
       },
       {
-        query: GET_USER_EGGS_CURSOR
+        query: PUBLIC_BASKET_QUERY
       }
     ]
   });

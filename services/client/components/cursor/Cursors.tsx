@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import useCursors from "../../hooks/graphql/cursors";
 import DeleteCursor from "./Delete";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InlineEdit from "../layout/InlineEdit";
 import { useMutation } from "@apollo/react-hooks";
-import { GET_EGGS_CURSOR, GET_USER_EGGS_CURSOR } from "../../graphql/Query";
+import { PUBLIC_BASKET_QUERY, USER_BASKET_QUERY } from "../../graphql/Query";
 import { RENAME_EGG_MUTATION } from "../../graphql/Mutation";
 
 // ################################################ COMPONENT'S TYPE ####################################
@@ -22,10 +22,10 @@ const RenameEgg: React.FunctionComponent<IProps> = props => {
   const [renameEgg, { loading, error }] = useMutation(RENAME_EGG_MUTATION, {
     refetchQueries: [
       {
-        query: GET_EGGS_CURSOR
+        query: PUBLIC_BASKET_QUERY
       },
       {
-        query: GET_USER_EGGS_CURSOR
+        query: USER_BASKET_QUERY
       }
     ]
   });
