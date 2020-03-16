@@ -9,7 +9,7 @@ import Link from "../../components/layout/Link";
 import paths from "../../paths";
 
 // Helper function
-import { signinAuth } from "../../utils/auth";
+// import { signinAuth } from "../../utils/auth";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
@@ -22,13 +22,5 @@ const SigninPage: NextPage<IProps> = _props => (
     <Link to={paths.request}>Forget Password</Link>
   </div>
 );
-
-SigninPage.getInitialProps = async ctx => {
-  // Check user's session
-  // If user already signin so redirect to user's dashboard
-  // Check user's session
-  const token = signinAuth(ctx);
-  return { token };
-};
 
 export default SigninPage;
