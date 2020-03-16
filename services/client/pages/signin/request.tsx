@@ -1,14 +1,18 @@
+import React from "react";
 import { NextPage } from "next";
+
+// Components
+import { RequestReset } from "../../components";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const Index: NextPage<IProps> = _props => (
+const RequestResetPage: NextPage<IProps> = _props => (
   <div>
-    <h1>This is Home</h1>
+    <RequestReset />
   </div>
 );
 
-export default Index;
+export default RequestResetPage;

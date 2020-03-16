@@ -1,9 +1,11 @@
 import React from "react";
 import Document, { Head, Main, NextScript } from "next/document";
+
+// styled component
 import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document<any> {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: any) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -11,7 +13,8 @@ export default class MyDocument extends Document<any> {
       // wraps the collectStyles provider around our <App />.
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: App => props => sheet.collectStyles(<App {...props} />)
+          enhanceApp: (App: any) => (props: any) =>
+            sheet.collectStyles(<App {...props} />)
         });
 
       // extract the initial props that may be present.
