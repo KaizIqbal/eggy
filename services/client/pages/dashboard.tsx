@@ -3,13 +3,14 @@ import { NextPage } from "next";
 import Head from "next/head";
 
 // custom context
-import { AuthContext } from "../contexts/authContext";
+import { AuthContext } from "contexts/authContext";
 
 // Components
-import { UserDashboard } from "../components";
+import { UserDashboard } from "components";
+import { getAccessToken } from "utils/accessToken";
 
 // Helper function
-import { dashboardAuth } from "../utils/auth";
+// import { dashboardAuth } from "utils/auth";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
@@ -19,7 +20,6 @@ interface IProps {}
 const Dashboard: NextPage<IProps> = _props => {
   // ################################################ HOOKS ################################################
   const { userData } = useContext(AuthContext);
-
   // ################################################ RENDER ################################################
 
   // ####################### Render flow ########################
@@ -32,20 +32,20 @@ const Dashboard: NextPage<IProps> = _props => {
     <>
       <Head>
         <title>{userData.firstName}'s Dashboard - Eggy</title>
+        <title>Dashboard - Eggy</title>
       </Head>
       <UserDashboard username={userData.username} />
     </>
   ) : (
-    <div>
-      <p>Loading......</p>
-    </div>
+    <>
+      <p>Loading..</p>
+    </>
   );
 };
 
-Dashboard.getInitialProps = async ctx => {
-  // Check user's session
-  const token = dashboardAuth(ctx);
-  return { token };
-};
-
 export default Dashboard;
+
+Dashboard.getInitialProps = async () => {
+  console.log(getAccessToken());
+  return {};
+};

@@ -1,5 +1,6 @@
 import { ApolloProvider } from "@apollo/react-hooks";
 import { NormalizedCacheObject } from "apollo-cache-inmemory";
+import cookie from "cookie";
 
 // Apollo Client
 import React from "react";
@@ -16,6 +17,9 @@ import { Page } from "../components";
 // Custom Hooks
 import withApollo from "../hooks/withApollo";
 import AuthContextProvider from "../contexts/authContext";
+
+// Utils
+import { setAccessToken } from "utils/accessToken";
 
 // ################################################ GLOBAL THEME ################################################
 // TODO:Edit Global Theme
@@ -43,6 +47,7 @@ const GlobalStyle = createGlobalStyle<IThemeWrapper>`
 // since "apollo" isn't a native Next.js prop we have to declare it's type.
 interface IProps {
   apollo: ApolloClient<NormalizedCacheObject>;
+  serverAccessToken: string;
 }
 
 // ################################################ COMPONENT ################################################
@@ -57,13 +62,32 @@ class MyApp extends App<IProps> {
       pageProps = Component.getInitialProps(ctx);
     }
     pageProps.query = ctx.query;
-    return { pageProps };
+
+    const cookies = cookie.parse(ctx.req.headers.cookie);
+    let serverAccessToken;
+    if (cookies._euid) {
+      const response = await fetch(
+        `https://1fst7.sse.codesandbox.io/refresh_token`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            cookie: "_euid=" + cookies._euid
+          }
+        }
+      );
+      const { accessToken } = await response.json();
+      serverAccessToken = accessToken;
+    }
+    return { pageProps, serverAccessToken };
   }
 
   // ################################################ RENDER ################################################
   render() {
     // instead of creating a client here, we use the rehydrated apollo client provided by our own withApollo provider.
-    const { Component, pageProps, apollo } = this.props;
+    const { Component, pageProps, serverAccessToken, apollo } = this.props;
+
+    setAccessToken(serverAccessToken);
 
     return (
       <>

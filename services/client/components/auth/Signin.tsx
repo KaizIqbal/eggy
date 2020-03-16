@@ -1,8 +1,7 @@
 import React from "react";
-import Router from "next/router";
+// import Router from "next/router";
 
 // Graphql Query & Mutation
-import { ME_QUERY } from "../../graphql/Query";
 import { SIGNIN_MUTATION } from "../../graphql/Mutation";
 
 // Hooks libraries
@@ -11,9 +10,11 @@ import { useForm } from "react-hook-form";
 
 // styled components
 import { Form } from "../styled";
+import { setAccessToken } from "utils/accessToken";
+import { ME_QUERY } from "graphql/Query";
 
 // Contains all routes
-import paths from "../../paths";
+// import paths from "../../paths";
 
 // ################################################ COMPONENT'S TYPE ####################################
 
@@ -30,13 +31,10 @@ const Signin: React.FunctionComponent<IProps> = _props => {
 
   // signin Mutation hook
   const [signin, { loading, error }] = useMutation(SIGNIN_MUTATION, {
-    refetchQueries: [
-      {
-        query: ME_QUERY
-      }
-    ],
-    onCompleted: () => {
-      Router.replace(paths.basket);
+    refetchQueries: [{ query: ME_QUERY }],
+    onCompleted: ({ signin }) => {
+      setAccessToken(signin.accessToken);
+      // Router.replace(paths.basket);
     }
   });
 
