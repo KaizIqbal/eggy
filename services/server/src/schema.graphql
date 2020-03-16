@@ -1,9 +1,82 @@
 # import * from "./generated/prisma.graphql"
 
+scalar Upload
+
+type SuccessMessage {
+  message: String
+}
+
+type AuthPayload {
+  accessToken: String!
+  user: User!
+}
+
 type Mutation {
-  createEgg(title: String): Egg!
+
+  # File
+  uploadFile(file: Upload! cursorId:ID!): File!
+  deleteFile(fileId: ID!): File!
+  
+  # Eggs
+  createEgg(title: String! platforms: [Platform]!): Egg!
+  updateEgg(eggname:String! platforms: [Platform]!): Egg!
+  renameEgg(id:ID! title:String!): Egg!
+  deleteEgg(eggname:String!): Egg!
+
+  publish(id:ID!): Egg!
+  unPublish(id:ID!): Egg!
+
+  # Cursors
+  createCursor(name:cursorName! frames:Int! flavorId:ID!): Cursor!
+  updateCursor(id:ID! name:cursorName! frames:Int! ): Cursor!
+  renameCursor(id:ID! flavorId:ID! name:cursorName!  ): Cursor!
+  deleteCursor(id:ID!): Flavor!  
+
+  # Flavour
+  createFlavor(name:String! eggId:ID!): Flavor!
+  updateFlavor(id:ID! name:String!): Flavor!  
+  deleteFlavor(id:ID!): Flavor!  
+
+  
+  # Auth
+  signup(firstName:String! lastName:String! username: String! email:String! password:String!): AuthPayload!
+  signin(email:String! password:String!): AuthPayload!
+  signout: SuccessMessage
+
+  revokeRefreshTokenForUser(userId:ID!): User!
+  requestReset(email:String!): SuccessMessage
+  resetPassword(resetToken:String! ,password:String! ,confirmPassword:String!): AuthPayload!
+
+  updatePermissions(permissions:[Permission] ,userId:ID!): User
 }
 
 type Query {
-  eggs: [Egg]!
+  # Eggs 
+  egg(where: EggWhereUniqueInput!): Egg
+  publicBasket(after: String first: Int): EggConnection!
+  userBasket(after: String first: Int): EggConnection!
+
+  # Cursors
+  cursor(eggname: String! flavorname: String! cursorname:cursorName!): Cursor
+  cursors(flavorname: String!):[Cursor]!
+
+  # Flavors
+  flavor(eggname: String! flavorname: String!): Flavor
+  flavors(eggname: String!):[Flavor]!
+
+  # User
+  me: User
+  users: [User]!
+
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  username: String!
+  email: String!
+  password: String!
+  permissions: [Permission!]!
+  tokenVersion: Int! 
 }
