@@ -1,5 +1,15 @@
 {
   "compilerOptions": {
-    "lib": ["es2016", "esnext.asynciterable"]
-  }
+    "lib": [
+      "es5",
+      "es6",
+      "es2015.promise",
+      "dom",
+      "es2016",
+      "esnext.asynciterable"
+    ]
+  },
+  "types": [
+    "node"
+  ],
 }
