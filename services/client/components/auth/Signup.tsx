@@ -2,7 +2,6 @@ import React from "react";
 import Router from "next/router";
 
 // Graphql Query & Mutation
-import { ME_QUERY } from "../../graphql/Query";
 import { SIGNUP_MUTATION } from "../../graphql/Mutation";
 
 // Hooks libraries
@@ -11,6 +10,7 @@ import { useForm } from "react-hook-form";
 
 // styled components
 import { Form } from "../styled";
+import { ME_QUERY } from "graphql/Query";
 
 // ################################################ COMPONENT'S TYPE ####################################
 
@@ -31,11 +31,7 @@ const Signup: React.FunctionComponent<IProps> = _props => {
   // signup Mutation hook
 
   const [signup, { loading, error }] = useMutation(SIGNUP_MUTATION, {
-    refetchQueries: [
-      {
-        query: ME_QUERY
-      }
-    ],
+    refetchQueries: [{ query: ME_QUERY }],
     onCompleted: () => {
       Router.push("/");
     }
