@@ -1,14 +1,21 @@
+import React from "react";
 import { NextPage } from "next";
+
+// Components
+import { PublicBasket } from "../components";
 
 // ################################################ NEXT PAGE PROPS ################################################
 
 interface IProps {}
 
 // ################################################ NEXT PAGE ################################################
-const Index: NextPage<IProps> = _props => (
-  <div>
-    <h1>This is Home</h1>
-  </div>
-);
+const Basket: NextPage<IProps> = _props => {
+  return (
+    <div>
+      <h1>Eggs</h1>
+      <PublicBasket />
+    </div>
+  );
+};
 
-export default Index;
+export default Basket;

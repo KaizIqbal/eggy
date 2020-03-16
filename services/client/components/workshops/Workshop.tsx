@@ -1,0 +1,43 @@
+import { useQuery } from "@apollo/react-hooks";
+import React from "react";
+import Head from "next/head";
+import { EGG_QUERY } from "../../graphql/Query";
+import CreateFlavor from "../flavor/Create";
+import Flavors from "../flavor/Flavors";
+
+// ##### COMPONENT PROPS TYPE #####
+
+interface IWorkshopProps {
+  username: any;
+  eggname: any;
+}
+
+// ##### COMPONENT #####
+
+const Workshop: React.FunctionComponent<IWorkshopProps> = props => {
+  // ##### HOOKS #####
+  const { data, loading, error } = useQuery(EGG_QUERY, {
+    variables: {
+      eggname: props.eggname
+    }
+  });
+
+  // ##### RENDER #####
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
+
+  return (
+    <>
+      <Head>
+        <title>{data.egg.title} - Eggy Workshop</title>
+      </Head>
+      <h1>
+        {props.username}'s Workshop for {props.eggname}
+      </h1>
+      <CreateFlavor eggname={data.egg.eggname} eggId={data.egg.id} />
+      <Flavors username={props.username} eggname={data.egg.eggname} />
+    </>
+  );
+};
+
+export default Workshop;
