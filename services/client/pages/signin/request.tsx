@@ -1,18 +1,12 @@
 import React from "react";
-import { NextPage } from "next";
+import Page from "components/Page";
+import { ResetPasswordRequest } from "components/auth";
 
-// Components
-import { RequestReset } from "../../components";
-
-// ################################################ NEXT PAGE PROPS ################################################
-
-interface IProps {}
-
-// ################################################ NEXT PAGE ################################################
-const RequestResetPage: NextPage<IProps> = _props => (
-  <div>
-    <RequestReset />
-  </div>
-);
-
-export default RequestResetPage;
+export default () => {
+  return (
+    <Page title="Eggy">
+      <h1>Request for Reset Password</h1>
+      <ResetPasswordRequest />
+    </Page>
+  );
+};
