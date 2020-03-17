@@ -1,21 +1,10 @@
 import React from "react";
-import { NextPage } from "next";
+import Page from "components/Page";
 
-// Components
-import { PublicBasket } from "../components";
-
-// ################################################ NEXT PAGE PROPS ################################################
-
-interface IProps {}
-
-// ################################################ NEXT PAGE ################################################
-const Basket: NextPage<IProps> = _props => {
+export default () => {
   return (
-    <div>
-      <h1>Eggs</h1>
-      <PublicBasket />
-    </div>
+    <Page>
+      <h1> 🧺 Basket </h1>
+    </Page>
   );
 };
-
-export default Basket;

@@ -1,0 +1,30 @@
+fragment UserData on User {
+  id
+  email
+  username
+  lastName
+  firstName
+}
+
+fragment EggData on Egg {
+  id
+  title
+  eggname
+  platforms
+  isPublished
+  user {
+    ...UserData
+  }
+}
+
+fragment BasketData on EggConnection {
+  edges {
+    node {
+      ...EggData
+    }
+  }
+  pageInfo {
+    endCursor
+    hasNextPage
+  }
+}

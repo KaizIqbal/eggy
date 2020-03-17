@@ -1,24 +1,15 @@
 import React from "react";
-import { NextPage } from "next";
+import Page from "components/Page";
+import { ResetPassword } from "components/auth";
+import { useRouter } from "next/router";
 
-// Components
-import { Reset } from "../../components";
-
-// ################################################ NEXT PAGE PROPS ################################################
-
-interface IProps {
-  query: {
-    token: string;
-  };
-}
-
-// ################################################ NEXT PAGE ################################################
-const ResetPage: NextPage<IProps> = ({ query: { token } }) => {
+export default () => {
+  const { query } = useRouter();
+  const token = query.token[0];
   return (
-    <div>
-      <Reset token={token} />
-    </div>
+    <Page title="Eggy">
+      <h1>Request for Reset Password</h1>
+      <ResetPassword token={token} />
+    </Page>
   );
 };
-
-export default ResetPage;
