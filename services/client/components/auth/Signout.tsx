@@ -1,48 +1,22 @@
 import React from "react";
-import Router from "next/router";
 
-// Graphql Query & Mutation
-import { SIGNOUT_MUTATION } from "../../graphql/Mutation";
-import { ME_QUERY } from "../../graphql/Query";
+import { useSignOutMutation } from "generated/graphql";
 
-// Hooks libraries
-import { useMutation } from "@apollo/react-hooks";
-
-// styled components
-import { Button } from "../styled";
-
-// Contains all routes
-import paths from "../../paths";
-
-// ################################################ COMPONENT'S TYPE ####################################
+import { Button } from "components/styled";
+import { setAccessToken } from "lib/accessToken";
 
 interface IProps {}
 
-// ################################################ COMPONENT ###############################################
-const Signout: React.FunctionComponent<IProps> = _props => {
-  // ################################################ HOOKS ################################################
+export const Signout: React.FunctionComponent<IProps> = _props => {
+  // ##### HOOKS #####
 
-  // signout Mutation hook
-  const [signout, { error }] = useMutation(SIGNOUT_MUTATION, {
-    refetchQueries: [
-      {
-        query: ME_QUERY
-      }
-    ],
+  const [signout, { error }] = useSignOutMutation({
     onCompleted: () => {
-      Router.replace(paths.home);
+      setAccessToken("");
     }
   });
 
-  // ################################################ HANDLING FUNCTION ################################################
-
-  // ################ Form submition #################
-  // #                                               #
-  // #     1. confirm message                        #
-  // #     2. call mutation                          #
-  // #     3. handle error                           #
-  // #                                               #
-  // #################################################
+  // ##### HANDLING FUNCTION #####
 
   const onClick = () => {
     if (window.confirm("Are you sure you want to Signout!")) {
@@ -50,14 +24,7 @@ const Signout: React.FunctionComponent<IProps> = _props => {
     }
   };
 
-  // ################################################ RENDER #####################################################
-
-  // ################## Render flow ##################
-  // #                                               #
-  // #     (error) => handle the Graphql error       #
-  // #     else => Render Component                  #
-  // #                                               #
-  // #################################################
+  // ##### RENDER #####
 
   if (error) return <p>Error: {error.message}</p>;
 
@@ -67,5 +34,3 @@ const Signout: React.FunctionComponent<IProps> = _props => {
     </Button>
   );
 };
-
-export default Signout;
