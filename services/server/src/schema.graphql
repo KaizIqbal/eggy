@@ -44,7 +44,7 @@ type Mutation {
   signout: SuccessMessage
 
   revokeRefreshTokenForUser(userId:ID!): User!
-  requestReset(email:String!): SuccessMessage
+  resetPasswordRequest(email:String!): SuccessMessage
   resetPassword(resetToken:String! ,password:String! ,confirmPassword:String!): AuthPayload!
 
   updatePermissions(permissions:[Permission] ,userId:ID!): User
