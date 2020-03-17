@@ -1,26 +1,16 @@
 import React from "react";
-import { NextPage } from "next";
+import Page from "components/Page";
+import { Signin } from "components/auth";
+import Link from "next/link";
 
-// Components
-import { Signin } from "../../components";
-import Link from "../../components/layout/Link";
-
-// Contains all routes
-import paths from "../../paths";
-
-// Helper function
-// import { signinAuth } from "../../utils/auth";
-
-// ################################################ NEXT PAGE PROPS ################################################
-
-interface IProps {}
-
-// ################################################ NEXT PAGE ################################################
-const SigninPage: NextPage<IProps> = _props => (
-  <div>
-    <Signin />
-    <Link to={paths.request}>Forget Password</Link>
-  </div>
-);
-
-export default SigninPage;
+export default () => {
+  return (
+    <Page title="Signin - Eggy">
+      <h1>Signin</h1>
+      <Signin />
+      <Link href="/signin/request">
+        <a> Forget Password</a>
+      </Link>
+    </Page>
+  );
+};

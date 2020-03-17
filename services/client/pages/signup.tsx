@@ -1,18 +1,12 @@
 import React from "react";
-import { NextPage } from "next";
+import Page from "components/Page";
+import { Signup } from "components/auth";
 
-// Components
-import { Signup } from "../components";
-
-// ################################################ NEXT PAGE PROPS ################################################
-
-interface IProps {}
-
-// ################################################ NEXT PAGE ################################################
-const SignupPage: NextPage<IProps> = _props => (
-  <div>
-    <Signup />
-  </div>
-);
-
-export default SignupPage;
+export default () => {
+  return (
+    <Page title="Signup - Eggy">
+      <h1>Signup</h1>
+      <Signup />
+    </Page>
+  );
+};

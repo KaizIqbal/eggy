@@ -1,18 +1,11 @@
 import React from "react";
 import Router from "next/router";
 
-// Graphql Query & Mutation
-import { SIGNUP_MUTATION } from "../../graphql/Mutation";
-
-// Hooks libraries
-import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "react-hook-form";
+import { useSignupMutation, MeDocument } from "generated/graphql";
 
-// styled components
-import { Form } from "../styled";
-import { ME_QUERY } from "graphql/Query";
-
-// ################################################ COMPONENT'S TYPE ####################################
+import { Form } from "components/styled";
+import { setAccessToken } from "lib/accessToken";
 
 interface IProps {}
 
@@ -24,54 +17,31 @@ type FormData = {
   password: string;
 };
 
-// ################################################ COMPONENT ###############################################
-const Signup: React.FunctionComponent<IProps> = _props => {
-  // ################################################ HOOKS ################################################
+export const Signup: React.FunctionComponent<IProps> = _props => {
+  // ##### HOOKS #####
 
-  // signup Mutation hook
-
-  const [signup, { loading, error }] = useMutation(SIGNUP_MUTATION, {
-    refetchQueries: [{ query: ME_QUERY }],
-    onCompleted: () => {
-      Router.push("/");
+  const [signup, { loading, error }] = useSignupMutation({
+    refetchQueries: [{ query: MeDocument }],
+    onCompleted: ({ signup: { accessToken } }) => {
+      setAccessToken(accessToken);
+      Router.back();
     }
   });
-
-  // react form hook
   const { register, handleSubmit, errors } = useForm<FormData>();
 
-  // ################################################ HANDLING FUNCTION ################################################
-
-  // ################ Form submition #################
-  // #                                               #
-  // #     1. call mutation                          #
-  // #     2. reset form                             #
-  // #     3. handle error                           #
-  // #                                               #
-  // #################################################
+  // ##### HANDLING FUNCTION #####
 
   const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
-      // createEgg Mutation call with data
       await signup({ variables: { ...values } });
-      // Reset Form
       e.target.reset();
     } catch (error) {
-      // Reset Form
       e.target.reset();
-      console.error(error);
     }
   };
 
-  // ################################################ RENDER #####################################################
-
-  // ################## Render flow ##################
-  // #                                               #
-  // #     (error) => handle the Graphql error       #
-  // #     else => Render Component                  #
-  // #                                               #
-  // #################################################
+  // ##### RENDER #####
 
   if (error) return <p>Error: {error.message}</p>;
 
@@ -165,5 +135,3 @@ const Signup: React.FunctionComponent<IProps> = _props => {
     </Form>
   );
 };
-
-export default Signup;
