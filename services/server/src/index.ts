@@ -80,8 +80,19 @@ server.express.use(async (req: any, _, next) => {
     return next();
   }
 
-  const user = await db.query.user({ where: { id: req.userId } });
-
+  const user = await db.query.user(
+    { where: { id: req.userId } },
+    `{
+      id
+      firstName
+      lastName
+      username
+      email
+      password
+      permissions
+      tokenVersion
+    }`
+  );
   req.user = user;
   next();
 });
