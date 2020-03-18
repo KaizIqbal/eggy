@@ -14,14 +14,14 @@ type AuthPayload {
 type Mutation {
 
   # File
-  uploadFile(file: Upload! cursorId:ID!): File!
-  deleteFile(fileId: ID!): File!
+  uploadFile(file:Upload! cursorId:ID!): File!
+  deleteFile(fileId:ID!): File!
   
   # Eggs
-  createEgg(title: String! platforms: [Platform]!): Egg!
-  updateEgg(eggname:String! platforms: [Platform]!): Egg!
+  createEgg(title:String! platforms:[Platform]!): Egg!
+  updateEgg(id:ID! platforms:[Platform]!): Egg!
   renameEgg(id:ID! title:String!): Egg!
-  deleteEgg(eggname:String!): Egg!
+  deleteEgg(id:ID!): Egg!
 
   publish(id:ID!): Egg!
   unPublish(id:ID!): Egg!
