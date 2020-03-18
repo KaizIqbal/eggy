@@ -424,7 +424,7 @@ export type MutationCreateEggArgs = {
 
 
 export type MutationUpdateEggArgs = {
-  eggname: Scalars['String'];
+  id: Scalars['ID'];
   platforms: Array<Maybe<Platform>>;
 };
 
@@ -436,7 +436,7 @@ export type MutationRenameEggArgs = {
 
 
 export type MutationDeleteEggArgs = {
-  eggname: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
@@ -786,6 +786,10 @@ export type SignupMutation = (
   & { signup: (
     { __typename?: 'AuthPayload' }
     & Pick<AuthPayload, 'accessToken'>
+    & { user: (
+      { __typename?: 'User' }
+      & UserDataFragment
+    ) }
   ) }
 );
 
@@ -800,6 +804,10 @@ export type SigninMutation = (
   & { signin: (
     { __typename?: 'AuthPayload' }
     & Pick<AuthPayload, 'accessToken'>
+    & { user: (
+      { __typename?: 'User' }
+      & UserDataFragment
+    ) }
   ) }
 );
 
@@ -882,6 +890,100 @@ export type UserBasketQuery = (
   & { userBasket: (
     { __typename?: 'EggConnection' }
     & BasketDataFragment
+  ) }
+);
+
+export type EggQueryVariables = {
+  eggname: Scalars['String'];
+};
+
+
+export type EggQuery = (
+  { __typename?: 'Query' }
+  & { egg: Maybe<(
+    { __typename?: 'Egg' }
+    & EggDataFragment
+  )> }
+);
+
+export type CreateEggMutationVariables = {
+  title: Scalars['String'];
+  platforms: Array<Maybe<Platform>>;
+};
+
+
+export type CreateEggMutation = (
+  { __typename?: 'Mutation' }
+  & { createEgg: (
+    { __typename?: 'Egg' }
+    & Pick<Egg, 'id'>
+  ) }
+);
+
+export type UpdateEggMutationVariables = {
+  id: Scalars['ID'];
+  platforms: Array<Maybe<Platform>>;
+};
+
+
+export type UpdateEggMutation = (
+  { __typename?: 'Mutation' }
+  & { updateEgg: (
+    { __typename?: 'Egg' }
+    & Pick<Egg, 'id'>
+  ) }
+);
+
+export type RenameEggMutationVariables = {
+  id: Scalars['ID'];
+  title: Scalars['String'];
+};
+
+
+export type RenameEggMutation = (
+  { __typename?: 'Mutation' }
+  & { renameEgg: (
+    { __typename?: 'Egg' }
+    & Pick<Egg, 'id'>
+  ) }
+);
+
+export type DeleteEggMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type DeleteEggMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteEgg: (
+    { __typename?: 'Egg' }
+    & Pick<Egg, 'id'>
+  ) }
+);
+
+export type PublishMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type PublishMutation = (
+  { __typename?: 'Mutation' }
+  & { publish: (
+    { __typename?: 'Egg' }
+    & Pick<Egg, 'id'>
+  ) }
+);
+
+export type UnPublishMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type UnPublishMutation = (
+  { __typename?: 'Mutation' }
+  & { unPublish: (
+    { __typename?: 'Egg' }
+    & Pick<Egg, 'id'>
   ) }
 );
 
@@ -973,9 +1075,12 @@ export const SignupDocument = gql`
     mutation signup($firstName: String!, $lastName: String!, $email: String!, $username: String!, $password: String!) {
   signup(firstName: $firstName, lastName: $lastName, email: $email, username: $username, password: $password) {
     accessToken
+    user {
+      ...UserData
+    }
   }
 }
-    `;
+    ${UserDataFragmentDoc}`;
 export type SignupMutationFn = ApolloReactCommon.MutationFunction<SignupMutation, SignupMutationVariables>;
 
 /**
@@ -1009,9 +1114,12 @@ export const SigninDocument = gql`
     mutation signin($email: String!, $password: String!) {
   signin(email: $email, password: $password) {
     accessToken
+    user {
+      ...UserData
+    }
   }
 }
-    `;
+    ${UserDataFragmentDoc}`;
 export type SigninMutationFn = ApolloReactCommon.MutationFunction<SigninMutation, SigninMutationVariables>;
 
 /**
@@ -1237,6 +1345,234 @@ export function useUserBasketLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type UserBasketQueryHookResult = ReturnType<typeof useUserBasketQuery>;
 export type UserBasketLazyQueryHookResult = ReturnType<typeof useUserBasketLazyQuery>;
 export type UserBasketQueryResult = ApolloReactCommon.QueryResult<UserBasketQuery, UserBasketQueryVariables>;
+export const EggDocument = gql`
+    query egg($eggname: String!) {
+  egg(where: {eggname: $eggname}) {
+    ...EggData
+  }
+}
+    ${EggDataFragmentDoc}`;
+
+/**
+ * __useEggQuery__
+ *
+ * To run a query within a React component, call `useEggQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEggQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEggQuery({
+ *   variables: {
+ *      eggname: // value for 'eggname'
+ *   },
+ * });
+ */
+export function useEggQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<EggQuery, EggQueryVariables>) {
+        return ApolloReactHooks.useQuery<EggQuery, EggQueryVariables>(EggDocument, baseOptions);
+      }
+export function useEggLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<EggQuery, EggQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<EggQuery, EggQueryVariables>(EggDocument, baseOptions);
+        }
+export type EggQueryHookResult = ReturnType<typeof useEggQuery>;
+export type EggLazyQueryHookResult = ReturnType<typeof useEggLazyQuery>;
+export type EggQueryResult = ApolloReactCommon.QueryResult<EggQuery, EggQueryVariables>;
+export const CreateEggDocument = gql`
+    mutation createEgg($title: String!, $platforms: [Platform]!) {
+  createEgg(title: $title, platforms: $platforms) {
+    id
+  }
+}
+    `;
+export type CreateEggMutationFn = ApolloReactCommon.MutationFunction<CreateEggMutation, CreateEggMutationVariables>;
+
+/**
+ * __useCreateEggMutation__
+ *
+ * To run a mutation, you first call `useCreateEggMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateEggMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createEggMutation, { data, loading, error }] = useCreateEggMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      platforms: // value for 'platforms'
+ *   },
+ * });
+ */
+export function useCreateEggMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateEggMutation, CreateEggMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateEggMutation, CreateEggMutationVariables>(CreateEggDocument, baseOptions);
+      }
+export type CreateEggMutationHookResult = ReturnType<typeof useCreateEggMutation>;
+export type CreateEggMutationResult = ApolloReactCommon.MutationResult<CreateEggMutation>;
+export type CreateEggMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateEggMutation, CreateEggMutationVariables>;
+export const UpdateEggDocument = gql`
+    mutation updateEgg($id: ID!, $platforms: [Platform]!) {
+  updateEgg(id: $id, platforms: $platforms) {
+    id
+  }
+}
+    `;
+export type UpdateEggMutationFn = ApolloReactCommon.MutationFunction<UpdateEggMutation, UpdateEggMutationVariables>;
+
+/**
+ * __useUpdateEggMutation__
+ *
+ * To run a mutation, you first call `useUpdateEggMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateEggMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateEggMutation, { data, loading, error }] = useUpdateEggMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      platforms: // value for 'platforms'
+ *   },
+ * });
+ */
+export function useUpdateEggMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateEggMutation, UpdateEggMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateEggMutation, UpdateEggMutationVariables>(UpdateEggDocument, baseOptions);
+      }
+export type UpdateEggMutationHookResult = ReturnType<typeof useUpdateEggMutation>;
+export type UpdateEggMutationResult = ApolloReactCommon.MutationResult<UpdateEggMutation>;
+export type UpdateEggMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateEggMutation, UpdateEggMutationVariables>;
+export const RenameEggDocument = gql`
+    mutation renameEgg($id: ID!, $title: String!) {
+  renameEgg(id: $id, title: $title) {
+    id
+  }
+}
+    `;
+export type RenameEggMutationFn = ApolloReactCommon.MutationFunction<RenameEggMutation, RenameEggMutationVariables>;
+
+/**
+ * __useRenameEggMutation__
+ *
+ * To run a mutation, you first call `useRenameEggMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRenameEggMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [renameEggMutation, { data, loading, error }] = useRenameEggMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useRenameEggMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RenameEggMutation, RenameEggMutationVariables>) {
+        return ApolloReactHooks.useMutation<RenameEggMutation, RenameEggMutationVariables>(RenameEggDocument, baseOptions);
+      }
+export type RenameEggMutationHookResult = ReturnType<typeof useRenameEggMutation>;
+export type RenameEggMutationResult = ApolloReactCommon.MutationResult<RenameEggMutation>;
+export type RenameEggMutationOptions = ApolloReactCommon.BaseMutationOptions<RenameEggMutation, RenameEggMutationVariables>;
+export const DeleteEggDocument = gql`
+    mutation deleteEgg($id: ID!) {
+  deleteEgg(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteEggMutationFn = ApolloReactCommon.MutationFunction<DeleteEggMutation, DeleteEggMutationVariables>;
+
+/**
+ * __useDeleteEggMutation__
+ *
+ * To run a mutation, you first call `useDeleteEggMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteEggMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteEggMutation, { data, loading, error }] = useDeleteEggMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteEggMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteEggMutation, DeleteEggMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteEggMutation, DeleteEggMutationVariables>(DeleteEggDocument, baseOptions);
+      }
+export type DeleteEggMutationHookResult = ReturnType<typeof useDeleteEggMutation>;
+export type DeleteEggMutationResult = ApolloReactCommon.MutationResult<DeleteEggMutation>;
+export type DeleteEggMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteEggMutation, DeleteEggMutationVariables>;
+export const PublishDocument = gql`
+    mutation publish($id: ID!) {
+  publish(id: $id) {
+    id
+  }
+}
+    `;
+export type PublishMutationFn = ApolloReactCommon.MutationFunction<PublishMutation, PublishMutationVariables>;
+
+/**
+ * __usePublishMutation__
+ *
+ * To run a mutation, you first call `usePublishMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePublishMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [publishMutation, { data, loading, error }] = usePublishMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePublishMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<PublishMutation, PublishMutationVariables>) {
+        return ApolloReactHooks.useMutation<PublishMutation, PublishMutationVariables>(PublishDocument, baseOptions);
+      }
+export type PublishMutationHookResult = ReturnType<typeof usePublishMutation>;
+export type PublishMutationResult = ApolloReactCommon.MutationResult<PublishMutation>;
+export type PublishMutationOptions = ApolloReactCommon.BaseMutationOptions<PublishMutation, PublishMutationVariables>;
+export const UnPublishDocument = gql`
+    mutation unPublish($id: ID!) {
+  unPublish(id: $id) {
+    id
+  }
+}
+    `;
+export type UnPublishMutationFn = ApolloReactCommon.MutationFunction<UnPublishMutation, UnPublishMutationVariables>;
+
+/**
+ * __useUnPublishMutation__
+ *
+ * To run a mutation, you first call `useUnPublishMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnPublishMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unPublishMutation, { data, loading, error }] = useUnPublishMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUnPublishMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UnPublishMutation, UnPublishMutationVariables>) {
+        return ApolloReactHooks.useMutation<UnPublishMutation, UnPublishMutationVariables>(UnPublishDocument, baseOptions);
+      }
+export type UnPublishMutationHookResult = ReturnType<typeof useUnPublishMutation>;
+export type UnPublishMutationResult = ApolloReactCommon.MutationResult<UnPublishMutation>;
+export type UnPublishMutationOptions = ApolloReactCommon.BaseMutationOptions<UnPublishMutation, UnPublishMutationVariables>;
 export const MeDocument = gql`
     query me {
   me {
