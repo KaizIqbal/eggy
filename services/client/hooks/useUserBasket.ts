@@ -1,8 +1,8 @@
-import { usePublicBasketQuery, PublicBasketDocument } from "generated/graphql";
+import { useUserBasketQuery, UserBasketDocument } from "generated/graphql";
 import updateEggCache from "lib/basketCache";
 
-function usePublicBasket() {
-  const { data, loading, fetchMore, error } = usePublicBasketQuery({
+function useUserBasket() {
+  const { data, loading, fetchMore, error } = useUserBasketQuery({
     fetchPolicy: "cache-and-network"
   });
 
@@ -12,9 +12,9 @@ function usePublicBasket() {
 
   const loadMore = () => {
     return fetchMore({
-      query: PublicBasketDocument,
+      query: UserBasketDocument,
       variables: {
-        cursor: data.publicBasket.pageInfo.endCursor
+        cursor: data.userBasket.pageInfo.endCursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         return updateEggCache(fetchMoreResult, previousResult);
@@ -23,11 +23,11 @@ function usePublicBasket() {
   };
 
   return {
-    eggs: data.publicBasket.edges.map(({ node }: any) => node),
-    hasNextPage: data.publicBasket.pageInfo.hasNextPage,
+    eggs: data.userBasket.edges.map(({ node }: any) => node),
+    hasNextPage: data.userBasket.pageInfo.hasNextPage,
     loading,
     loadMore,
     error
   };
 }
-export default usePublicBasket;
+export default useUserBasket;

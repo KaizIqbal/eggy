@@ -1,13 +1,17 @@
 import React from "react";
+import Router from "next/router";
 import InfiniteScroll from "react-infinite-scroll-component";
-import usePublicBasket from "hooks/usePublicBasket";
+
+import useUserBasket from "hooks/useUserBasket";
 import { Egg } from "generated/graphql";
+
+import { Button } from "components/styled";
 
 interface IProps {}
 
-export const PublicBasket: React.FunctionComponent<IProps> = _props => {
+export const UserBasket: React.FunctionComponent<IProps> = _props => {
   // ##### HOOKS #####
-  const { eggs, error, loading, loadMore, hasNextPage } = usePublicBasket();
+  const { eggs, error, loading, loadMore, hasNextPage } = useUserBasket();
 
   // ##### RENDER #####
   if (loading) return <p>Fetching Eggs...</p>;
@@ -27,12 +31,19 @@ export const PublicBasket: React.FunctionComponent<IProps> = _props => {
         endMessage={<p> There are not more eggs </p>}>
         {eggs.map((egg: Egg) => (
           <li key={egg.id}>
-            <h4>{egg.title}</h4>
-            <p>by {egg.user.firstName + " " + egg.user.lastName}</p>
-            Available for:
-            {egg.platforms.map(platform => (
-              <p key={platform}>{platform}</p>
-            ))}
+            {egg.title + " "}
+            <Button
+              onClick={() => {
+                Router.push(
+                  "/egg/[eggname]/workshop",
+                  `/egg/${egg.eggname}/workshop`
+                );
+              }}>
+              Workshop
+            </Button>
+            {/* <UpdateEgg egg={egg} />
+            <DeleteEgg eggname={egg.eggname} />
+            <PublishEgg id={egg.id} isPublished={egg.isPublished} /> */}
           </li>
         ))}
       </InfiniteScroll>
