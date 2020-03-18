@@ -52,8 +52,8 @@ export const eggMutations = {
     // first take copy in updates
     const updates = { ...args };
 
-    // remove egganme from updates
-    delete updates.eggname;
+    // remove id from updates
+    delete updates.id;
 
     // deconstruct platforms and delete from updates
     const platforms = updates.platforms;
@@ -69,7 +69,7 @@ export const eggMutations = {
           ...updates
         },
         where: {
-          eggname: args.eggname
+          id: args.id
         }
       },
       info
@@ -109,12 +109,20 @@ export const eggMutations = {
   // ################################################ DELETE EGG ################################################
 
   async deleteEgg(parent, args, ctx, info) {
-    const where = { eggname: args.eggname };
+    const where = { id: args.id };
     // 1.find egg
-    const egg = await ctx.db.query.egg({ where }, `{id title user{ id }}`);
+    const egg = await ctx.db.query.egg(
+      { where },
+      `{
+      id
+      user {
+        id
+      }
+    }`
+    );
 
     // 2.check they own the egg ,or  have a permission
-    const ownsEgg = egg.user.id === ctx.request.userId;
+    const ownsEgg = egg!.user!.id === ctx.request.userId;
 
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
