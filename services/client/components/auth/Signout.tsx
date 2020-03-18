@@ -10,26 +10,20 @@ interface IProps {}
 export const Signout: React.FunctionComponent<IProps> = _props => {
   // ##### HOOKS #####
 
-  const [signout, { error }] = useSignOutMutation({
-    onCompleted: () => {
-      setAccessToken("");
-    }
-  });
-
-  // ##### HANDLING FUNCTION #####
-
-  const onClick = () => {
-    if (window.confirm("Are you sure you want to Signout!")) {
-      signout();
-    }
-  };
+  const [signout, { error, client }] = useSignOutMutation();
 
   // ##### RENDER #####
 
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Button type="button" onClick={onClick}>
+    <Button
+      type="button"
+      onClick={async () => {
+        await signout();
+        setAccessToken("");
+        await client!.resetStore();
+      }}>
       Signout
     </Button>
   );

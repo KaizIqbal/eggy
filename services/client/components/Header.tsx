@@ -10,20 +10,11 @@ interface Props {}
 export const Header: React.FC<Props> = () => {
   const { data, loading } = useMeQuery();
 
-  let body = (
-    <>
-      {" "}
-      <Link href="/signin">
-        <a>Signin</a>
-      </Link>{" "}
-      |{" "}
-      <Link href="/signup">
-        <a>Signup</a>
-      </Link>
-    </>
-  );
+  let body: any = null;
 
-  if (!loading && data && data.me) {
+  if (loading) {
+    body = <p>Loading.....</p>;
+  } else if (data && data.me) {
     body = (
       <>
         {" "}
@@ -35,6 +26,19 @@ export const Header: React.FC<Props> = () => {
           <a>Dashboard</a>
         </Link>{" "}
         | <Signout />
+      </>
+    );
+  } else {
+    body = (
+      <>
+        {" "}
+        <Link href="/signin">
+          <a>Signin</a>
+        </Link>{" "}
+        |{" "}
+        <Link href="/signup">
+          <a>Signup</a>
+        </Link>
       </>
     );
   }
