@@ -17,13 +17,13 @@ type FormData = {
   password: string;
 };
 
-export const Signup: React.FunctionComponent<IProps> = _props => {
-  // ##### HOOKS #####
+export const Signup: React.FC<IProps> = _props => {
+  // ---------------------------------------------------------------- HOOKS
 
   const [signup, { loading, error }] = useSignupMutation();
   const { register, handleSubmit, errors } = useForm<FormData>();
 
-  // ##### HANDLING FUNCTION #####
+  // ---------------------------------------------------------------- HANDLING FUNCTION
 
   const onSubmit = async (values: any, e: any) => {
     try {
@@ -60,7 +60,7 @@ export const Signup: React.FunctionComponent<IProps> = _props => {
     }
   };
 
-  // ##### RENDER #####
+  // ---------------------------------------------------------------- RENDER
 
   if (error) return <p>Error: {error.message}</p>;
 
