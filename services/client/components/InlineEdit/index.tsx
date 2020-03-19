@@ -6,7 +6,7 @@ import useOnClickOutside from "hooks/useOnClickOutside";
 
 import { InlineEditInput, InlineEditText } from "./styles";
 
-interface InlineEditProps {
+interface IProps {
   text: string;
   onSetText: (text: string) => void;
 
@@ -15,7 +15,9 @@ interface InlineEditProps {
   readonly regex?: RegExp;
 }
 
-export const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
+export const InlineEdit: React.FC<IProps> = props => {
+  // ---------------------------------------------------------------- HOOKS
+
   const [isInputActive, setIsInputActive] = useState(false);
   const [inputValue, setInputValue] = useState(props.text);
 
@@ -25,6 +27,8 @@ export const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
 
   const enter = useKeypress("Enter");
   const esc = useKeypress("Escape");
+
+  // ---------------------------------------------------------------- HELPER HOOKS
 
   // check to see if the user clicked outside of this component
   useOnClickOutside(wrapperRef, () => {
@@ -68,13 +72,12 @@ export const InlineEdit: React.FunctionComponent<InlineEditProps> = props => {
     }
   }, [enter, esc]); // watch the Enter and Escape key presses
 
+  // ---------------------------------------------------------------- RENDER
+
   return (
     <>
       <span ref={wrapperRef}>
-        <InlineEditText
-          ref={textRef}
-          isHidden={isInputActive}
-          onClick={() => setIsInputActive(true)}>
+        <InlineEditText ref={textRef} isHidden={isInputActive} onClick={() => setIsInputActive(true)}>
           {props.text}
         </InlineEditText>
         <InlineEditInput

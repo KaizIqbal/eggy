@@ -1,7 +1,7 @@
 import React from "react";
 import Page from "components/Page";
 import { UserBasket } from "components/basket";
-import { CreateEgg } from "components/egg/Create";
+import { CreateEgg } from "components/egg";
 
 export default () => {
   return (
