@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 
-import { useCreateEggMutation, UserBasketDocument, PublicBasketDocument } from "generated/graphql";
+import { UserBasketDocument, PublicBasketDocument, useUpdateEggMutation, Egg } from "generated/graphql";
 import { useForm } from "react-hook-form";
 
-import { Button, Form } from "components/styled";
-import { Popup } from "components/Popup";
 import { possiblePlatforms } from "helper/constriants";
 
-interface IProps {}
+import { Popup } from "components/Popup";
+import { RenameEgg } from "components/egg";
+import { Button, Form } from "components/styled";
+
+interface IProps {
+  egg: Egg;
+}
 
 type FormData = {
-  eggname: string;
-  title: string;
   platforms: string;
 };
 
-export const CreateEgg: React.FC<IProps> = _props => {
+export const UpdateEgg: React.FC<IProps> = ({ egg }) => {
   // ---------------------------------------------------------------- HOOKS
 
   const [popup, setPopup] = useState(false);
-  const [createEgg, { loading, error }] = useCreateEggMutation({
+  const [updateEgg, { loading, error }] = useUpdateEggMutation({
     refetchQueries: [{ query: UserBasketDocument }, { query: PublicBasketDocument }]
   });
   const { register, handleSubmit, errors } = useForm<FormData>();
@@ -29,7 +31,8 @@ export const CreateEgg: React.FC<IProps> = _props => {
   const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
-      await createEgg({ variables: { ...values } });
+
+      await updateEgg({ variables: { id: egg.id, ...values } });
 
       e.target.reset();
 
@@ -45,40 +48,28 @@ export const CreateEgg: React.FC<IProps> = _props => {
     setPopup(!popup);
   };
 
+  const currentPlatforms = Object.values(egg.platforms);
+
   // ---------------------------------------------------------------- RENDER
 
   if (error) return <p>Error: {error.message}</p>;
-
   return (
     <>
-      <Button onClick={togglePopup}>+ Add Egg</Button>
+      <Button onClick={togglePopup}>Edit</Button>
       {popup ? (
         <Popup closePopup={togglePopup}>
           <br />
+          <RenameEgg egg={egg} />
           <Form onSubmit={handleSubmit(onSubmit)}>
             <fieldset disabled={loading}>
-              {/* Insert Title of Egg */}
-              <label htmlFor="title">
-                Title
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  placeholder="Sweet Cursor"
-                  ref={register({ required: "Your input is required" })}
-                />
-                {errors.title && errors.title.message}
-              </label>
-
-              <br />
-
               <label htmlFor="platforms">
-                {possiblePlatforms.map((platform: string) => (
+                {possiblePlatforms.map(platform => (
                   <label key={platform} htmlFor={`platform-${platform}`}>
                     <input
                       id={`platform-${platform}`}
                       type="checkbox"
                       value={platform}
+                      defaultChecked={currentPlatforms.includes(platform)}
                       name="platforms"
                       ref={register({ required: "Your input is required" })}
                     />
@@ -89,7 +80,7 @@ export const CreateEgg: React.FC<IProps> = _props => {
               </label>
               <br />
               {/* Submition */}
-              <button type="submit">Submit</button>
+              <button type="submit">Updat{loading ? "ing" : "e"}</button>
             </fieldset>
           </Form>
         </Popup>

@@ -7,12 +7,12 @@ import { setAccessToken } from "lib/accessToken";
 
 interface IProps {}
 
-export const Signout: React.FunctionComponent<IProps> = _props => {
-  // ##### HOOKS #####
+export const Signout: React.FC<IProps> = _props => {
+  // ---------------------------------------------------------------- HOOKS
 
   const [signout, { error, client }] = useSignOutMutation();
 
-  // ##### RENDER #####
+  // ---------------------------------------------------------------- RENDER
 
   if (error) return <p>Error: {error.message}</p>;
 

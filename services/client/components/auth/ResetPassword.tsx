@@ -15,8 +15,8 @@ type FormData = {
   confirmPassword: string;
 };
 
-export const ResetPassword: React.FunctionComponent<IProps> = ({ token }) => {
-  // ##### HOOKS #####
+export const ResetPassword: React.FC<IProps> = ({ token }) => {
+  // ---------------------------------------------------------------- HOOKS
 
   const [resetPassword, { loading, error }] = useResetPasswordMutation({
     refetchQueries: [{ query: MeDocument }],
@@ -26,7 +26,7 @@ export const ResetPassword: React.FunctionComponent<IProps> = ({ token }) => {
   });
   const { register, handleSubmit, watch, errors } = useForm<FormData>();
 
-  // ##### HANDLING FUNCTION #####
+  // ---------------------------------------------------------------- HANDLING FUNCTION
 
   const onSubmit = async (values: any, e: any) => {
     try {
@@ -43,7 +43,7 @@ export const ResetPassword: React.FunctionComponent<IProps> = ({ token }) => {
     }
   };
 
-  // ##### RENDER #####
+  // ---------------------------------------------------------------- RENDER
 
   if (error) return <p>Error: {error.message}</p>;
 
@@ -79,8 +79,7 @@ export const ResetPassword: React.FunctionComponent<IProps> = ({ token }) => {
             minLength={8}
             ref={register({
               required: "Confirm Password is Required",
-              validate: value =>
-                value === watch("password") || "Passwords don't match."
+              validate: value => value === watch("password") || "Passwords don't match."
             })}
           />
           {errors.confirmPassword && errors.confirmPassword.message}

@@ -9,9 +9,13 @@ interface IProps {
   closePopup: () => void;
 }
 
-export const Popup: React.FunctionComponent<IProps> = props => {
+export const Popup: React.FC<IProps> = props => {
+  // ---------------------------------------------------------------- HOOKS
+
   const wrapperRef = useRef(null);
   const esc = useKeypress("Escape");
+
+  // ---------------------------------------------------------------- HELPER HOOKS
 
   // check to see if the user clicked outside of this component
   useOnClickOutside(wrapperRef, () => {
@@ -24,6 +28,8 @@ export const Popup: React.FunctionComponent<IProps> = props => {
       props.closePopup();
     }
   }, [esc, props]);
+
+  // ---------------------------------------------------------------- RENDER
 
   return (
     <PopupContainer>

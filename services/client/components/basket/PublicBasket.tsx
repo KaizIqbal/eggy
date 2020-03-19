@@ -5,11 +5,13 @@ import { Egg } from "generated/graphql";
 
 interface IProps {}
 
-export const PublicBasket: React.FunctionComponent<IProps> = _props => {
-  // ##### HOOKS #####
+export const PublicBasket: React.FC<IProps> = _props => {
+  // ---------------------------------------------------------------- HOOKS
+
   const { eggs, error, loading, loadMore, hasNextPage } = usePublicBasket();
 
-  // ##### RENDER #####
+  // ---------------------------------------------------------------- RENDER
+
   if (loading) return <p>Fetching Eggs...</p>;
   if (error) return <p>Error! ${error.message}</p>;
   if (!eggs) return <p>No Public Egg Found</p>;
