@@ -1,8 +1,8 @@
-
 import styled, { css } from "styled-components";
 
 //  these make sure it can work in any text element
 const InlineEditStyle = css`
+  size: inherit;
   text-align: left;
   font: inherit;
   color: inherit;

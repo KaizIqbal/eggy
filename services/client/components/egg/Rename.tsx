@@ -15,7 +15,7 @@ export const RenameEgg: React.FC<IProps> = ({ egg }) => {
   const [renameEgg, { loading, error }] = useRenameEggMutation({
     refetchQueries: [{ query: UserBasketDocument }, { query: PublicBasketDocument }]
   });
-  const regex = /^[^\s]+(\s+[^\s]+)*$/;
+  const regex = /[^\s]*[^\s]/;
 
   // ---------------------------------------------------------------- HELPER HOOKS
 
@@ -47,9 +47,11 @@ export const RenameEgg: React.FC<IProps> = ({ egg }) => {
 
   return (
     <>
-      <InlineEdit text={title} emptyText={title} onSetText={_handleRename} maxLength={20} regex={regex} />
-      {loading ? " Saving ..." : null}
-      {error ? `${error}` : null}
+      <h1>
+        <InlineEdit text={title} emptyText={title} onSetText={_handleRename} maxLength={20} regex={regex} />
+      </h1>
+      {loading ? <p> Saving ...</p> : null}
+      {error ? <p> ${error}</p> : null}
     </>
   );
 };

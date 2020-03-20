@@ -92,6 +92,8 @@ export const InlineEdit: React.FC<IProps> = props => {
           onChange={e => {
             const value = e.target.value;
             if (props.regex === undefined) {
+              // sanitize the input a little
+              setInputValue(DOMPurify.sanitize(value));
               return;
             }
             if (value.match(props.regex)) {

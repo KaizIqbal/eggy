@@ -53,8 +53,6 @@ export const Signup: React.FC<IProps> = _props => {
         Router.push("/basket");
       }
       Router.back();
-
-      e.target.reset();
     } catch (error) {
       e.target.reset();
     }

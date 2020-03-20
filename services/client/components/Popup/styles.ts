@@ -14,13 +14,15 @@ const PopupContainer = styled.div`
 
 const PopupInner = styled.div`
   position: absolute;
-  left: 25%;
-  right: 25%;
-  top: 25%;
-  bottom: 25%;
+  left: 15%;
+  right: 15%;
+  top: 7%;
+  bottom: 7%;
   margin: auto;
   border-radius: 20px;
   background: white;
+  text-align: center;
+  align-content: center;
 `;
 
 export { PopupContainer, PopupInner };
