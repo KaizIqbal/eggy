@@ -1,13 +1,14 @@
 import React from "react";
 
 import { useForm } from "react-hook-form";
-import { useResetPasswordMutation, MeDocument } from "generated/graphql";
+import { useResetPasswordMutation, MeDocument, MeQuery } from "generated/graphql";
 
 import { Form } from "components/styled";
 import { setAccessToken } from "lib/accessToken";
+import Router from "next/router";
 
 interface IProps {
-  token: string;
+  token: any;
 }
 
 type FormData = {
@@ -18,12 +19,7 @@ type FormData = {
 export const ResetPassword: React.FC<IProps> = ({ token }) => {
   // ---------------------------------------------------------------- HOOKS
 
-  const [resetPassword, { loading, error }] = useResetPasswordMutation({
-    refetchQueries: [{ query: MeDocument }],
-    onCompleted: ({ resetPassword: { accessToken } }) => {
-      setAccessToken(accessToken);
-    }
-  });
+  const [resetPassword, { loading, error }] = useResetPasswordMutation();
   const { register, handleSubmit, watch, errors } = useForm<FormData>();
 
   // ---------------------------------------------------------------- HANDLING FUNCTION
@@ -31,13 +27,31 @@ export const ResetPassword: React.FC<IProps> = ({ token }) => {
   const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
-      await resetPassword({
+
+      const response = await resetPassword({
         variables: {
           resetToken: token,
           ...values
+        },
+        update: (store, { data }) => {
+          if (!data) {
+            return null;
+          }
+
+          store.writeQuery<MeQuery>({
+            query: MeDocument,
+            data: {
+              me: data.resetPassword.user
+            }
+          });
         }
       });
-      e.target.reset();
+
+      if (response && response.data) {
+        setAccessToken(response.data.resetPassword.accessToken);
+      }
+
+      Router.push("/dashboard");
     } catch (error) {
       e.target.reset();
     }

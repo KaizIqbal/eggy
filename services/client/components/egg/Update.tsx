@@ -59,7 +59,9 @@ export const UpdateEgg: React.FC<IProps> = ({ egg }) => {
       {popup ? (
         <Popup closePopup={togglePopup}>
           <br />
+
           <RenameEgg egg={egg} />
+
           <Form onSubmit={handleSubmit(onSubmit)}>
             <fieldset disabled={loading}>
               <label htmlFor="platforms">

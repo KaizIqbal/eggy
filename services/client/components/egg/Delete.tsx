@@ -1,5 +1,7 @@
 import React from "react";
+
 import { useDeleteEggMutation, PublicBasketDocument, UserBasketDocument } from "generated/graphql";
+
 import { Button } from "components/styled";
 
 interface IProps {
@@ -27,7 +29,7 @@ export const DeleteEgg: React.FC<IProps> = ({ id }) => {
 
   return (
     <>
-      <Button onClick={() => deleteEgg}>Delete</Button>
+      <Button onClick={() => deleteEgg()}>Delete</Button>
     </>
   );
 };

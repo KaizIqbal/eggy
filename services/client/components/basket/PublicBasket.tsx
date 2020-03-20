@@ -1,7 +1,10 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+
 import usePublicBasket from "hooks/usePublicBasket";
 import { Egg } from "generated/graphql";
+
+import { EggPopup } from "components/egg";
 
 interface IProps {}
 
@@ -29,12 +32,7 @@ export const PublicBasket: React.FC<IProps> = _props => {
         endMessage={<p> There are not more eggs </p>}>
         {eggs.map((egg: Egg) => (
           <li key={egg.id}>
-            <h4>{egg.title}</h4>
-            <p>by {egg.user.firstName + " " + egg.user.lastName}</p>
-            Available for:
-            {egg.platforms.map(platform => (
-              <p key={platform}>{platform}</p>
-            ))}
+            <EggPopup eggname={egg.eggname}>{egg.title}</EggPopup>{" "}
           </li>
         ))}
       </InfiniteScroll>

@@ -38,6 +38,9 @@ mutation resetPasswordRequest($email: String!) {
 mutation resetPassword($resetToken: String! $password: String! $confirmPassword: String!) {
   resetPassword(resetToken: $resetToken password: $password confirmPassword: $confirmPassword) {
     accessToken
+    user {
+      ...UserData
+    }
   }
 }
 
