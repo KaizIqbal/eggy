@@ -18,7 +18,7 @@ export const Header: React.FC<Props> = () => {
     body = (
       <>
         {" "}
-        <Link href="/[username]">
+        <Link href="/[username]" as={`/${data.me.username}`}>
           <a> {data.me.firstName}</a>
         </Link>{" "}
         |{" "}

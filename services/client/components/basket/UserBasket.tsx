@@ -19,13 +19,13 @@ export const UserBasket: React.FC<IProps> = _props => {
 
   if (loading) return <p>Fetching Eggs...</p>;
   if (error) return <p>Error! ${error.message}</p>;
-  if (!eggs) return <p>No Public Egg Found</p>;
+  if (!eggs) return <p>No Egg Found</p>;
 
   const eggsCount = hasNextPage ? eggs.length + 1 : eggs.length;
   const loadMoreEggs = loading ? () => {} : loadMore;
 
   return (
-    <div>
+    <>
       <InfiniteScroll
         dataLength={eggsCount}
         next={() => loadMoreEggs}
@@ -41,12 +41,18 @@ export const UserBasket: React.FC<IProps> = _props => {
               }}>
               Workshop
             </Button>
+            <Button
+              onClick={() => {
+                Router.push("/egg/[eggname]", `/egg/${egg.eggname}`);
+              }}>
+              Page
+            </Button>
             <UpdateEgg egg={egg} />
             <DeleteEgg id={egg.id} />
             {egg.isPublished ? <UnPublishEgg id={egg.id} /> : <PublishEgg id={egg.id} />}
           </li>
         ))}
       </InfiniteScroll>
-    </div>
+    </>
   );
 };

@@ -1,21 +1,20 @@
 import React from "react";
-import Page from "components/Page";
-import { ResetPassword } from "components/auth";
 import { useRouter } from "next/router";
+
+import Page from "components/Page";
 
 export default () => {
   // ---------------------------------------------------------------- HOOKS
 
   const {
-    query: { token }
+    query: { eggname }
   } = useRouter();
-
+  console.log(eggname);
   // ---------------------------------------------------------------- RENDER
 
   return (
-    <Page title="Eggy">
-      <h1>Request for Reset Password</h1>
-      <ResetPassword token={token} />
+    <Page>
+      <h1> Workshop </h1>
     </Page>
   );
 };

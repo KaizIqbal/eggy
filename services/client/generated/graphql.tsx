@@ -847,6 +847,10 @@ export type ResetPasswordMutation = (
   & { resetPassword: (
     { __typename?: 'AuthPayload' }
     & Pick<AuthPayload, 'accessToken'>
+    & { user: (
+      { __typename?: 'User' }
+      & UserDataFragment
+    ) }
   ) }
 );
 
@@ -1213,9 +1217,12 @@ export const ResetPasswordDocument = gql`
     mutation resetPassword($resetToken: String!, $password: String!, $confirmPassword: String!) {
   resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
     accessToken
+    user {
+      ...UserData
+    }
   }
 }
-    `;
+    ${UserDataFragmentDoc}`;
 export type ResetPasswordMutationFn = ApolloReactCommon.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
 
 /**
