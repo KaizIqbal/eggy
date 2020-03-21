@@ -1,4 +1,5 @@
 import React from "react";
+import Router from "next/router";
 
 import { useSignOutMutation } from "generated/graphql";
 
@@ -23,6 +24,7 @@ export const Signout: React.FC<IProps> = _props => {
         await signout();
         setAccessToken("");
         await client!.resetStore();
+        Router.replace("/");
       }}>
       Signout
     </Button>
