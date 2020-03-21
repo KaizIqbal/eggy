@@ -50,7 +50,7 @@ export const Signup: React.FC<IProps> = _props => {
       }
 
       if (window.history.length === 0) {
-        Router.push("/basket");
+        Router.replace("/");
       }
       Router.back();
     } catch (error) {

@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Router from "next/router";
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import { createUploadLink } from "apollo-upload-client";
@@ -12,6 +13,8 @@ import { onError } from "apollo-link-error";
 import { ApolloLink } from "apollo-link";
 import cookie from "cookie";
 import { endpoint } from "./endpoint";
+import { Redirect } from "./redirect";
+import { isBrowser } from "./isBrowser";
 
 const isServer = () => typeof window === "undefined";
 
@@ -24,12 +27,7 @@ const isServer = () => typeof window === "undefined";
  * @param {Boolean} [config.ssr=true]
  */
 export function withApollo(PageComponent: any, { ssr = true } = {}) {
-  const WithApollo = ({
-    apolloClient,
-    serverAccessToken,
-    apolloState,
-    ...pageProps
-  }: any) => {
+  const WithApollo = ({ apolloClient, serverAccessToken, apolloState, ...pageProps }: any) => {
     if (!isServer() && !getAccessToken()) {
       setAccessToken(serverAccessToken);
     }
@@ -39,8 +37,7 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
 
   if (process.env.NODE_ENV !== "production") {
     // Find correct display name
-    const displayName =
-      PageComponent.displayName || PageComponent.name || "Component";
+    const displayName = PageComponent.displayName || PageComponent.name || "Component";
 
     // Warn if old way of installing apollo is used
     if (displayName === "App") {
@@ -77,14 +74,9 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
 
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
-      const apolloClient = (ctx.ctx.apolloClient = initApolloClient(
-        {},
-        serverAccessToken
-      ));
+      const apolloClient = (ctx.ctx.apolloClient = initApolloClient({}, serverAccessToken));
 
-      const pageProps = PageComponent.getInitialProps
-        ? await PageComponent.getInitialProps(ctx)
-        : {};
+      const pageProps = PageComponent.getInitialProps ? await PageComponent.getInitialProps(ctx) : {};
 
       // Only on the server
       if (typeof window === "undefined") {
@@ -112,6 +104,9 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
             // Handle them in components via the data.error prop:
             // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
             console.error("Error while running `getDataFromTree`", error);
+            if (error.message.includes("Not Authentiated")) {
+              Redirect(ctx.ctx, "/signin");
+            }
           }
         }
 
@@ -168,6 +163,17 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     fetch
   });
 
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({ message, locations, path }) => {
+        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+        if (isBrowser && message.includes("Not Authentiated")) {
+          Router.replace("/signin");
+        }
+      });
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+  });
+
   const refreshLink = new TokenRefreshLink({
     accessTokenField: "accessToken",
     isTokenValidOrUndefined: () => {
@@ -213,19 +219,9 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     };
   });
 
-  const errorLink = onError(({ graphQLErrors, networkError }) => {
-    console.log(graphQLErrors);
-    console.log(networkError);
-  });
-
   return new ApolloClient({
     ssrMode: typeof window === "undefined", // Disables forceFetch on the server (so queries are only run once)
-    link: ApolloLink.from([
-      refreshLink,
-      authLink,
-      errorLink,
-      httpLinkWithUpload
-    ]),
+    link: ApolloLink.from([refreshLink, authLink, errorLink, httpLinkWithUpload]),
     cache: new InMemoryCache().restore(initialState)
   });
 }
