@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Link from "next/link";
 import Head from "next/head";
 
 import { useEggLazyQuery } from "generated/graphql";
@@ -52,9 +51,6 @@ export const EggPopup: React.FC<IProps> = ({ eggname, children }) => {
         {/* Details */}
         <div>
           <h1>{data.egg.title}</h1>
-          <Link href="/egg/[eggname]" as={`/egg/${data.egg.eggname}`}>
-            <a target="_blank">More...</a>
-          </Link>
         </div>
         <p>by {data.egg.user.firstName + " " + data.egg.user.lastName}</p>
         Available for:
