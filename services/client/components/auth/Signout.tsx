@@ -24,7 +24,7 @@ export const Signout: React.FC<IProps> = _props => {
         await signout();
         setAccessToken("");
         await client!.resetStore();
-        Router.replace("/");
+        Router.push("/basket");
       }}>
       Signout
     </Button>
