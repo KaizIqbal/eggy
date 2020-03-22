@@ -20,13 +20,13 @@ export const PublicBasket: React.FC<IProps> = _props => {
   if (!eggs) return <p>No Public Egg Found</p>;
 
   const eggsCount = hasNextPage ? eggs.length + 1 : eggs.length;
-  const loadMoreEggs = loading ? () => {} : loadMore;
+  const loadMoreEggs = loading ? () => {} : () => loadMore;
 
   return (
     <div>
       <InfiniteScroll
         dataLength={eggsCount}
-        next={() => loadMoreEggs}
+        next={loadMoreEggs}
         hasMore={hasNextPage!}
         loader={<p>Loading...</p>}
         endMessage={<p> There are not more eggs </p>}>

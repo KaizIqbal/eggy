@@ -20,16 +20,20 @@ export const UserBasket: React.FC<IProps> = _props => {
   if (loading) return <p>Fetching Eggs...</p>;
   if (error) return <p>Error! ${error.message}</p>;
   if (!eggs) return <p>No Egg Found</p>;
+  console.log(hasNextPage);
+  if (hasNextPage === undefined) {
+    return <p>Fetching Eggs...</p>;
+  }
 
   const eggsCount = hasNextPage ? eggs.length + 1 : eggs.length;
-  const loadMoreEggs = loading ? () => {} : loadMore;
+  const loadMoreEggs = loading ? () => {} : () => loadMore;
 
   return (
     <>
       <InfiniteScroll
         dataLength={eggsCount}
-        next={() => loadMoreEggs}
-        hasMore={hasNextPage!}
+        next={loadMoreEggs}
+        hasMore={hasNextPage}
         loader={<p>Loading...</p>}
         endMessage={<p> There are not more eggs </p>}>
         {eggs.map((egg: Egg) => (

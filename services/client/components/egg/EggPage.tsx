@@ -2,6 +2,7 @@ import React from "react";
 
 import { useEggQuery } from "generated/graphql";
 import Head from "next/head";
+import { ShowEgg } from ".";
 
 interface IProps {
   eggname: any;
@@ -26,21 +27,7 @@ export const EggPage: React.FC<IProps> = ({ eggname }) => {
 
   if (error) return <p>Error: {error.message}</p>;
 
-  if (data && data.egg)
-    return (
-      <>
-        <Head>
-          <title>{data.egg.title} - Eggy</title>
-        </Head>
-        {/* Details */}
-        <h1>{data.egg.title} Page</h1>
-        <p>by {data.egg.user.firstName + " " + data.egg.user.lastName}</p>
-        Available for:
-        {data.egg.platforms.map(platform => (
-          <p key={platform}>{platform}</p>
-        ))}
-      </>
-    );
+  if (data && data.egg) return <ShowEgg egg={data.egg} />;
 
   return (
     <>
