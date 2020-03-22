@@ -5,6 +5,7 @@ import { useEggLazyQuery } from "generated/graphql";
 
 import { Popup } from "components/Popup";
 import { EggCard } from "components/styled/egg";
+import { ShowEgg } from ".";
 
 interface IProps {
   eggname: any;
@@ -25,6 +26,11 @@ export const EggPopup: React.FC<IProps> = ({ eggname, children }) => {
 
   const togglePopup = () => {
     setPopup(!popup);
+    if (popup) {
+      window.history.pushState("", "", "/basket");
+    } else {
+      window.history.pushState("", "", `/egg/${eggname}`);
+    }
   };
 
   // ---------------------------------------------------------------- RENDER
@@ -43,22 +49,7 @@ export const EggPopup: React.FC<IProps> = ({ eggname, children }) => {
   } else if (error) {
     body = <p>Error: {error.message}</p>;
   } else if (data && data.egg) {
-    body = (
-      <>
-        <Head>
-          <title>{data.egg.title} - Eggy Basket</title>
-        </Head>
-        {/* Details */}
-        <div>
-          <h1>{data.egg.title}</h1>
-        </div>
-        <p>by {data.egg.user.firstName + " " + data.egg.user.lastName}</p>
-        Available for:
-        {data.egg.platforms.map(platform => (
-          <p key={platform}>{platform}</p>
-        ))}
-      </>
-    );
+    body = <ShowEgg egg={data.egg} />;
   } else {
     body = (
       <>
