@@ -1,8 +1,7 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import usePublicBasket from "hooks/usePublicBasket";
-import { Egg } from "generated/graphql";
+import { Egg, usePublicBasketQuery, PublicBasketDocument } from "generated/graphql";
 
 import { EggPopup } from "components/egg";
 
@@ -11,23 +10,52 @@ interface IProps {}
 export const PublicBasket: React.FC<IProps> = _props => {
   // ---------------------------------------------------------------- HOOKS
 
-  const { eggs, error, loading, loadMore, hasNextPage } = usePublicBasket();
+  const { data, loading, fetchMore, called, error } = usePublicBasketQuery({
+    fetchPolicy: "cache-and-network"
+  });
 
-  // ---------------------------------------------------------------- RENDER
+  // ---------------------------------------------------------------- HELPER
 
-  if (loading) return <p>Fetching Eggs...</p>;
+  if (loading && !called) return <p>Fetching Public Eggs...</p>;
   if (error) return <p>Error! ${error.message}</p>;
-  if (!eggs) return <p>No Public Egg Found</p>;
+  if (!data) return <p>No Public Egg Found</p>;
+
+  const loadMore = () => {
+    return fetchMore({
+      query: PublicBasketDocument,
+      variables: {
+        cursor: data.publicBasket.pageInfo.endCursor
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        const newEdges = fetchMoreResult!.publicBasket.edges;
+        const pageInfo = fetchMoreResult!.publicBasket.pageInfo;
+        return newEdges.length
+          ? {
+              publicBasket: {
+                __typename: previousResult.publicBasket.__typename,
+                edges: [...previousResult.publicBasket.edges, ...newEdges],
+                pageInfo
+              }
+            }
+          : previousResult;
+      }
+    });
+  };
+
+  const eggs = data.publicBasket.edges.map(({ node }: any) => node);
+  const hasNextPage = data.publicBasket.pageInfo.hasNextPage;
 
   const eggsCount = hasNextPage ? eggs.length + 1 : eggs.length;
-  const loadMoreEggs = loading ? () => {} : () => loadMore;
+  const loadMoreEggs = loading ? () => {} : loadMore;
+
+  // ---------------------------------------------------------------- RENDER
 
   return (
     <div>
       <InfiniteScroll
         dataLength={eggsCount}
         next={loadMoreEggs}
-        hasMore={hasNextPage!}
+        hasMore={hasNextPage}
         loader={<p>Loading...</p>}
         endMessage={<p> There are not more eggs </p>}>
         {eggs.map((egg: Egg) => (
