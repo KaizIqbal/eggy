@@ -13,7 +13,7 @@ export const Header: React.FC<Props> = () => {
   let body: any = null;
 
   if (loading) {
-    body = <p>Loading.....</p>;
+    body = <>{" Loading... | "}</>;
   } else if (data && data.me) {
     body = (
       <>

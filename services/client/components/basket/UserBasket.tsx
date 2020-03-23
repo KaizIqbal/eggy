@@ -2,8 +2,7 @@ import React from "react";
 import Router from "next/router";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import useUserBasket from "hooks/useUserBasket";
-import { Egg } from "generated/graphql";
+import { Egg, useUserBasketQuery, UserBasketDocument } from "generated/graphql";
 
 import { UpdateEgg, PublishEgg, UnPublishEgg, DeleteEgg } from "components/egg";
 import { Button } from "components/styled";
@@ -13,20 +12,45 @@ interface IProps {}
 export const UserBasket: React.FC<IProps> = _props => {
   // ---------------------------------------------------------------- HOOKS
 
-  const { eggs, error, loading, loadMore, hasNextPage } = useUserBasket();
+  const { data, loading, fetchMore, called, error } = useUserBasketQuery({
+    fetchPolicy: "cache-and-network"
+  });
 
-  // ---------------------------------------------------------------- RENDER
+  // ---------------------------------------------------------------- HELPER
 
-  if (loading) return <p>Fetching Eggs...</p>;
+  if (loading && !called) return <p>Fetching User's Eggs...</p>;
   if (error) return <p>Error! ${error.message}</p>;
-  if (!eggs) return <p>No Egg Found</p>;
-  console.log(hasNextPage);
-  if (hasNextPage === undefined) {
-    return <p>Fetching Eggs...</p>;
-  }
+  if (!data) return <p>No Public Egg Found</p>;
+
+  const loadMore = () => {
+    return fetchMore({
+      query: UserBasketDocument,
+      variables: {
+        cursor: data.userBasket.pageInfo.endCursor
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        const newEdges = fetchMoreResult!.userBasket.edges;
+        const pageInfo = fetchMoreResult!.userBasket.pageInfo;
+        return newEdges.length
+          ? {
+              userBasket: {
+                __typename: previousResult.userBasket.__typename,
+                edges: [...previousResult.userBasket.edges, ...newEdges],
+                pageInfo
+              }
+            }
+          : previousResult;
+      }
+    });
+  };
+
+  const eggs = data.userBasket.edges.map(({ node }: any) => node);
+  const hasNextPage = data.userBasket.pageInfo.hasNextPage;
 
   const eggsCount = hasNextPage ? eggs.length + 1 : eggs.length;
-  const loadMoreEggs = loading ? () => {} : () => loadMore;
+  const loadMoreEggs = loading ? () => {} : loadMore;
+
+  // ---------------------------------------------------------------- RENDER
 
   return (
     <>

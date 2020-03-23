@@ -47,7 +47,7 @@ export const Signin: React.FC<IProps> = _props => {
       }
 
       if (window.history.length === 0) {
-        Router.replace("/");
+        Router.push("/basket");
       }
       Router.back();
     } catch (error) {
