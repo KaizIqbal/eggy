@@ -61,7 +61,12 @@ export const UserBasket: React.FC<IProps> = _props => {
       {eggs.map((egg: Egg) => (
         <li key={egg.id}>
           {egg.title + " "}
-
+          <Button
+            onClick={() => {
+              Router.push("/workshop/[...slugs]", `/workshop/${egg.eggname}`);
+            }}>
+            Workshop
+          </Button>
           <Button
             onClick={() => {
               Router.push("/egg/[eggname]", `/egg/${egg.eggname}`);
