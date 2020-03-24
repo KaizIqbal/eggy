@@ -18,9 +18,8 @@ export const UserBasket: React.FC<IProps> = _props => {
 
   // ---------------------------------------------------------------- HELPER
 
-  if (loading && !called) return <p>Fetching User's Eggs...</p>;
+  if ((loading && !called) || !data) return <p>Fetching User's Eggs...</p>;
   if (error) return <p>Error! ${error.message}</p>;
-  if (!data) return <p>No Public Egg Found</p>;
 
   const loadMore = () => {
     return fetchMore({
@@ -53,29 +52,27 @@ export const UserBasket: React.FC<IProps> = _props => {
   // ---------------------------------------------------------------- RENDER
 
   return (
-    <>
-      <InfiniteScroll
-        dataLength={eggsCount}
-        next={loadMoreEggs}
-        hasMore={hasNextPage}
-        loader={<p>Loading...</p>}
-        endMessage={<p> There are not more eggs </p>}>
-        {eggs.map((egg: Egg) => (
-          <li key={egg.id}>
-            {egg.title + " "}
+    <InfiniteScroll
+      dataLength={eggsCount}
+      next={loadMoreEggs}
+      hasMore={hasNextPage}
+      loader={<p>Loading...</p>}
+      endMessage={<p> There are not more eggs </p>}>
+      {eggs.map((egg: Egg) => (
+        <li key={egg.id}>
+          {egg.title + " "}
 
-            <Button
-              onClick={() => {
-                Router.push("/egg/[eggname]", `/egg/${egg.eggname}`);
-              }}>
-              Page
-            </Button>
-            <UpdateEgg egg={egg} />
-            <DeleteEgg id={egg.id} />
-            {egg.isPublished ? <UnPublishEgg id={egg.id} /> : <PublishEgg id={egg.id} />}
-          </li>
-        ))}
-      </InfiniteScroll>
-    </>
+          <Button
+            onClick={() => {
+              Router.push("/egg/[eggname]", `/egg/${egg.eggname}`);
+            }}>
+            Page
+          </Button>
+          <UpdateEgg egg={egg} />
+          <DeleteEgg id={egg.id} />
+          {egg.isPublished ? <UnPublishEgg id={egg.id} /> : <PublishEgg id={egg.id} />}
+        </li>
+      ))}
+    </InfiniteScroll>
   );
 };
