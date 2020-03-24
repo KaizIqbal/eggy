@@ -37,5 +37,31 @@ export const eggQueries = {
       },
       info
     );
+  },
+
+  async isEggAccessible(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      return { access: false };
+    }
+
+    const egg = await ctx.db.query.egg(
+      {
+        where: {
+          eggname: args.eggname
+        }
+      },
+      `{
+        id
+        user {
+          id
+        }
+      }`
+    );
+
+    if (egg.user.id !== ctx.request.userId) {
+      return { access: false };
+    }
+
+    return { access: true };
   }
 };
