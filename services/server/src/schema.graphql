@@ -11,6 +11,10 @@ type AuthPayload {
   user: User!
 }
 
+type EggFlag {
+  access: Boolean!
+}
+
 type Mutation {
 
   # File
@@ -51,8 +55,11 @@ type Mutation {
 }
 
 type Query {
-  # Eggs 
+  # Egg
   egg(where: EggWhereUniqueInput!): Egg
+  isEggAccessible(eggname: String!): EggFlag 
+
+  # Basket
   publicBasket(after: String first: Int): EggConnection!
   userBasket(after: String first: Int): EggConnection!
 

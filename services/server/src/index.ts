@@ -31,7 +31,6 @@ server.express.post("/refresh_token", async (req, res) => {
   try {
     payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
   } catch (error) {
-    console.error(error);
     return res.send({ ok: false, accessToken: "" });
   }
 
