@@ -64,7 +64,6 @@ export const EggPopup: React.FC<IProps> = ({ eggname, children }) => {
       <EggCard onClick={initPopup}>{children}</EggCard>
       {popup ? (
         <>
-          <br />
           <Popup closePopup={togglePopup}>{body}</Popup>
         </>
       ) : null}

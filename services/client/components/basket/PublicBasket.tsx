@@ -16,15 +16,14 @@ export const PublicBasket: React.FC<IProps> = _props => {
 
   // ---------------------------------------------------------------- HELPER
 
-  if (loading && !called) return <p>Fetching Public Eggs...</p>;
+  if ((loading && !called) || !data) return <p>Fetching Public Eggs...</p>;
   if (error) return <p>Error! ${error.message}</p>;
-  if (!data) return <p>No Public Egg Found</p>;
 
   const loadMore = () => {
     return fetchMore({
       query: PublicBasketDocument,
       variables: {
-        cursor: data.publicBasket.pageInfo.endCursor
+        cursor: data!.publicBasket.pageInfo.endCursor
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         const newEdges = fetchMoreResult!.publicBasket.edges;
@@ -51,19 +50,21 @@ export const PublicBasket: React.FC<IProps> = _props => {
   // ---------------------------------------------------------------- RENDER
 
   return (
-    <div>
+    <>
       <InfiniteScroll
         dataLength={eggsCount}
         next={loadMoreEggs}
         hasMore={hasNextPage}
         loader={<p>Loading...</p>}
         endMessage={<p> There are not more eggs </p>}>
-        {eggs.map((egg: Egg) => (
-          <li key={egg.id}>
-            <EggPopup eggname={egg.eggname}>{egg.title}</EggPopup>{" "}
-          </li>
-        ))}
+        {eggs.map((egg: Egg) => {
+          return (
+            <li key={egg.id}>
+              <EggPopup eggname={egg.eggname}>{egg.title}</EggPopup>
+            </li>
+          );
+        })}
       </InfiniteScroll>
-    </div>
+    </>
   );
 };
