@@ -15,6 +15,10 @@ type EggFlag {
   access: Boolean!
 }
 
+type UserFlag {
+  available: Boolean!
+}
+
 type Mutation {
 
   # File
@@ -74,6 +78,7 @@ type Query {
   # User
   me: User
   users: [User]!
+  isUserAvailable(username: String!) :UserFlag
 
 }
 
