@@ -69,7 +69,7 @@ export const UserBasket: React.FC<IProps> = _props => {
           </Button>
           <Button
             onClick={() => {
-              Router.push("/egg/[eggname]", `/egg/${egg.eggname}`);
+              Router.push("/egg/[eggname]", `/egg/${egg.eggname}`, { shallow: true });
             }}>
             Page
           </Button>
