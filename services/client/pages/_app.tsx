@@ -3,7 +3,7 @@ import React from "react";
 
 import { ApolloProvider } from "@apollo/react-hooks";
 import { ThemeProvider } from "styled-components";
-import { withApollo } from "lib/apollo";
+import { withApollo } from "lib/withApollo";
 
 import { theme, GlobalStyle } from "components/styled/global";
 

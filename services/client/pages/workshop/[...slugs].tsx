@@ -1,17 +1,19 @@
 import React from "react";
 import fetch from "isomorphic-unfetch";
-import { NextPage, NextPageContext } from "next";
-
-import Page from "components/Page";
+import { NextPage,  } from "next";
 
 import { Redirect } from "lib/redirect";
 import { endpoint } from "lib/endpoint";
 
+import Page from "components/Page";
+import { getAccessToken } from "lib/accessToken";
+
 interface IProps {
-  eggname: string;
+  eggname?: string;
 }
 
 const Workshop: NextPage<IProps> = ({ eggname }) => {
+  if(!eggname) return <h1>Oops</h1>
   return (
     <Page title="Eggy Workshop">
       <h1>Workshop</h1>
@@ -20,7 +22,7 @@ const Workshop: NextPage<IProps> = ({ eggname }) => {
   );
 };
 
-Workshop.getInitialProps = async (context: NextPageContext) => {
+Workshop.getInitialProps = async context => {
   const { query } = context;
 
   const { slugs } = query;
@@ -34,7 +36,7 @@ Workshop.getInitialProps = async (context: NextPageContext) => {
   // Graphql Query for checking access
   const response = await fetch(endpoint, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" ,"authorization":`Bearer ${getAccessToken()}`},
     body: JSON.stringify({
       query: `{
         isEggAccessible(eggname: "${eggname}") {
@@ -49,6 +51,9 @@ Workshop.getInitialProps = async (context: NextPageContext) => {
       isEggAccessible: { access }
     }
   } = response;
+
+  console.log(eggname);
+  console.log(access);
 
   if (!access) {
     Redirect(context, "/basket");
