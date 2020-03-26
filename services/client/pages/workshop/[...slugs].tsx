@@ -7,18 +7,27 @@ import { endpoint } from "lib/endpoint";
 import { getAccessToken } from "lib/accessToken";
 
 import Page from "components/Page";
+import { MainWorkshop } from "components/workshops";
 
 interface IProps {
   eggname?: any;
 }
 
 const Workshop: NextPage<IProps> = ({ eggname }) => {
-  return (
-    <Page title="Eggy Workshop">
-      <h1>Workshop</h1>
-      {eggname}
-    </Page>
-  );
+  let body: any;
+
+  if (eggname) {
+    body = <MainWorkshop eggname={eggname} />;
+  } else {
+    body = (
+      <>
+        <h1>Oops</h1>
+        <p>Something Went Wrong</p>
+      </>
+    );
+  }
+
+  return <Page title="Eggy Workshop">{body}</Page>;
 };
 
 Workshop.getInitialProps = async context => {
