@@ -17,6 +17,14 @@ fragment EggData on Egg {
   }
 }
 
+fragment FlavorData on Flavor {
+  id
+  name
+  egg {
+    ...EggData
+  }
+}
+
 fragment BasketData on EggConnection {
   edges {
     node {

@@ -1,9 +1,8 @@
 # import * from "./fragments.graphql"
 
-# ########## QUERIES ##########
+# -------------------- QUERIES 
 
-# ##### EGG #####
-
+# ---------- EGG 
 query egg($eggname: String!) {
   egg(where: { eggname: $eggname }) {
     ...EggData
@@ -11,44 +10,44 @@ query egg($eggname: String!) {
 }
 
 
-# ########## MUTATIONS ##########
+# -------------------- MUTATIONS
 
-# ##### CREATE #####
+# ---------- CREATE
 mutation createEgg($title: String!, $platforms: [Platform]!) {
   createEgg(title: $title, platforms: $platforms) {
     id
   }
 }
 
-# ##### UPDATE #####
+# ---------- UPDATE
 mutation updateEgg($id: ID!, $platforms: [Platform]!) {
   updateEgg(id: $id, platforms: $platforms) {
     id
   }
 }
 
-# ##### RENAME #####
+# ---------- RENAME
 mutation renameEgg($id: ID!, $title: String!) {
   renameEgg(id: $id, title: $title) {
     id
   }
 }
 
-# ##### DELETE #####
+# ---------- DELETE 
 mutation deleteEgg($id: ID!) {
   deleteEgg(id: $id) {
     id
   }
 }
 
-# ##### PUBLISH #####
+# ---------- PUBLISH
 mutation publish($id: ID!) {
   publish(id: $id) {
     id
   }
 }
 
-# ##### UNPUBLISH #####
+# ---------- UNPUBLISH
 mutation unPublish($id: ID!) {
   unPublish(id: $id) {
     id
