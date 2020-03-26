@@ -1,0 +1,45 @@
+# import * from "./fragments.graphql"
+
+# -------------------- QUERIES 
+
+# ---------- FETCH SINGLE FLAVOR 
+query flavor($eggname: String!, $flavorname: String!) {
+  flavor(eggname: $eggname, flavorname: $flavorname) {
+    ...FlavorData
+  }
+}
+
+# ---------- FETCH ALL FLAVORS
+query flavors($eggname: String!) {
+  flavors(eggname: $eggname) {
+    ...FlavorData
+  }
+}
+
+
+
+# -------------------- MUTATIONS
+
+# ---------- CREATE
+mutation createFlavor($name: String!, $eggId: ID!) {
+  createFlavor(name: $name, eggId: $eggId) {
+    id
+  }
+}
+
+# ---------- UPDATE
+mutation updateFlavor($id: ID!, $name: String!) {
+  updateFlavor(id: $id, name: $name) {
+    id
+  }
+}
+
+# ---------- DELETE
+mutation deleteFlavor($id: ID!) {
+  deleteFlavor(id: $id) {
+    id
+  }
+}
+
+
+
