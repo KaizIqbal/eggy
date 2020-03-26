@@ -1,13 +1,13 @@
 # import * from "./fragments.graphql"
 
-# ##### ME! #####
+# ---------- ME!
 query me {
   me {
     ...UserData
   }
 }
 
-# ##### FETCH USERS #####
+# ---------- FETCH USERS
 query users {
   users {
     ...UserData

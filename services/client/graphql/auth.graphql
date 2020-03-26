@@ -1,6 +1,6 @@
 # import * from "./fragments.graphql"
 
-# ##### SIGNUP #####
+# ---------- SIGNUP
 mutation signup($firstName: String! $lastName: String! $email: String! $username: String! $password: String!) {
   signup(firstName: $firstName lastName: $lastName email: $email username: $username password: $password) {
     accessToken
@@ -10,7 +10,7 @@ mutation signup($firstName: String! $lastName: String! $email: String! $username
   }
 }
 
-# ##### SIGNIN #####
+# ---------- SIGNIN
 mutation signin($email: String!, $password: String!) {
   signin(email: $email, password: $password) {
     accessToken

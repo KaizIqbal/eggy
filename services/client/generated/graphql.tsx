@@ -120,6 +120,11 @@ export type EggEdge = {
   cursor: Scalars['String'];
 };
 
+export type EggFlag = {
+   __typename?: 'EggFlag';
+  access: Scalars['Boolean'];
+};
+
 export type EggWhereInput = {
   AND?: Maybe<Array<EggWhereInput>>;
   OR?: Maybe<Array<EggWhereInput>>;
@@ -559,6 +564,7 @@ export enum Platform {
 export type Query = {
    __typename?: 'Query';
   egg?: Maybe<Egg>;
+  isEggAccessible?: Maybe<EggFlag>;
   publicBasket: EggConnection;
   userBasket: EggConnection;
   cursor?: Maybe<Cursor>;
@@ -567,11 +573,17 @@ export type Query = {
   flavors: Array<Maybe<Flavor>>;
   me?: Maybe<User>;
   users: Array<Maybe<User>>;
+  isUserAvailable?: Maybe<UserFlag>;
 };
 
 
 export type QueryEggArgs = {
   where: EggWhereUniqueInput;
+};
+
+
+export type QueryIsEggAccessibleArgs = {
+  eggname: Scalars['String'];
 };
 
 
@@ -609,6 +621,11 @@ export type QueryFlavorsArgs = {
   eggname: Scalars['String'];
 };
 
+
+export type QueryIsUserAvailableArgs = {
+  username: Scalars['String'];
+};
+
 export type SuccessMessage = {
    __typename?: 'SuccessMessage';
   message?: Maybe<Scalars['String']>;
@@ -625,6 +642,11 @@ export type User = {
   password: Scalars['String'];
   permissions: Array<Permission>;
   tokenVersion: Scalars['Int'];
+};
+
+export type UserFlag = {
+   __typename?: 'UserFlag';
+  available: Scalars['Boolean'];
 };
 
 export type UserWhereInput = {
@@ -991,6 +1013,74 @@ export type UnPublishMutation = (
   ) }
 );
 
+export type FlavorQueryVariables = {
+  eggname: Scalars['String'];
+  flavorname: Scalars['String'];
+};
+
+
+export type FlavorQuery = (
+  { __typename?: 'Query' }
+  & { flavor: Maybe<(
+    { __typename?: 'Flavor' }
+    & FlavorDataFragment
+  )> }
+);
+
+export type FlavorsQueryVariables = {
+  eggname: Scalars['String'];
+};
+
+
+export type FlavorsQuery = (
+  { __typename?: 'Query' }
+  & { flavors: Array<Maybe<(
+    { __typename?: 'Flavor' }
+    & FlavorDataFragment
+  )>> }
+);
+
+export type CreateFlavorMutationVariables = {
+  name: Scalars['String'];
+  eggId: Scalars['ID'];
+};
+
+
+export type CreateFlavorMutation = (
+  { __typename?: 'Mutation' }
+  & { createFlavor: (
+    { __typename?: 'Flavor' }
+    & Pick<Flavor, 'id'>
+  ) }
+);
+
+export type UpdateFlavorMutationVariables = {
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+
+export type UpdateFlavorMutation = (
+  { __typename?: 'Mutation' }
+  & { updateFlavor: (
+    { __typename?: 'Flavor' }
+    & Pick<Flavor, 'id'>
+  ) }
+);
+
+export type DeleteFlavorMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type DeleteFlavorMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteFlavor: (
+    { __typename?: 'Flavor' }
+    & Pick<Flavor, 'id'>
+  ) }
+);
+
 export type UserDataFragment = (
   { __typename?: 'User' }
   & Pick<User, 'id' | 'email' | 'username' | 'lastName' | 'firstName'>
@@ -1002,6 +1092,15 @@ export type EggDataFragment = (
   & { user: (
     { __typename?: 'User' }
     & UserDataFragment
+  ) }
+);
+
+export type FlavorDataFragment = (
+  { __typename?: 'Flavor' }
+  & Pick<Flavor, 'id' | 'name'>
+  & { egg: (
+    { __typename?: 'Egg' }
+    & EggDataFragment
   ) }
 );
 
@@ -1062,6 +1161,15 @@ export const EggDataFragmentDoc = gql`
   }
 }
     ${UserDataFragmentDoc}`;
+export const FlavorDataFragmentDoc = gql`
+    fragment FlavorData on Flavor {
+  id
+  name
+  egg {
+    ...EggData
+  }
+}
+    ${EggDataFragmentDoc}`;
 export const BasketDataFragmentDoc = gql`
     fragment BasketData on EggConnection {
   edges {
@@ -1580,6 +1688,171 @@ export function useUnPublishMutation(baseOptions?: ApolloReactHooks.MutationHook
 export type UnPublishMutationHookResult = ReturnType<typeof useUnPublishMutation>;
 export type UnPublishMutationResult = ApolloReactCommon.MutationResult<UnPublishMutation>;
 export type UnPublishMutationOptions = ApolloReactCommon.BaseMutationOptions<UnPublishMutation, UnPublishMutationVariables>;
+export const FlavorDocument = gql`
+    query flavor($eggname: String!, $flavorname: String!) {
+  flavor(eggname: $eggname, flavorname: $flavorname) {
+    ...FlavorData
+  }
+}
+    ${FlavorDataFragmentDoc}`;
+
+/**
+ * __useFlavorQuery__
+ *
+ * To run a query within a React component, call `useFlavorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFlavorQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFlavorQuery({
+ *   variables: {
+ *      eggname: // value for 'eggname'
+ *      flavorname: // value for 'flavorname'
+ *   },
+ * });
+ */
+export function useFlavorQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FlavorQuery, FlavorQueryVariables>) {
+        return ApolloReactHooks.useQuery<FlavorQuery, FlavorQueryVariables>(FlavorDocument, baseOptions);
+      }
+export function useFlavorLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FlavorQuery, FlavorQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FlavorQuery, FlavorQueryVariables>(FlavorDocument, baseOptions);
+        }
+export type FlavorQueryHookResult = ReturnType<typeof useFlavorQuery>;
+export type FlavorLazyQueryHookResult = ReturnType<typeof useFlavorLazyQuery>;
+export type FlavorQueryResult = ApolloReactCommon.QueryResult<FlavorQuery, FlavorQueryVariables>;
+export const FlavorsDocument = gql`
+    query flavors($eggname: String!) {
+  flavors(eggname: $eggname) {
+    ...FlavorData
+  }
+}
+    ${FlavorDataFragmentDoc}`;
+
+/**
+ * __useFlavorsQuery__
+ *
+ * To run a query within a React component, call `useFlavorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFlavorsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFlavorsQuery({
+ *   variables: {
+ *      eggname: // value for 'eggname'
+ *   },
+ * });
+ */
+export function useFlavorsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FlavorsQuery, FlavorsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FlavorsQuery, FlavorsQueryVariables>(FlavorsDocument, baseOptions);
+      }
+export function useFlavorsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FlavorsQuery, FlavorsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FlavorsQuery, FlavorsQueryVariables>(FlavorsDocument, baseOptions);
+        }
+export type FlavorsQueryHookResult = ReturnType<typeof useFlavorsQuery>;
+export type FlavorsLazyQueryHookResult = ReturnType<typeof useFlavorsLazyQuery>;
+export type FlavorsQueryResult = ApolloReactCommon.QueryResult<FlavorsQuery, FlavorsQueryVariables>;
+export const CreateFlavorDocument = gql`
+    mutation createFlavor($name: String!, $eggId: ID!) {
+  createFlavor(name: $name, eggId: $eggId) {
+    id
+  }
+}
+    `;
+export type CreateFlavorMutationFn = ApolloReactCommon.MutationFunction<CreateFlavorMutation, CreateFlavorMutationVariables>;
+
+/**
+ * __useCreateFlavorMutation__
+ *
+ * To run a mutation, you first call `useCreateFlavorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateFlavorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createFlavorMutation, { data, loading, error }] = useCreateFlavorMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      eggId: // value for 'eggId'
+ *   },
+ * });
+ */
+export function useCreateFlavorMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateFlavorMutation, CreateFlavorMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateFlavorMutation, CreateFlavorMutationVariables>(CreateFlavorDocument, baseOptions);
+      }
+export type CreateFlavorMutationHookResult = ReturnType<typeof useCreateFlavorMutation>;
+export type CreateFlavorMutationResult = ApolloReactCommon.MutationResult<CreateFlavorMutation>;
+export type CreateFlavorMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateFlavorMutation, CreateFlavorMutationVariables>;
+export const UpdateFlavorDocument = gql`
+    mutation updateFlavor($id: ID!, $name: String!) {
+  updateFlavor(id: $id, name: $name) {
+    id
+  }
+}
+    `;
+export type UpdateFlavorMutationFn = ApolloReactCommon.MutationFunction<UpdateFlavorMutation, UpdateFlavorMutationVariables>;
+
+/**
+ * __useUpdateFlavorMutation__
+ *
+ * To run a mutation, you first call `useUpdateFlavorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateFlavorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateFlavorMutation, { data, loading, error }] = useUpdateFlavorMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useUpdateFlavorMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateFlavorMutation, UpdateFlavorMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateFlavorMutation, UpdateFlavorMutationVariables>(UpdateFlavorDocument, baseOptions);
+      }
+export type UpdateFlavorMutationHookResult = ReturnType<typeof useUpdateFlavorMutation>;
+export type UpdateFlavorMutationResult = ApolloReactCommon.MutationResult<UpdateFlavorMutation>;
+export type UpdateFlavorMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateFlavorMutation, UpdateFlavorMutationVariables>;
+export const DeleteFlavorDocument = gql`
+    mutation deleteFlavor($id: ID!) {
+  deleteFlavor(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteFlavorMutationFn = ApolloReactCommon.MutationFunction<DeleteFlavorMutation, DeleteFlavorMutationVariables>;
+
+/**
+ * __useDeleteFlavorMutation__
+ *
+ * To run a mutation, you first call `useDeleteFlavorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFlavorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteFlavorMutation, { data, loading, error }] = useDeleteFlavorMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteFlavorMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteFlavorMutation, DeleteFlavorMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteFlavorMutation, DeleteFlavorMutationVariables>(DeleteFlavorDocument, baseOptions);
+      }
+export type DeleteFlavorMutationHookResult = ReturnType<typeof useDeleteFlavorMutation>;
+export type DeleteFlavorMutationResult = ApolloReactCommon.MutationResult<DeleteFlavorMutation>;
+export type DeleteFlavorMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteFlavorMutation, DeleteFlavorMutationVariables>;
 export const MeDocument = gql`
     query me {
   me {
