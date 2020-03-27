@@ -40,10 +40,10 @@ export const flavrorMutations = {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
 
-    // Checking flavor's name contains special symbols
-    checkFlavorName(args);
+    // Remove all Special Character
+    args.name = args.name.trim();
+    args.name = args.name.replace(/[^\w\s]/gi, "");
 
-    // first take copy in updates
     const flavorId = args.id;
     delete args.id;
 

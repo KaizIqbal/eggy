@@ -34,17 +34,16 @@ type Mutation {
   publish(id:ID!): Egg!
   unPublish(id:ID!): Egg!
 
-  # Cursors
-  createCursor(name:cursorName! frames:Int! flavorId:ID!): Cursor!
-  updateCursor(id:ID! name:cursorName! frames:Int! ): Cursor!
-  renameCursor(id:ID! flavorId:ID! name:cursorName!  ): Cursor!
-  deleteCursor(id:ID!): Flavor!  
-
   # Flavour
   createFlavor(name:String! eggId:ID!): Flavor!
   renameFlavor(id:ID! name:String!): Flavor!  
   deleteFlavor(id:ID!): Flavor!  
 
+  # Cursors
+  createCursor(name:cursorName! frames:Int! flavorId:ID!): Cursor!
+  updateCursor(id:ID! name:cursorName! frames:Int!): Cursor!
+  renameCursor(id:ID! flavorId:ID! name:cursorName!): Cursor!
+  deleteCursor(id:ID!): Cursor!  
   
   # Auth
   signup(firstName:String! lastName:String! username: String! email:String! password:String!): AuthPayload!
@@ -68,8 +67,8 @@ type Query {
   userBasket(after: String first: Int): EggConnection!
 
   # Cursors
-  cursor(eggname: String! flavorname: String! cursorname:cursorName!): Cursor
-  cursors(flavorname: String!):[Cursor]!
+  cursor(id:ID!): Cursor
+  cursors(flavorId: ID!):[Cursor]!
 
   # Flavors
   flavor(id: ID!): Flavor!
