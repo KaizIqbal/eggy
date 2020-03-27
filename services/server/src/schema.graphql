@@ -42,7 +42,7 @@ type Mutation {
 
   # Flavour
   createFlavor(name:String! eggId:ID!): Flavor!
-  updateFlavor(id:ID! name:String!): Flavor!  
+  renameFlavor(id:ID! name:String!): Flavor!  
   deleteFlavor(id:ID!): Flavor!  
 
   
@@ -73,7 +73,7 @@ type Query {
 
   # Flavors
   flavor(id: ID!): Flavor!
-  flavors(eggId: ID!):[Flavor]!
+  flavors(eggId: ID!): [Flavor]!
 
   # User
   me: User
