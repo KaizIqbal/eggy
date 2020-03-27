@@ -1,0 +1,42 @@
+# import * from "./fragments.graphql"
+
+# ---------------------------------------- QUERIES 
+
+# ---------- FETCH SINGLE FLAVOR 
+query cursor($id: ID!) {
+  cursor(id: $id) {
+    ...CursorData
+  }
+}
+
+# ---------- FETCH ALL FLAVORS
+query cursors($flavorId: ID!) {
+  cursors(flavorId: $flavorId) {
+    ...CursorData
+  }
+}
+
+
+# ---------------------------------------- MUTATIONS
+
+# ---------- CREATE
+mutation createCursor($flavorId: ID!, $name: cursorName!, $frames: Int! ) {
+  createCursor(flavorId: $flavorId, name: $name, frames: $frames) {
+    id
+  }
+}
+
+
+# ---------- RENAME
+mutation renameCursor($flavorId: ID!, $id: ID!, $name: cursorName! ) {
+  renameCursor(flavorId: $flavorId, id: $id, name: $name) {
+    id
+  }
+}
+
+# ---------- DELETE
+mutation deleteCursor($id: ID!) {
+  deleteCursor(id: $id) {
+    id
+  }
+}

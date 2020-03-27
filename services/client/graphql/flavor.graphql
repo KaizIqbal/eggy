@@ -1,6 +1,6 @@
 # import * from "./fragments.graphql"
 
-# -------------------- QUERIES 
+# ---------------------------------------- QUERIES 
 
 # ---------- FETCH SINGLE FLAVOR 
 query flavor($id: ID!) {
@@ -18,7 +18,7 @@ query flavors($eggId: ID!) {
 
 
 
-# -------------------- MUTATIONS
+# ---------------------------------------- MUTATIONS
 
 # ---------- CREATE
 mutation createFlavor($name: String!, $eggId: ID!) {
@@ -27,7 +27,7 @@ mutation createFlavor($name: String!, $eggId: ID!) {
   }
 }
 
-# ---------- UPDATE
+# ---------- RENAME
 mutation renameFlavor($id: ID!, $name: String!) {
   renameFlavor(id: $id, name: $name) {
     id
