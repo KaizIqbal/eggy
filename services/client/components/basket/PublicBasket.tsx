@@ -57,13 +57,11 @@ export const PublicBasket: React.FC<IProps> = _props => {
         hasMore={hasNextPage}
         loader={<p>Loading...</p>}
         endMessage={<p> There are not more eggs </p>}>
-        {eggs.map((egg: Egg) => {
-          return (
-            <li key={egg.id}>
-              <EggPopup eggname={egg.eggname}>{egg.title}</EggPopup>
-            </li>
-          );
-        })}
+        {eggs.map((egg: Egg) => (
+          <li key={egg.id}>
+            <EggPopup eggname={egg.eggname}>{egg.title}</EggPopup>
+          </li>
+        ))}
       </InfiniteScroll>
     </>
   );

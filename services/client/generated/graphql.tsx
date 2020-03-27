@@ -612,13 +612,12 @@ export type QueryCursorsArgs = {
 
 
 export type QueryFlavorArgs = {
-  eggname: Scalars['String'];
-  flavorname: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
 export type QueryFlavorsArgs = {
-  eggname: Scalars['String'];
+  eggId: Scalars['ID'];
 };
 
 
@@ -1014,8 +1013,7 @@ export type UnPublishMutation = (
 );
 
 export type FlavorQueryVariables = {
-  eggname: Scalars['String'];
-  flavorname: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
@@ -1028,7 +1026,7 @@ export type FlavorQuery = (
 );
 
 export type FlavorsQueryVariables = {
-  eggname: Scalars['String'];
+  eggId: Scalars['ID'];
 };
 
 
@@ -1689,8 +1687,8 @@ export type UnPublishMutationHookResult = ReturnType<typeof useUnPublishMutation
 export type UnPublishMutationResult = ApolloReactCommon.MutationResult<UnPublishMutation>;
 export type UnPublishMutationOptions = ApolloReactCommon.BaseMutationOptions<UnPublishMutation, UnPublishMutationVariables>;
 export const FlavorDocument = gql`
-    query flavor($eggname: String!, $flavorname: String!) {
-  flavor(eggname: $eggname, flavorname: $flavorname) {
+    query flavor($id: ID!) {
+  flavor(id: $id) {
     ...FlavorData
   }
 }
@@ -1708,8 +1706,7 @@ export const FlavorDocument = gql`
  * @example
  * const { data, loading, error } = useFlavorQuery({
  *   variables: {
- *      eggname: // value for 'eggname'
- *      flavorname: // value for 'flavorname'
+ *      id: // value for 'id'
  *   },
  * });
  */
@@ -1723,8 +1720,8 @@ export type FlavorQueryHookResult = ReturnType<typeof useFlavorQuery>;
 export type FlavorLazyQueryHookResult = ReturnType<typeof useFlavorLazyQuery>;
 export type FlavorQueryResult = ApolloReactCommon.QueryResult<FlavorQuery, FlavorQueryVariables>;
 export const FlavorsDocument = gql`
-    query flavors($eggname: String!) {
-  flavors(eggname: $eggname) {
+    query flavors($eggId: ID!) {
+  flavors(eggId: $eggId) {
     ...FlavorData
   }
 }
@@ -1742,7 +1739,7 @@ export const FlavorsDocument = gql`
  * @example
  * const { data, loading, error } = useFlavorsQuery({
  *   variables: {
- *      eggname: // value for 'eggname'
+ *      eggId: // value for 'eggId'
  *   },
  * });
  */
