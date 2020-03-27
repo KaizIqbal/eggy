@@ -394,13 +394,13 @@ export type Mutation = {
   deleteEgg: Egg;
   publish: Egg;
   unPublish: Egg;
-  createCursor: Cursor;
-  updateCursor: Cursor;
-  renameCursor: Cursor;
-  deleteCursor: Flavor;
   createFlavor: Flavor;
   renameFlavor: Flavor;
   deleteFlavor: Flavor;
+  createCursor: Cursor;
+  updateCursor: Cursor;
+  renameCursor: Cursor;
+  deleteCursor: Cursor;
   signup: AuthPayload;
   signin: AuthPayload;
   signout?: Maybe<SuccessMessage>;
@@ -455,6 +455,23 @@ export type MutationUnPublishArgs = {
 };
 
 
+export type MutationCreateFlavorArgs = {
+  name: Scalars['String'];
+  eggId: Scalars['ID'];
+};
+
+
+export type MutationRenameFlavorArgs = {
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+
+export type MutationDeleteFlavorArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type MutationCreateCursorArgs = {
   name: CursorName;
   frames: Scalars['Int'];
@@ -477,23 +494,6 @@ export type MutationRenameCursorArgs = {
 
 
 export type MutationDeleteCursorArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type MutationCreateFlavorArgs = {
-  name: Scalars['String'];
-  eggId: Scalars['ID'];
-};
-
-
-export type MutationRenameFlavorArgs = {
-  id: Scalars['ID'];
-  name: Scalars['String'];
-};
-
-
-export type MutationDeleteFlavorArgs = {
   id: Scalars['ID'];
 };
 
@@ -600,14 +600,12 @@ export type QueryUserBasketArgs = {
 
 
 export type QueryCursorArgs = {
-  eggname: Scalars['String'];
-  flavorname: Scalars['String'];
-  cursorname: CursorName;
+  id: Scalars['ID'];
 };
 
 
 export type QueryCursorsArgs = {
-  flavorname: Scalars['String'];
+  flavorId: Scalars['ID'];
 };
 
 
@@ -918,6 +916,75 @@ export type UserBasketQuery = (
   ) }
 );
 
+export type CursorQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type CursorQuery = (
+  { __typename?: 'Query' }
+  & { cursor: Maybe<(
+    { __typename?: 'Cursor' }
+    & CursorDataFragment
+  )> }
+);
+
+export type CursorsQueryVariables = {
+  flavorId: Scalars['ID'];
+};
+
+
+export type CursorsQuery = (
+  { __typename?: 'Query' }
+  & { cursors: Array<Maybe<(
+    { __typename?: 'Cursor' }
+    & CursorDataFragment
+  )>> }
+);
+
+export type CreateCursorMutationVariables = {
+  flavorId: Scalars['ID'];
+  name: CursorName;
+  frames: Scalars['Int'];
+};
+
+
+export type CreateCursorMutation = (
+  { __typename?: 'Mutation' }
+  & { createCursor: (
+    { __typename?: 'Cursor' }
+    & Pick<Cursor, 'id'>
+  ) }
+);
+
+export type RenameCursorMutationVariables = {
+  flavorId: Scalars['ID'];
+  id: Scalars['ID'];
+  name: CursorName;
+};
+
+
+export type RenameCursorMutation = (
+  { __typename?: 'Mutation' }
+  & { renameCursor: (
+    { __typename?: 'Cursor' }
+    & Pick<Cursor, 'id'>
+  ) }
+);
+
+export type DeleteCursorMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type DeleteCursorMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteCursor: (
+    { __typename?: 'Cursor' }
+    & Pick<Cursor, 'id'>
+  ) }
+);
+
 export type EggQueryVariables = {
   eggname: Scalars['String'];
 };
@@ -1102,6 +1169,15 @@ export type FlavorDataFragment = (
   ) }
 );
 
+export type CursorDataFragment = (
+  { __typename?: 'Cursor' }
+  & Pick<Cursor, 'id' | 'name' | 'frames'>
+  & { flavor: (
+    { __typename?: 'Flavor' }
+    & FlavorDataFragment
+  ) }
+);
+
 export type BasketDataFragment = (
   { __typename?: 'EggConnection' }
   & { edges: Array<Maybe<(
@@ -1168,6 +1244,16 @@ export const FlavorDataFragmentDoc = gql`
   }
 }
     ${EggDataFragmentDoc}`;
+export const CursorDataFragmentDoc = gql`
+    fragment CursorData on Cursor {
+  id
+  name
+  frames
+  flavor {
+    ...FlavorData
+  }
+}
+    ${FlavorDataFragmentDoc}`;
 export const BasketDataFragmentDoc = gql`
     fragment BasketData on EggConnection {
   edges {
@@ -1458,6 +1544,172 @@ export function useUserBasketLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type UserBasketQueryHookResult = ReturnType<typeof useUserBasketQuery>;
 export type UserBasketLazyQueryHookResult = ReturnType<typeof useUserBasketLazyQuery>;
 export type UserBasketQueryResult = ApolloReactCommon.QueryResult<UserBasketQuery, UserBasketQueryVariables>;
+export const CursorDocument = gql`
+    query cursor($id: ID!) {
+  cursor(id: $id) {
+    ...CursorData
+  }
+}
+    ${CursorDataFragmentDoc}`;
+
+/**
+ * __useCursorQuery__
+ *
+ * To run a query within a React component, call `useCursorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCursorQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCursorQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCursorQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CursorQuery, CursorQueryVariables>) {
+        return ApolloReactHooks.useQuery<CursorQuery, CursorQueryVariables>(CursorDocument, baseOptions);
+      }
+export function useCursorLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CursorQuery, CursorQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<CursorQuery, CursorQueryVariables>(CursorDocument, baseOptions);
+        }
+export type CursorQueryHookResult = ReturnType<typeof useCursorQuery>;
+export type CursorLazyQueryHookResult = ReturnType<typeof useCursorLazyQuery>;
+export type CursorQueryResult = ApolloReactCommon.QueryResult<CursorQuery, CursorQueryVariables>;
+export const CursorsDocument = gql`
+    query cursors($flavorId: ID!) {
+  cursors(flavorId: $flavorId) {
+    ...CursorData
+  }
+}
+    ${CursorDataFragmentDoc}`;
+
+/**
+ * __useCursorsQuery__
+ *
+ * To run a query within a React component, call `useCursorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCursorsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCursorsQuery({
+ *   variables: {
+ *      flavorId: // value for 'flavorId'
+ *   },
+ * });
+ */
+export function useCursorsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<CursorsQuery, CursorsQueryVariables>) {
+        return ApolloReactHooks.useQuery<CursorsQuery, CursorsQueryVariables>(CursorsDocument, baseOptions);
+      }
+export function useCursorsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CursorsQuery, CursorsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<CursorsQuery, CursorsQueryVariables>(CursorsDocument, baseOptions);
+        }
+export type CursorsQueryHookResult = ReturnType<typeof useCursorsQuery>;
+export type CursorsLazyQueryHookResult = ReturnType<typeof useCursorsLazyQuery>;
+export type CursorsQueryResult = ApolloReactCommon.QueryResult<CursorsQuery, CursorsQueryVariables>;
+export const CreateCursorDocument = gql`
+    mutation createCursor($flavorId: ID!, $name: cursorName!, $frames: Int!) {
+  createCursor(flavorId: $flavorId, name: $name, frames: $frames) {
+    id
+  }
+}
+    `;
+export type CreateCursorMutationFn = ApolloReactCommon.MutationFunction<CreateCursorMutation, CreateCursorMutationVariables>;
+
+/**
+ * __useCreateCursorMutation__
+ *
+ * To run a mutation, you first call `useCreateCursorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCursorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCursorMutation, { data, loading, error }] = useCreateCursorMutation({
+ *   variables: {
+ *      flavorId: // value for 'flavorId'
+ *      name: // value for 'name'
+ *      frames: // value for 'frames'
+ *   },
+ * });
+ */
+export function useCreateCursorMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateCursorMutation, CreateCursorMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateCursorMutation, CreateCursorMutationVariables>(CreateCursorDocument, baseOptions);
+      }
+export type CreateCursorMutationHookResult = ReturnType<typeof useCreateCursorMutation>;
+export type CreateCursorMutationResult = ApolloReactCommon.MutationResult<CreateCursorMutation>;
+export type CreateCursorMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateCursorMutation, CreateCursorMutationVariables>;
+export const RenameCursorDocument = gql`
+    mutation renameCursor($flavorId: ID!, $id: ID!, $name: cursorName!) {
+  renameCursor(flavorId: $flavorId, id: $id, name: $name) {
+    id
+  }
+}
+    `;
+export type RenameCursorMutationFn = ApolloReactCommon.MutationFunction<RenameCursorMutation, RenameCursorMutationVariables>;
+
+/**
+ * __useRenameCursorMutation__
+ *
+ * To run a mutation, you first call `useRenameCursorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRenameCursorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [renameCursorMutation, { data, loading, error }] = useRenameCursorMutation({
+ *   variables: {
+ *      flavorId: // value for 'flavorId'
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useRenameCursorMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RenameCursorMutation, RenameCursorMutationVariables>) {
+        return ApolloReactHooks.useMutation<RenameCursorMutation, RenameCursorMutationVariables>(RenameCursorDocument, baseOptions);
+      }
+export type RenameCursorMutationHookResult = ReturnType<typeof useRenameCursorMutation>;
+export type RenameCursorMutationResult = ApolloReactCommon.MutationResult<RenameCursorMutation>;
+export type RenameCursorMutationOptions = ApolloReactCommon.BaseMutationOptions<RenameCursorMutation, RenameCursorMutationVariables>;
+export const DeleteCursorDocument = gql`
+    mutation deleteCursor($id: ID!) {
+  deleteCursor(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteCursorMutationFn = ApolloReactCommon.MutationFunction<DeleteCursorMutation, DeleteCursorMutationVariables>;
+
+/**
+ * __useDeleteCursorMutation__
+ *
+ * To run a mutation, you first call `useDeleteCursorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCursorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCursorMutation, { data, loading, error }] = useDeleteCursorMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCursorMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteCursorMutation, DeleteCursorMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteCursorMutation, DeleteCursorMutationVariables>(DeleteCursorDocument, baseOptions);
+      }
+export type DeleteCursorMutationHookResult = ReturnType<typeof useDeleteCursorMutation>;
+export type DeleteCursorMutationResult = ApolloReactCommon.MutationResult<DeleteCursorMutation>;
+export type DeleteCursorMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteCursorMutation, DeleteCursorMutationVariables>;
 export const EggDocument = gql`
     query egg($eggname: String!) {
   egg(where: {eggname: $eggname}) {

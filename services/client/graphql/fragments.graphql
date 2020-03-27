@@ -25,6 +25,15 @@ fragment FlavorData on Flavor {
   }
 }
 
+fragment CursorData on Cursor {
+  id
+  name
+  frames
+  flavor {
+    ...FlavorData
+  }
+}
+
 fragment BasketData on EggConnection {
   edges {
     node {

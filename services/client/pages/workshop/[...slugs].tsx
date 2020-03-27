@@ -7,22 +7,25 @@ import { endpoint } from "lib/endpoint";
 import { getAccessToken } from "lib/accessToken";
 
 import Page from "components/Page";
-import { MainWorkshop } from "components/workshops";
+import { MainWorkshop, FlavorWorkshop } from "components/workshops";
 
 interface IProps {
   eggname?: any;
+  flavorId?: any;
 }
 
-const Workshop: NextPage<IProps> = ({ eggname }) => {
+const Workshop: NextPage<IProps> = ({ eggname, flavorId }) => {
   let body: any;
 
-  if (eggname) {
+  if (flavorId && eggname) {
+    body = <FlavorWorkshop id={flavorId} />;
+  } else if (eggname) {
     body = <MainWorkshop eggname={eggname} />;
   } else {
     body = (
       <>
         <h1>Oops</h1>
-        <p>Something Went Wrong</p>
+        <p>Workshop Not Fetched</p>
       </>
     );
   }
@@ -35,7 +38,7 @@ Workshop.getInitialProps = async context => {
 
   const { slugs } = query;
 
-  // valid url => /workshop/eggname/flavorname/cursorname = 3 slug
+  // valid url => /workshop/eggname/flavorid/cursorid = 3 slug
   if (!slugs || slugs.length >= 3) {
     Redirect(context, "/basket");
   }
@@ -64,7 +67,9 @@ Workshop.getInitialProps = async context => {
     Redirect(context, "/basket");
   }
 
-  return { eggname };
+  const flavorId = slugs[1];
+
+  return { eggname, flavorId };
 };
 
 export default Workshop;

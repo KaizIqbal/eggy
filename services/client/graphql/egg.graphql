@@ -1,6 +1,6 @@
 # import * from "./fragments.graphql"
 
-# -------------------- QUERIES 
+# --------------------------------------- QUERIES 
 
 # ---------- EGG 
 query egg($eggname: String!) {
@@ -10,7 +10,7 @@ query egg($eggname: String!) {
 }
 
 
-# -------------------- MUTATIONS
+# --------------------------------------- MUTATIONS
 
 # ---------- CREATE
 mutation createEgg($title: String!, $platforms: [Platform]!) {
