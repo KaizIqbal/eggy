@@ -1,6 +1,9 @@
 import React from "react";
 import Head from "next/head";
+
 import { useEggQuery } from "generated/graphql";
+
+import { CreateFlavor, Flavors } from "components/flavor";
 
 interface IProps {
   eggname: any;
@@ -16,6 +19,7 @@ export const MainWorkshop: React.FC<IProps> = ({ eggname }) => {
     return (
       <>
         <Head>
+          {" "}
           <title>Loading... - Eggy Workshop</title>
         </Head>
         <p>Loading Workshop.....</p>
@@ -31,6 +35,9 @@ export const MainWorkshop: React.FC<IProps> = ({ eggname }) => {
       </Head>
 
       <h1>Workshop for {data!.egg!.title} </h1>
+
+      <CreateFlavor eggId={data!.egg!.id} />
+      <Flavors eggId={data!.egg!.id} />
     </>
   );
 };
