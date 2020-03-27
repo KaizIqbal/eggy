@@ -3,6 +3,7 @@ import React from "react";
 import { useFlavorsQuery, Flavor } from "generated/graphql";
 
 import Link from "next/link";
+import { RenameFlavor, DeleteFlavor } from "components/flavor";
 
 interface IProps {
   eggId: string;
@@ -26,9 +27,8 @@ export const Flavors: React.FC<IProps> = ({ eggId }) => {
             <Link href="/workshop/[...slugs]" as={`/workshop/${flavor.egg.eggname}/${flavor.name}`}>
               <a>{flavor.name}</a>
             </Link>
-
-            {/* <UpdateEgg egg={egg} /> */}
-            {/* <DeleteEgg id={egg.id} /> */}
+            <RenameFlavor eggId={eggId} flavor={flavor} />
+            <DeleteFlavor eggId={eggId} id={flavor.id} />
           </li>
         );
       })}
