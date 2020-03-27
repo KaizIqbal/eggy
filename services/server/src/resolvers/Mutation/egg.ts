@@ -1,5 +1,6 @@
 // Helper Functions
 import isAuth from "../../utils/isAuth";
+import checkEgg from "../../utils/checkEgg";
 import checkPublish from "../../utils/checkPublish";
 import generateEggName from "../../utils/generateEggName";
 
@@ -7,7 +8,6 @@ export const eggMutations = {
   // ################################################ CREATE EGG ################################################
 
   async createEgg(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
     isAuth(ctx);
 
     // Remove unnecessary space from title
@@ -45,9 +45,8 @@ export const eggMutations = {
 
   // ################################################ UPDATE EGG ################################################
 
-  updateEgg(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
+  async updateEgg(parent, args, ctx, info) {
+    await checkEgg(ctx, args.id, ["ADMIN", "EGGUPDATE"]);
 
     // first take copy in updates
     const updates = { ...args };
@@ -79,8 +78,7 @@ export const eggMutations = {
   // ################################################ RENAME EGG ################################################
 
   async renameEgg(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
+    await checkEgg(ctx, args.id, ["ADMIN", "EGGUPDATE"]);
 
     const eggId = args.id;
     delete args.id;
@@ -109,34 +107,10 @@ export const eggMutations = {
   // ################################################ DELETE EGG ################################################
 
   async deleteEgg(parent, args, ctx, info) {
-    const where = { id: args.id };
-    // 1.find egg
-    const egg = await ctx.db.query.egg(
-      { where },
-      `{
-      id
-      user {
-        id
-      }
-    }`
-    );
-
-    // 2.check they own the egg ,or  have a permission
-    const ownsEgg = egg!.user!.id === ctx.request.userId;
-
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
-
-    const hasDeletePermissions = ctx.request.user.permissions.some(
-      (permission: string) => ["ADMIN", "EGGDELETE"].includes(permission)
-    );
-
-    if (!ownsEgg && !hasDeletePermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
+    checkEgg(ctx, args.id, ["ADMIN", "EGGDELETE"]);
 
     // 3.Delete Egg
-    return ctx.db.mutation.deleteEgg({ where }, info);
+    return ctx.db.mutation.deleteEgg({ where: { id: args.id } }, info);
   },
 
   // ################################################ PUBLISH EGG ################################################
