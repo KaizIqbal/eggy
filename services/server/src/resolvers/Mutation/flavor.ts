@@ -36,7 +36,7 @@ export const flavrorMutations = {
 
   // ################################################ UPDATE FLAVOR ################################################
 
-  updateFlavor(parent, args, ctx, info) {
+  renameFlavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
 
