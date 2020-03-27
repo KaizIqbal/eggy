@@ -8,31 +8,13 @@ export const flavorQueries = {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
 
-    //get one cursor id by cursors
-    const data = await ctx.db.query.flavors(
-      {
-        where: {
-          name: args.flavorname,
-          egg: { eggname: args.eggname }
-        }
-      },
-      `{
-        id
-      }`
-    );
+    const flavor = await ctx.db.query.flavor({
+      where: {
+        id: args.id
+      }
+    });
 
-    // data[0] for access first element in flavors array
-    // but it always return only one flavor always 😉
-
-    const flavor = await ctx.db.query.flavor(
-      {
-        where: {
-          id: data[0].id
-        }
-      },
-      info
-    );
-
+    console.log(flavor);
     return flavor;
   },
 
@@ -47,7 +29,7 @@ export const flavorQueries = {
       {
         where: {
           egg: {
-            eggname: args.eggname
+            id: args.eggId
           }
         }
       },

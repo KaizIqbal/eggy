@@ -72,8 +72,8 @@ type Query {
   cursors(flavorname: String!):[Cursor]!
 
   # Flavors
-  flavor(eggname: String! flavorname: String!): Flavor
-  flavors(eggname: String!):[Flavor]!
+  flavor(id: ID!): Flavor!
+  flavors(eggId: ID!):[Flavor]!
 
   # User
   me: User
