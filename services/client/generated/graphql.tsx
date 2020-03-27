@@ -399,7 +399,7 @@ export type Mutation = {
   renameCursor: Cursor;
   deleteCursor: Flavor;
   createFlavor: Flavor;
-  updateFlavor: Flavor;
+  renameFlavor: Flavor;
   deleteFlavor: Flavor;
   signup: AuthPayload;
   signin: AuthPayload;
@@ -487,7 +487,7 @@ export type MutationCreateFlavorArgs = {
 };
 
 
-export type MutationUpdateFlavorArgs = {
+export type MutationRenameFlavorArgs = {
   id: Scalars['ID'];
   name: Scalars['String'];
 };
@@ -569,7 +569,7 @@ export type Query = {
   userBasket: EggConnection;
   cursor?: Maybe<Cursor>;
   cursors: Array<Maybe<Cursor>>;
-  flavor?: Maybe<Flavor>;
+  flavor: Flavor;
   flavors: Array<Maybe<Flavor>>;
   me?: Maybe<User>;
   users: Array<Maybe<User>>;
@@ -1019,10 +1019,10 @@ export type FlavorQueryVariables = {
 
 export type FlavorQuery = (
   { __typename?: 'Query' }
-  & { flavor: Maybe<(
+  & { flavor: (
     { __typename?: 'Flavor' }
     & FlavorDataFragment
-  )> }
+  ) }
 );
 
 export type FlavorsQueryVariables = {
@@ -1052,15 +1052,15 @@ export type CreateFlavorMutation = (
   ) }
 );
 
-export type UpdateFlavorMutationVariables = {
+export type RenameFlavorMutationVariables = {
   id: Scalars['ID'];
   name: Scalars['String'];
 };
 
 
-export type UpdateFlavorMutation = (
+export type RenameFlavorMutation = (
   { __typename?: 'Mutation' }
-  & { updateFlavor: (
+  & { renameFlavor: (
     { __typename?: 'Flavor' }
     & Pick<Flavor, 'id'>
   ) }
@@ -1785,39 +1785,39 @@ export function useCreateFlavorMutation(baseOptions?: ApolloReactHooks.MutationH
 export type CreateFlavorMutationHookResult = ReturnType<typeof useCreateFlavorMutation>;
 export type CreateFlavorMutationResult = ApolloReactCommon.MutationResult<CreateFlavorMutation>;
 export type CreateFlavorMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateFlavorMutation, CreateFlavorMutationVariables>;
-export const UpdateFlavorDocument = gql`
-    mutation updateFlavor($id: ID!, $name: String!) {
-  updateFlavor(id: $id, name: $name) {
+export const RenameFlavorDocument = gql`
+    mutation renameFlavor($id: ID!, $name: String!) {
+  renameFlavor(id: $id, name: $name) {
     id
   }
 }
     `;
-export type UpdateFlavorMutationFn = ApolloReactCommon.MutationFunction<UpdateFlavorMutation, UpdateFlavorMutationVariables>;
+export type RenameFlavorMutationFn = ApolloReactCommon.MutationFunction<RenameFlavorMutation, RenameFlavorMutationVariables>;
 
 /**
- * __useUpdateFlavorMutation__
+ * __useRenameFlavorMutation__
  *
- * To run a mutation, you first call `useUpdateFlavorMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateFlavorMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useRenameFlavorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRenameFlavorMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updateFlavorMutation, { data, loading, error }] = useUpdateFlavorMutation({
+ * const [renameFlavorMutation, { data, loading, error }] = useRenameFlavorMutation({
  *   variables: {
  *      id: // value for 'id'
  *      name: // value for 'name'
  *   },
  * });
  */
-export function useUpdateFlavorMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateFlavorMutation, UpdateFlavorMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateFlavorMutation, UpdateFlavorMutationVariables>(UpdateFlavorDocument, baseOptions);
+export function useRenameFlavorMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RenameFlavorMutation, RenameFlavorMutationVariables>) {
+        return ApolloReactHooks.useMutation<RenameFlavorMutation, RenameFlavorMutationVariables>(RenameFlavorDocument, baseOptions);
       }
-export type UpdateFlavorMutationHookResult = ReturnType<typeof useUpdateFlavorMutation>;
-export type UpdateFlavorMutationResult = ApolloReactCommon.MutationResult<UpdateFlavorMutation>;
-export type UpdateFlavorMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateFlavorMutation, UpdateFlavorMutationVariables>;
+export type RenameFlavorMutationHookResult = ReturnType<typeof useRenameFlavorMutation>;
+export type RenameFlavorMutationResult = ApolloReactCommon.MutationResult<RenameFlavorMutation>;
+export type RenameFlavorMutationOptions = ApolloReactCommon.BaseMutationOptions<RenameFlavorMutation, RenameFlavorMutationVariables>;
 export const DeleteFlavorDocument = gql`
     mutation deleteFlavor($id: ID!) {
   deleteFlavor(id: $id) {
