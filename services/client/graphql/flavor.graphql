@@ -28,8 +28,8 @@ mutation createFlavor($name: String!, $eggId: ID!) {
 }
 
 # ---------- UPDATE
-mutation updateFlavor($id: ID!, $name: String!) {
-  updateFlavor(id: $id, name: $name) {
+mutation renameFlavor($id: ID!, $name: String!) {
+  renameFlavor(id: $id, name: $name) {
     id
   }
 }
