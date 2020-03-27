@@ -19,7 +19,7 @@ export const RenameFlavor: React.FC<IProps> = ({ flavor, eggId }) => {
   const [renameFlavor, { loading, error }] = useRenameFlavorMutation({
     refetchQueries: [{ query: FlavorsDocument, variables: { eggId } }]
   });
-  const regex = /[^\s]*[^\s]/;
+  const regex = /[^\s][a-zA-Z][^\s]/;
 
   // ---------------------------------------------------------------- HELPER HOOKS
 
@@ -37,10 +37,11 @@ export const RenameFlavor: React.FC<IProps> = ({ flavor, eggId }) => {
 
   const _handleRename = async (text: any) => {
     // Remove unnecessary space from title
-    // example "   This is   a  DOG     " =>  "This is a DOG"
+    // example "   This is#   a  DOG@     " =>  "This is a DOG"
 
     text = text.trim();
     text = text.replace(/  +/g, " ");
+    text = text.replace(/[^a-zA-Z\s]+/g, "");
 
     // set the state
     setName(text);

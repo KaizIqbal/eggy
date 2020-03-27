@@ -14,24 +14,38 @@ export const Flavors: React.FC<IProps> = ({ eggId }) => {
 
   const { data, loading, error } = useFlavorsQuery({ variables: { eggId } });
 
-  // ---------------------------------------------------------------- RENDER
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  return (
+  let body: any = (
     <>
-      {data!.flavors!.map((f: any) => {
-        const flavor: Flavor = f;
-        return (
-          <li key={flavor.id}>
-            <Link href="/workshop/[...slugs]" as={`/workshop/${flavor.egg.eggname}/${flavor.name}`}>
-              <a>{flavor.name}</a>
-            </Link>
-            <RenameFlavor eggId={eggId} flavor={flavor} />
-            <DeleteFlavor eggId={eggId} id={flavor.id} />
-          </li>
-        );
-      })}
+      <p>
+        Click <strong>+ Add Flavor</strong> to Create New One
+      </p>
     </>
   );
+
+  // ---------------------------------------------------------------- RENDER
+
+  if (loading) return <p>Loading...</p>;
+
+  if (error) return <p>Error: {error.message}</p>;
+
+  if (data!.flavors!.length !== 0) {
+    body = (
+      <>
+        {data!.flavors!.map((f: any) => {
+          const flavor: Flavor = f;
+          return (
+            <li key={flavor.id}>
+              <Link href="/workshop/[...slugs]" as={`/workshop/${flavor.egg.eggname}/${flavor.id}`}>
+                <a>{flavor.name}</a>
+              </Link>
+              <RenameFlavor eggId={eggId} flavor={flavor} />
+              <DeleteFlavor eggId={eggId} id={flavor.id} />
+            </li>
+          );
+        })}
+      </>
+    );
+  }
+
+  return body;
 };

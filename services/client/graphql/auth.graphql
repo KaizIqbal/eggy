@@ -1,8 +1,8 @@
 # import * from "./fragments.graphql"
 
 # ---------- SIGNUP
-mutation signup($firstName: String! $lastName: String! $email: String! $username: String! $password: String!) {
-  signup(firstName: $firstName lastName: $lastName email: $email username: $username password: $password) {
+mutation signup($firstName: String!, $lastName: String!, $email: String!, $username: String!, $password: String!) {
+  signup(firstName: $firstName, lastName: $lastName, email: $email, username: $username, password: $password) {
     accessToken
     user {
       ...UserData
@@ -20,23 +20,23 @@ mutation signin($email: String!, $password: String!) {
   }
 }
 
-# ##### SIGNOUT #####
+# ---------- SIGNOUT 
 mutation signOut {
   signout {
     message
   }
 }
 
-# ##### REQUEST FOR RESET PASSWORD #####
+# ---------- REQUEST FOR RESET PASSWORD 
 mutation resetPasswordRequest($email: String!) {
   resetPasswordRequest(email: $email) {
     message
   }
 }
 
-# ##### RESET PASSWORD #####
-mutation resetPassword($resetToken: String! $password: String! $confirmPassword: String!) {
-  resetPassword(resetToken: $resetToken password: $password confirmPassword: $confirmPassword) {
+# ---------- RESET PASSWORD 
+mutation resetPassword($resetToken: String!, $password: String!, $confirmPassword: String!) {
+  resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
     accessToken
     user {
       ...UserData
@@ -44,7 +44,7 @@ mutation resetPassword($resetToken: String! $password: String! $confirmPassword:
   }
 }
 
-# ##### UPDATE USER'S PERMISSIONS #####
+# ---------- UPDATE USER'S PERMISSIONS 
 mutation updatePermissions($permissions: [Permission], $userId: ID!) {
   updatePermissions(permissions: $permissions, userId: $userId) {
     ...UserData

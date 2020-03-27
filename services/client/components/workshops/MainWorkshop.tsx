@@ -28,16 +28,19 @@ export const MainWorkshop: React.FC<IProps> = ({ eggname }) => {
 
   if (error) return <p>Error: {error.message}</p>;
 
-  return (
-    <>
-      <Head>
-        <title>{data!.egg!.title} - Eggy Workshop</title>
-      </Head>
+  if (data && data.egg)
+    return (
+      <>
+        <Head>
+          <title>{data.egg.title} - Eggy Workshop</title>
+        </Head>
 
-      <h1>Workshop for {data!.egg!.title} </h1>
+        <h1>Workshop for {data.egg.title} </h1>
 
-      <CreateFlavor eggId={data!.egg!.id} />
-      <Flavors eggId={data!.egg!.id} />
-    </>
-  );
+        <CreateFlavor eggId={data.egg.id} />
+        <Flavors eggId={data.egg.id} />
+      </>
+    );
+
+  return null;
 };
