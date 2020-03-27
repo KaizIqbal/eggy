@@ -3,15 +3,15 @@
 # -------------------- QUERIES 
 
 # ---------- FETCH SINGLE FLAVOR 
-query flavor($eggname: String!, $flavorname: String!) {
-  flavor(eggname: $eggname, flavorname: $flavorname) {
+query flavor($id: ID!) {
+  flavor(id: $id) {
     ...FlavorData
   }
 }
 
 # ---------- FETCH ALL FLAVORS
-query flavors($eggname: String!) {
-  flavors(eggname: $eggname) {
+query flavors($eggId: ID!) {
+  flavors(eggId: $eggId) {
     ...FlavorData
   }
 }
