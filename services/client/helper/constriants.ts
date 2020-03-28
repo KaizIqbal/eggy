@@ -3,7 +3,7 @@ import { Platform, CursorName } from "generated/graphql";
 export const possiblePlatforms = Object.values(Platform);
 
 const possibleCursors = Object.values(CursorName);
-let availableCursors: any = null;
+let availableCursors: any;
 
 export const setCursors = (fetchedCursors: any) => {
   const cursors = Object.values(fetchedCursors);
