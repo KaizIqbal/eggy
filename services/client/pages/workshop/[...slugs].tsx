@@ -7,17 +7,19 @@ import { endpoint } from "lib/endpoint";
 import { getAccessToken } from "lib/accessToken";
 
 import Page from "components/Page";
-import { MainWorkshop, FlavorWorkshop } from "components/workshops";
+import { MainWorkshop, FlavorWorkshop, CursorWorkshop } from "components/workshops";
 
 interface IProps {
   eggname?: any;
   flavorId?: any;
+  cursorId?: any;
 }
 
-const Workshop: NextPage<IProps> = ({ eggname, flavorId }) => {
+const Workshop: NextPage<IProps> = ({ eggname, flavorId, cursorId }) => {
   let body: any;
-
-  if (flavorId && eggname) {
+  if (cursorId && flavorId && eggname) {
+    body = <CursorWorkshop id={cursorId} />;
+  } else if (flavorId && eggname) {
     body = <FlavorWorkshop id={flavorId} />;
   } else if (eggname) {
     body = <MainWorkshop eggname={eggname} />;
@@ -68,8 +70,9 @@ Workshop.getInitialProps = async context => {
   }
 
   const flavorId = slugs[1];
+  const cursorId = slugs[2];
 
-  return { eggname, flavorId };
+  return { eggname, flavorId, cursorId };
 };
 
 export default Workshop;
