@@ -1,3 +1,5 @@
+import { Cursors } from "./Cursors";
 import { CreateCursor } from "./Create";
+import { DeleteCursor } from "./Delete";
 
-export { CreateCursor };
+export { Cursors, CreateCursor, DeleteCursor };
