@@ -1,10 +1,10 @@
 import React from "react";
 import { NextPage } from "next";
 
-import { endpoint } from "lib/endpoint";
 import { Redirect } from "lib/redirect";
 
 import Page from "components/Page";
+import { isUserAvailable } from "helper/isUserAvailable";
 
 interface IProps {
   username?: any;
@@ -23,23 +23,8 @@ UserProfilePage.getInitialProps = async context => {
 
   const { username } = query;
 
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `{
-        isUserAvailable(username: "${username}"){
-          available
-        }
-      }`
-    })
-  }).then(response => response.json());
-
-  const {
-    data: {
-      isUserAvailable: { available }
-    }
-  } = response;
+  // Helper using Graphql Query
+  const available = await isUserAvailable(username);
 
   if (!available) {
     Redirect(context, `/search/${username}`);
