@@ -1,10 +1,8 @@
 import React from "react";
 import { NextPage } from "next";
-import fetch from "isomorphic-unfetch";
 
 import { Redirect } from "lib/redirect";
-import { endpoint } from "lib/endpoint";
-import { getAccessToken } from "lib/accessToken";
+import { isEggAccessible } from "helper/isEggAccessible";
 
 import Page from "components/Page";
 import { MainWorkshop, FlavorWorkshop, CursorWorkshop } from "components/workshops";
@@ -17,6 +15,7 @@ interface IProps {
 
 const Workshop: NextPage<IProps> = ({ eggname, flavorId, cursorId }) => {
   let body: any;
+
   if (cursorId && flavorId && eggname) {
     body = <CursorWorkshop id={cursorId} />;
   } else if (flavorId && eggname) {
@@ -41,29 +40,14 @@ Workshop.getInitialProps = async context => {
   const { slugs } = query;
 
   // valid url => /workshop/eggname/flavorid/cursorid = 3 slug
-  if (!slugs || slugs.length >= 3) {
+  // More then 3 slug => Redirect to Basket
+  if (!slugs || slugs.length > 3) {
     Redirect(context, "/basket");
   }
   const eggname = slugs[0];
 
-  // Graphql Query for checking access
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", authorization: `Bearer ${getAccessToken()}` },
-    body: JSON.stringify({
-      query: `{
-        isEggAccessible(eggname: "${eggname}") {
-          access
-        }
-      }`
-    })
-  }).then(response => response.json());
-
-  const {
-    data: {
-      isEggAccessible: { access }
-    }
-  } = response;
+  // Graphql Query for checking Egg access
+  const access = await isEggAccessible(eggname);
 
   if (!access) {
     Redirect(context, "/basket");
