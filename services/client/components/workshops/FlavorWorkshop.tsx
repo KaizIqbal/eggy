@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 
 import { useFlavorQuery } from "generated/graphql";
-import { CreateCursor } from "components/cursor";
+import { CreateCursor, Cursors } from "components/cursor";
 
 interface IProps {
   id: any;
@@ -37,6 +37,8 @@ export const FlavorWorkshop: React.FC<IProps> = ({ id }) => {
           Workshop for {data.flavor.egg.title} {data.flavor.name}
         </h1>
         <CreateCursor flavorId={data.flavor.id} />
+
+        <Cursors flavorId={data.flavor.id} />
       </>
     );
 
