@@ -60,48 +60,48 @@ export const CreateCursor: React.FC<IProps> = ({ flavorId }) => {
   if (error) return <p>Error: {error.message}</p>;
 
   let body: any = (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset disabled={loading}>
-        {/* Select Cursor Name */}
-        <label htmlFor="Cursor Name">
-          Select Cursor
-          <select id="name" name="name" ref={register({ required: "Your input is required" })}>
-            {availableCurosrs.map((cursor: string) => (
-              <option key={cursor} value={cursor}>
-                {cursor}
-              </option>
-            ))}
-          </select>
-          {errors.name && errors.name.message}
-        </label>
-        <br />
-
-        {/* Insert Frames of Cursor */}
-        <label htmlFor="frames">
-          Frames
-          <input
-            type="number"
-            id="frames"
-            name="frames"
-            max="60"
-            defaultValue={1}
-            ref={register({ required: "Your input is required" })}
-          />
-          {errors.frames && errors.frames.message}
-        </label>
-        <br />
-
-        {/* Submition */}
-        <button type="submit">Submit</button>
-      </fieldset>
-    </Form>
+    <>
+      <h2>All Cursors is Satisfied</h2>
+    </>
   );
 
-  if (availableCurosrs.length === 0) {
+  if (availableCurosrs && availableCurosrs.length !== 0) {
     body = (
-      <>
-        <h2>All Cursors is Satisfied</h2>
-      </>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <fieldset disabled={loading}>
+          {/* Select Cursor Name */}
+          <label htmlFor="Cursor Name">
+            Select Cursor
+            <select id="name" name="name" ref={register({ required: "Your input is required" })}>
+              {availableCurosrs.map((cursor: string) => (
+                <option key={cursor} value={cursor}>
+                  {cursor}
+                </option>
+              ))}
+            </select>
+            {errors.name && errors.name.message}
+          </label>
+          <br />
+
+          {/* Insert Frames of Cursor */}
+          <label htmlFor="frames">
+            Frames
+            <input
+              type="number"
+              id="frames"
+              name="frames"
+              max="60"
+              defaultValue={1}
+              ref={register({ required: "Your input is required" })}
+            />
+            {errors.frames && errors.frames.message}
+          </label>
+          <br />
+
+          {/* Submition */}
+          <button type="submit">Submit</button>
+        </fieldset>
+      </Form>
     );
   }
 
