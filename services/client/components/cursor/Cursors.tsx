@@ -2,12 +2,14 @@ import React from "react";
 import Link from "next/link";
 
 import { useCursorsQuery, Cursor } from "generated/graphql";
+import { DeleteCursor } from ".";
+import { setCursors } from "helper/constriants";
 
 interface IProps {
   flavorId: string;
 }
 
-export const Flavors: React.FC<IProps> = ({ flavorId }) => {
+export const Cursors: React.FC<IProps> = ({ flavorId }) => {
   // ---------------------------------------------------------------- HOOKS
 
   const { data, loading, error } = useCursorsQuery({ variables: { flavorId } });
@@ -26,7 +28,11 @@ export const Flavors: React.FC<IProps> = ({ flavorId }) => {
 
   if (error) return <p>Error: {error.message}</p>;
 
-  if (data!.cursors!.length !== 0) {
+  if (data && data.cursors.length !== 0) {
+    // store and filter cursor in global variable `availableCursors`
+    // 👇 👇 This help in create Cursor for check how many cursors left to create
+    setCursors(data!.cursors.map((cursor: any) => cursor.name));
+
     body = (
       <>
         {data!.cursors!.map((c: any) => {
@@ -38,6 +44,7 @@ export const Flavors: React.FC<IProps> = ({ flavorId }) => {
                 as={`/workshop/${cursor.flavor.egg.eggname}/${cursor.flavor.id}/${cursor.id}`}>
                 <a>{cursor.name}</a>
               </Link>
+              <DeleteCursor id={cursor.id} flavorId={cursor.flavor.id} />
             </li>
           );
         })}

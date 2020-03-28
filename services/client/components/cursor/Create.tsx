@@ -6,6 +6,7 @@ import { useCreateCursorMutation, CursorsDocument } from "generated/graphql";
 
 import { Button, Form } from "components/styled";
 import { Popup } from "components/Popup";
+import { getAvailableCursors } from "helper/constriants";
 
 interface IProps {
   flavorId: string;
@@ -25,11 +26,19 @@ export const CreateCursor: React.FC<IProps> = ({ flavorId }) => {
   });
   const { register, handleSubmit, errors } = useForm<FormData>();
 
+  // ---------------------------------------------------------------- HELPER
+
+  const availableCurosrs = getAvailableCursors();
+
   // ---------------------------------------------------------------- HANDLING FUNCTION
 
   const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
+
+      // first convert frames to Integer Value
+      values.frames = parseInt(values.frames, 10);
+
       await createCursor({ variables: { flavorId, ...values } });
 
       e.target.reset();
@@ -50,40 +59,59 @@ export const CreateCursor: React.FC<IProps> = ({ flavorId }) => {
 
   if (error) return <p>Error: {error.message}</p>;
 
+  let body: any = (
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <fieldset disabled={loading}>
+        {/* Select Cursor Name */}
+        <label htmlFor="Cursor Name">
+          Select Cursor
+          <select id="name" name="name" ref={register({ required: "Your input is required" })}>
+            {availableCurosrs.map((cursor: string) => (
+              <option key={cursor} value={cursor}>
+                {cursor}
+              </option>
+            ))}
+          </select>
+          {errors.name && errors.name.message}
+        </label>
+        <br />
+
+        {/* Insert Frames of Cursor */}
+        <label htmlFor="frames">
+          Frames
+          <input
+            type="number"
+            id="frames"
+            name="frames"
+            max="60"
+            defaultValue={1}
+            ref={register({ required: "Your input is required" })}
+          />
+          {errors.frames && errors.frames.message}
+        </label>
+        <br />
+
+        {/* Submition */}
+        <button type="submit">Submit</button>
+      </fieldset>
+    </Form>
+  );
+
+  if (availableCurosrs.length === 0) {
+    body = (
+      <>
+        <h2>All Cursors is Satisfied</h2>
+      </>
+    );
+  }
+
   return (
     <>
       <Button onClick={togglePopup}>+ Add Cursor</Button>
       {popup ? (
         <Popup closePopup={togglePopup}>
           <br />
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <fieldset disabled={loading}>
-              {/* Select Cursor Name */}
-              <label htmlFor="Cursor Name">
-                Select Cursor
-                <select id="name" name="name" ref={register({ required: "Your input is required" })} />
-                {errors.name && errors.name.message}
-              </label>
-              <br />
-
-              {/* Insert Frames of Cursor */}
-              <label htmlFor="frames">
-                Frames
-                <input
-                  type="number"
-                  id="frames"
-                  name="frames"
-                  defaultValue={1}
-                  ref={register({ required: "Your input is required" })}
-                />
-                {errors.frames && errors.frames.message}
-              </label>
-              <br />
-
-              {/* Submition */}
-              <button type="submit">Submit</button>
-            </fieldset>
-          </Form>
+          {body}
         </Popup>
       ) : null}
     </>
