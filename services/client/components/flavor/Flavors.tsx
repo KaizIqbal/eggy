@@ -1,8 +1,8 @@
 import React from "react";
+import Link from "next/link";
 
 import { useFlavorsQuery, Flavor } from "generated/graphql";
 
-import Link from "next/link";
 import { RenameFlavor, DeleteFlavor } from "components/flavor";
 
 interface IProps {
@@ -35,7 +35,10 @@ export const Flavors: React.FC<IProps> = ({ eggId }) => {
           const flavor: Flavor = f;
           return (
             <li key={flavor.id}>
-              <Link href="/workshop/[...slugs]" as={`/workshop/${flavor.egg.eggname}/${flavor.id}`}>
+              <Link
+                href={{ pathname: "/workshop/[slug]", query: { flavorId: flavor.id } }}
+                as={`/workshop/${flavor.egg.eggname}`}
+                shallow={true}>
                 <a>{flavor.name}</a>
               </Link>
               <RenameFlavor eggId={eggId} flavor={flavor} />
