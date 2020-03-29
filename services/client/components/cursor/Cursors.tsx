@@ -1,10 +1,11 @@
 import React from "react";
-import Link from "next/link";
+import Router from "next/router";
 
 import { useCursorsQuery, Cursor } from "generated/graphql";
 import { setCursors } from "helper/constriants";
 
 import { DeleteCursor } from "components/cursor";
+import { CursorList, CursorCard, Heading, Actions, Body } from "components/styled/cursor/Cursors";
 
 interface IProps {
   flavorId: string;
@@ -35,22 +36,28 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
 
   if (data && data.cursors.length !== 0) {
     body = (
-      <>
+      <CursorList>
         {data!.cursors!.map((c: any) => {
           const cursor: Cursor = c;
           return (
-            <li key={cursor.id}>
-              <Link
-                href={{ pathname: "/workshop/[slug]", query: { flavorId: cursor.flavor.id, cursorId: cursor.id } }}
-                as={`/workshop/${cursor.flavor.egg.eggname}`}
-                shallow={true}>
-                <a>{cursor.name}</a>
-              </Link>
-              <DeleteCursor id={cursor.id} flavorId={cursor.flavor.id} />
-            </li>
+            <CursorCard key={cursor.id}>
+              <Heading
+                onClick={() =>
+                  Router.push(
+                    { pathname: "/workshop/[slug]", query: { flavorId: cursor.flavor.id, cursorId: cursor.id } },
+                    `/workshop/${cursor.flavor.egg.eggname}`
+                  )
+                }>
+                {cursor.name}
+              </Heading>
+              <Body>Cursor Body</Body>
+              <Actions>
+                <DeleteCursor id={cursor.id} flavorId={cursor.flavor.id} />
+              </Actions>
+            </CursorCard>
           );
         })}
-      </>
+      </CursorList>
     );
   }
 
