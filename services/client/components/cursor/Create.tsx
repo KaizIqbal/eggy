@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
-
 import { useCreateCursorMutation, CursorsDocument } from "generated/graphql";
+
+import { getAvailableCursors } from "helper/constriants";
 
 import { Button, Form } from "components/styled";
 import { Popup } from "components/Popup";
-import { getAvailableCursors } from "helper/constriants";
 
 interface IProps {
   flavorId: string;

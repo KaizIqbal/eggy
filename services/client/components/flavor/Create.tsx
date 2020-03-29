@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import { useCreateFlavorMutation, FlavorsDocument } from "generated/graphql";
 import { useForm } from "react-hook-form";
+import { useCreateFlavorMutation, FlavorsDocument } from "generated/graphql";
 
 import { Button, Form } from "components/styled";
 import { Popup } from "components/Popup";
