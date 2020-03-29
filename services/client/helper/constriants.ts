@@ -7,6 +7,7 @@ let availableCursors: any;
 
 export const setCursors = (fetchedCursors: any) => {
   const cursors = Object.values(fetchedCursors);
+
   availableCursors = possibleCursors.filter(cursor => !cursors.includes(cursor));
 };
 

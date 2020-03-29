@@ -29,11 +29,11 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
 
   if (error) return <p>Error: {error.message}</p>;
 
-  if (data && data.cursors.length !== 0) {
-    // store and filter cursor in global variable `availableCursors`
-    // 👇 👇 This help in create Cursor for check how many cursors left to create
-    setCursors(data!.cursors.map((cursor: any) => cursor.name));
+  // store and filter cursor in the global variable `availableCursors`
+  // 👇 👇 This help in create Cursor for check how many cursors left to create
+  setCursors(data!.cursors!.map((cursor: any) => cursor.name));
 
+  if (data && data.cursors.length !== 0) {
     body = (
       <>
         {data!.cursors!.map((c: any) => {
