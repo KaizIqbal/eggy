@@ -1,16 +1,17 @@
 // Helper Functions
-import isAuth from "../../utils/isAuth";
+import checkFlavor from "../../utils/checkFlavor";
+import checkCursor from "../../utils/checkCursor";
 
 export const cursorMutations = {
   // ################################################ CREATE CURSOR ################################################
 
   async createCursor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
-
     // seprate flavorId and cursor data
     const flavorId = args.flavorId;
     delete args.flavorId;
+
+    // Checking user has permissions or not if not then throw Error
+    await checkFlavor(ctx, flavorId, ["ADMIN", "CURSORCREATE"]);
 
     const [data] = await ctx.db.query.cursors(
       {
@@ -43,13 +44,13 @@ export const cursorMutations = {
 
   // ################################################ UPDATE CURSOR ################################################
 
-  updateCursor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
-
+  async updateCursor(parent, args, ctx, info) {
     // separate data from args
     const cursorId = args.id;
     delete args.id;
+
+    // Checking user has permissions or not if not then throw Error
+    await checkCursor(ctx, cursorId, ["ADMIN", "CURSORUPDATE"]);
 
     // return updated cursor by id
     return ctx.db.mutation.updateCursor(
@@ -62,21 +63,10 @@ export const cursorMutations = {
       info
     );
   },
-
-  // ################################################ DELETE CURSOR ################################################
-
-  deleteCursor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
-
-    // Delete flavor by id
-    return ctx.db.mutation.deleteCursor({ where: { id: args.id } }, info);
-  },
-
   // ################################################ RENAME CURSOR ################################################
   async renameCursor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
+    // Checking user has permissions or not if not then throw Error
+    await checkCursor(ctx, args.id, ["ADMIN", "CURSORUPDATE"]);
 
     let updateCursor: any;
 
@@ -117,5 +107,19 @@ export const cursorMutations = {
 
     // return updated cursor by id
     return updateCursor;
+  },
+
+  // ################################################ DELETE CURSOR ################################################
+
+  async deleteCursor(parent, args, ctx, info) {
+    // separate id from args
+    const cursorId = args.id;
+    delete args.id;
+
+    // Checking user has permissions or not if not then throw Error
+    await checkCursor(ctx, cursorId, ["ADMIN", "CURSORUPDATE"]);
+
+    // Delete flavor by id
+    return ctx.db.mutation.deleteCursor({ where: { id: cursorId } }, info);
   }
 };

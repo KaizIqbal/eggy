@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Sat Mar 14 2020 03:34:49 GMT+0000 (Coordinated Universal Time)
+# timestamp: Sun Mar 29 2020 06:05:36 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -1863,6 +1863,12 @@ enum Permission {
   EGGCREATE
   EGGUPDATE
   EGGDELETE
+  FLAVORCREATE
+  FLAVORUPDATE
+  FLAVORDELETE
+  CURSORCREATE
+  CURSORUPDATE
+  CURSORDELETE
   PERMISSIONUPDATE
 }
 
