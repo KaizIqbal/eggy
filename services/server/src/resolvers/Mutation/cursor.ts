@@ -12,14 +12,14 @@ export const cursorMutations = {
     const flavorId = args.flavorId;
     delete args.flavorId;
 
-    const data = await ctx.db.query.cursors(
+    const [data] = await ctx.db.query.cursors(
       {
         where: { name: args.name }
       },
       info
     );
 
-    if (data[0]) {
+    if (data) {
       throw new Error("Cursor is already Available");
     }
 
@@ -78,7 +78,7 @@ export const cursorMutations = {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
 
-    let updateCursor;
+    let updateCursor: any;
 
     // separate id from args
     const cursorId = args.id;
@@ -86,17 +86,17 @@ export const cursorMutations = {
     const flavorId = args.flavorId;
     delete args.flavorId;
 
-    const data = await ctx.db.query.cursors(
+    const [data] = await ctx.db.query.cursors(
       {
         where: { name: args.name, flavor: { id: flavorId } }
       },
       info
     );
     // if cursor already available
-    if (data[0]) {
+    if (data) {
       // Same Cursor so do nothing
-      if (data[0].id === cursorId) {
-        updateCursor = data[0];
+      if (data.id === cursorId) {
+        updateCursor = data;
       } else {
         throw new Error("Cursor already available");
       }
