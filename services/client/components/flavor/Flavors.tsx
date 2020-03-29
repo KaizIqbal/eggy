@@ -37,8 +37,7 @@ export const Flavors: React.FC<IProps> = ({ eggId }) => {
             <li key={flavor.id}>
               <Link
                 href={{ pathname: "/workshop/[slug]", query: { flavorId: flavor.id } }}
-                as={`/workshop/${flavor.egg.eggname}`}
-                shallow={true}>
+                as={`/workshop/${flavor.egg.eggname}`}>
                 <a>{flavor.name}</a>
               </Link>
               <RenameFlavor eggId={eggId} flavor={flavor} />
