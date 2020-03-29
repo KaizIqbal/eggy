@@ -2,8 +2,9 @@ import React from "react";
 import Link from "next/link";
 
 import { useCursorsQuery, Cursor } from "generated/graphql";
-import { DeleteCursor } from ".";
 import { setCursors } from "helper/constriants";
+
+import { DeleteCursor } from "components/cursor";
 
 interface IProps {
   flavorId: string;
@@ -40,8 +41,9 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
           return (
             <li key={cursor.id}>
               <Link
-                href="/workshop/[...slugs]"
-                as={`/workshop/${cursor.flavor.egg.eggname}/${cursor.flavor.id}/${cursor.id}`}>
+                href={{ pathname: "/workshop/[slug]", query: { flavorId: cursor.flavor.id, cursorId: cursor.id } }}
+                as={`/workshop/${cursor.flavor.egg.eggname}`}
+                shallow={true}>
                 <a>{cursor.name}</a>
               </Link>
               <DeleteCursor id={cursor.id} flavorId={cursor.flavor.id} />

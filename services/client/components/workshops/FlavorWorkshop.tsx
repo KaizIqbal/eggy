@@ -36,8 +36,8 @@ export const FlavorWorkshop: React.FC<IProps> = ({ id }) => {
         <h1>
           Workshop for {data.flavor.egg.title} {data.flavor.name}
         </h1>
-        <CreateCursor flavorId={data.flavor.id} />
 
+        <CreateCursor flavorId={data.flavor.id} />
         <Cursors flavorId={data.flavor.id} />
       </>
     );

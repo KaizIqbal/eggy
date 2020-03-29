@@ -69,6 +69,7 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
           });
           const data = await response.json();
           serverAccessToken = data.accessToken;
+          setAccessToken(serverAccessToken);
         }
       }
 

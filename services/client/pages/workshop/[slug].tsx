@@ -1,5 +1,6 @@
 import React from "react";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 
 import { Redirect } from "lib/redirect";
 import { isEggAccessible } from "helper/isEggAccessible";
@@ -9,26 +10,25 @@ import { MainWorkshop, FlavorWorkshop, CursorWorkshop } from "components/worksho
 
 interface IProps {
   eggname?: any;
-  flavorId?: any;
-  cursorId?: any;
 }
 
-const Workshop: NextPage<IProps> = ({ eggname, flavorId, cursorId }) => {
+const Workshop: NextPage<IProps> = ({ eggname }) => {
+  // ---------------------------------------------------------------- HOOKS
+
+  const {
+    query: { flavorId, cursorId }
+  } = useRouter();
+
+  // ---------------------------------------------------------------- RENDER
+
   let body: any;
 
   if (cursorId && flavorId && eggname) {
     body = <CursorWorkshop id={cursorId} />;
   } else if (flavorId && eggname) {
     body = <FlavorWorkshop id={flavorId} />;
-  } else if (eggname) {
-    body = <MainWorkshop eggname={eggname} />;
   } else {
-    body = (
-      <>
-        <h1>Oops</h1>
-        <p>Workshop Not Fetched</p>
-      </>
-    );
+    body = <MainWorkshop eggname={eggname} />;
   }
 
   return <Page title="Eggy Workshop">{body}</Page>;
@@ -37,26 +37,19 @@ const Workshop: NextPage<IProps> = ({ eggname, flavorId, cursorId }) => {
 Workshop.getInitialProps = async context => {
   const { query } = context;
 
-  const { slugs } = query;
+  const { slug } = query;
 
-  // valid url => /workshop/eggname/flavorid/cursorid = 3 slug
-  // More then 3 slug => Redirect to Basket
-  if (!slugs || slugs.length > 3) {
+  if (!slug) {
     Redirect(context, "/basket");
   }
-  const eggname = slugs[0];
-
   // Graphql Query for checking Egg access
-  const access = await isEggAccessible(eggname);
+  const access = await isEggAccessible(slug);
 
   if (!access) {
     Redirect(context, "/basket");
   }
 
-  const flavorId = slugs[1];
-  const cursorId = slugs[2];
-
-  return { eggname, flavorId, cursorId };
+  return { eggname: slug };
 };
 
 export default Workshop;
