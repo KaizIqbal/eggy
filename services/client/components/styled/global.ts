@@ -18,4 +18,8 @@ export const GlobalStyle = createGlobalStyle<IThemeWrapper>`
     margin: 0 auto;
     color: ${props => props.theme.niceBlack}; 
   }
+
+  li {
+    list-style: none;
+  }
 `;
