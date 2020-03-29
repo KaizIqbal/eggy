@@ -1,20 +1,21 @@
 // Helper Functions
-import isAuth from "../../utils/isAuth";
 import checkFlavorName from "../../utils/checkFlavorName";
+import checkEgg from "../../utils/checkEgg";
+import checkFlavor from "../../utils/checkFlavor";
 
 export const flavrorMutations = {
   // ################################################ CREATE FLAVOR ################################################
 
   async createFlavor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
-
     // Checking flavor's name contains special symbols
     checkFlavorName(args);
 
     // seprate EggId and flavour data
     const eggId = args.eggId;
     delete args.eggId;
+
+    // Checking user has permissions or not if not then throw Error
+    await checkEgg(ctx, eggId, ["ADMIN", "FLAVORCREATE"]);
 
     const flavor = await ctx.db.mutation.createFlavor(
       {
@@ -36,16 +37,16 @@ export const flavrorMutations = {
 
   // ################################################ UPDATE FLAVOR ################################################
 
-  renameFlavor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
-
+  async renameFlavor(parent, args, ctx, info) {
     // Remove all Special Character
     args.name = args.name.trim();
     args.name = args.name.replace(/[^\w\s]/gi, "");
 
     const flavorId = args.id;
     delete args.id;
+
+    // Checking user has permissions or not if not then throw Error
+    await checkFlavor(ctx, flavorId, ["ADMIN", "FLAVORUPDATE"]);
 
     // return updated flavor by id
     return ctx.db.mutation.updateFlavor(
@@ -61,9 +62,9 @@ export const flavrorMutations = {
 
   // ################################################ DELETE FLAVOR ################################################
 
-  deleteFlavor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
+  async deleteFlavor(parent, args, ctx, info) {
+    // Checking user has permissions or not if not then throw Error
+    await checkFlavor(ctx, args.id, ["ADMIN", "FLAVORDELETE"]);
 
     // Delete flavor by id
     return ctx.db.mutation.deleteFlavor({ where: { id: args.id } }, info);
