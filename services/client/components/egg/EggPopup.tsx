@@ -29,7 +29,7 @@ export const EggPopup: React.FC<IProps> = ({ eggname, children }) => {
     if (popup) {
       window.history.pushState("", "", "/basket");
     } else {
-      window.history.pushState("", "", `/egg/${eggname}`);
+      window.history.pushState("", "", `/eggs/${eggname}`);
     }
   };
 
