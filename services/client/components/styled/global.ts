@@ -17,6 +17,7 @@ export const GlobalStyle = createGlobalStyle<IThemeWrapper>`
   body {
     margin: 0 auto;
     color: ${props => props.theme.niceBlack}; 
+    height: 100%;
   }
 
   li {
