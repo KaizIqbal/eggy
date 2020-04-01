@@ -41,16 +41,19 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
           const cursor: Cursor = c;
           return (
             <CursorCard key={cursor.id}>
-              <Heading
-                onClick={() =>
-                  Router.push(
-                    { pathname: "/workshop/[slug]", query: { flavorId: cursor.flavor.id, cursorId: cursor.id } },
-                    `/workshop/${cursor.flavor.egg.eggname}`
-                  )
-                }>
-                {cursor.name}
+              <Heading>
+                <label
+                  htmlFor={cursor.name}
+                  onClick={() =>
+                    Router.push(
+                      { pathname: "/workshop/[slug]", query: { flavorId: cursor.flavor.id, cursorId: cursor.id } },
+                      `/workshop/${cursor.flavor.egg.eggname}`
+                    )
+                  }>
+                  {cursor.name}
+                </label>
               </Heading>
-              <Body>Cursor Body</Body>
+              <Body>Body</Body>
               <Actions>
                 <DeleteCursor id={cursor.id} flavorId={cursor.flavor.id} />
               </Actions>
