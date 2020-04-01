@@ -4,31 +4,25 @@ const CursorList = styled.ol`
   margin: 0;
   padding: 0;
   display: grid;
-  grid-column-gap: 0.3rem;
+  grid-gap: 1rem;
+  text-align: center;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 `;
 
 const CursorCard = styled.div`
   background-color: #1fd234;
-  margin: 0.5em 0;
-  border-style: solid;
+  border: solid;
 `;
 
-const Heading = styled.p`
-  background-color: #136234;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  text-align: center;
-  font-size: 1.4rem;
-  text-transform: uppercase;
+const Heading = styled.div`
+  font-size: 20px;
+  background-color: #ec6d34;
 `;
 
 const Body = styled.div`
+  height: 5rem;
   background-color: #83ffff;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-align: center;
-  font-size: 1.4rem;
-  text-transform: uppercase;
+  display: inline-block;
 `;
 
 const Actions = styled.div`
