@@ -1,0 +1,12 @@
+# import * from "./fragments.graphql"
+
+
+# ---------- FILE UPLOAD 
+mutation uploadFile($file: Upload!, $cursorId: ID!) {
+  uploadFile(file: $file, cursorId: $cursorId) {
+    ...FileData
+    cursor {
+      ...CursorData
+    }
+  }
+}

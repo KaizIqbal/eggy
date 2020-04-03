@@ -553,6 +553,12 @@ export enum Permission {
   Eggcreate = 'EGGCREATE',
   Eggupdate = 'EGGUPDATE',
   Eggdelete = 'EGGDELETE',
+  Flavorcreate = 'FLAVORCREATE',
+  Flavorupdate = 'FLAVORUPDATE',
+  Flavordelete = 'FLAVORDELETE',
+  Cursorcreate = 'CURSORCREATE',
+  Cursorupdate = 'CURSORUPDATE',
+  Cursordelete = 'CURSORDELETE',
   Permissionupdate = 'PERMISSIONUPDATE'
 }
 
@@ -1079,6 +1085,24 @@ export type UnPublishMutation = (
   ) }
 );
 
+export type UploadFileMutationVariables = {
+  file: Scalars['Upload'];
+  cursorId: Scalars['ID'];
+};
+
+
+export type UploadFileMutation = (
+  { __typename?: 'Mutation' }
+  & { uploadFile: (
+    { __typename?: 'File' }
+    & { cursor: (
+      { __typename?: 'Cursor' }
+      & CursorDataFragment
+    ) }
+    & FileDataFragment
+  ) }
+);
+
 export type FlavorQueryVariables = {
   id: Scalars['ID'];
 };
@@ -1175,7 +1199,15 @@ export type CursorDataFragment = (
   & { flavor: (
     { __typename?: 'Flavor' }
     & FlavorDataFragment
-  ) }
+  ), source: Maybe<(
+    { __typename?: 'File' }
+    & FileDataFragment
+  )> }
+);
+
+export type FileDataFragment = (
+  { __typename?: 'File' }
+  & Pick<File, 'id' | 'key' | 'url' | 'mimetype' | 'filename' | 'createdAt' | 'updatedAt'>
 );
 
 export type BasketDataFragment = (
@@ -1244,6 +1276,17 @@ export const FlavorDataFragmentDoc = gql`
   }
 }
     ${EggDataFragmentDoc}`;
+export const FileDataFragmentDoc = gql`
+    fragment FileData on File {
+  id
+  key
+  url
+  mimetype
+  filename
+  createdAt
+  updatedAt
+}
+    `;
 export const CursorDataFragmentDoc = gql`
     fragment CursorData on Cursor {
   id
@@ -1252,8 +1295,12 @@ export const CursorDataFragmentDoc = gql`
   flavor {
     ...FlavorData
   }
+  source {
+    ...FileData
+  }
 }
-    ${FlavorDataFragmentDoc}`;
+    ${FlavorDataFragmentDoc}
+${FileDataFragmentDoc}`;
 export const BasketDataFragmentDoc = gql`
     fragment BasketData on EggConnection {
   edges {
@@ -1938,6 +1985,43 @@ export function useUnPublishMutation(baseOptions?: ApolloReactHooks.MutationHook
 export type UnPublishMutationHookResult = ReturnType<typeof useUnPublishMutation>;
 export type UnPublishMutationResult = ApolloReactCommon.MutationResult<UnPublishMutation>;
 export type UnPublishMutationOptions = ApolloReactCommon.BaseMutationOptions<UnPublishMutation, UnPublishMutationVariables>;
+export const UploadFileDocument = gql`
+    mutation uploadFile($file: Upload!, $cursorId: ID!) {
+  uploadFile(file: $file, cursorId: $cursorId) {
+    ...FileData
+    cursor {
+      ...CursorData
+    }
+  }
+}
+    ${FileDataFragmentDoc}
+${CursorDataFragmentDoc}`;
+export type UploadFileMutationFn = ApolloReactCommon.MutationFunction<UploadFileMutation, UploadFileMutationVariables>;
+
+/**
+ * __useUploadFileMutation__
+ *
+ * To run a mutation, you first call `useUploadFileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadFileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadFileMutation, { data, loading, error }] = useUploadFileMutation({
+ *   variables: {
+ *      file: // value for 'file'
+ *      cursorId: // value for 'cursorId'
+ *   },
+ * });
+ */
+export function useUploadFileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UploadFileMutation, UploadFileMutationVariables>) {
+        return ApolloReactHooks.useMutation<UploadFileMutation, UploadFileMutationVariables>(UploadFileDocument, baseOptions);
+      }
+export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
+export type UploadFileMutationResult = ApolloReactCommon.MutationResult<UploadFileMutation>;
+export type UploadFileMutationOptions = ApolloReactCommon.BaseMutationOptions<UploadFileMutation, UploadFileMutationVariables>;
 export const FlavorDocument = gql`
     query flavor($id: ID!) {
   flavor(id: $id) {

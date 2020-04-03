@@ -1,28 +1,51 @@
 import styled from "styled-components";
 
 const CursorList = styled.ol`
-  margin: 0;
-  padding: 0;
   display: grid;
   grid-gap: 1rem;
-  text-align: center;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 `;
 
 const CursorCard = styled.div`
-  background-color: #1fd234;
+  height: auto;
   border: solid;
+  background-color: #1fd234;
 `;
 
 const Heading = styled.div`
   font-size: 20px;
+  text-align: center;
   background-color: #ec6d34;
 `;
 
 const Body = styled.div`
-  height: 5rem;
-  background-color: #83ffff;
-  display: inline-block;
+  width: 100%;
+  position: relative;
+  
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  button {
+    opacity:0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: red;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  &:hover button {
+    opacity:1;
+  }
 `;
 
 const Actions = styled.div`
