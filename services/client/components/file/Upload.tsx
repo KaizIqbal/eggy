@@ -10,11 +10,13 @@ interface IProps {
 
 export const UploadFile: React.FC<IProps> = ({ cursorId, flavorId }) => {
   // ---------------------------------------------------------------- HOOKS
+
   const [uploadFile, { loading, error }] = useUploadFileMutation({
     refetchQueries: [{ query: CursorsDocument, variables: { flavorId } }]
   });
 
   // ---------------------------------------------------------------- HANDLING FUNCTION
+
   const onDrop = useCallback(
     acceptedFiles => {
       const file = acceptedFiles[0];
@@ -24,8 +26,11 @@ export const UploadFile: React.FC<IProps> = ({ cursorId, flavorId }) => {
   );
 
   // ---------------------------------------------------------------- RENDER
+
   if (error) return <p>Error: {error.message}</p>;
+
   if (loading) return <p>Uploading...</p>;
+
   return (
     <>
       <Dropzone onDrop={files => onDrop(files)}>

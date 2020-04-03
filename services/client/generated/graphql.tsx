@@ -1095,10 +1095,19 @@ export type UploadFileMutation = (
   { __typename?: 'Mutation' }
   & { uploadFile: (
     { __typename?: 'File' }
-    & { cursor: (
-      { __typename?: 'Cursor' }
-      & CursorDataFragment
-    ) }
+    & FileDataFragment
+  ) }
+);
+
+export type DeleteFileMutationVariables = {
+  fileId: Scalars['ID'];
+};
+
+
+export type DeleteFileMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteFile: (
+    { __typename?: 'File' }
     & FileDataFragment
   ) }
 );
@@ -1989,13 +1998,9 @@ export const UploadFileDocument = gql`
     mutation uploadFile($file: Upload!, $cursorId: ID!) {
   uploadFile(file: $file, cursorId: $cursorId) {
     ...FileData
-    cursor {
-      ...CursorData
-    }
   }
 }
-    ${FileDataFragmentDoc}
-${CursorDataFragmentDoc}`;
+    ${FileDataFragmentDoc}`;
 export type UploadFileMutationFn = ApolloReactCommon.MutationFunction<UploadFileMutation, UploadFileMutationVariables>;
 
 /**
@@ -2022,6 +2027,38 @@ export function useUploadFileMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type UploadFileMutationHookResult = ReturnType<typeof useUploadFileMutation>;
 export type UploadFileMutationResult = ApolloReactCommon.MutationResult<UploadFileMutation>;
 export type UploadFileMutationOptions = ApolloReactCommon.BaseMutationOptions<UploadFileMutation, UploadFileMutationVariables>;
+export const DeleteFileDocument = gql`
+    mutation deleteFile($fileId: ID!) {
+  deleteFile(fileId: $fileId) {
+    ...FileData
+  }
+}
+    ${FileDataFragmentDoc}`;
+export type DeleteFileMutationFn = ApolloReactCommon.MutationFunction<DeleteFileMutation, DeleteFileMutationVariables>;
+
+/**
+ * __useDeleteFileMutation__
+ *
+ * To run a mutation, you first call `useDeleteFileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteFileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteFileMutation, { data, loading, error }] = useDeleteFileMutation({
+ *   variables: {
+ *      fileId: // value for 'fileId'
+ *   },
+ * });
+ */
+export function useDeleteFileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteFileMutation, DeleteFileMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteFileMutation, DeleteFileMutationVariables>(DeleteFileDocument, baseOptions);
+      }
+export type DeleteFileMutationHookResult = ReturnType<typeof useDeleteFileMutation>;
+export type DeleteFileMutationResult = ApolloReactCommon.MutationResult<DeleteFileMutation>;
+export type DeleteFileMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteFileMutation, DeleteFileMutationVariables>;
 export const FlavorDocument = gql`
     query flavor($id: ID!) {
   flavor(id: $id) {
