@@ -4,10 +4,9 @@ import Router from "next/router";
 import { useCursorsQuery, Cursor } from "generated/graphql";
 import { setCursors } from "helper/constriants";
 
-import { UploadFile } from "components/file";
+import { UploadFile, DeleteFile } from "components/file";
 import { DeleteCursor } from "components/cursor";
 import { CursorList, CursorCard, Heading, Actions, Body } from "components/styled/cursor/Cursors";
-import { Button } from "components/styled";
 
 interface IProps {
   flavorId: string;
@@ -59,7 +58,7 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
                 {cursor.source ? (
                   <>
                     <img src={cursor.source.url} alt={cursor.source.filename} />
-                    <Button>Remove</Button>
+                    <DeleteFile fileId={cursor.source.id} flavorId={flavorId} />
                   </>
                 ) : (
                   <UploadFile flavorId={flavorId} cursorId={cursor.id} />
