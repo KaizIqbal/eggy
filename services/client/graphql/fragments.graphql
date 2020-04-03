@@ -32,6 +32,19 @@ fragment CursorData on Cursor {
   flavor {
     ...FlavorData
   }
+  source {
+    ...FileData
+  }
+}
+
+fragment FileData on File {
+  id
+  key
+  url
+  mimetype
+  filename
+  createdAt
+  updatedAt
 }
 
 fragment BasketData on EggConnection {
