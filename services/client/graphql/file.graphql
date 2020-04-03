@@ -5,8 +5,12 @@
 mutation uploadFile($file: Upload!, $cursorId: ID!) {
   uploadFile(file: $file, cursorId: $cursorId) {
     ...FileData
-    cursor {
-      ...CursorData
-    }
+  }
+}
+
+# ---------- FILE DELETE 
+mutation deleteFile($fileId: ID!) {
+  deleteFile(fileId: $fileId) {
+    ...FileData
   }
 }
