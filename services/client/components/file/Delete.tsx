@@ -22,7 +22,9 @@ export const DeleteFile: React.FC<IProps> = ({ fileId, flavorId }) => {
 
   return (
     <>
-      <Button onClick={() => deleteFile()}>Remov{loading ? "ing" : "e"}</Button>
+      <Button type="submit" onClick={() => deleteFile()}>
+        Remov{loading ? "ing" : "e"}
+      </Button>
     </>
   );
 };
