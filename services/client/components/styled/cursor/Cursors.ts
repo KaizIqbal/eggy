@@ -21,14 +21,14 @@ const Heading = styled.div`
 const Body = styled.div`
   width: 100%;
   position: relative;
-  
+
   img {
     width: 100%;
     height: auto;
   }
 
-  button {
-    opacity:0;
+  button[type="submit"] {
+    opacity: 0;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -44,7 +44,7 @@ const Body = styled.div`
   }
 
   &:hover button {
-    opacity:1;
+    opacity: 1;
   }
 `;
 
