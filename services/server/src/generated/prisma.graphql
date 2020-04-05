@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Sun Mar 29 2020 06:05:36 GMT+0000 (Coordinated Universal Time)
+# timestamp: Sun Apr 05 2020 12:03:38 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -86,7 +86,9 @@ type CursorEdge {
 }
 
 enum cursorName {
-  Default
+  Pointer_Left
+  Pointer_Center
+  Pointer_Right
   X11
   Wayland
 }
