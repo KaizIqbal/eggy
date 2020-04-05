@@ -51,7 +51,7 @@ export const fileMutations = {
       name;
 
     // fileApi call
-    const s3Response = await uploadToS3(key, stream);
+    const s3Response = await uploadToS3(key, mimetype, stream);
 
     // get url from s3 Response
     const url = s3Response.Location;
