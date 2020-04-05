@@ -34,7 +34,9 @@ export type Cursor = Node & {
 };
 
 export enum CursorName {
-  Default = 'Default',
+  PointerLeft = 'Pointer_Left',
+  PointerCenter = 'Pointer_Center',
+  PointerRight = 'Pointer_Right',
   X11 = 'X11',
   Wayland = 'Wayland'
 }
