@@ -18,7 +18,9 @@ enum Platform {
   LINUX
 }
 enum cursorName {
-  Default
+  Pointer_Left 
+  Pointer_Center 
+  Pointer_Right
   X11
   Wayland
 }
