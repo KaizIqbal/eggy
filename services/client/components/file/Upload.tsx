@@ -25,21 +25,13 @@ export const UploadFile: React.FC<IProps> = ({ cursorId, flavorId }) => {
     [uploadFile, cursorId]
   );
 
-  const { getRootProps, getInputProps, open, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps, open } = useDropzone({
     onDrop: upload,
     // Disable click and keydown behavior
     noClick: true,
     noKeyboard: true,
     accept: [".svg"]
   });
-
-  // ---------------------------------------------------------------- HANDLING FUNCTION
-
-  const files = acceptedFiles.map((file: any) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
   // ---------------------------------------------------------------- RENDER
 
@@ -57,10 +49,6 @@ export const UploadFile: React.FC<IProps> = ({ cursorId, flavorId }) => {
           Open File Dialog
         </Button>
       </div>
-      <aside>
-        <h4>Files</h4>
-        <ul>{files}</ul>
-      </aside>
     </>
   );
 };
