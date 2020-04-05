@@ -23,8 +23,10 @@ const Body = styled.div`
   position: relative;
 
   img {
-    width: 100%;
+    width: 50%;
     height: auto;
+    display: block;
+    margin: auto;
   }
 
   button[type="submit"] {
