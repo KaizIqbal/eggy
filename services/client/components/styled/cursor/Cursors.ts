@@ -20,13 +20,15 @@ const Heading = styled.div`
 
 const Body = styled.div`
   width: 100%;
+  height: 7em;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   img {
     width: 50%;
     height: auto;
-    display: block;
-    margin: auto;
   }
 
   button[type="submit"] {
