@@ -17,7 +17,7 @@ export const flavrorMutations = {
     // Checking user has permissions or not if not then throw Error
     await checkEgg(ctx, eggId, ["ADMIN", "FLAVORCREATE"]);
 
-    const flavor = await ctx.db.mutation.createFlavor(
+    return await ctx.db.mutation.createFlavor(
       {
         data: {
           // Provide relationship between Flavour and Cursor
@@ -31,8 +31,6 @@ export const flavrorMutations = {
       },
       info
     );
-
-    return flavor;
   },
 
   // ################################################ UPDATE FLAVOR ################################################
