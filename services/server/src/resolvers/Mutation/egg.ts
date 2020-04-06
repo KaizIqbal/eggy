@@ -1,7 +1,7 @@
 // Helper Functions
 import isAuth from "../../utils/isAuth";
 import checkEgg from "../../utils/checkEgg";
-import checkPublish from "../../utils/checkPublish";
+import { checkEggStatus } from "../../utils/checkEggStatus";
 import generateEggName from "../../utils/generateEggName";
 
 export const eggMutations = {
@@ -118,7 +118,7 @@ export const eggMutations = {
   async publish(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
-    await checkPublish(ctx, args);
+    await checkEggStatus(ctx, args);
 
     return ctx.db.mutation.updateEgg(
       {
@@ -134,7 +134,7 @@ export const eggMutations = {
   async unPublish(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
-    await checkPublish(ctx, args);
+    await checkEggStatus(ctx, args);
 
     return ctx.db.mutation.updateEgg(
       {

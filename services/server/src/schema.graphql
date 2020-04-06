@@ -73,6 +73,7 @@ type Query {
   # Flavors
   flavor(id: ID!): Flavor!
   flavors(eggId: ID!): [Flavor]!
+  RenderFlavors(eggId: ID!): [Flavor]!
 
   # User
   me: User
