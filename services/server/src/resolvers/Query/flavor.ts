@@ -35,5 +35,22 @@ export const flavorQueries = {
       },
       info
     );
+  },
+  RenderFlavors(parent, args, ctx, info) {
+    // Checking user logged in or not if not then throw Error
+    isAuth(ctx);
+
+    // return Render flavors in egg
+    return ctx.db.query.flavors(
+      {
+        where: {
+          isRendered: true,
+          egg: {
+            id: args.eggId
+          }
+        }
+      },
+      info
+    );
   }
 };

@@ -14,6 +14,10 @@ export const fileMutations = {
 
     const { createReadStream, filename, mimetype, encoding } = await args.file;
 
+    if (mimetype !== "image/svg+xml") {
+      throw new Error("ERROR: Only .svg file Supported");
+    }
+
     // creating Stream
     const stream = createReadStream();
 
