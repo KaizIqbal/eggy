@@ -1,6 +1,6 @@
 import React from "react";
 
-import { usePublishMutation, PublicBasketDocument, UserBasketDocument } from "generated/graphql";
+import { usePublishEggMutation, PublicBasketDocument, UserBasketDocument } from "generated/graphql";
 
 import { Button } from "components/styled";
 
@@ -11,7 +11,7 @@ interface IProps {
 export const PublishEgg: React.FC<IProps> = ({ id }) => {
   // ---------------------------------------------------------------- HOOKS
 
-  const [publishEgg, { loading, error }] = usePublishMutation({
+  const [publishEgg, { loading, error }] = usePublishEggMutation({
     refetchQueries: [
       {
         query: PublicBasketDocument
