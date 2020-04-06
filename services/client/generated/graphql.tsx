@@ -326,6 +326,7 @@ export type Flavor = Node & {
    __typename?: 'Flavor';
   id: Scalars['ID'];
   name: Scalars['String'];
+  isRendered: Scalars['Boolean'];
   egg: Egg;
   cursors?: Maybe<Array<Cursor>>;
 };
@@ -345,7 +346,9 @@ export enum FlavorOrderByInput {
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   NameAsc = 'name_ASC',
-  NameDesc = 'name_DESC'
+  NameDesc = 'name_DESC',
+  IsRenderedAsc = 'isRendered_ASC',
+  IsRenderedDesc = 'isRendered_DESC'
 }
 
 export type FlavorWhereInput = {
@@ -380,6 +383,8 @@ export type FlavorWhereInput = {
   name_not_starts_with?: Maybe<Scalars['String']>;
   name_ends_with?: Maybe<Scalars['String']>;
   name_not_ends_with?: Maybe<Scalars['String']>;
+  isRendered?: Maybe<Scalars['Boolean']>;
+  isRendered_not?: Maybe<Scalars['Boolean']>;
   egg?: Maybe<EggWhereInput>;
   cursors_every?: Maybe<CursorWhereInput>;
   cursors_some?: Maybe<CursorWhereInput>;
@@ -1192,12 +1197,15 @@ export type EggDataFragment = (
   & { user: (
     { __typename?: 'User' }
     & UserDataFragment
-  ) }
+  ), flavors: Maybe<Array<(
+    { __typename?: 'Flavor' }
+    & Pick<Flavor, 'isRendered'>
+  )>> }
 );
 
 export type FlavorDataFragment = (
   { __typename?: 'Flavor' }
-  & Pick<Flavor, 'id' | 'name'>
+  & Pick<Flavor, 'id' | 'name' | 'isRendered'>
   & { egg: (
     { __typename?: 'Egg' }
     & EggDataFragment
@@ -1276,12 +1284,16 @@ export const EggDataFragmentDoc = gql`
   user {
     ...UserData
   }
+  flavors {
+    isRendered
+  }
 }
     ${UserDataFragmentDoc}`;
 export const FlavorDataFragmentDoc = gql`
     fragment FlavorData on Flavor {
   id
   name
+  isRendered
   egg {
     ...EggData
   }
