@@ -115,7 +115,7 @@ export const eggMutations = {
 
   // ################################################ PUBLISH EGG ################################################
 
-  async publish(parent, args, ctx, info) {
+  async publishEgg(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
     await checkEggStatus(ctx, args);
@@ -131,7 +131,7 @@ export const eggMutations = {
 
   // ################################################ UNPUBLISH EGG ################################################
 
-  async unPublish(parent, args, ctx, info) {
+  async unPublishEgg(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
     await checkEggStatus(ctx, args);

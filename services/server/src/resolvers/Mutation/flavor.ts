@@ -2,6 +2,7 @@
 import checkFlavorName from "../../utils/checkFlavorName";
 import checkEgg from "../../utils/checkEgg";
 import checkFlavor from "../../utils/checkFlavor";
+import { checkFalvorStatus } from "../../utils/checkFlavorStatus";
 
 export const flavrorMutations = {
   // ################################################ CREATE FLAVOR ################################################
@@ -66,5 +67,25 @@ export const flavrorMutations = {
 
     // Delete flavor by id
     return ctx.db.mutation.deleteFlavor({ where: { id: args.id } }, info);
+  },
+
+  async publishFlavor(aprent, args, ctx, info) {
+    // Checking user has permissions or not if not then throw Error
+    await checkFalvorStatus(ctx, args);
+
+    return ctx.db.mutation.updateFlavor(
+      { where: { id: args.id }, data: { isPublished: true } },
+      info
+    );
+  },
+
+  async unPublishFlavor(aprent, args, ctx, info) {
+    // Checking user has permissions or not if not then throw Error
+    await checkFalvorStatus(ctx, args);
+
+    return ctx.db.mutation.updateFlavor(
+      { where: { id: args.id }, data: { isPublished: false } },
+      info
+    );
   }
 };
