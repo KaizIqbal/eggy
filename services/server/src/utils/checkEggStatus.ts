@@ -6,7 +6,7 @@ async function checkEggStatus(ctx: any, args: any) {
   });
 
   if (!egg) {
-    throw new Error(`Egg not found or you're not the publisher`);
+    throw new Error("Egg not found or you're not the publisher");
   }
 }
 
