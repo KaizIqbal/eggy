@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useUnPublishMutation, PublicBasketDocument, UserBasketDocument } from "generated/graphql";
+import { useUnPublishEggMutation, PublicBasketDocument, UserBasketDocument } from "generated/graphql";
 
 import { Button } from "components/styled";
 
@@ -11,7 +11,7 @@ interface IProps {
 export const UnPublishEgg: React.FC<IProps> = ({ id }) => {
   // ---------------------------------------------------------------- HOOKS
 
-  const [unPublishEgg, { loading, error }] = useUnPublishMutation({
+  const [unPublishEgg, { loading, error }] = useUnPublishEggMutation({
     refetchQueries: [
       {
         query: PublicBasketDocument

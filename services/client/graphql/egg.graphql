@@ -41,15 +41,15 @@ mutation deleteEgg($id: ID!) {
 }
 
 # ---------- PUBLISH
-mutation publish($id: ID!) {
-  publish(id: $id) {
+mutation publishEgg($id: ID!) {
+  publishEgg(id: $id) {
     id
   }
 }
 
 # ---------- UNPUBLISH
-mutation unPublish($id: ID!) {
-  unPublish(id: $id) {
+mutation unPublishEgg($id: ID!) {
+  unPublishEgg(id: $id) {
     id
   }
 }
