@@ -16,7 +16,12 @@ query flavors($eggId: ID!) {
   }
 }
 
-
+# ---------- FETCH ALL RENDER FLAVORS
+query renderFlavors($eggId: ID!) {
+  renderFlavors(eggId: $eggId) {
+    ...FlavorData
+  }
+}
 
 # ---------------------------------------- MUTATIONS
 
@@ -41,5 +46,17 @@ mutation deleteFlavor($id: ID!) {
   }
 }
 
+# ---------- PUBLISH
+mutation publishFlavor($id: ID!) {
+  publishFlavor(id: $id) {
+    id
+  }
+}
 
+# ---------- UNPUBLISH
+mutation unPublishFlavor($id: ID!) {
+  unPublishFlavor(id: $id) {
+    id
+  }
+}
 

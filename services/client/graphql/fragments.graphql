@@ -11,7 +11,6 @@ fragment EggData on Egg {
   title
   eggname
   platforms
-  isRendered
   isPublished
   user {
     ...UserData
@@ -22,6 +21,7 @@ fragment FlavorData on Flavor {
   id
   name
   isRendered
+  isPublished
   egg {
     ...EggData
   }
