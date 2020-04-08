@@ -9,6 +9,7 @@ import { authMutations } from "./Mutation/auth";
 import { cursorMutations } from "./Mutation/cursor";
 import { fileMutations } from "./Mutation/file";
 
+import { helloSubscription } from "./Subscription/hello";
 export const resolvers = {
   Mutation: {
     ...authMutations,
@@ -29,5 +30,8 @@ export const resolvers = {
     ...flavorQueries,
 
     ...cursorQueries
+  },
+  Subscription: {
+    ...helloSubscription
   }
 };
