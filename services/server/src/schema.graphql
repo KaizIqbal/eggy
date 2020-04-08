@@ -58,6 +58,10 @@ type Mutation {
   updatePermissions(permissions:[Permission] ,userId:ID!): User
 }
 
+type Subscription {
+  hello: String!
+}
+
 type Query {
   # Egg
   egg(where: EggWhereUniqueInput!): Egg
@@ -74,7 +78,6 @@ type Query {
   # Flavors
   flavor(id: ID!): Flavor!
   flavors(eggId: ID!): [Flavor]!
-  renderFlavors(eggId: ID!): [Flavor]!
 
   # User
   me: User
