@@ -29,6 +29,7 @@ export type Cursor = Node & {
   id: Scalars['ID'];
   name: CursorName;
   frames: Scalars['Int'];
+  isRendered: Scalars['Boolean'];
   flavor: Flavor;
   source?: Maybe<File>;
 };
@@ -47,7 +48,9 @@ export enum CursorOrderByInput {
   NameAsc = 'name_ASC',
   NameDesc = 'name_DESC',
   FramesAsc = 'frames_ASC',
-  FramesDesc = 'frames_DESC'
+  FramesDesc = 'frames_DESC',
+  IsRenderedAsc = 'isRendered_ASC',
+  IsRenderedDesc = 'isRendered_DESC'
 }
 
 export type CursorWhereInput = {
@@ -80,6 +83,8 @@ export type CursorWhereInput = {
   frames_lte?: Maybe<Scalars['Int']>;
   frames_gt?: Maybe<Scalars['Int']>;
   frames_gte?: Maybe<Scalars['Int']>;
+  isRendered?: Maybe<Scalars['Boolean']>;
+  isRendered_not?: Maybe<Scalars['Boolean']>;
   flavor?: Maybe<FlavorWhereInput>;
   source?: Maybe<FileWhereInput>;
 };
@@ -327,7 +332,6 @@ export type Flavor = Node & {
   id: Scalars['ID'];
   name: Scalars['String'];
   isPublished: Scalars['Boolean'];
-  isRendered: Scalars['Boolean'];
   egg: Egg;
   cursors?: Maybe<Array<Cursor>>;
 };
@@ -349,9 +353,7 @@ export enum FlavorOrderByInput {
   NameAsc = 'name_ASC',
   NameDesc = 'name_DESC',
   IsPublishedAsc = 'isPublished_ASC',
-  IsPublishedDesc = 'isPublished_DESC',
-  IsRenderedAsc = 'isRendered_ASC',
-  IsRenderedDesc = 'isRendered_DESC'
+  IsPublishedDesc = 'isPublished_DESC'
 }
 
 export type FlavorWhereInput = {
@@ -388,8 +390,6 @@ export type FlavorWhereInput = {
   name_not_ends_with?: Maybe<Scalars['String']>;
   isPublished?: Maybe<Scalars['Boolean']>;
   isPublished_not?: Maybe<Scalars['Boolean']>;
-  isRendered?: Maybe<Scalars['Boolean']>;
-  isRendered_not?: Maybe<Scalars['Boolean']>;
   egg?: Maybe<EggWhereInput>;
   cursors_every?: Maybe<CursorWhereInput>;
   cursors_some?: Maybe<CursorWhereInput>;
@@ -601,7 +601,6 @@ export type Query = {
   cursors: Array<Maybe<Cursor>>;
   flavor: Flavor;
   flavors: Array<Maybe<Flavor>>;
-  renderFlavors: Array<Maybe<Flavor>>;
   me?: Maybe<User>;
   users: Array<Maybe<User>>;
   isUserAvailable?: Maybe<UserFlag>;
@@ -646,11 +645,6 @@ export type QueryFlavorArgs = {
 
 
 export type QueryFlavorsArgs = {
-  eggId: Scalars['ID'];
-};
-
-
-export type QueryRenderFlavorsArgs = {
   eggId: Scalars['ID'];
 };
 
@@ -1168,19 +1162,6 @@ export type FlavorsQuery = (
   )>> }
 );
 
-export type RenderFlavorsQueryVariables = {
-  eggId: Scalars['ID'];
-};
-
-
-export type RenderFlavorsQuery = (
-  { __typename?: 'Query' }
-  & { renderFlavors: Array<Maybe<(
-    { __typename?: 'Flavor' }
-    & FlavorDataFragment
-  )>> }
-);
-
 export type CreateFlavorMutationVariables = {
   name: Scalars['String'];
   eggId: Scalars['ID'];
@@ -1264,7 +1245,7 @@ export type EggDataFragment = (
 
 export type FlavorDataFragment = (
   { __typename?: 'Flavor' }
-  & Pick<Flavor, 'id' | 'name' | 'isRendered' | 'isPublished'>
+  & Pick<Flavor, 'id' | 'name' | 'isPublished'>
   & { egg: (
     { __typename?: 'Egg' }
     & EggDataFragment
@@ -1273,7 +1254,7 @@ export type FlavorDataFragment = (
 
 export type CursorDataFragment = (
   { __typename?: 'Cursor' }
-  & Pick<Cursor, 'id' | 'name' | 'frames'>
+  & Pick<Cursor, 'id' | 'name' | 'frames' | 'isRendered'>
   & { flavor: (
     { __typename?: 'Flavor' }
     & FlavorDataFragment
@@ -1349,7 +1330,6 @@ export const FlavorDataFragmentDoc = gql`
     fragment FlavorData on Flavor {
   id
   name
-  isRendered
   isPublished
   egg {
     ...EggData
@@ -1372,6 +1352,7 @@ export const CursorDataFragmentDoc = gql`
   id
   name
   frames
+  isRendered
   flavor {
     ...FlavorData
   }
@@ -2196,39 +2177,6 @@ export function useFlavorsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHook
 export type FlavorsQueryHookResult = ReturnType<typeof useFlavorsQuery>;
 export type FlavorsLazyQueryHookResult = ReturnType<typeof useFlavorsLazyQuery>;
 export type FlavorsQueryResult = ApolloReactCommon.QueryResult<FlavorsQuery, FlavorsQueryVariables>;
-export const RenderFlavorsDocument = gql`
-    query renderFlavors($eggId: ID!) {
-  renderFlavors(eggId: $eggId) {
-    ...FlavorData
-  }
-}
-    ${FlavorDataFragmentDoc}`;
-
-/**
- * __useRenderFlavorsQuery__
- *
- * To run a query within a React component, call `useRenderFlavorsQuery` and pass it any options that fit your needs.
- * When your component renders, `useRenderFlavorsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useRenderFlavorsQuery({
- *   variables: {
- *      eggId: // value for 'eggId'
- *   },
- * });
- */
-export function useRenderFlavorsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<RenderFlavorsQuery, RenderFlavorsQueryVariables>) {
-        return ApolloReactHooks.useQuery<RenderFlavorsQuery, RenderFlavorsQueryVariables>(RenderFlavorsDocument, baseOptions);
-      }
-export function useRenderFlavorsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<RenderFlavorsQuery, RenderFlavorsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<RenderFlavorsQuery, RenderFlavorsQueryVariables>(RenderFlavorsDocument, baseOptions);
-        }
-export type RenderFlavorsQueryHookResult = ReturnType<typeof useRenderFlavorsQuery>;
-export type RenderFlavorsLazyQueryHookResult = ReturnType<typeof useRenderFlavorsLazyQuery>;
-export type RenderFlavorsQueryResult = ApolloReactCommon.QueryResult<RenderFlavorsQuery, RenderFlavorsQueryVariables>;
 export const CreateFlavorDocument = gql`
     mutation createFlavor($name: String!, $eggId: ID!) {
   createFlavor(name: $name, eggId: $eggId) {

@@ -20,7 +20,6 @@ fragment EggData on Egg {
 fragment FlavorData on Flavor {
   id
   name
-  isRendered
   isPublished
   egg {
     ...EggData
@@ -31,6 +30,7 @@ fragment CursorData on Cursor {
   id
   name
   frames
+  isRendered
   flavor {
     ...FlavorData
   }
