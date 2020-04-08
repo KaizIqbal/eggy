@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Mon Apr 06 2020 09:44:58 GMT+0000 (Coordinated Universal Time)
+# timestamp: Wed Apr 08 2020 04:05:47 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -30,6 +30,7 @@ type Cursor implements Node {
   id: ID!
   name: cursorName!
   frames: Int!
+  isRendered: Boolean!
   flavor: Flavor!
   source: File
 }
@@ -48,6 +49,7 @@ input CursorCreateInput {
   id: ID
   name: cursorName!
   frames: Int!
+  isRendered: Boolean
   flavor: FlavorCreateOneWithoutCursorsInput!
   source: FileCreateOneWithoutCursorInput
 }
@@ -66,6 +68,7 @@ input CursorCreateWithoutFlavorInput {
   id: ID
   name: cursorName!
   frames: Int!
+  isRendered: Boolean
   source: FileCreateOneWithoutCursorInput
 }
 
@@ -73,6 +76,7 @@ input CursorCreateWithoutSourceInput {
   id: ID
   name: cursorName!
   frames: Int!
+  isRendered: Boolean
   flavor: FlavorCreateOneWithoutCursorsInput!
 }
 
@@ -100,12 +104,15 @@ enum CursorOrderByInput {
   name_DESC
   frames_ASC
   frames_DESC
+  isRendered_ASC
+  isRendered_DESC
 }
 
 type CursorPreviousValues {
   id: ID!
   name: cursorName!
   frames: Int!
+  isRendered: Boolean!
 }
 
 input CursorScalarWhereInput {
@@ -189,6 +196,10 @@ input CursorScalarWhereInput {
 
   """All values greater than or equal the given value."""
   frames_gte: Int
+  isRendered: Boolean
+
+  """All values that are not equal to given value."""
+  isRendered_not: Boolean
 }
 
 type CursorSubscriptionPayload {
@@ -231,6 +242,7 @@ input CursorSubscriptionWhereInput {
 input CursorUpdateInput {
   name: cursorName
   frames: Int
+  isRendered: Boolean
   flavor: FlavorUpdateOneRequiredWithoutCursorsInput
   source: FileUpdateOneWithoutCursorInput
 }
@@ -238,11 +250,13 @@ input CursorUpdateInput {
 input CursorUpdateManyDataInput {
   name: cursorName
   frames: Int
+  isRendered: Boolean
 }
 
 input CursorUpdateManyMutationInput {
   name: cursorName
   frames: Int
+  isRendered: Boolean
 }
 
 input CursorUpdateManyWithoutFlavorInput {
@@ -272,12 +286,14 @@ input CursorUpdateOneRequiredWithoutSourceInput {
 input CursorUpdateWithoutFlavorDataInput {
   name: cursorName
   frames: Int
+  isRendered: Boolean
   source: FileUpdateOneWithoutCursorInput
 }
 
 input CursorUpdateWithoutSourceDataInput {
   name: cursorName
   frames: Int
+  isRendered: Boolean
   flavor: FlavorUpdateOneRequiredWithoutCursorsInput
 }
 
@@ -378,6 +394,10 @@ input CursorWhereInput {
 
   """All values greater than or equal the given value."""
   frames_gte: Int
+  isRendered: Boolean
+
+  """All values that are not equal to given value."""
+  isRendered_not: Boolean
   flavor: FlavorWhereInput
   source: FileWhereInput
 }
@@ -1439,7 +1459,6 @@ type Flavor implements Node {
   id: ID!
   name: String!
   isPublished: Boolean!
-  isRendered: Boolean!
   egg: Egg!
   cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor!]
 }
@@ -1458,7 +1477,6 @@ input FlavorCreateInput {
   id: ID
   name: String!
   isPublished: Boolean
-  isRendered: Boolean
   egg: EggCreateOneWithoutFlavorsInput!
   cursors: CursorCreateManyWithoutFlavorInput
 }
@@ -1477,7 +1495,6 @@ input FlavorCreateWithoutCursorsInput {
   id: ID
   name: String!
   isPublished: Boolean
-  isRendered: Boolean
   egg: EggCreateOneWithoutFlavorsInput!
 }
 
@@ -1485,7 +1502,6 @@ input FlavorCreateWithoutEggInput {
   id: ID
   name: String!
   isPublished: Boolean
-  isRendered: Boolean
   cursors: CursorCreateManyWithoutFlavorInput
 }
 
@@ -1505,15 +1521,12 @@ enum FlavorOrderByInput {
   name_DESC
   isPublished_ASC
   isPublished_DESC
-  isRendered_ASC
-  isRendered_DESC
 }
 
 type FlavorPreviousValues {
   id: ID!
   name: String!
   isPublished: Boolean!
-  isRendered: Boolean!
 }
 
 input FlavorScalarWhereInput {
@@ -1609,10 +1622,6 @@ input FlavorScalarWhereInput {
 
   """All values that are not equal to given value."""
   isPublished_not: Boolean
-  isRendered: Boolean
-
-  """All values that are not equal to given value."""
-  isRendered_not: Boolean
 }
 
 type FlavorSubscriptionPayload {
@@ -1655,7 +1664,6 @@ input FlavorSubscriptionWhereInput {
 input FlavorUpdateInput {
   name: String
   isPublished: Boolean
-  isRendered: Boolean
   egg: EggUpdateOneRequiredWithoutFlavorsInput
   cursors: CursorUpdateManyWithoutFlavorInput
 }
@@ -1663,13 +1671,11 @@ input FlavorUpdateInput {
 input FlavorUpdateManyDataInput {
   name: String
   isPublished: Boolean
-  isRendered: Boolean
 }
 
 input FlavorUpdateManyMutationInput {
   name: String
   isPublished: Boolean
-  isRendered: Boolean
 }
 
 input FlavorUpdateManyWithoutEggInput {
@@ -1699,14 +1705,12 @@ input FlavorUpdateOneRequiredWithoutCursorsInput {
 input FlavorUpdateWithoutCursorsDataInput {
   name: String
   isPublished: Boolean
-  isRendered: Boolean
   egg: EggUpdateOneRequiredWithoutFlavorsInput
 }
 
 input FlavorUpdateWithoutEggDataInput {
   name: String
   isPublished: Boolean
-  isRendered: Boolean
   cursors: CursorUpdateManyWithoutFlavorInput
 }
 
@@ -1819,10 +1823,6 @@ input FlavorWhereInput {
 
   """All values that are not equal to given value."""
   isPublished_not: Boolean
-  isRendered: Boolean
-
-  """All values that are not equal to given value."""
-  isRendered_not: Boolean
   egg: EggWhereInput
   cursors_every: CursorWhereInput
   cursors_some: CursorWhereInput
