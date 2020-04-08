@@ -1,18 +1,22 @@
 import React from "react";
+import cookie from "cookie";
 import Head from "next/head";
 import Router from "next/router";
-import { ApolloClient } from "apollo-client";
-import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
-import { createUploadLink } from "apollo-upload-client";
-import { setContext } from "apollo-link-context";
-import fetch from "isomorphic-unfetch";
-import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwtDecode from "jwt-decode";
-import { getAccessToken, setAccessToken } from "./accessToken";
+import fetch from "isomorphic-unfetch";
+
 import { onError } from "apollo-link-error";
-import { ApolloLink } from "apollo-link";
-import cookie from "cookie";
-import { endpoint } from "./endpoint";
+import { ApolloClient } from "apollo-client";
+import { WebSocketLink } from "apollo-link-ws";
+import { ApolloLink, split } from "apollo-link";
+import { setContext } from "apollo-link-context";
+import { getMainDefinition } from "apollo-utilities";
+import { createUploadLink } from "apollo-upload-client";
+import { TokenRefreshLink } from "apollo-link-token-refresh";
+import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
+
+import { getAccessToken, setAccessToken } from "./accessToken";
+import { endpoint, websocket_endpoint } from "./endpoint";
 import { Redirect } from "./redirect";
 import { isBrowser } from "./isBrowser";
 
@@ -158,7 +162,7 @@ function initApolloClient(initState: any, serverAccessToken?: string) {
  * @param  {Object} config
  */
 function createApolloClient(initialState = {}, serverAccessToken?: string) {
-  const httpLinkWithUpload = createUploadLink({
+  const uploadLink = createUploadLink({
     uri: endpoint,
     credentials: "include",
     fetch
@@ -220,9 +224,44 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     };
   });
 
+  // Create a WebSocket link:
+  const wsLink: any = () => {
+    const token = isServer() ? serverAccessToken : getAccessToken();
+    return isBrowser
+      ? // if you instantiate in the server, the error will be thrown
+        new WebSocketLink({
+          uri: websocket_endpoint,
+          options: {
+            lazy: true,
+            reconnect: true,
+            connectionParams: {
+              headers: {
+                Authorization: token ? `bearer ${token}` : ""
+              }
+            }
+          }
+        })
+      : null;
+  };
+
+  // using the ability to split links, you can send data to each link
+  // depending on what kind of operation is being sent
+  const link = isBrowser
+    ? //only create the split in the browser split based on operation type
+      split(
+        // split based on operation type
+        ({ query }) => {
+          const definition = getMainDefinition(query);
+          return definition.kind === "OperationDefinition" && definition.operation === "subscription";
+        },
+        wsLink,
+        authLink
+      )
+    : authLink;
+
   return new ApolloClient({
     ssrMode: typeof window === "undefined", // Disables forceFetch on the server (so queries are only run once)
-    link: ApolloLink.from([refreshLink, authLink, errorLink, httpLinkWithUpload]),
+    link: ApolloLink.from([link, uploadLink, refreshLink, errorLink]),
     cache: new InMemoryCache().restore(initialState)
   });
 }

@@ -16,13 +16,6 @@ query flavors($eggId: ID!) {
   }
 }
 
-# ---------- FETCH ALL RENDER FLAVORS
-query renderFlavors($eggId: ID!) {
-  renderFlavors(eggId: $eggId) {
-    ...FlavorData
-  }
-}
-
 # ---------------------------------------- MUTATIONS
 
 # ---------- CREATE
