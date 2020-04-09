@@ -162,6 +162,7 @@ function initApolloClient(initState: any, serverAccessToken?: string) {
  * @param  {Object} config
  */
 function createApolloClient(initialState = {}, serverAccessToken?: string) {
+  // This also contain HttpLink
   const uploadLink = createUploadLink({
     uri: endpoint,
     credentials: "include",
@@ -214,8 +215,11 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     }
   });
 
+  // Getting Token
+  const token = isServer() ? serverAccessToken : getAccessToken();
+
+  // Create a Authentication Link:
   const authLink = setContext((_request, { headers }) => {
-    const token = isServer() ? serverAccessToken : getAccessToken();
     return {
       headers: {
         ...headers,
@@ -231,7 +235,13 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
         uri: websocket_endpoint,
         options: {
           lazy: true,
-          reconnect: true
+          reconnect: true,
+          connectionParams: {
+            // Provide authorization header to ApolloServer
+            headers: {
+              authorization: token ? `bearer ${token}` : ""
+            }
+          }
         }
       })
     : null;
