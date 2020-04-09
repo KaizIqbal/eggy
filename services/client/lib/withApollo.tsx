@@ -225,24 +225,16 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
   });
 
   // Create a WebSocket link:
-  const wsLink: any = () => {
-    const token = isServer() ? serverAccessToken : getAccessToken();
-    return isBrowser
-      ? // if you instantiate in the server, the error will be thrown
-        new WebSocketLink({
-          uri: websocket_endpoint,
-          options: {
-            lazy: true,
-            reconnect: true,
-            connectionParams: {
-              headers: {
-                Authorization: token ? `bearer ${token}` : ""
-              }
-            }
-          }
-        })
-      : null;
-  };
+  const wsLink: any = isBrowser
+    ? // if you instantiate in the server, the error will be thrown
+      new WebSocketLink({
+        uri: websocket_endpoint,
+        options: {
+          lazy: true,
+          reconnect: true
+        }
+      })
+    : null;
 
   // using the ability to split links, you can send data to each link
   // depending on what kind of operation is being sent
@@ -261,7 +253,7 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
 
   return new ApolloClient({
     ssrMode: typeof window === "undefined", // Disables forceFetch on the server (so queries are only run once)
-    link: ApolloLink.from([link, uploadLink, refreshLink, errorLink]),
+    link: ApolloLink.from([errorLink, refreshLink, link, uploadLink]),
     cache: new InMemoryCache().restore(initialState)
   });
 }
