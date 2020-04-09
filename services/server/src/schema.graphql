@@ -59,7 +59,7 @@ type Mutation {
 }
 
 type Subscription {
-  hello: String!
+ fileUploaded: FileSubscriptionPayload
 }
 
 type Query {
