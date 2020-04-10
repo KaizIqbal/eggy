@@ -60,8 +60,6 @@ export const fileMutations = {
     // get url from s3 Response
     const url = s3Response.Location;
 
-    // Call To Render
-
     // add detail to prisma
     const file = await ctx.db.mutation.createFile(
       {
@@ -76,6 +74,8 @@ export const fileMutations = {
       },
       info
     );
+
+    // Call To Render
 
     // return File
     return file;

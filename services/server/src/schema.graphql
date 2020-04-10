@@ -44,9 +44,8 @@ type Mutation {
   createCursor(name:cursorName! frames:Int! flavorId:ID!): Cursor!
   updateCursor(id:ID! name:cursorName! frames:Int!): Cursor!
   renameCursor(id:ID! flavorId:ID! name:cursorName!): Cursor!
-  deleteCursor(id:ID!): Cursor!  
-  renderCursor(fileId:ID!): Cursor!
-  
+  deleteCursor(id:ID!): Cursor!
+    
   # Auth
   signup(firstName:String! lastName:String! username: String! email:String! password:String!): AuthPayload!
   signin(email:String! password:String!): AuthPayload!
@@ -59,9 +58,9 @@ type Mutation {
   updatePermissions(permissions:[Permission] ,userId:ID!): User
 }
 
-type Subscription {
- fileUploaded: FileSubscriptionPayload
-}
+# type Subscription {
+#  fileUploaded: FileSubscriptionPayload
+# }
 
 type Query {
   # Egg
