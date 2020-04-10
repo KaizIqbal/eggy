@@ -67,7 +67,8 @@ type Cursor {
   frames: Int!
   isRendered: Boolean! @default(value: false) 
   flavor: Flavor! @relation(name: "Cursors")
-  source: File @relation(name: "File" link: INLINE onDelete: CASCADE)
+  source: File @relation(name: "Sourcefile")
+  render: [File] @relation(name: "Renderfile")
 }
 
 type File {
@@ -79,5 +80,4 @@ type File {
   mimetype: String!
   encoding: String!
   url: String! @unique
-  cursor: Cursor! @relation(name: "File")
 }

@@ -45,6 +45,7 @@ type Mutation {
   updateCursor(id:ID! name:cursorName! frames:Int!): Cursor!
   renameCursor(id:ID! flavorId:ID! name:cursorName!): Cursor!
   deleteCursor(id:ID!): Cursor!  
+  renderCursor(fileId:ID!): Cursor!
   
   # Auth
   signup(firstName:String! lastName:String! username: String! email:String! password:String!): AuthPayload!
@@ -84,6 +85,8 @@ type Query {
   users: [User]!
   isUserAvailable(username: String!) :UserFlag
 
+  # file
+  file(id: ID!): File!
 }
 
 type User {

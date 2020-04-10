@@ -117,9 +117,21 @@ export const cursorMutations = {
     delete args.id;
 
     // Checking user has permissions or not if not then throw Error
-    await checkCursor(ctx, cursorId, ["ADMIN", "CURSORUPDATE"]);
+    await checkCursor(ctx, cursorId, ["ADMIN", "CURSORDELETE"]);
 
     // Delete flavor by id
     return ctx.db.mutation.deleteCursor({ where: { id: cursorId } }, info);
+  },
+
+  async renderCursor(parent, args, ctx, info) {
+    // separate id from args
+    const cursorId = args.id;
+    delete args.id;
+
+    // Checking user has permissions or not if not then throw Error
+    await checkCursor(ctx, cursorId, ["ADMIN", "CURSORUPDATE"]);
+
+    // update cursor by id
+    return ctx.db.mutation.updateCursor({ where: { id: cursorId } }, info);
   }
 };
