@@ -10,7 +10,7 @@ import { authMutations } from "./Mutation/auth";
 import { cursorMutations } from "./Mutation/cursor";
 import { fileMutations } from "./Mutation/file";
 
-import { Subscription } from "./Subscription";
+// import { Subscription } from "./Subscription";
 
 export const resolvers = {
   Mutation: {
@@ -34,8 +34,8 @@ export const resolvers = {
     ...cursorQueries,
 
     ...fileQueries
-  },
-  Subscription: {
-    ...Subscription
   }
+  // Subscription: {
+  //   ...Subscription
+  // }
 };

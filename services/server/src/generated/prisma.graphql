@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Fri Apr 10 2020 05:25:44 GMT+0000 (Coordinated Universal Time)
+# timestamp: Fri Apr 10 2020 07:22:00 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -52,7 +52,7 @@ input CursorCreateInput {
   frames: Int!
   isRendered: Boolean
   flavor: FlavorCreateOneWithoutCursorsInput!
-  source: FileCreateOneInput
+  source: FileCreateOneWithoutCursorInput
   render: FileCreateManyInput
 }
 
@@ -61,12 +61,26 @@ input CursorCreateManyWithoutFlavorInput {
   connect: [CursorWhereUniqueInput!]
 }
 
+input CursorCreateOneWithoutSourceInput {
+  create: CursorCreateWithoutSourceInput
+  connect: CursorWhereUniqueInput
+}
+
 input CursorCreateWithoutFlavorInput {
   id: ID
   name: cursorName!
   frames: Int!
   isRendered: Boolean
-  source: FileCreateOneInput
+  source: FileCreateOneWithoutCursorInput
+  render: FileCreateManyInput
+}
+
+input CursorCreateWithoutSourceInput {
+  id: ID
+  name: cursorName!
+  frames: Int!
+  isRendered: Boolean
+  flavor: FlavorCreateOneWithoutCursorsInput!
   render: FileCreateManyInput
 }
 
@@ -234,7 +248,7 @@ input CursorUpdateInput {
   frames: Int
   isRendered: Boolean
   flavor: FlavorUpdateOneRequiredWithoutCursorsInput
-  source: FileUpdateOneInput
+  source: FileUpdateOneWithoutCursorInput
   render: FileUpdateManyInput
 }
 
@@ -267,17 +281,37 @@ input CursorUpdateManyWithWhereNestedInput {
   data: CursorUpdateManyDataInput!
 }
 
+input CursorUpdateOneRequiredWithoutSourceInput {
+  create: CursorCreateWithoutSourceInput
+  connect: CursorWhereUniqueInput
+  update: CursorUpdateWithoutSourceDataInput
+  upsert: CursorUpsertWithoutSourceInput
+}
+
 input CursorUpdateWithoutFlavorDataInput {
   name: cursorName
   frames: Int
   isRendered: Boolean
-  source: FileUpdateOneInput
+  source: FileUpdateOneWithoutCursorInput
+  render: FileUpdateManyInput
+}
+
+input CursorUpdateWithoutSourceDataInput {
+  name: cursorName
+  frames: Int
+  isRendered: Boolean
+  flavor: FlavorUpdateOneRequiredWithoutCursorsInput
   render: FileUpdateManyInput
 }
 
 input CursorUpdateWithWhereUniqueWithoutFlavorInput {
   where: CursorWhereUniqueInput!
   data: CursorUpdateWithoutFlavorDataInput!
+}
+
+input CursorUpsertWithoutSourceInput {
+  update: CursorUpdateWithoutSourceDataInput!
+  create: CursorCreateWithoutSourceInput!
 }
 
 input CursorUpsertWithWhereUniqueWithoutFlavorInput {
@@ -978,6 +1012,7 @@ type File implements Node {
   mimetype: String!
   encoding: String!
   url: String!
+  cursor: Cursor!
 }
 
 """A connection to a list of items."""
@@ -997,6 +1032,7 @@ input FileCreateInput {
   mimetype: String!
   encoding: String!
   url: String!
+  cursor: CursorCreateOneWithoutSourceInput!
 }
 
 input FileCreateManyInput {
@@ -1004,9 +1040,18 @@ input FileCreateManyInput {
   connect: [FileWhereUniqueInput!]
 }
 
-input FileCreateOneInput {
-  create: FileCreateInput
+input FileCreateOneWithoutCursorInput {
+  create: FileCreateWithoutCursorInput
   connect: FileWhereUniqueInput
+}
+
+input FileCreateWithoutCursorInput {
+  id: ID
+  key: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String!
 }
 
 """An edge in a connection."""
@@ -1386,6 +1431,7 @@ input FileUpdateDataInput {
   mimetype: String
   encoding: String
   url: String
+  cursor: CursorUpdateOneRequiredWithoutSourceInput
 }
 
 input FileUpdateInput {
@@ -1394,6 +1440,7 @@ input FileUpdateInput {
   mimetype: String
   encoding: String
   url: String
+  cursor: CursorUpdateOneRequiredWithoutSourceInput
 }
 
 input FileUpdateManyDataInput {
@@ -1429,13 +1476,21 @@ input FileUpdateManyWithWhereNestedInput {
   data: FileUpdateManyDataInput!
 }
 
-input FileUpdateOneInput {
-  create: FileCreateInput
+input FileUpdateOneWithoutCursorInput {
+  create: FileCreateWithoutCursorInput
   connect: FileWhereUniqueInput
   disconnect: Boolean
   delete: Boolean
-  update: FileUpdateDataInput
-  upsert: FileUpsertNestedInput
+  update: FileUpdateWithoutCursorDataInput
+  upsert: FileUpsertWithoutCursorInput
+}
+
+input FileUpdateWithoutCursorDataInput {
+  key: String
+  filename: String
+  mimetype: String
+  encoding: String
+  url: String
 }
 
 input FileUpdateWithWhereUniqueNestedInput {
@@ -1443,9 +1498,9 @@ input FileUpdateWithWhereUniqueNestedInput {
   data: FileUpdateDataInput!
 }
 
-input FileUpsertNestedInput {
-  update: FileUpdateDataInput!
-  create: FileCreateInput!
+input FileUpsertWithoutCursorInput {
+  update: FileUpdateWithoutCursorDataInput!
+  create: FileCreateWithoutCursorInput!
 }
 
 input FileUpsertWithWhereUniqueNestedInput {
@@ -1747,6 +1802,7 @@ input FileWhereInput {
 
   """All values not ending with the given string."""
   url_not_ends_with: String
+  cursor: CursorWhereInput
 }
 
 input FileWhereUniqueInput {
