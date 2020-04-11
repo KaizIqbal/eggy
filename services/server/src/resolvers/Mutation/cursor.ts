@@ -1,6 +1,7 @@
 // Helper Functions
 import checkFlavor from "../../utils/checkFlavor";
 import checkCursor from "../../utils/checkCursor";
+import { fetchFroms3 } from "../../modules/fileApi";
 
 export const cursorMutations = {
   // ################################################ CREATE CURSOR ################################################
@@ -117,9 +118,51 @@ export const cursorMutations = {
     delete args.id;
 
     // Checking user has permissions or not if not then throw Error
-    await checkCursor(ctx, cursorId, ["ADMIN", "CURSORDELETE"]);
+    // await checkCursor(ctx, cursorId, ["ADMIN", "CURSORDELETE"]);
 
     // Delete flavor by id
     return ctx.db.mutation.deleteCursor({ where: { id: cursorId } }, info);
+  },
+
+  async renderCursor(parent, args, ctx, info) {
+    // deconstruct id from args
+    const { id } = args;
+
+    const cursor = await ctx.db.query.cursor(
+      { where: { id } },
+      `{
+        name
+        frames
+        source {
+          key
+        }
+    }`
+    );
+
+    if (!cursor) {
+      throw new Error("Cursor not Found");
+    }
+
+    if (!cursor!.source) {
+      throw new Error("source file not found for this cursor");
+    }
+
+    // data of generated cursor
+    const {
+      name: fileName,
+      frames,
+      source: { key }
+    } = cursor;
+
+    const fileExtension = ".png";
+
+    // Fetch Source File From Amazon S3
+    const { Body } = await fetchFroms3(key);
+
+    console.log(Body, fileName, fileExtension, frames);
+
+    // Update Cursors
+    // TODO
+    return ctx.db.query.cursor({ where: { id } }, info);
   }
 };

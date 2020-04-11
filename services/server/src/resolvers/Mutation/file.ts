@@ -51,7 +51,7 @@ export const fileMutations = {
       data.flavor.egg.eggname +
       "/" +
       data.flavor.name +
-      "/" +
+      "/source/" +
       name;
 
     // fileApi call
