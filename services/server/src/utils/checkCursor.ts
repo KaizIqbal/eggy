@@ -1,11 +1,14 @@
 import isAuth from "./isAuth";
 
 async function checkCursor(ctx: any, id: any, permissions: any) {
+  // Checking user logged in or not if not then throw Error
+  isAuth(ctx);
+
   const cursor = await ctx.db.query.cursor(
     { where: { id } },
     `{
-      flavor{
-        egg{
+      flavor {
+        egg {
           user {
             id
           }
@@ -14,17 +17,16 @@ async function checkCursor(ctx: any, id: any, permissions: any) {
     }`
   );
 
-  // Checking user logged in or not if not then throw Error
-  isAuth(ctx);
+  console.log();
 
   // check they own the egg ,or  have a permission
-  const ownsFlavor = cursor!.flavor!.egg!.user!.id === ctx.request.userId;
+  const ownsCursor = cursor!.flavor!.egg!.user!.id === ctx.request.userId;
 
   const hasPermissions = ctx.request.user.permissions.some(
     (permission: string) => permissions.includes(permission)
   );
 
-  if (!ownsFlavor && !hasPermissions) {
+  if (!ownsCursor && !hasPermissions) {
     throw new Error("Access Denied!");
   }
 }

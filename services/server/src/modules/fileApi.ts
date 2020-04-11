@@ -22,6 +22,16 @@ export function uploadToS3(key: any, mimetype: any, stream: any) {
   return s3Response;
 }
 
+export function fetchFroms3(key: string) {
+  const params = {
+    Bucket: process.env.BUCKET_NAME,
+    Key: key
+  };
+  const s3Response = s3bucket.getObject(params).promise();
+
+  return s3Response;
+}
+
 export function deleteFromS3(key: any) {
   // Configure parameter
   const params = {
