@@ -4,6 +4,12 @@ enum Permission {
   EGGCREATE
   EGGUPDATE
   EGGDELETE
+  FLAVORCREATE
+  FLAVORUPDATE
+  FLAVORDELETE
+  CURSORCREATE
+  CURSORUPDATE
+  CURSORDELETE
   PERMISSIONUPDATE
 }
 
@@ -12,7 +18,9 @@ enum Platform {
   LINUX
 }
 enum cursorName {
-  Default
+  Pointer_Left 
+  Pointer_Center 
+  Pointer_Right
   X11
   Wayland
 }
@@ -47,7 +55,8 @@ type Egg {
 
 type Flavor {
   id: ID! @id
-  name: String! 
+  name: String!
+  isPublished: Boolean! @default(value: false)
   egg: Egg!  @relation(name: "Flavors")
   cursors: [Cursor]  @relation(name: "Cursors" onDelete: CASCADE)
 }
@@ -56,8 +65,10 @@ type Cursor {
   id: ID! @id
   name: cursorName!
   frames: Int!
+  isRendered: Boolean! @default(value: false) 
   flavor: Flavor! @relation(name: "Cursors")
   source: File @relation(name: "File" link: INLINE onDelete: CASCADE)
+  render: [File!] @relation(name: "Renderfile" onDelete: CASCADE)
 }
 
 type File {

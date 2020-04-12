@@ -19,17 +19,6 @@ server.express.use(
 
 server.express.use(coockieParser());
 
-// // Decode the token to get userId from each request
-// server.express.use((req: any, res, next) => {
-//   const { auth }: { auth: string } = req.cookies;
-//   if (auth) {
-//     const { _uid }: any = jwt.verify(auth, process.env.APP_SECRET);
-//     // put the userId onto the req for the further requests to access
-//     req.userId = _uid;
-//   }
-//   next();
-// });
-
 // Refreshing the `RefreshToken`
 server.express.post("/refresh_token", async (req, res) => {
   const token = req.cookies._euid;
@@ -42,7 +31,6 @@ server.express.post("/refresh_token", async (req, res) => {
   try {
     payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
   } catch (error) {
-    console.error(error);
     return res.send({ ok: false, accessToken: "" });
   }
 
@@ -91,8 +79,19 @@ server.express.use(async (req: any, _, next) => {
     return next();
   }
 
-  const user = await db.query.user({ where: { id: req.userId } });
-
+  const user = await db.query.user(
+    { where: { id: req.userId } },
+    `{
+      id
+      firstName
+      lastName
+      username
+      email
+      password
+      permissions
+      tokenVersion
+    }`
+  );
   req.user = user;
   next();
 });

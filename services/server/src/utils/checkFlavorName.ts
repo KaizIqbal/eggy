@@ -1,7 +1,7 @@
 function checkFlavorName(args: any) {
   var regex = /^[a-zA-Z]+$/;
   if (!regex.test(args.name)) {
-    throw new Error("flavour name is Invalid");
+    throw new Error("Flavor name is Invalid \n Spacial Characters not allowed");
   }
 }
 
