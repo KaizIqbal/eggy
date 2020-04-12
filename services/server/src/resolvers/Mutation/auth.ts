@@ -95,7 +95,7 @@ export const authMutations = {
 
   // ################################################ REQUEST FOR PASSWORD FORGET ################################################
 
-  async requestReset(parent, args, ctx, info) {
+  async resetPasswordRequest(parent, args, ctx, info) {
     // 1. Check if this is a real user
     const user = await ctx.db.query.user({
       where: {

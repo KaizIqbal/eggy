@@ -8,32 +8,14 @@ export const cursorQueries = {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
 
-    //get one cursor id by cursors
-    const data = await ctx.db.query.cursors(
+    return ctx.db.query.cursor(
       {
         where: {
-          name: args.cursorname,
-          flavor: { name: args.flavorname, egg: { eggname: args.eggname } }
-        }
-      },
-      `{
-        id
-      }`
-    );
-
-    // data[0] for access first element in cursors array
-    // but it always return only one cursor always 😉
-
-    const cursor = await ctx.db.query.cursor(
-      {
-        where: {
-          id: data[0].id
+          id: args.id
         }
       },
       info
     );
-
-    return cursor;
   },
 
   // ################################################ FOR FETCH CURSORS ################################################
@@ -45,7 +27,7 @@ export const cursorQueries = {
       {
         where: {
           flavor: {
-            name: args.flavorname
+            id: args.flavorId
           }
         }
       },

@@ -6,17 +6,28 @@ const s3bucket = new AWS.S3({
   Bucket: process.env.BUCKET_NAME
 });
 
-export function uploadToS3(key: any, stream: any) {
+export function uploadToS3(key: any, mimetype: any, stream: any) {
   // Configure parameter
   const params = {
     Bucket: process.env.BUCKET_NAME,
     Key: key,
     ACL: "public-read",
+    ContentType: mimetype,
     Body: stream
   };
 
   // Uploading to S3
   const s3Response = s3bucket.upload(params).promise();
+
+  return s3Response;
+}
+
+export function fetchFroms3(key: string) {
+  const params = {
+    Bucket: process.env.BUCKET_NAME,
+    Key: key
+  };
+  const s3Response = s3bucket.getObject(params).promise();
 
   return s3Response;
 }

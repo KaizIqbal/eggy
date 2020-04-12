@@ -30,5 +30,19 @@ export const userQueries = {
 
     // 3. If they do,Query all users
     return ctx.db.query.users({}, info);
+  },
+
+  async isUserAvailable(parent, args, ctx, info) {
+    if (!args.username.startsWith("@")) {
+      return { available: false };
+    }
+
+    const user = await ctx.db.query.user({ where: { username: args.username } });
+
+    if (!user) {
+      return { available: false };
+    }
+
+    return { available: true };
   }
 };
