@@ -1,0 +1,8 @@
+{
+  "name": "eggy-lamda-functions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Kaiz Khatri",
+  "license": "MIT",
+  "private": false
+}
