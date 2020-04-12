@@ -1,0 +1,62 @@
+fragment UserData on User {
+  id
+  email
+  username
+  lastName
+  firstName
+}
+
+fragment EggData on Egg {
+  id
+  title
+  eggname
+  platforms
+  isPublished
+  user {
+    ...UserData
+  }
+}
+
+fragment FlavorData on Flavor {
+  id
+  name
+  isPublished
+  egg {
+    ...EggData
+  }
+}
+
+fragment CursorData on Cursor {
+  id
+  name
+  frames
+  isRendered
+  flavor {
+    ...FlavorData
+  }
+  source {
+    ...FileData
+  }
+}
+
+fragment FileData on File {
+  id
+  key
+  url
+  mimetype
+  filename
+  createdAt
+  updatedAt
+}
+
+fragment BasketData on EggConnection {
+  edges {
+    node {
+      ...EggData
+    }
+  }
+  pageInfo {
+    endCursor
+    hasNextPage
+  }
+}
