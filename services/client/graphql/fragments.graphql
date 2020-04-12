@@ -17,6 +17,38 @@ fragment EggData on Egg {
   }
 }
 
+fragment FlavorData on Flavor {
+  id
+  name
+  isPublished
+  egg {
+    ...EggData
+  }
+}
+
+fragment CursorData on Cursor {
+  id
+  name
+  frames
+  isRendered
+  flavor {
+    ...FlavorData
+  }
+  source {
+    ...FileData
+  }
+}
+
+fragment FileData on File {
+  id
+  key
+  url
+  mimetype
+  filename
+  createdAt
+  updatedAt
+}
+
 fragment BasketData on EggConnection {
   edges {
     node {

@@ -1,6 +1,7 @@
-import * as React from "react";
+import React from "react";
 import Head from "next/head";
 import { Header } from "components/Header";
+import { UserContextProvider } from "contexts/UserContext";
 
 type Props = {
   title?: string;
@@ -17,8 +18,11 @@ const Page: React.FC<Props> = ({ children, title = "Eggy" }) => (
       <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <title>{title}</title>
     </Head>
-    <Header />
-    {children}
+
+    <UserContextProvider>
+      <Header />
+      {children}
+    </UserContextProvider>
   </div>
 );
 
