@@ -157,6 +157,7 @@ export const cursorMutations = {
     // Fetch Source File From Amazon S3
     const sourceSvg = await fetchFroms3(key);
 
+    console.log(fileName, frames, sourceSvg);
     // Update Cursors
     // TODO
     return ctx.db.query.cursor({ where: { id } }, info);
