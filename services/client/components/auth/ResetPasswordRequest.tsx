@@ -11,16 +11,13 @@ type FormData = {
   email: string;
 };
 
-export const ResetPasswordRequest: React.FunctionComponent<IProps> = _props => {
-  // ##### HOOKS #####
+export const ResetPasswordRequest: React.FC<IProps> = _props => {
+  // ---------------------------------------------------------------- HOOKS
 
-  const [
-    resetPasswordRequest,
-    { loading, error, called }
-  ] = useResetPasswordRequestMutation();
+  const [resetPasswordRequest, { loading, error, called }] = useResetPasswordRequestMutation();
   const { register, handleSubmit, errors } = useForm<FormData>();
 
-  // ##### HANDLING FUNCTION #####
+  // ---------------------------------------------------------------- HANDLING FUNCTION
 
   const onSubmit = async (values: any, e: any) => {
     try {
@@ -32,12 +29,11 @@ export const ResetPasswordRequest: React.FunctionComponent<IProps> = _props => {
     }
   };
 
-  // ##### RENDER #####
+  // ---------------------------------------------------------------- RENDER
 
   if (error) return <p>Error: {error.message}</p>;
 
-  if (!error && !loading && called)
-    return <p>Reset Link Sended check your email</p>;
+  if (!error && !loading && called) return <p>Reset Link Sended check your email</p>;
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} method="post">

@@ -2,7 +2,7 @@ import React from "react";
 import Router from "next/router";
 
 import { useForm } from "react-hook-form";
-import { useSigninMutation, MeDocument } from "generated/graphql";
+import { useSigninMutation, MeDocument, MeQuery } from "generated/graphql";
 
 import { Form } from "components/styled";
 import { setAccessToken } from "lib/accessToken";
@@ -14,31 +14,48 @@ type FormData = {
   password: string;
 };
 
-export const Signin: React.FunctionComponent<IProps> = _props => {
-  // ##### HOOKS #####
+export const Signin: React.FC<IProps> = _props => {
+  // ---------------------------------------------------------------- HOOKS
 
-  const [signin, { loading, error }] = useSigninMutation({
-    refetchQueries: [{ query: MeDocument }],
-    onCompleted: ({ signin: { accessToken } }) => {
-      setAccessToken(accessToken);
-      Router.back();
-    }
-  });
+  const [signin, { loading, error }] = useSigninMutation();
   const { register, handleSubmit, errors } = useForm<FormData>();
 
-  // ##### HANDLING FUNCTION #####
+  // ---------------------------------------------------------------- HANDLING FUNCTION
 
   const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
-      await signin({ variables: { ...values } });
-      e.target.reset();
+
+      const response = await signin({
+        variables: { ...values },
+        update: (store, { data }) => {
+          if (!data) {
+            return null;
+          }
+
+          store.writeQuery<MeQuery>({
+            query: MeDocument,
+            data: {
+              me: data.signin.user
+            }
+          });
+        }
+      });
+
+      if (response && response.data) {
+        setAccessToken(response.data.signin.accessToken);
+      }
+
+      if (window.history.length === 0) {
+        Router.push("/basket");
+      }
+      Router.back();
     } catch (error) {
       e.target.reset();
     }
   };
 
-  // ##### RENDER #####
+  // ---------------------------------------------------------------- RENDER
 
   if (error) return <p>Error: {error.message}</p>;
 

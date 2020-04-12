@@ -1,13 +1,14 @@
 import React from "react";
 
 import { useForm } from "react-hook-form";
-import { useResetPasswordMutation, MeDocument } from "generated/graphql";
+import { useResetPasswordMutation, MeDocument, MeQuery } from "generated/graphql";
 
 import { Form } from "components/styled";
 import { setAccessToken } from "lib/accessToken";
+import Router from "next/router";
 
 interface IProps {
-  token: string;
+  token: any;
 }
 
 type FormData = {
@@ -15,35 +16,48 @@ type FormData = {
   confirmPassword: string;
 };
 
-export const ResetPassword: React.FunctionComponent<IProps> = ({ token }) => {
-  // ##### HOOKS #####
+export const ResetPassword: React.FC<IProps> = ({ token }) => {
+  // ---------------------------------------------------------------- HOOKS
 
-  const [resetPassword, { loading, error }] = useResetPasswordMutation({
-    refetchQueries: [{ query: MeDocument }],
-    onCompleted: ({ resetPassword: { accessToken } }) => {
-      setAccessToken(accessToken);
-    }
-  });
+  const [resetPassword, { loading, error }] = useResetPasswordMutation();
   const { register, handleSubmit, watch, errors } = useForm<FormData>();
 
-  // ##### HANDLING FUNCTION #####
+  // ---------------------------------------------------------------- HANDLING FUNCTION
 
   const onSubmit = async (values: any, e: any) => {
     try {
       e.preventDefault();
-      await resetPassword({
+
+      const response = await resetPassword({
         variables: {
           resetToken: token,
           ...values
+        },
+        update: (store, { data }) => {
+          if (!data) {
+            return null;
+          }
+
+          store.writeQuery<MeQuery>({
+            query: MeDocument,
+            data: {
+              me: data.resetPassword.user
+            }
+          });
         }
       });
-      e.target.reset();
+
+      if (response && response.data) {
+        setAccessToken(response.data.resetPassword.accessToken);
+      }
+
+      Router.push("/dashboard");
     } catch (error) {
       e.target.reset();
     }
   };
 
-  // ##### RENDER #####
+  // ---------------------------------------------------------------- RENDER
 
   if (error) return <p>Error: {error.message}</p>;
 
@@ -79,8 +93,7 @@ export const ResetPassword: React.FunctionComponent<IProps> = ({ token }) => {
             minLength={8}
             ref={register({
               required: "Confirm Password is Required",
-              validate: value =>
-                value === watch("password") || "Passwords don't match."
+              validate: value => value === watch("password") || "Passwords don't match."
             })}
           />
           {errors.confirmPassword && errors.confirmPassword.message}
