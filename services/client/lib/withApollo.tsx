@@ -1,17 +1,24 @@
 import React from "react";
-import Head from "next/head";
-import { ApolloClient } from "apollo-client";
-import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
-import { createUploadLink } from "apollo-upload-client";
-import { setContext } from "apollo-link-context";
-import fetch from "isomorphic-unfetch";
-import { TokenRefreshLink } from "apollo-link-token-refresh";
-import jwtDecode from "jwt-decode";
-import { getAccessToken, setAccessToken } from "./accessToken";
-import { onError } from "apollo-link-error";
-import { ApolloLink } from "apollo-link";
 import cookie from "cookie";
-import { endpoint } from "./endpoint";
+import Head from "next/head";
+import Router from "next/router";
+import jwtDecode from "jwt-decode";
+import fetch from "isomorphic-unfetch";
+
+import { onError } from "apollo-link-error";
+import { ApolloClient } from "apollo-client";
+import { WebSocketLink } from "apollo-link-ws";
+import { ApolloLink, split } from "apollo-link";
+import { setContext } from "apollo-link-context";
+import { getMainDefinition } from "apollo-utilities";
+import { createUploadLink } from "apollo-upload-client";
+import { TokenRefreshLink } from "apollo-link-token-refresh";
+import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
+
+import { getAccessToken, setAccessToken } from "./accessToken";
+import { endpoint, websocket_endpoint } from "./endpoint";
+import { Redirect } from "./redirect";
+import { isBrowser } from "./isBrowser";
 
 const isServer = () => typeof window === "undefined";
 
@@ -24,12 +31,7 @@ const isServer = () => typeof window === "undefined";
  * @param {Boolean} [config.ssr=true]
  */
 export function withApollo(PageComponent: any, { ssr = true } = {}) {
-  const WithApollo = ({
-    apolloClient,
-    serverAccessToken,
-    apolloState,
-    ...pageProps
-  }: any) => {
+  const WithApollo = ({ apolloClient, serverAccessToken, apolloState, ...pageProps }: any) => {
     if (!isServer() && !getAccessToken()) {
       setAccessToken(serverAccessToken);
     }
@@ -39,8 +41,7 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
 
   if (process.env.NODE_ENV !== "production") {
     // Find correct display name
-    const displayName =
-      PageComponent.displayName || PageComponent.name || "Component";
+    const displayName = PageComponent.displayName || PageComponent.name || "Component";
 
     // Warn if old way of installing apollo is used
     if (displayName === "App") {
@@ -72,19 +73,15 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
           });
           const data = await response.json();
           serverAccessToken = data.accessToken;
+          setAccessToken(serverAccessToken);
         }
       }
 
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
-      const apolloClient = (ctx.ctx.apolloClient = initApolloClient(
-        {},
-        serverAccessToken
-      ));
+      const apolloClient = (ctx.ctx.apolloClient = initApolloClient({}, serverAccessToken));
 
-      const pageProps = PageComponent.getInitialProps
-        ? await PageComponent.getInitialProps(ctx)
-        : {};
+      const pageProps = PageComponent.getInitialProps ? await PageComponent.getInitialProps(ctx) : {};
 
       // Only on the server
       if (typeof window === "undefined") {
@@ -112,6 +109,9 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
             // Handle them in components via the data.error prop:
             // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
             console.error("Error while running `getDataFromTree`", error);
+            if (error.message.includes("Not Authentiated")) {
+              Redirect(ctx.ctx, "/signin");
+            }
           }
         }
 
@@ -162,10 +162,22 @@ function initApolloClient(initState: any, serverAccessToken?: string) {
  * @param  {Object} config
  */
 function createApolloClient(initialState = {}, serverAccessToken?: string) {
-  const httpLinkWithUpload = createUploadLink({
+  // This also contain HttpLink
+  const uploadLink = createUploadLink({
     uri: endpoint,
     credentials: "include",
     fetch
+  });
+
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({ message, locations, path }) => {
+        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+        if (isBrowser && message.includes("Not Authentiated")) {
+          Router.replace("/signin");
+        }
+      });
+    if (networkError) console.log(`[Network error]: ${networkError}`);
   });
 
   const refreshLink = new TokenRefreshLink({
@@ -203,8 +215,11 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     }
   });
 
+  // Getting Token
+  const token = isServer() ? serverAccessToken : getAccessToken();
+
+  // Create a Authentication Link:
   const authLink = setContext((_request, { headers }) => {
-    const token = isServer() ? serverAccessToken : getAccessToken();
     return {
       headers: {
         ...headers,
@@ -213,19 +228,42 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     };
   });
 
-  const errorLink = onError(({ graphQLErrors, networkError }) => {
-    console.log(graphQLErrors);
-    console.log(networkError);
-  });
+  // Create a WebSocket link:
+  const wsLink: any = isBrowser
+    ? // if you instantiate in the server, the error will be thrown
+      new WebSocketLink({
+        uri: websocket_endpoint,
+        options: {
+          lazy: true,
+          reconnect: true,
+          connectionParams: {
+            // Provide authorization header to ApolloServer
+            headers: {
+              authorization: token ? `bearer ${token}` : ""
+            }
+          }
+        }
+      })
+    : null;
+
+  // using the ability to split links, you can send data to each link
+  // depending on what kind of operation is being sent
+  const link = isBrowser
+    ? //only create the split in the browser split based on operation type
+      split(
+        // split based on operation type
+        ({ query }) => {
+          const definition = getMainDefinition(query);
+          return definition.kind === "OperationDefinition" && definition.operation === "subscription";
+        },
+        wsLink,
+        authLink
+      )
+    : authLink;
 
   return new ApolloClient({
     ssrMode: typeof window === "undefined", // Disables forceFetch on the server (so queries are only run once)
-    link: ApolloLink.from([
-      refreshLink,
-      authLink,
-      errorLink,
-      httpLinkWithUpload
-    ]),
+    link: ApolloLink.from([errorLink, refreshLink, link, uploadLink]),
     cache: new InMemoryCache().restore(initialState)
   });
 }
