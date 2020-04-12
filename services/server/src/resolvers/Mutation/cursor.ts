@@ -154,12 +154,8 @@ export const cursorMutations = {
       source: { key }
     } = cursor;
 
-    const fileExtension = ".png";
-
     // Fetch Source File From Amazon S3
-    const { Body } = await fetchFroms3(key);
-
-    console.log(Body, fileName, fileExtension, frames);
+    const sourceSvg = await fetchFroms3(key);
 
     // Update Cursors
     // TODO
