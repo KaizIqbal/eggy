@@ -1,13 +1,13 @@
 // Helper Functions
 import isAuth from "../../utils/isAuth";
-import checkPublish from "../../utils/checkPublish";
+import checkEgg from "../../utils/checkEgg";
+import { checkEggStatus } from "../../utils/checkEggStatus";
 import generateEggName from "../../utils/generateEggName";
 
 export const eggMutations = {
   // ################################################ CREATE EGG ################################################
 
   async createEgg(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
     isAuth(ctx);
 
     // Remove unnecessary space from title
@@ -45,15 +45,14 @@ export const eggMutations = {
 
   // ################################################ UPDATE EGG ################################################
 
-  updateEgg(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
+  async updateEgg(parent, args, ctx, info) {
+    await checkEgg(ctx, args.id, ["ADMIN", "EGGUPDATE"]);
 
     // first take copy in updates
     const updates = { ...args };
 
-    // remove egganme from updates
-    delete updates.eggname;
+    // remove id from updates
+    delete updates.id;
 
     // deconstruct platforms and delete from updates
     const platforms = updates.platforms;
@@ -69,7 +68,7 @@ export const eggMutations = {
           ...updates
         },
         where: {
-          eggname: args.eggname
+          id: args.id
         }
       },
       info
@@ -79,8 +78,7 @@ export const eggMutations = {
   // ################################################ RENAME EGG ################################################
 
   async renameEgg(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
+    await checkEgg(ctx, args.id, ["ADMIN", "EGGUPDATE"]);
 
     const eggId = args.id;
     delete args.id;
@@ -109,34 +107,18 @@ export const eggMutations = {
   // ################################################ DELETE EGG ################################################
 
   async deleteEgg(parent, args, ctx, info) {
-    const where = { eggname: args.eggname };
-    // 1.find egg
-    const egg = await ctx.db.query.egg({ where }, `{id title user{ id }}`);
-
-    // 2.check they own the egg ,or  have a permission
-    const ownsEgg = egg.user.id === ctx.request.userId;
-
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
-
-    const hasDeletePermissions = ctx.request.user.permissions.some(
-      (permission: string) => ["ADMIN", "EGGDELETE"].includes(permission)
-    );
-
-    if (!ownsEgg && !hasDeletePermissions) {
-      throw new Error("You don't have permission to do that!");
-    }
+    checkEgg(ctx, args.id, ["ADMIN", "EGGDELETE"]);
 
     // 3.Delete Egg
-    return ctx.db.mutation.deleteEgg({ where }, info);
+    return ctx.db.mutation.deleteEgg({ where: { id: args.id } }, info);
   },
 
   // ################################################ PUBLISH EGG ################################################
 
-  async publish(parent, args, ctx, info) {
+  async publishEgg(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
-    await checkPublish(ctx, args);
+    await checkEggStatus(ctx, args);
 
     return ctx.db.mutation.updateEgg(
       {
@@ -149,10 +131,10 @@ export const eggMutations = {
 
   // ################################################ UNPUBLISH EGG ################################################
 
-  async unPublish(parent, args, ctx, info) {
+  async unPublishEgg(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
     isAuth(ctx);
-    await checkPublish(ctx, args);
+    await checkEggStatus(ctx, args);
 
     return ctx.db.mutation.updateEgg(
       {

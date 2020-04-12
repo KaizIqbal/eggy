@@ -1,25 +1,27 @@
 // Helper Functions
-import isAuth from "../../utils/isAuth";
+import checkFlavor from "../../utils/checkFlavor";
+import checkCursor from "../../utils/checkCursor";
+import { fetchFroms3 } from "../../modules/fileApi";
 
 export const cursorMutations = {
   // ################################################ CREATE CURSOR ################################################
 
   async createCursor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
-
     // seprate flavorId and cursor data
     const flavorId = args.flavorId;
     delete args.flavorId;
 
-    const data = await ctx.db.query.cursors(
+    // Checking user has permissions or not if not then throw Error
+    await checkFlavor(ctx, flavorId, ["ADMIN", "CURSORCREATE"]);
+
+    const [data] = await ctx.db.query.cursors(
       {
         where: { name: args.name }
       },
       info
     );
 
-    if (data[0]) {
+    if (data) {
       throw new Error("Cursor is already Available");
     }
 
@@ -43,13 +45,13 @@ export const cursorMutations = {
 
   // ################################################ UPDATE CURSOR ################################################
 
-  updateCursor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
-
+  async updateCursor(parent, args, ctx, info) {
     // separate data from args
     const cursorId = args.id;
     delete args.id;
+
+    // Checking user has permissions or not if not then throw Error
+    await checkCursor(ctx, cursorId, ["ADMIN", "CURSORUPDATE"]);
 
     // return updated cursor by id
     return ctx.db.mutation.updateCursor(
@@ -62,23 +64,12 @@ export const cursorMutations = {
       info
     );
   },
-
-  // ################################################ DELETE CURSOR ################################################
-
-  deleteCursor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
-
-    // Delete flavor by id
-    return ctx.db.mutation.deleteCursor({ where: { id: args.id } }, info);
-  },
-
   // ################################################ RENAME CURSOR ################################################
   async renameCursor(parent, args, ctx, info) {
-    // Checking user logged in or not if not then throw Error
-    isAuth(ctx);
+    // Checking user has permissions or not if not then throw Error
+    await checkCursor(ctx, args.id, ["ADMIN", "CURSORUPDATE"]);
 
-    let updateCursor;
+    let updateCursor: any;
 
     // separate id from args
     const cursorId = args.id;
@@ -86,17 +77,17 @@ export const cursorMutations = {
     const flavorId = args.flavorId;
     delete args.flavorId;
 
-    const data = await ctx.db.query.cursors(
+    const [data] = await ctx.db.query.cursors(
       {
         where: { name: args.name, flavor: { id: flavorId } }
       },
       info
     );
     // if cursor already available
-    if (data[0]) {
+    if (data) {
       // Same Cursor so do nothing
-      if (data[0].id === cursorId) {
-        updateCursor = data[0];
+      if (data.id === cursorId) {
+        updateCursor = data;
       } else {
         throw new Error("Cursor already available");
       }
@@ -117,5 +108,57 @@ export const cursorMutations = {
 
     // return updated cursor by id
     return updateCursor;
+  },
+
+  // ################################################ DELETE CURSOR ################################################
+
+  async deleteCursor(parent, args, ctx, info) {
+    // separate id from args
+    const cursorId = args.id;
+    delete args.id;
+
+    // Checking user has permissions or not if not then throw Error
+    // await checkCursor(ctx, cursorId, ["ADMIN", "CURSORDELETE"]);
+
+    // Delete flavor by id
+    return ctx.db.mutation.deleteCursor({ where: { id: cursorId } }, info);
+  },
+
+  async renderCursor(parent, args, ctx, info) {
+    // deconstruct id from args
+    const { id } = args;
+
+    const cursor = await ctx.db.query.cursor(
+      { where: { id } },
+      `{
+        name
+        frames
+        source {
+          key
+        }
+    }`
+    );
+
+    if (!cursor) {
+      throw new Error("Cursor not Found");
+    }
+
+    if (!cursor!.source) {
+      throw new Error("source file not found for this cursor");
+    }
+
+    // data of generated cursor
+    const {
+      name: fileName,
+      frames,
+      source: { key }
+    } = cursor;
+
+    // Fetch Source File From Amazon S3
+    const sourceSvg = await fetchFroms3(key);
+
+    // Update Cursors
+    // TODO
+    return ctx.db.query.cursor({ where: { id } }, info);
   }
 };

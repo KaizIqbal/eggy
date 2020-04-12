@@ -14,6 +14,10 @@ export const fileMutations = {
 
     const { createReadStream, filename, mimetype, encoding } = await args.file;
 
+    if (mimetype !== "image/svg+xml") {
+      throw new Error("ERROR: Only .svg file Supported");
+    }
+
     // creating Stream
     const stream = createReadStream();
 
@@ -47,11 +51,11 @@ export const fileMutations = {
       data.flavor.egg.eggname +
       "/" +
       data.flavor.name +
-      "/" +
+      "/source/" +
       name;
 
     // fileApi call
-    const s3Response = await uploadToS3(key, stream);
+    const s3Response = await uploadToS3(key, mimetype, stream);
 
     // get url from s3 Response
     const url = s3Response.Location;
@@ -70,6 +74,8 @@ export const fileMutations = {
       },
       info
     );
+
+    // Call To Render
 
     // return File
     return file;
