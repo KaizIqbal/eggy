@@ -1,0 +1,84 @@
+enum Permission {
+  ADMIN
+  USER
+  EGGCREATE
+  EGGUPDATE
+  EGGDELETE
+  FLAVORCREATE
+  FLAVORUPDATE
+  FLAVORDELETE
+  CURSORCREATE
+  CURSORUPDATE
+  CURSORDELETE
+  PERMISSIONUPDATE
+}
+
+enum Platform {
+  WINDOW
+  LINUX
+}
+enum cursorName {
+  Pointer_Left 
+  Pointer_Center 
+  Pointer_Right
+  X11
+  Wayland
+}
+
+type User {
+  id: ID! @id
+  firstName: String!
+  lastName: String!
+  username: String! @unique
+  email: String! @unique
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String 
+  tokenVersion: Int! @default(value: 0)
+  permissions: [Permission]  @scalarList(strategy: RELATION)
+  eggs: [Egg] @relation(name: "Eggs" onDelete: CASCADE)
+}
+
+type Egg {
+  id: ID! @id
+  title: String!
+  eggname: String! @unique
+  isPublished: Boolean! @default(value: false)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  platforms: [Platform]!  @scalarList(strategy: RELATION)
+  user: User! @relation(name: "Eggs")
+  flavors: [Flavor]  @relation(name: "Flavors" onDelete: CASCADE)
+}
+
+type Flavor {
+  id: ID! @id
+  name: String!
+  isPublished: Boolean! @default(value: false)
+  egg: Egg!  @relation(name: "Flavors")
+  cursors: [Cursor]  @relation(name: "Cursors" onDelete: CASCADE)
+}
+
+type Cursor {
+  id: ID! @id
+  name: cursorName!
+  frames: Int!
+  isRendered: Boolean! @default(value: false) 
+  flavor: Flavor! @relation(name: "Cursors")
+  source: File @relation(name: "File" link: INLINE onDelete: CASCADE)
+  render: [File!] @relation(name: "Renderfile" onDelete: CASCADE)
+}
+
+type File {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  key: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String! @unique
+  cursor: Cursor! @relation(name: "File")
+}
