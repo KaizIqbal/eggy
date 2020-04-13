@@ -23,8 +23,8 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: handler.render
     events:
       - http:
           method: get
-          path: hello
+          path: render
