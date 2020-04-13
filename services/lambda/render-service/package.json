@@ -1,0 +1,31 @@
+{
+  "name": "render-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "start": "node ./node_modules/serverless/bin/serverless invoke local -f execute",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "chrome-aws-lambda": "2.1.1",
+    "puppeteer-core": "2.1.1",
+    "source-map-support": "0.5.16"
+  },
+  "devDependencies": {
+    "serverless": "1.67.3",
+    "serverless-layers": "2.1.3",
+    "@types/puppeteer-core": "2.0.0",
+    "@types/aws-lambda": "^8.10.17",
+    "@types/node": "^10.12.18",
+    "fork-ts-checker-webpack-plugin": "^3.0.1",
+    "serverless-webpack": "^5.2.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.2.4",
+    "webpack": "^4.29.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "author": "Kaiz Khatri",
+  "license": "MIT",
+  "keywords": []
+}
