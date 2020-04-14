@@ -1,9 +1,12 @@
 {
-  "name": "render-service",
+  "name": "eggy-render-lambda-function",
   "version": "1.0.0",
   "description": "",
   "main": "handler.js",
   "scripts": {
+    "go": "npx sls invoke -f render",
+    "die": "npx sls remove",
+    "deploy:dev": "npx sls deploy -v",
     "local": "node ./node_modules/serverless/bin/serverless invoke local -f render",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
