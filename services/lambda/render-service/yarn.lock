@@ -78,13 +78,13 @@
     shortid "^2.2.14"
 
 "@serverless/components@^2.29.0":
-  version "2.29.1"
-  resolved "https://registry.yarnpkg.com/@serverless/components/-/components-2.29.1.tgz#3c688c053e237bd25a40c9697fbbcd0608607dcf"
-  integrity sha512-TnsE3LlfmkDRHs4cJWgNWkeNWlFznw5IWnhNzg9e0sobPR39GOMXPHM2OhIT5Z54ALX+qoSWG9ZFkoFnywX3fg==
+  version "2.29.2"
+  resolved "https://registry.yarnpkg.com/@serverless/components/-/components-2.29.2.tgz#60bb42832524a246fbb50608db48399892647371"
+  integrity sha512-T8RiHXetlGcpwENPf2lDbygceQhAFDtI85BfHHp6qdJB9OPN4uyVlfQPWnpbpXH1CY9d0WkNV4ESsXbON+SqgQ==
   dependencies:
     "@serverless/inquirer" "^1.1.0"
     "@serverless/platform-client" "^0.25.4"
-    "@serverless/platform-client-china" "^1.0.2"
+    "@serverless/platform-client-china" "^1.0.5"
     "@serverless/platform-sdk" "^2.3.0"
     adm-zip "^0.4.14"
     ansi-escapes "^4.3.1"
@@ -168,7 +168,7 @@
     inquirer "^7.1.0"
     ncjsm "^4.0.1"
 
-"@serverless/platform-client-china@^1.0.2":
+"@serverless/platform-client-china@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@serverless/platform-client-china/-/platform-client-china-1.0.5.tgz#1a19ad25835aaa1425225a1a218e36a5cba02326"
   integrity sha512-EhiVkC3qh8uZQjcIXbN7n1eVCKiyvriJjghbOe4cigkNhT/dHPTFM23aK3h/rJowfP9P5+R4xfKsaCWRjA8Y3Q==
@@ -247,9 +247,9 @@
     traverse "^0.6.6"
 
 "@serverless/utils-china@latest":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@serverless/utils-china/-/utils-china-0.1.1.tgz#d6d505a50375da4a6620a3fae81a7618bc50d2b4"
-  integrity sha512-B4/PC2iVEn0xbPu/dWE/hAWsgwfUKpekf03KTk6CXkWMkfq3EoewqAOIgceWTCVzKLrAhQ+zTsAzdLD9FpxjQA==
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@serverless/utils-china/-/utils-china-0.1.2.tgz#f6bec1f3cf7b1ade019c8539615f733ceffb52dc"
+  integrity sha512-7wXPmp90pIcGhRopFnRj5jmjJ0Fzog7+Vg/OeW5ZEYUw7nyMlY4NnpiRl+Xv+oVUqmYX5jAR1dLGS6XwXIMShA==
   dependencies:
     "@tencent-sdk/capi" "^0.2.15-alpha.0"
     dijkstrajs "^1.0.1"
