@@ -2,7 +2,7 @@ import " source-map-support/register ";
 import { Handler } from "aws-lambda";
 import * as chromium from "chrome-aws-lambda";
 
-export const execute: Handler = async (_event, _context) => {
+export const render: Handler = async (_event, _context) => {
   let result: any;
   let browser: any;
 
