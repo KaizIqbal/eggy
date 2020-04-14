@@ -1,4 +1,4 @@
-import " source-map-support/register ";
+import "source-map-support/register";
 import { Handler } from "aws-lambda";
 import * as chromium from "chrome-aws-lambda";
 
@@ -24,7 +24,6 @@ export const render: Handler = async (_event, _context) => {
     await page.goto("https://example.com");
 
     result = await page.title();
-    console.log(result);
   } finally {
     if (browser) {
       await browser.close();
@@ -35,7 +34,7 @@ export const render: Handler = async (_event, _context) => {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: `Title: $ { result } `
+        message: `Title: ${result}`
       },
       null,
       2
