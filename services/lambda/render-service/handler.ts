@@ -1,8 +1,9 @@
 import { Handler } from "aws-lambda";
 import "source-map-support/register";
+import * as fs from "fs";
 import * as chromium from "chrome-aws-lambda";
 import timesnap from "timesnap";
-import * as fs from "fs";
+// const timesnap = require("timesnap");
 import { readFiles } from "./utils/readFiles";
 
 // aws-sdk is always preinstalled in AWS Lambda in all Node.js runtimes
