@@ -18,24 +18,24 @@ export const render: Handler = async (event, _context) => {
   try {
     const params = {
       Bucket: process.env.BUCKET_NAME,
-      Key: srcKey,
+      Key: srcKey
     };
     srcSvg = s3.getObject(params).toString();
   } catch (error) {
     return;
   }
 
-  template = fs.readFileSync("./template/render.html").toString();
+  template = fs.readFileSync(__dirname + "demo/render.html").toString();
   template = template.replace("<svginjection>", srcSvg);
 
   try {
-    fs.writeFileSync(__dirname + "/index.html", template);
+    fs.writeFileSync(__dirname + "index.html", template);
     //file written successfully
   } catch (err) {
     console.error(err);
     return;
   }
-  
+
   await timesnap({
     executablePath: process.env.IS_LOCAL
       ? "/usr/bin/google-chrome-stable"
@@ -44,18 +44,18 @@ export const render: Handler = async (event, _context) => {
     selector: "svg",
     fps: 1,
     duration: 44,
-    outputDirectory: "render/raw",
-    outputPattern: "animated-%d.png",
+    outputDirectory: __dirname + "render/raw",
+    outputPattern: __dirname + "animated-%d.png"
   });
 
   // use an absolute path to the folder where files are located
   readFiles(
-    "render/raw/",
+    __dirname + "render/raw/",
     (filename: string, content: Buffer) => {
       console.log("file name:", filename);
       console.log(content);
     },
-    (err:any) => {
+    (err: any) => {
       throw err;
     }
   );
@@ -64,10 +64,10 @@ export const render: Handler = async (event, _context) => {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: "hello",
+        message: "hello"
       },
       null,
       2
-    ),
+    )
   };
 };
