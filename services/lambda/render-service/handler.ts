@@ -19,7 +19,7 @@ export const render: Handler = async (_event, _context) => {
   try {
     const params = {
       Bucket: process.env.BUCKET_NAME,
-      Key: srcKey
+      Key: srcKey,
     };
     const response = await s3.getObject(params).promise();
     const { Body } = response;
@@ -40,7 +40,7 @@ export const render: Handler = async (_event, _context) => {
       executablePath: process.env.IS_LOCAL
         ? "/usr/bin/google-chrome-stable"
         : await chromium.executablePath,
-      headless: chromium.headless // If you set this to false, the Chrome window will be displayed, so change it if it does not work during development.
+      headless: chromium.headless, // If you set this to false, the Chrome window will be displayed, so change it if it does not work during development.
     });
     const page = await browser.newPage();
     await page.setContent(template);
@@ -48,33 +48,23 @@ export const render: Handler = async (_event, _context) => {
     await page.waitForNavigation({ waitUntil: "load" });
     const svgElement = await page.select("svg");
 
-    result = await svgElement.screenshot({ omitBackground: true });
+    result = await svgElement.screenshot({
+      omitBackground: true,
+    });
   } finally {
     if (browser) {
       await browser.close();
     }
   }
 
-   try {
-    const params = {
-      Bucket: process.env.BUCKET_NAME,
-      Key: srcKey
-    };
-    const response = await s3.getObject(params).promise();
-    const { Body } = response;
-    srcSvg = Body.toString();
-  } catch (error) {
-    return;
-  }
-
   return {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message:
+        message: "hello",
       },
       null,
       2
-    )
+    ),
   };
 };

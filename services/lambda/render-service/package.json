@@ -4,7 +4,7 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "local": "node ./node_modules/serverless/bin/serverless invoke local -f render",
+    "local": "npx sls invoke local --function render",
     "deploy:dev": "npx sls deploy -v",
     "deploy:prod": "npx sls deploy -s",
     "clean": "npx sls remove",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
     "@types/node": "^10.12.18",
+    "@types/puppeteer": "^2.0.1",
     "@types/puppeteer-core": "2.0.0",
     "serverless": "1.67.3",
     "serverless-layers": "2.1.3",
