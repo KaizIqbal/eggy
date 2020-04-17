@@ -1,6 +1,6 @@
 import * as fs from "fs";
 
-function readFiles(dirname, onFileContent, onError) {
+function readFiles(dirname:string, onFileContent:any, onError:any) {
   fs.readdir(dirname, (err, filenames) => {
     if (err) {
       onError(err);

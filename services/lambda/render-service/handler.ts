@@ -3,12 +3,10 @@ import "source-map-support/register";
 import * as fs from "fs";
 import * as chromium from "chrome-aws-lambda";
 import timesnap from "timesnap";
-// const timesnap = require("timesnap");
 import { readFiles } from "./utils/readFiles";
 
 // aws-sdk is always preinstalled in AWS Lambda in all Node.js runtimes
-const S3Client = require("aws-sdk/clients/s3");
-// create an S3 client
+import * as S3Client from "aws-sdk/clients/s3";
 const s3 = new S3Client({ region: process.env.S3_REGION });
 
 export const render: Handler = async (event, _context) => {
@@ -20,9 +18,9 @@ export const render: Handler = async (event, _context) => {
   try {
     const params = {
       Bucket: process.env.BUCKET_NAME,
-      Key: srcKey
+      Key: srcKey,
     };
-    srcSvg = await s3.getObject(params).toString();
+    srcSvg = s3.getObject(params).toString();
   } catch (error) {
     return;
   }
@@ -37,6 +35,7 @@ export const render: Handler = async (event, _context) => {
     console.error(err);
     return;
   }
+  
   await timesnap({
     executablePath: process.env.IS_LOCAL
       ? "/usr/bin/google-chrome-stable"
@@ -46,16 +45,17 @@ export const render: Handler = async (event, _context) => {
     fps: 1,
     duration: 44,
     outputDirectory: "render/raw",
-    outputPattern: "animated-%d.png"
+    outputPattern: "animated-%d.png",
   });
 
   // use an absolute path to the folder where files are located
   readFiles(
     "render/raw/",
-    (filename, content) => {
+    (filename: string, content: Buffer) => {
       console.log("file name:", filename);
+      console.log(content);
     },
-    err => {
+    (err:any) => {
       throw err;
     }
   );
@@ -64,10 +64,10 @@ export const render: Handler = async (event, _context) => {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: "hello"
+        message: "hello",
       },
       null,
       2
-    )
+    ),
   };
 };
