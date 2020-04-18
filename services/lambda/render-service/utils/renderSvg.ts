@@ -1,19 +1,15 @@
 import * as chromium from "chrome-aws-lambda";
 import * as sharp from "sharp";
 
-async function renderSvg(srcSvg: string, frames: number, filePrefix: string) {
+async function renderSvg(template: string, frames: number, filePrefix: string) {
   // Browser & HTML Template instance
   let browser: any;
-  let template: string;
 
   // render Image Config
   let renderImages = {};
   const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
 
   try {
-    // injecting svg file in HTML Template
-    template = template.replace("<svginjection>", srcSvg);
-
     // -------------------------------------------- SETUP BROWSER
 
     browser = await chromium.puppeteer.launch({
