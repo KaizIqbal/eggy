@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
+    "@types/sharp": "0.24.0",
     "@types/node": "^10.12.18",
     "@types/puppeteer": "^2.0.1",
     "@types/puppeteer-core": "2.0.0",
