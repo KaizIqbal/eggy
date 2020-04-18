@@ -1,10 +1,7 @@
 import * as chromium from "chrome-aws-lambda";
+import * as sharp from "sharp";
 
-export async function render(
-  srcSvg: string,
-  frames: number,
-  filePrefix: string
-) {
+async function renderSvg(srcSvg: string, frames: number, filePrefix: string) {
   // Browser & HTML Template instance
   let browser: any;
   let template: string;
@@ -62,8 +59,10 @@ export async function render(
       console.log(`Rendered Frame ${index}/${frames}`);
     }
 
-    // save raw images
+    // save raw images like {"raw":[...]}
     renderImages["raw"] = images;
+
+    // -------------------------------------------- GENERATE SIZES OF FRAMES
 
     sizes.forEach(size => {
       let renderSize = renderImages.raw.filter(async image => {
@@ -74,13 +73,18 @@ export async function render(
         return image;
       });
 
+      // save all sizes
+      // exapmle 96x96, 88x88, ..., 24x24
       renderImages[`${size}x${size}`] = renderSize;
     });
-
-    console.log(renderImages);
   } finally {
     if (browser) {
       await browser.close();
     }
   }
+
+  // return object
+  return renderImages;
 }
+
+export { renderSvg };
