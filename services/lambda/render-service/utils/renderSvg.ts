@@ -38,7 +38,7 @@ async function renderSvg(srcSvg: string, frames: number, filePrefix: string) {
       const image = {};
 
       // generate filename & rendered image as base64 encoding
-      const fileName = `${filePrefix}-${index}.png`;
+      const fileName = frames === 1 ? filePrefix : `${filePrefix}-${index}.png`;
 
       const b64string = await svgImage.screenshot({
         omitBackground: true,
