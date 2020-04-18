@@ -4,25 +4,25 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "go": "npx sls invoke -f render",
-    "die": "npx sls remove",
-    "deploy": "npx sls deploy",
+    "local": "npx sls invoke local --function render",
     "deploy:dev": "npx sls deploy -v",
-    "local": "node ./node_modules/serverless/bin/serverless invoke local -f render",
+    "deploy:prod": "npx sls deploy -s",
+    "clean": "npx sls remove",
+    "go": "npx sls invoke -f render",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "babel-runtime": "6.26.0",
     "chrome-aws-lambda": "2.1.1",
-    "puppeteer-core": "2.1.1",
-    "source-map-support": "0.5.16",
-    "timesnap": "0.1.2"
+    "puppeteer-core": "3.0.0",
+    "sharp": "latest",
+    "source-map-support": "0.5.16"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
+    "@types/sharp": "0.24.0",
     "@types/node": "^10.12.18",
+    "@types/puppeteer": "^2.0.1",
     "@types/puppeteer-core": "2.0.0",
-    "fork-ts-checker-webpack-plugin": "^3.0.1",
     "serverless": "1.67.3",
     "serverless-layers": "2.1.3",
     "serverless-webpack": "^5.2.0",
