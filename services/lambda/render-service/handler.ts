@@ -1,6 +1,5 @@
 import { Handler } from "aws-lambda";
 import "source-map-support/register";
-import * as chromium from "chrome-aws-lambda";
 import * as fs from "fs";
 import { renderTemplate } from "./template/render";
 
@@ -9,8 +8,6 @@ import * as S3Client from "aws-sdk/clients/s3";
 const s3 = new S3Client({ region: process.env.S3_REGION });
 
 export const render: Handler = async (_event, _context) => {
-  let browser: any, result: any;
-
   // const srcKey = event.srcKey;
   const srcKey = "@ful1ie5_/Bibata-KflzAZTR5/Sharp/source/X11.svg";
   let srcSvg: string;

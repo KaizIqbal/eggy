@@ -14,6 +14,7 @@
   "dependencies": {
     "chrome-aws-lambda": "2.1.1",
     "puppeteer-core": "3.0.0",
+    "sharp": "latest",
     "source-map-support": "0.5.16"
   },
   "devDependencies": {
