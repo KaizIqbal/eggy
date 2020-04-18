@@ -1,4 +1,4 @@
-export const renderTemplate = `
+export const template = `
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,3 +19,9 @@ export const renderTemplate = `
     </body>
 </html>
 `;
+
+function generateRenderTemplate(svg: string) {
+  return template.replace("<svginjection>", svg);
+}
+
+export { generateRenderTemplate };

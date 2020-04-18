@@ -48,7 +48,7 @@ async function renderSvg(srcSvg: string, frames: number, filePrefix: string) {
 
       // setup object
       image["fileName"] = fileName;
-      image["mimeType"] = "image/png";
+      image["contentType"] = "image/png";
       image["encoding"] = "base64";
       image["Body"] = Body;
 
