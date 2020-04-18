@@ -73,8 +73,7 @@ async function renderSvg(srcSvg: string, frames: number, filePrefix: string) {
         return image;
       });
 
-      // save all sizes
-      // exapmle 96x96, 88x88, ..., 24x24
+      // save all sizes like { ... , "96x96":[...], ...}
       renderImages[`${size}x${size}`] = renderSize;
     });
   } finally {
