@@ -1,3 +1,4 @@
+export const template = `
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,7 +11,17 @@
     </head>
                 
     <body>
+
         <!-- .svg file injected on <svg> tag -->
-        <svg-inject>
+
+        <svginjection>
+            
     </body>
 </html>
+`;
+
+function generateRenderTemplate(svg: string) {
+  return template.replace("<svginjection>", svg);
+}
+
+export { generateRenderTemplate };
