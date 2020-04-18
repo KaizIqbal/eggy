@@ -21,9 +21,12 @@ async function fetchSvgFromS3(key: string) {
     console.error(error);
     return;
   }
-  const fileName = path.parse(key).base;
-  console.log(fileName);
-  return svg;
+
+  // get fileName from key & remove extension
+  let fileName = path.parse(key).base;
+  fileName = fileName.split(".")[0];
+
+  return { svg, fileName };
 }
 
 export { fetchSvgFromS3 };
