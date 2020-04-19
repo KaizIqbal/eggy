@@ -5,7 +5,7 @@ service:
   # org: your-org-name
 
 custom:
-  s3Bucket: ${env:BUCKET_NAME}
+  s3Bucket: ${env:S3_BUCKET}
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
@@ -19,7 +19,7 @@ plugins:
 
 provider:
   name: aws
-  region: ${env:REGION}
+  region: ${env:S3_REGION}
   # here we put the layers we want to use
   layers:
     # Google Chrome for AWS Lambda as a layer
