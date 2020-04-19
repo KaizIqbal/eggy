@@ -6,7 +6,9 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
   let browser: any;
 
   // render Image Config
-  let renderImages = {};
+  let renderImages = {
+    raw: []
+  };
   const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
 
   try {
@@ -56,7 +58,7 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
     }
 
     // save raw images like {"raw":[...]}
-    renderImages["raw"] = images;
+    renderImages.raw = images;
 
     // -------------------------------------------- GENERATE SIZES OF FRAMES
 

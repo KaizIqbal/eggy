@@ -6,9 +6,10 @@
   "scripts": {
     "local": "npx sls invoke local --function render",
     "deploy:dev": "npx sls deploy -v",
-    "deploy:prod": "npx sls deploy -s",
-    "clean": "npx sls remove",
+    "go:dev": "npx sls invoke -f render -l",
+    "deploy": "npx sls deploy -s",
     "go": "npx sls invoke -f render",
+    "clean": "npx sls remove",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

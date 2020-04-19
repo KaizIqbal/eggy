@@ -1,4 +1,3 @@
-import * as path from "path";
 // aws-sdk is always preinstalled in AWS Lambda in all Node.js runtimes
 import * as S3Client from "aws-sdk/clients/s3";
 const s3 = new S3Client({ region: process.env.S3_REGION });
@@ -9,7 +8,7 @@ async function fetchSvgFromS3(key: string) {
   // Fetching from S3
   try {
     const params = {
-      Bucket: process.env.BUCKET_NAME,
+      Bucket: process.env.S3_BUCKET,
       Key: key
     };
     const response = await s3.getObject(params).promise();
@@ -22,11 +21,7 @@ async function fetchSvgFromS3(key: string) {
     return;
   }
 
-  // get fileName from key & remove extension
-  let fileName = path.parse(key).base;
-  fileName = fileName.split(".")[0];
-
-  return { svg, fileName };
+  return svg;
 }
 
 export { fetchSvgFromS3 };
