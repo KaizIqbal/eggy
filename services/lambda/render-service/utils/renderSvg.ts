@@ -1,7 +1,15 @@
 import * as chromium from "chrome-aws-lambda";
 import * as sharp from "sharp";
 
-async function renderSvg(template: string, frames: number, filePrefix: string) {
+async function renderSvg(
+  template: string,
+  frames: number,
+  filePrefix: string,
+  destKey: string
+) {
+  // fix destKey :: store rendered images in directory not in file
+  const path = destKey.endsWith("/") ? destKey : destKey.concat("/");
+
   // Browser & HTML Template instance
   let browser: any;
 
@@ -36,7 +44,8 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
       const image = {};
 
       // generate filename & rendered image as base64 encoding
-      const fileName = frames === 1 ? filePrefix : `${filePrefix}-${index}.png`;
+      const fileName =
+        frames === 1 ? `${filePrefix}.png` : `${filePrefix}-${index}.png`;
 
       const b64string = await svgImage.screenshot({
         omitBackground: true,
@@ -45,7 +54,7 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
       const Body = Buffer.from(b64string, "base64");
 
       // setup object
-      image["fileName"] = fileName;
+      image["key"] = path + fileName;
       image["contentType"] = "image/png";
       image["encoding"] = "base64";
       image["Body"] = Body;
