@@ -7,9 +7,6 @@ async function renderSvg(
   filePrefix: string,
   destKey: string
 ) {
-  // fix destKey :: store rendered images in directory not in file
-  const path = destKey.endsWith("/") ? destKey : destKey.concat("/");
-
   // Browser & HTML Template instance
   let browser: any;
 
@@ -17,6 +14,7 @@ async function renderSvg(
   let renderImages = {
     raw: []
   };
+
   const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
 
   try {
@@ -54,7 +52,7 @@ async function renderSvg(
       const Body = Buffer.from(b64string, "base64");
 
       // setup object
-      image["key"] = path + fileName;
+      image["key"] = destKey + fileName;
       image["contentType"] = "image/png";
       image["encoding"] = "base64";
       image["Body"] = Body;
