@@ -7,18 +7,20 @@ import { generateRenderTemplate } from "./template/render";
 import { renderSvg } from "./utils/renderSvg";
 
 export const render: Handler = async (_event, _context) => {
-  // const srcKey = event.srcKey;
-  const key: string = "@ful1ie5_/Bibata-KflzAZTR5/Sharp/source/X11.svg";
-  const frames: number = 2;
+  // const { srcKey, destKey, frames } = event;
 
-  const svg = await fetchSvgFromS3(key);
+  const srcKey: string = "@ful1ie5_/Bibata-KflzAZTR5/Sharp/source/X11.svg";
+  const destKey: string = "@ful1ie5_/Bibata-KflzAZTR5/Sharp/render";
+  const frames: number = 1;
+
+  const svg = await fetchSvgFromS3(srcKey);
 
   // get fileName from key & remove extension
-  let fileName = path.parse(key).base;
-  fileName = fileName.split(".")[0].toString();
+  let fileName = path.parse(srcKey).base;
+  fileName = fileName.split(".")[0];
 
   const template = generateRenderTemplate(svg);
-  const renderImages = await renderSvg(template, frames, fileName);
+  const renderImages = await renderSvg(template, frames, fileName, destKey);
 
   console.log(renderImages);
   return {
