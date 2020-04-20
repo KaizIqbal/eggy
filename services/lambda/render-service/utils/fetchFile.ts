@@ -1,13 +1,18 @@
 import { fetchFromS3 } from "./s3";
 
 async function fetchFile(key: string) {
-  const response = await fetchFromS3(key);
-  const { Body } = response;
+  let svg: string;
+  try {
+    const response = await fetchFromS3(key);
+    const { Body } = response;
 
-  // Convert Buffer to String
-  const svg: string = Body.toString();
-
-  return svg;
+    // Convert Buffer to String
+    svg = Body.toString();
+  } catch (error) {
+    throw new Error(error);
+  } finally {
+    return svg;
+  }
 }
 
 export { fetchFile };
