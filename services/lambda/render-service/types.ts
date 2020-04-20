@@ -6,5 +6,5 @@ export interface Image {
 }
 
 export interface RenderImages {
-  [key: string]: Image[];
+  [key: string]: Array<Image>;
 }
