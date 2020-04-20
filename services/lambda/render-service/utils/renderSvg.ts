@@ -1,19 +1,14 @@
 import * as chromium from "chrome-aws-lambda";
 import * as sharp from "sharp";
 
-async function renderSvg(
-  template: string,
-  frames: number,
-  filePrefix: string,
-  destKey: string
-) {
+import { Image, RenderImages } from "../types";
+
+async function renderSvg(template: string, frames: number, filePrefix: string) {
   // Browser & HTML Template instance
   let browser: any;
 
   // render Image Config
-  let renderImages = {
-    raw: []
-  };
+  let renderImages: RenderImages;
 
   const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
 
@@ -37,25 +32,26 @@ async function renderSvg(
 
     // -------------------------------------------- RENDER FRAMES
 
-    const images = [];
+    const images: Image[] = [];
+
     for (let index = 1; index <= frames; index++) {
-      const image = {};
+      let image: Image;
 
       // generate filename & rendered image as base64 encoding
-      const fileName =
+      const fileName: string =
         frames === 1 ? `${filePrefix}.png` : `${filePrefix}-${index}.png`;
 
-      const b64string = await svgImage.screenshot({
+      const b64string: string = (await svgImage.screenshot({
         omitBackground: true,
         encoding: "base64"
-      });
-      const Body = Buffer.from(b64string, "base64");
+      })) as string;
+      const Body: Buffer = Buffer.from(b64string, "base64");
 
       // setup object
-      image["key"] = destKey + fileName;
-      image["contentType"] = "image/png";
-      image["encoding"] = "base64";
-      image["Body"] = Body;
+      image.fileName = fileName;
+      image.contentType = "image/png";
+      image.encoding = "base64";
+      image.Body = Body;
 
       // push details to Object
       images.push(image);
