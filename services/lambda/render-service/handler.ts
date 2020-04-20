@@ -30,8 +30,16 @@ export const render: Handler = async (_event, _context) => {
     // console.log(renderImages);
     await uploadFiles(renderImages);
   } catch (error) {
-    console.error(error);
-    return;
+    return {
+      statusCode: 500,
+      body: JSON.stringify(
+        {
+          error: error
+        },
+        null,
+        2
+      )
+    };
   } finally {
     return {
       statusCode: 200,
