@@ -3,12 +3,12 @@ import * as sharp from "sharp";
 
 import { Image, RenderImages } from "../types";
 
-async function renderSvg(template: string, frames: number, filePrefix: string) {
+async function renderSvg(template: string, frames: number, fileName: string) {
   // Browser & HTML Template instance
   let browser: any;
 
   // render Image Config
-  let renderImages: RenderImages;
+  const renderImages: RenderImages = {};
 
   const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
 
@@ -32,14 +32,14 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
 
     // -------------------------------------------- RENDER FRAMES
 
-    const images: Image[] = [];
+    const images: Array<Image> = [];
 
     for (let index = 1; index <= frames; index++) {
       let image: Image;
 
       // generate filename & rendered image as base64 encoding
-      const fileName: string =
-        frames === 1 ? `${filePrefix}.png` : `${filePrefix}-${index}.png`;
+      const name: string =
+        frames === 1 ? `${fileName}.png` : `${fileName}-${index}.png`;
 
       const b64string: string = (await svgImage.screenshot({
         omitBackground: true,
@@ -48,7 +48,7 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
       const Body: Buffer = Buffer.from(b64string, "base64");
 
       // setup object
-      image.fileName = fileName;
+      image.fileName = name;
       image.contentType = "image/png";
       image.encoding = "base64";
       image.Body = Body;
@@ -60,7 +60,7 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
       console.log(`Rendered Frame ${index}/${frames}`);
     }
 
-    // save raw images like {"raw":[...]}
+    // save raw images
     renderImages.raw = images;
 
     // -------------------------------------------- GENERATE SIZES OF FRAMES
@@ -74,17 +74,20 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
         return image;
       });
 
-      // save all sizes like { ... , "96x96":[...], ...}
+      // save all sizes
       renderImages[`${size}x${size}`] = renderSize;
     });
+  } catch (error) {
+    console.error(error);
+    return;
   } finally {
     if (browser) {
       await browser.close();
+
+      // return object
+      return renderImages;
     }
   }
-
-  // return object
-  return renderImages;
 }
 
 export { renderSvg };
