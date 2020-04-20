@@ -3,7 +3,7 @@ import * as sharp from "sharp";
 
 import { Image, RenderImages } from "../types";
 
-async function renderSvg(template: string, frames: number, fileName: string) {
+async function renderSvg(template: string, frames: number, filePrefix: string) {
   // Browser & HTML Template instance
   let browser: any;
 
@@ -35,11 +35,11 @@ async function renderSvg(template: string, frames: number, fileName: string) {
     const images: Array<Image> = [];
 
     for (let index = 1; index <= frames; index++) {
-      let image: Image;
-
       // generate filename & rendered image as base64 encoding
-      const name: string =
-        frames === 1 ? `${fileName}.png` : `${fileName}-${index}.png`;
+      const fileName: string =
+        frames === 1
+          ? `${filePrefix}.png`.toString()
+          : `${filePrefix}-${index}.png`.toString();
 
       const b64string: string = (await svgImage.screenshot({
         omitBackground: true,
@@ -48,10 +48,12 @@ async function renderSvg(template: string, frames: number, fileName: string) {
       const Body: Buffer = Buffer.from(b64string, "base64");
 
       // setup object
-      image.fileName = name;
-      image.contentType = "image/png";
-      image.encoding = "base64";
-      image.Body = Body;
+      const image: Image = {
+        fileName,
+        contentType: "image/png",
+        encoding: "base64",
+        Body
+      };
 
       // push details to Object
       images.push(image);
@@ -78,8 +80,7 @@ async function renderSvg(template: string, frames: number, fileName: string) {
       renderImages[`${size}x${size}`] = renderSize;
     });
   } catch (error) {
-    console.error(error);
-    return;
+    throw new Error(error);
   } finally {
     if (browser) {
       await browser.close();
