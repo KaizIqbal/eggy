@@ -37,9 +37,7 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
     for (let index = 1; index <= frames; index++) {
       // generate filename & rendered image as base64 encoding
       const fileName: string =
-        frames === 1
-          ? `${filePrefix}.png`.toString()
-          : `${filePrefix}-${index}.png`.toString();
+        frames === 1 ? `${filePrefix}.png` : `${filePrefix}-${index}.png`;
 
       const b64string: string = (await svgImage.screenshot({
         omitBackground: true,
@@ -65,15 +63,15 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
     // save raw images
     renderImages.raw = images;
 
-    // -------------------------------------------- GENERATE SIZES OF FRAMES
+    // -------------------------------------------- RESIZE THE FRAMES
 
-    sizes.forEach(size => {
-      let renderSize = renderImages.raw.filter(async image => {
-        image.Body = await sharp(image.Body)
-          .resize({ height: size, width: size })
-          .setEncoding("base64")
-          .toBuffer();
-        return image;
+    sizes.forEach((size) => {
+      const renderSize: Array<Image> = [];
+      renderImages.raw.filter(async (image) => {
+        let temp: Image = { ...image };
+        temp.Body = await sharp(image.Body).resize(size, size).toBuffer();
+        console.log(`resize raw to ${size}x${size}`);
+        renderSize.push(temp);
       });
 
       // save all sizes

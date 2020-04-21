@@ -7,13 +7,11 @@ import { fetchFile } from "./utils/fetchFile";
 import { renderSvg } from "./utils/renderSvg";
 import { uploadFiles } from "./utils/uploadFiles";
 
-export const render: Handler = async (_event, _context) => {
-  try {
-    // const { srcKey, destKey, frames } = event;
+export const render: Handler = async (event, _context) => {
+  let result: any;
 
-    const srcKey: string = "@ful1ie5_/Bibata-KflzAZTR5/Sharp/source/X11.svg";
-    const destKey: string = "@ful1ie5_/Bibata-KflzAZTR5/Sharp/render";
-    const frames: number = 1;
+  try {
+    const { srcKey, destKey, frames } = event;
 
     // fix destKey :: store rendered images in directory not in file
     const destPath = destKey.endsWith("/") ? destKey : destKey.concat("/");
@@ -27,25 +25,24 @@ export const render: Handler = async (_event, _context) => {
     const template = generateRenderTemplate(svg);
     const renderImages = await renderSvg(template, frames, fileName);
 
-    // console.log(renderImages);
-    await uploadFiles(renderImages);
+    result = await uploadFiles(renderImages, destPath);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(
+        {
+          data: result
+        },
+        null,
+        2
+      )
+    };
   } catch (error) {
     return {
       statusCode: 500,
       body: JSON.stringify(
         {
           error: error
-        },
-        null,
-        2
-      )
-    };
-  } finally {
-    return {
-      statusCode: 200,
-      body: JSON.stringify(
-        {
-          message: "hello"
         },
         null,
         2
