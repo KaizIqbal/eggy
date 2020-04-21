@@ -1,19 +1,18 @@
 import * as chromium from "chrome-aws-lambda";
 import * as sharp from "sharp";
 
-async function renderSvg(srcSvg: string, frames: number, filePrefix: string) {
+import { Image, RenderImages } from "../types";
+
+async function renderSvg(template: string, frames: number, filePrefix: string) {
   // Browser & HTML Template instance
   let browser: any;
-  let template: string;
 
   // render Image Config
-  let renderImages = {};
+  const renderImages: RenderImages = {};
+
   const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
 
   try {
-    // injecting svg file in HTML Template
-    template = template.replace("<svginjection>", srcSvg);
-
     // -------------------------------------------- SETUP BROWSER
 
     browser = await chromium.puppeteer.launch({
@@ -33,24 +32,26 @@ async function renderSvg(srcSvg: string, frames: number, filePrefix: string) {
 
     // -------------------------------------------- RENDER FRAMES
 
-    const images = [];
+    const images: Array<Image> = [];
+
     for (let index = 1; index <= frames; index++) {
-      const image = {};
-
       // generate filename & rendered image as base64 encoding
-      const fileName = frames === 1 ? filePrefix : `${filePrefix}-${index}.png`;
+      const fileName: string =
+        frames === 1 ? `${filePrefix}.png` : `${filePrefix}-${index}.png`;
 
-      const b64string = await svgImage.screenshot({
+      const b64string: string = (await svgImage.screenshot({
         omitBackground: true,
         encoding: "base64"
-      });
-      const Body = Buffer.from(b64string, "base64");
+      })) as string;
+      const Body: Buffer = Buffer.from(b64string, "base64");
 
       // setup object
-      image["fileName"] = fileName;
-      image["contentType"] = "image/png";
-      image["encoding"] = "base64";
-      image["Body"] = Body;
+      const image: Image = {
+        fileName,
+        contentType: "image/png",
+        encoding: "base64",
+        Body
+      };
 
       // push details to Object
       images.push(image);
@@ -59,31 +60,33 @@ async function renderSvg(srcSvg: string, frames: number, filePrefix: string) {
       console.log(`Rendered Frame ${index}/${frames}`);
     }
 
-    // save raw images like {"raw":[...]}
-    renderImages["raw"] = images;
+    // save raw images
+    renderImages.raw = images;
 
-    // -------------------------------------------- GENERATE SIZES OF FRAMES
+    // -------------------------------------------- RESIZE THE FRAMES
 
-    sizes.forEach(size => {
-      let renderSize = renderImages.raw.filter(async image => {
-        image.Body = await sharp(image.Body)
-          .resize({ height: size, width: size })
-          .setEncoding("base64")
-          .toBuffer();
-        return image;
+    sizes.forEach((size) => {
+      const renderSize: Array<Image> = [];
+      renderImages.raw.filter(async (image) => {
+        let temp: Image = { ...image };
+        temp.Body = await sharp(image.Body).resize(size, size).toBuffer();
+        console.log(`resize raw to ${size}x${size}`);
+        renderSize.push(temp);
       });
 
-      // save all sizes like { ... , "96x96":[...], ...}
+      // save all sizes
       renderImages[`${size}x${size}`] = renderSize;
     });
+  } catch (error) {
+    throw new Error(error);
   } finally {
     if (browser) {
       await browser.close();
+
+      // return object
+      return renderImages;
     }
   }
-
-  // return object
-  return renderImages;
 }
 
 export { renderSvg };
