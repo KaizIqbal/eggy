@@ -77,9 +77,7 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
       // save all sizes
       renderImages[`${size}x${size}`] = renderSize;
     });
-  } catch (error) {
-    throw new Error(error);
-  } finally {
+  }  finally {
     if (browser) {
       await browser.close();
 

@@ -1,0 +1,5 @@
+{
+  "srcKey": "<.svg file path in S3>",
+  "destKey": "<Path to store rendered images in S3>",
+  "frames": 1
+}
