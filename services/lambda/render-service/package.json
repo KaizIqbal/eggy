@@ -6,9 +6,9 @@
   "scripts": {
     "local": "npx sls invoke local --function render",
     "deploy:dev": "npx sls deploy -v",
-    "go:dev": "npx sls invoke -f render -l --path test.json",
+    "go:dev": "npx sls invoke -f render -l --path data.json",
     "deploy": "npx sls deploy -s",
-    "go": "npx sls invoke -f render",
+    "go": "npx sls invoke -f render --path data.json",
     "clean": "npx sls remove",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -34,5 +34,9 @@
   },
   "author": "Kaiz Khatri",
   "license": "MIT",
-  "keywords": ["eggy", "render", "lambda"]
+  "keywords": [
+    "eggy",
+    "render",
+    "lambda"
+  ]
 }
