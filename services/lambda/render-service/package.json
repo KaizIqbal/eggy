@@ -6,7 +6,7 @@
   "scripts": {
     "local": "npx sls invoke local --function render",
     "deploy:dev": "npx sls deploy -v",
-    "go:dev": "npx sls invoke -f render -l",
+    "go:dev": "npx sls invoke -f render -l --path test.json",
     "deploy": "npx sls deploy -s",
     "go": "npx sls invoke -f render",
     "clean": "npx sls remove",
@@ -34,5 +34,5 @@
   },
   "author": "Kaiz Khatri",
   "license": "MIT",
-  "keywords": []
+  "keywords": ["eggy", "render", "lambda"]
 }
