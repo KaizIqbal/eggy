@@ -42,7 +42,7 @@ export const render: Handler = async (event, _context) => {
       statusCode: 500,
       body: JSON.stringify(
         {
-          error: error
+          message: "Internal Server Error!!"
         },
         null,
         2
