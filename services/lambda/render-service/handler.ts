@@ -10,9 +10,8 @@ import { uploadFiles } from "./utils/uploadFiles";
 export const render: Handler = async (event, _context) => {
   let result: any;
 
+  const { srcKey, destKey, frames } = event;
   try {
-    const { srcKey, destKey, frames } = event;
-
     // fix destKey :: store rendered images in directory not in file
     const destPath = destKey.endsWith("/") ? destKey : destKey.concat("/");
 
@@ -26,23 +25,23 @@ export const render: Handler = async (event, _context) => {
     const renderImages = await renderSvg(template, frames, fileName);
 
     result = await uploadFiles(renderImages, destPath);
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify(
-        {
-          data: result
-        },
-        null,
-        2
-      )
-    };
   } catch (error) {
     return {
       statusCode: 500,
       body: JSON.stringify(
         {
-          error: error
+          message: "Internal Server Error!!"
+        },
+        null,
+        2
+      )
+    };
+  } finally {
+    return {
+      statusCode: 200,
+      body: JSON.stringify(
+        {
+          data: result
         },
         null,
         2
