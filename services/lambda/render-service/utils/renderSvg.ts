@@ -81,14 +81,15 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
       // save all sizes
       renderImages[`${size}x${size}`] = renderSize;
     });
+
+    // return object
+
+    return renderImages;
   } catch (error) {
     throw new Error(error);
   } finally {
     if (browser) {
       await browser.close();
-
-      // return object
-      return renderImages;
     }
   }
 }
