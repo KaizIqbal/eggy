@@ -26,10 +26,12 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
     });
 
     const page = await browser.newPage();
-    await page.setContent(template, { waitUntil: "networkidle0" });
+    await page.setContent(template, { waitUntil: "load" });
 
-    const svgImage = await page.$("svg");
+    await page.waitForSelector("#container");
+    const svgImage = await page.$("#container");
 
+    if (!svgImage) throw new Error("svg element not found");
     // -------------------------------------------- RENDER FRAMES
 
     const images: Array<Image> = [];
@@ -65,11 +67,13 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
 
     // -------------------------------------------- RESIZE THE FRAMES
 
-    sizes.forEach((size) => {
+    sizes.forEach(size => {
       const renderSize: Array<Image> = [];
-      renderImages.raw.filter(async (image) => {
+      renderImages.raw.filter(async image => {
         let temp: Image = { ...image };
-        temp.Body = await sharp(image.Body).resize(size, size).toBuffer();
+        temp.Body = await sharp(image.Body)
+          .resize(size, size)
+          .toBuffer();
         console.log(`resize raw to ${size}x${size}`);
         renderSize.push(temp);
       });
@@ -77,7 +81,9 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
       // save all sizes
       renderImages[`${size}x${size}`] = renderSize;
     });
-  }  finally {
+  } catch (error) {
+    throw new Error(error);
+  } finally {
     if (browser) {
       await browser.close();
 

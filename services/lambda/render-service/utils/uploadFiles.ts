@@ -7,24 +7,27 @@ async function uploadFiles(renderImages: RenderImages, destPath: string) {
 
   let result: any;
 
-  // Uploading all Files
-  categories.map(async (category) => {
-    const images = renderImages[category];
-    const data = images.filter(async (image) => {
-      const key: string = destPath + category + "/" + image.fileName;
-      const response = await uploadToS3(key, image.contentType, image.Body);
+  try {
+    // Uploading all Files
+    categories.map(async category => {
+      const images = renderImages[category];
+      const data = images.filter(async image => {
+        const key: string = destPath + category + "/" + image.fileName;
+        const response = await uploadToS3(key, image.contentType, image.Body);
 
-      return {
-        key,
-        url: response.Location,
-        mimetype: image.contentType,
-        encoding: image.encoding
-      };
+        return {
+          key,
+          url: response.Location,
+          mimetype: image.contentType,
+          encoding: image.encoding
+        };
+      });
+      if (category === "raw") result = data;
     });
-    if (category === "raw") result = data;
-  });
-
-  return result;
+    return result;
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
 export { uploadFiles };
