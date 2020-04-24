@@ -2,13 +2,21 @@ import * as chromium from "chrome-aws-lambda";
 import * as sharp from "sharp";
 
 import { Image, RenderImages } from "../types";
+import { uploadToS3 } from "./s3";
 
-async function renderSvg(template: string, frames: number, filePrefix: string) {
+async function renderSvg(
+  template: string,
+  frames: number,
+  filePrefix: string,
+  destPath: string
+) {
   // Browser & HTML Template instance
   let browser: any;
 
   // render Image Config
   const renderImages: RenderImages = {};
+
+  const result = [];
 
   const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
 
@@ -26,10 +34,12 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
     });
 
     const page = await browser.newPage();
-    await page.setContent(template, { waitUntil: "networkidle0" });
+    await page.setContent(template, { waitUntil: "load" });
 
-    const svgImage = await page.$("svg");
+    await page.waitForSelector("#container");
+    const svgImage = await page.$("#container");
 
+    if (!svgImage) throw new Error("svg element not found");
     // -------------------------------------------- RENDER FRAMES
 
     const images: Array<Image> = [];
@@ -58,6 +68,18 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
 
       // Display rendered frame log
       console.log(`Rendered Frame ${index}/${frames}`);
+
+      // uploading raw images
+
+      const key: string = destPath + "raw/" + image.fileName;
+      const response = await uploadToS3(key, image.contentType, image.Body);
+
+      result.push({
+        key: response.Key,
+        url: response.Location,
+        mimetype: image.contentType,
+        encoding: image.encoding
+      });
     }
 
     // save raw images
@@ -65,25 +87,34 @@ async function renderSvg(template: string, frames: number, filePrefix: string) {
 
     // -------------------------------------------- RESIZE THE FRAMES
 
-    sizes.forEach((size) => {
-      const renderSize: Array<Image> = [];
-      renderImages.raw.filter(async (image) => {
+    sizes.forEach(size => {
+      renderImages.raw.filter(async image => {
         let temp: Image = { ...image };
-        temp.Body = await sharp(image.Body).resize(size, size).toBuffer();
-        console.log(`resize raw to ${size}x${size}`);
-        renderSize.push(temp);
-      });
+        temp.Body = await sharp(image.Body)
+          .resize(size, size)
+          .toBuffer();
 
-      // save all sizes
-      renderImages[`${size}x${size}`] = renderSize;
+        const category = `${size}x${size}`;
+        console.log(`resize raw to ${category}`);
+
+        // uploading raw images
+        const key: string = destPath + category + "/" + temp.fileName;
+        const response = await uploadToS3(key, temp.contentType, temp.Body);
+        result.push({
+          key: response.Key,
+          url: response.Location,
+          mimetype: temp.contentType,
+          encoding: temp.encoding
+        });
+      });
     });
-  }  finally {
+  } catch (error) {
+    throw new Error(error);
+  } finally {
     if (browser) {
       await browser.close();
-
-      // return object
-      return renderImages;
     }
+    return result;
   }
 }
 

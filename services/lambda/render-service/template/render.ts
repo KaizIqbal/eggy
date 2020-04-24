@@ -11,11 +11,13 @@ export const template = `
     </head>
                 
     <body>
+        <div id="container">
 
-        <!-- .svg file injected on <svg> tag -->
+            <!-- .svg file injected on <svg> tag -->
 
-        <svginjection>
-            
+            <svginjection>
+
+        </div>
     </body>
 </html>
 `;
