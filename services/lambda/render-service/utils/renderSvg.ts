@@ -70,8 +70,10 @@ async function renderSvg(
       console.log(`Rendered Frame ${index}/${frames}`);
 
       // uploading raw images
-      const key: string = destPath + "raw" + "/" + image.fileName;
+
+      const key: string = destPath + "raw/" + image.fileName;
       const response = await uploadToS3(key, image.contentType, image.Body);
+
       result.push({
         key: response.Key,
         url: response.Location,
@@ -85,10 +87,12 @@ async function renderSvg(
 
     // -------------------------------------------- RESIZE THE FRAMES
 
-    sizes.forEach((size) => {
-      renderImages.raw.filter(async (image) => {
+    sizes.forEach(size => {
+      renderImages.raw.filter(async image => {
         let temp: Image = { ...image };
-        temp.Body = await sharp(image.Body).resize(size, size).toBuffer();
+        temp.Body = await sharp(image.Body)
+          .resize(size, size)
+          .toBuffer();
 
         const category = `${size}x${size}`;
         console.log(`resize raw to ${category}`);
