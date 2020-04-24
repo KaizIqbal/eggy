@@ -5,7 +5,6 @@ import * as path from "path";
 import { generateRenderTemplate } from "./template/render";
 import { fetchFile } from "./utils/fetchFile";
 import { renderSvg } from "./utils/renderSvg";
-import { uploadFiles } from "./utils/uploadFiles";
 
 export const render: Handler = async (event, context) => {
   const { srcKey, destKey, frames } = event;
@@ -35,9 +34,7 @@ export const render: Handler = async (event, context) => {
     fileName = fileName.split(".")[0];
 
     const template = generateRenderTemplate(svg);
-    const renderImages = await renderSvg(template, frames, fileName);
-
-    result = await uploadFiles(renderImages, destPath);
+    result = await renderSvg(template, frames, fileName, destPath);
   } catch (error) {
     return context.fail(error);
   } finally {
