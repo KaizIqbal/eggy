@@ -20,6 +20,11 @@ plugins:
 provider:
   name: aws
   region: ap-south-1
+  iamRoleStatements:	
+    - Effect: Allow	
+      Action:	
+        - "s3:*"	
+      Resource: "arn:aws:s3:::${self:custom.s3Bucket}/*"
   # here we put the layers we want to use
   layers:
     # Google Chrome for AWS Lambda as a layer
