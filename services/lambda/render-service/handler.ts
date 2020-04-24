@@ -5,12 +5,24 @@ import * as path from "path";
 import { generateRenderTemplate } from "./template/render";
 import { fetchFile } from "./utils/fetchFile";
 import { renderSvg } from "./utils/renderSvg";
-import { uploadFiles } from "./utils/uploadFiles";
 
-export const render: Handler = async (event, _context) => {
+export const render: Handler = async (event, context) => {
+  const { srcKey, destKey, frames } = event;
   let result: any;
 
-  const { srcKey, destKey, frames } = event;
+  if (!srcKey || !destKey || !frames) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify(
+        {
+          error: "Some Arguments are missing"
+        },
+        null,
+        2
+      )
+    };
+  }
+
   try {
     // fix destKey :: store rendered images in directory not in file
     const destPath = destKey.endsWith("/") ? destKey : destKey.concat("/");
@@ -22,30 +34,10 @@ export const render: Handler = async (event, _context) => {
     fileName = fileName.split(".")[0];
 
     const template = generateRenderTemplate(svg);
-    const renderImages = await renderSvg(template, frames, fileName);
-
-    result = await uploadFiles(renderImages, destPath);
+    result = await renderSvg(template, frames, fileName, destPath);
   } catch (error) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify(
-        {
-          message: "Internal Server Error!!"
-        },
-        null,
-        2
-      )
-    };
+    return context.fail(error);
   } finally {
-    return {
-      statusCode: 200,
-      body: JSON.stringify(
-        {
-          data: result
-        },
-        null,
-        2
-      )
-    };
+    return context.succeed(result);
   }
 };
