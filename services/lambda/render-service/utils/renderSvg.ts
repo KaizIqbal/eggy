@@ -74,6 +74,7 @@ async function renderSvg(
       const key: string = destPath + "raw/" + image.fileName;
       const response = await uploadToS3(key, image.contentType, image.Body);
 
+      console.log(`Uploading RAW Frames ${index}/${frames}`);
       result.push({
         key: response.Key,
         url: response.Location,
@@ -87,25 +88,19 @@ async function renderSvg(
 
     // -------------------------------------------- RESIZE THE FRAMES
 
-    sizes.forEach(size => {
-      renderImages.raw.filter(async image => {
+    sizes.forEach((size) => {
+      renderImages.raw.forEach(async (image) => {
         let temp: Image = { ...image };
-        temp.Body = await sharp(image.Body)
-          .resize(size, size)
-          .toBuffer();
+        temp.Body = await sharp(image.Body).resize(size, size).toBuffer();
 
         const category = `${size}x${size}`;
-        console.log(`resize raw to ${category}`);
 
         // uploading raw images
         const key: string = destPath + category + "/" + temp.fileName;
         const response = await uploadToS3(key, temp.contentType, temp.Body);
-        result.push({
-          key: response.Key,
-          url: response.Location,
-          mimetype: temp.contentType,
-          encoding: temp.encoding
-        });
+        console.log(
+          `${category} ${filePrefix}.png Uploaded at ${response.Location}`
+        );
       });
     });
   } catch (error) {

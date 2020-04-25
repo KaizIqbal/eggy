@@ -27,7 +27,6 @@ async function uploadToS3(key: string, contentType: string, stream: Buffer) {
     };
 
     // Uploading to S3
-
     return await s3.upload(params).promise();
   } catch (error) {
     throw new Error(error);
