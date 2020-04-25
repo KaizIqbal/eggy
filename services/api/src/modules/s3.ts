@@ -1,15 +1,12 @@
-const AWS = require("aws-sdk");
+import { aws } from "./awsConfig";
 
-const s3bucket = new AWS.S3({
-  accessKeyId: process.env.IAM_USER_KEY,
-  secretAccessKey: process.env.IAM_USER_SECRET,
-  Bucket: process.env.BUCKET_NAME
+const s3bucket = new aws.S3({
+  Bucket: process.env.S3_BUCKET
 });
 
 export function uploadToS3(key: any, mimetype: any, stream: any) {
   // Configure parameter
   const params = {
-    Bucket: process.env.BUCKET_NAME,
     Key: key,
     ACL: "public-read",
     ContentType: mimetype,
@@ -24,7 +21,6 @@ export function uploadToS3(key: any, mimetype: any, stream: any) {
 
 export function fetchFroms3(key: string) {
   const params = {
-    Bucket: process.env.BUCKET_NAME,
     Key: key
   };
   const s3Response = s3bucket.getObject(params).promise();
@@ -35,7 +31,6 @@ export function fetchFroms3(key: string) {
 export function deleteFromS3(key: any) {
   // Configure parameter
   const params = {
-    Bucket: process.env.BUCKET_NAME,
     Key: key
   };
 

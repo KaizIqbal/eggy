@@ -1,4 +1,4 @@
-import { uploadToS3, deleteFromS3 } from "../../modules/fileApi";
+import { uploadToS3, deleteFromS3 } from "../../modules/s3";
 import isAuth from "../../utils/isAuth";
 
 export const fileMutations = {
