@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://1fst7.sse.codesandbox.io"
+schema: "https://sbiub.sse.codesandbox.io"
 documents: "graphql/*.graphql"
 generates:
   generated/graphql.tsx:
