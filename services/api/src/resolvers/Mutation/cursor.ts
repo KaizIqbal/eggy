@@ -1,7 +1,7 @@
 // Helper Functions
 import checkFlavor from "../../utils/checkFlavor";
 import checkCursor from "../../utils/checkCursor";
-import { fetchFroms3 } from "../../modules/fileApi";
+import { fetchFroms3 } from "../../modules/s3";
 
 export const cursorMutations = {
   // ################################################ CREATE CURSOR ################################################
