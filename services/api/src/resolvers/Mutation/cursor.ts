@@ -167,6 +167,7 @@ export const cursorMutations = {
     };
     payload = JSON.stringify(payload);
 
+    // -------------- Invoke Render Lambda Function --------------
     const response = await invokeRenderLambdaFunction(payload);
 
     // If any error in lambda execution
