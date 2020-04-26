@@ -2,6 +2,7 @@
 import checkFlavor from "../../utils/checkFlavor";
 import checkCursor from "../../utils/checkCursor";
 import { fetchFroms3 } from "../../modules/s3";
+import { invokeRenderLambdaFunction } from "../../modules/lambda/render";
 
 export const cursorMutations = {
   // ################################################ CREATE CURSOR ################################################
@@ -147,17 +148,27 @@ export const cursorMutations = {
       throw new Error("source file not found for this cursor");
     }
 
-    // data of generated cursor
+    // data of cursor
     const {
-      name: fileName,
+      name,
       frames,
       source: { key }
     } = cursor;
 
-    // Fetch Source File From Amazon S3
-    const sourceSvg = await fetchFroms3(key);
+    // configure render path ../render/*.png in s3
+    let destKey = key.split(name)[0];
+    destKey = destKey.replace("source", "render");
 
-    console.log(fileName, frames, sourceSvg);
+    let payload = {
+      srcKey: key,
+      destKey,
+      frames
+    };
+
+    payload = JSON.stringify(payload);
+    const response = await invokeRenderLambdaFunction(payload);
+
+    console.log(response);
     // Update Cursors
     // TODO
     return ctx.db.query.cursor({ where: { id } }, info);
