@@ -760,7 +760,7 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-aws-sdk@*:
+aws-sdk@*, aws-sdk@^2.663.0:
   version "2.663.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.663.0.tgz#003d8cc318635d1bf67deda586f5e5d583b7e384"
   integrity sha512-xPOszNOaSXTRs8VGXaMbhTKXdlq2TlDRfFRVEGxkZrtow87hEIVZGAUSUme2e3GHqHUDnySwcufrUpUPUizOKQ==
@@ -2781,14 +2781,14 @@ graphql-yoga@1.18.3:
     graphql-upload "^8.0.0"
     subscriptions-transport-ws "^0.9.8"
 
-graphql@*, "graphql@^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0", graphql@^0.13.1:
+graphql@*, graphql@0.13.2, "graphql@^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0", graphql@^0.13.1:
   version "0.13.2"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.13.2.tgz#4c740ae3c222823e7004096f832e7b93b2108270"
   integrity sha512-QZ5BL8ZO/B20VA8APauGBg3GyEgZ19eduvpLWoq5x7gMmWnHoy8rlQWPLmWgFvo1yNgjSEFMesmS4R6pPr7xog==
   dependencies:
     iterall "^1.2.1"
 
-graphql@14.6.0, graphql@^14.0.0, graphql@^14.0.2, graphql@^14.3.0:
+graphql@^14.0.0, graphql@^14.0.2, graphql@^14.3.0:
   version "14.6.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.6.0.tgz#57822297111e874ea12f5cd4419616930cd83e49"
   integrity sha512-VKzfvHEKybTKjQVpTFrA5yUq2S9ihcZvfJAtsDBBCuV6wauPu1xl/f9ehgVf0FcEJJs4vz6ysb/ZMkGigQZseg==
@@ -4755,8 +4755,6 @@ postgres-interval@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/postgres-interval/-/postgres-interval-1.2.0.tgz#b460c82cb1587507788819a06aa0fffdb3544695"
   integrity sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==
-  dependencies:
-    xtend "^4.0.0"
 
 prepend-http@^1.0.1:
   version "1.0.4"
