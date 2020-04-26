@@ -1,10 +1,10 @@
-import { aws } from "../awsConfig";
+import * as LAMBDA from "aws-sdk/clients/lambda";
 
-const lambda = new aws.Lambda({ apiVersion: "2015-03-31" });
+const lambda = new LAMBDA({ apiVersion: "2015-03-31" });
 
 export async function invokeRenderLambdaFunction(payload: Object) {
   const params = {
-    arn: process.env.RENDER_LAMBDA_ARN,
+    FunctionName: "render-service-dev-render",
     InvocationType: "RequestResponse",
     Payload: JSON.stringify(payload)
   };
