@@ -2,6 +2,7 @@
 import checkFlavor from "../../utils/checkFlavor";
 import checkCursor from "../../utils/checkCursor";
 import { fetchFroms3 } from "../../modules/s3";
+import { invokeRenderLambdaFunction } from "../../modules/lambda/render";
 
 export const cursorMutations = {
   // ################################################ CREATE CURSOR ################################################
@@ -147,17 +148,42 @@ export const cursorMutations = {
       throw new Error("source file not found for this cursor");
     }
 
-    // data of generated cursor
+    // data of cursor
     const {
-      name: fileName,
+      name,
       frames,
       source: { key }
     } = cursor;
 
-    // Fetch Source File From Amazon S3
-    const sourceSvg = await fetchFroms3(key);
+    // configure render path ../render/*.png in s3
+    let destKey = key.split(name)[0];
+    destKey = destKey.replace("source", "render");
 
-    console.log(fileName, frames, sourceSvg);
+    // Prepare render payload
+    let payload = {
+      srcKey: key,
+      destKey,
+      frames
+    };
+    payload = JSON.stringify(payload);
+
+    // -------------- Invoke Render Lambda Function --------------
+    const response = await invokeRenderLambdaFunction(payload);
+
+    // If any error in lambda execution
+    if (!response.StatusCode === 200) {
+      throw new Error("Ooops.Render server generating Exception");
+    }
+
+    let { Payload: data } = response;
+    data = JSON.parse(data);
+
+    // Checking lambda have manual Ecxeption or not
+    if (data.statusCode) {
+      throw new Error(data.body);
+    }
+
+    console.log(data);
     // Update Cursors
     // TODO
     return ctx.db.query.cursor({ where: { id } }, info);
