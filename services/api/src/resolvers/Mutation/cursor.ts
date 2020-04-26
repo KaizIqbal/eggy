@@ -172,14 +172,14 @@ export const cursorMutations = {
 
     // If any error in lambda execution
     if (!response.StatusCode === 200) {
-      throw new Error("Oops.\n Render server generating Exception");
+      throw new Error("Ooops.Render server generating Exception");
     }
 
     let { Payload: data } = response;
     data = JSON.parse(data);
 
     // Checking lambda have manual Ecxeption or not
-    if (data.statusCode === 500) {
+    if (data.statusCode) {
       throw new Error(data.body);
     }
 
