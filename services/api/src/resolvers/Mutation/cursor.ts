@@ -159,16 +159,30 @@ export const cursorMutations = {
     let destKey = key.split(name)[0];
     destKey = destKey.replace("source", "render");
 
+    // Prepare render payload
     let payload = {
       srcKey: key,
       destKey,
       frames
     };
-
     payload = JSON.stringify(payload);
+
     const response = await invokeRenderLambdaFunction(payload);
 
-    console.log(response);
+    // If any error in lambda execution
+    if (!response.StatusCode === 200) {
+      throw new Error("Oops.\n Render server generating Exception");
+    }
+
+    let { Payload: data } = response;
+    data = JSON.parse(data);
+
+    // Checking lambda have manual Ecxeption or not
+    if (data.statusCode === 500) {
+      throw new Error(data.body);
+    }
+
+    console.log(data);
     // Update Cursors
     // TODO
     return ctx.db.query.cursor({ where: { id } }, info);
