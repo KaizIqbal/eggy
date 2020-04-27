@@ -1,7 +1,8 @@
+// types
+import { Image } from "../../../types";
 // Helper Functions
 import checkFlavor from "../../utils/checkFlavor";
 import checkCursor from "../../utils/checkCursor";
-import { fetchFroms3 } from "../../modules/s3";
 import { invokeRenderLambdaFunction } from "../../modules/lambda/render";
 
 export const cursorMutations = {
@@ -160,17 +161,19 @@ export const cursorMutations = {
     destKey = destKey.replace("source", "render");
 
     // Prepare render payload
-    let payload = {
+    const payload = {
       srcKey: key,
       destKey,
       frames
     };
-    payload = JSON.stringify(payload);
 
     // -------------- Invoke Render Lambda Function --------------
-    const response = await invokeRenderLambdaFunction(payload);
+    const response: any = await invokeRenderLambdaFunction(
+      JSON.stringify(payload)
+    );
 
     // If any error in lambda execution
+    // @ts-ignore
     if (!response.StatusCode === 200) {
       throw new Error("Ooops.Render server generating Exception");
     }
@@ -183,9 +186,14 @@ export const cursorMutations = {
       throw new Error(data.body);
     }
 
-    console.log(data);
     // Update Cursors
     // TODO
+
+    await Promise.all(
+      data.map(async (image: Image) => {
+        console.log(image);
+      })
+    );
     return ctx.db.query.cursor({ where: { id } }, info);
   }
 };
