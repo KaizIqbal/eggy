@@ -45,7 +45,7 @@ type Mutation {
   updateCursor(id:ID! name:cursorName! frames:Int!): Cursor!
   renameCursor(id:ID! flavorId:ID! name:cursorName!): Cursor!
   deleteCursor(id:ID!): Cursor!
-  renderCursor(id:ID!): [RenderFile]!
+  renderCursor(id:ID!): [RenderFile!]
     
   # Auth
   signup(firstName:String! lastName:String! username: String! email:String! password:String!): AuthPayload!
