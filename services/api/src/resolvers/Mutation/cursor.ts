@@ -184,17 +184,22 @@ export const cursorMutations = {
       throw new Error(data.body);
     }
 
-    // Update Cursors
-    // TODO
-
-    return await Promise.all(
-      data.map(async (image: Image) => {
-        return await ctx.db.mutation.createRenderFile(
+    // Sotore lambda response data to prisma
+    // if data alredy exits then it overwrite or create new one
+    await Promise.all(
+      data.map(async (image: any) => {
+        return await ctx.db.mutation.upsertRenderFile(
           {
             where: {
-              id
+              url: image.url
             },
-            data: {
+            update: {
+              ...image
+            },
+            create: {
+              cursor: {
+                connect: { id }
+              },
               ...image
             }
           },
@@ -202,6 +207,11 @@ export const cursorMutations = {
         );
       })
     );
-    // return ctx.db.query.cursor({ where: { id } }, info);
+
+    // Update Cursor render flag
+    return ctx.db.mutation.updateCursor(
+      { where: { id }, data: { isRendered: true } },
+      info
+    );
   }
 };

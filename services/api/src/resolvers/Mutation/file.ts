@@ -21,9 +21,9 @@ export const fileMutations = {
     // creating Stream
     const stream = createReadStream();
 
-    // Fetch names from database for S3 file structure
-    const data = await ctx.db.query.cursor(
-      { where: { id: args.cursorId } },
+    // Fetch names from database for S3 file structure && updating cursor render flag to false
+    const data = await ctx.db.mutation.updateCursor(
+      { where: { id: args.cursorId }, data: { isRendered: false } },
       `{
         name
         flavor {
@@ -61,15 +61,25 @@ export const fileMutations = {
     const url = s3Response.Location;
 
     // add detail to prisma
-    const file = await ctx.db.mutation.createFile(
+    const file = await ctx.db.mutation.upsertFile(
       {
-        data: {
+        where: {
+          url
+        },
+        update: {
           key: key,
           filename: name,
           mimetype: mimetype,
           encoding: encoding,
-          url: url,
-          cursor: { connect: { id: args.cursorId } }
+          url: url
+        },
+        create: {
+          cursor: { connect: { id: args.cursorId } },
+          key: key,
+          filename: name,
+          mimetype: mimetype,
+          encoding: encoding,
+          url: url
         }
       },
       info
