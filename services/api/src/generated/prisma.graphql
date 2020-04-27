@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Fri Apr 10 2020 07:22:00 GMT+0000 (Coordinated Universal Time)
+# timestamp: Mon Apr 27 2020 05:34:47 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -14,6 +14,10 @@ type AggregateFile {
 }
 
 type AggregateFlavor {
+  count: Int!
+}
+
+type AggregateRenderFile {
   count: Int!
 }
 
@@ -33,7 +37,7 @@ type Cursor implements Node {
   isRendered: Boolean!
   flavor: Flavor!
   source: File
-  render(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
+  render(where: RenderFileWhereInput, orderBy: RenderFileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RenderFile!]
 }
 
 """A connection to a list of items."""
@@ -53,12 +57,17 @@ input CursorCreateInput {
   isRendered: Boolean
   flavor: FlavorCreateOneWithoutCursorsInput!
   source: FileCreateOneWithoutCursorInput
-  render: FileCreateManyInput
+  render: RenderFileCreateManyWithoutCursorInput
 }
 
 input CursorCreateManyWithoutFlavorInput {
   create: [CursorCreateWithoutFlavorInput!]
   connect: [CursorWhereUniqueInput!]
+}
+
+input CursorCreateOneWithoutRenderInput {
+  create: CursorCreateWithoutRenderInput
+  connect: CursorWhereUniqueInput
 }
 
 input CursorCreateOneWithoutSourceInput {
@@ -72,7 +81,16 @@ input CursorCreateWithoutFlavorInput {
   frames: Int!
   isRendered: Boolean
   source: FileCreateOneWithoutCursorInput
-  render: FileCreateManyInput
+  render: RenderFileCreateManyWithoutCursorInput
+}
+
+input CursorCreateWithoutRenderInput {
+  id: ID
+  name: cursorName!
+  frames: Int!
+  isRendered: Boolean
+  flavor: FlavorCreateOneWithoutCursorsInput!
+  source: FileCreateOneWithoutCursorInput
 }
 
 input CursorCreateWithoutSourceInput {
@@ -81,7 +99,7 @@ input CursorCreateWithoutSourceInput {
   frames: Int!
   isRendered: Boolean
   flavor: FlavorCreateOneWithoutCursorsInput!
-  render: FileCreateManyInput
+  render: RenderFileCreateManyWithoutCursorInput
 }
 
 """An edge in a connection."""
@@ -249,7 +267,7 @@ input CursorUpdateInput {
   isRendered: Boolean
   flavor: FlavorUpdateOneRequiredWithoutCursorsInput
   source: FileUpdateOneWithoutCursorInput
-  render: FileUpdateManyInput
+  render: RenderFileUpdateManyWithoutCursorInput
 }
 
 input CursorUpdateManyDataInput {
@@ -281,6 +299,13 @@ input CursorUpdateManyWithWhereNestedInput {
   data: CursorUpdateManyDataInput!
 }
 
+input CursorUpdateOneRequiredWithoutRenderInput {
+  create: CursorCreateWithoutRenderInput
+  connect: CursorWhereUniqueInput
+  update: CursorUpdateWithoutRenderDataInput
+  upsert: CursorUpsertWithoutRenderInput
+}
+
 input CursorUpdateOneRequiredWithoutSourceInput {
   create: CursorCreateWithoutSourceInput
   connect: CursorWhereUniqueInput
@@ -293,7 +318,15 @@ input CursorUpdateWithoutFlavorDataInput {
   frames: Int
   isRendered: Boolean
   source: FileUpdateOneWithoutCursorInput
-  render: FileUpdateManyInput
+  render: RenderFileUpdateManyWithoutCursorInput
+}
+
+input CursorUpdateWithoutRenderDataInput {
+  name: cursorName
+  frames: Int
+  isRendered: Boolean
+  flavor: FlavorUpdateOneRequiredWithoutCursorsInput
+  source: FileUpdateOneWithoutCursorInput
 }
 
 input CursorUpdateWithoutSourceDataInput {
@@ -301,12 +334,17 @@ input CursorUpdateWithoutSourceDataInput {
   frames: Int
   isRendered: Boolean
   flavor: FlavorUpdateOneRequiredWithoutCursorsInput
-  render: FileUpdateManyInput
+  render: RenderFileUpdateManyWithoutCursorInput
 }
 
 input CursorUpdateWithWhereUniqueWithoutFlavorInput {
   where: CursorWhereUniqueInput!
   data: CursorUpdateWithoutFlavorDataInput!
+}
+
+input CursorUpsertWithoutRenderInput {
+  update: CursorUpdateWithoutRenderDataInput!
+  create: CursorCreateWithoutRenderInput!
 }
 
 input CursorUpsertWithoutSourceInput {
@@ -407,9 +445,9 @@ input CursorWhereInput {
   isRendered_not: Boolean
   flavor: FlavorWhereInput
   source: FileWhereInput
-  render_every: FileWhereInput
-  render_some: FileWhereInput
-  render_none: FileWhereInput
+  render_every: RenderFileWhereInput
+  render_some: RenderFileWhereInput
+  render_none: RenderFileWhereInput
 }
 
 input CursorWhereUniqueInput {
@@ -1035,11 +1073,6 @@ input FileCreateInput {
   cursor: CursorCreateOneWithoutSourceInput!
 }
 
-input FileCreateManyInput {
-  create: [FileCreateInput!]
-  connect: [FileWhereUniqueInput!]
-}
-
 input FileCreateOneWithoutCursorInput {
   create: FileCreateWithoutCursorInput
   connect: FileWhereUniqueInput
@@ -1093,301 +1126,6 @@ type FilePreviousValues {
   url: String!
 }
 
-input FileScalarWhereInput {
-  """Logical AND on all given filters."""
-  AND: [FileScalarWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [FileScalarWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [FileScalarWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-
-  """All values that are not equal to given value."""
-  updatedAt_not: DateTime
-
-  """All values that are contained in given list."""
-  updatedAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  updatedAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  updatedAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  updatedAt_lte: DateTime
-
-  """All values greater than the given value."""
-  updatedAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  updatedAt_gte: DateTime
-  key: String
-
-  """All values that are not equal to given value."""
-  key_not: String
-
-  """All values that are contained in given list."""
-  key_in: [String!]
-
-  """All values that are not contained in given list."""
-  key_not_in: [String!]
-
-  """All values less than the given value."""
-  key_lt: String
-
-  """All values less than or equal the given value."""
-  key_lte: String
-
-  """All values greater than the given value."""
-  key_gt: String
-
-  """All values greater than or equal the given value."""
-  key_gte: String
-
-  """All values containing the given string."""
-  key_contains: String
-
-  """All values not containing the given string."""
-  key_not_contains: String
-
-  """All values starting with the given string."""
-  key_starts_with: String
-
-  """All values not starting with the given string."""
-  key_not_starts_with: String
-
-  """All values ending with the given string."""
-  key_ends_with: String
-
-  """All values not ending with the given string."""
-  key_not_ends_with: String
-  filename: String
-
-  """All values that are not equal to given value."""
-  filename_not: String
-
-  """All values that are contained in given list."""
-  filename_in: [String!]
-
-  """All values that are not contained in given list."""
-  filename_not_in: [String!]
-
-  """All values less than the given value."""
-  filename_lt: String
-
-  """All values less than or equal the given value."""
-  filename_lte: String
-
-  """All values greater than the given value."""
-  filename_gt: String
-
-  """All values greater than or equal the given value."""
-  filename_gte: String
-
-  """All values containing the given string."""
-  filename_contains: String
-
-  """All values not containing the given string."""
-  filename_not_contains: String
-
-  """All values starting with the given string."""
-  filename_starts_with: String
-
-  """All values not starting with the given string."""
-  filename_not_starts_with: String
-
-  """All values ending with the given string."""
-  filename_ends_with: String
-
-  """All values not ending with the given string."""
-  filename_not_ends_with: String
-  mimetype: String
-
-  """All values that are not equal to given value."""
-  mimetype_not: String
-
-  """All values that are contained in given list."""
-  mimetype_in: [String!]
-
-  """All values that are not contained in given list."""
-  mimetype_not_in: [String!]
-
-  """All values less than the given value."""
-  mimetype_lt: String
-
-  """All values less than or equal the given value."""
-  mimetype_lte: String
-
-  """All values greater than the given value."""
-  mimetype_gt: String
-
-  """All values greater than or equal the given value."""
-  mimetype_gte: String
-
-  """All values containing the given string."""
-  mimetype_contains: String
-
-  """All values not containing the given string."""
-  mimetype_not_contains: String
-
-  """All values starting with the given string."""
-  mimetype_starts_with: String
-
-  """All values not starting with the given string."""
-  mimetype_not_starts_with: String
-
-  """All values ending with the given string."""
-  mimetype_ends_with: String
-
-  """All values not ending with the given string."""
-  mimetype_not_ends_with: String
-  encoding: String
-
-  """All values that are not equal to given value."""
-  encoding_not: String
-
-  """All values that are contained in given list."""
-  encoding_in: [String!]
-
-  """All values that are not contained in given list."""
-  encoding_not_in: [String!]
-
-  """All values less than the given value."""
-  encoding_lt: String
-
-  """All values less than or equal the given value."""
-  encoding_lte: String
-
-  """All values greater than the given value."""
-  encoding_gt: String
-
-  """All values greater than or equal the given value."""
-  encoding_gte: String
-
-  """All values containing the given string."""
-  encoding_contains: String
-
-  """All values not containing the given string."""
-  encoding_not_contains: String
-
-  """All values starting with the given string."""
-  encoding_starts_with: String
-
-  """All values not starting with the given string."""
-  encoding_not_starts_with: String
-
-  """All values ending with the given string."""
-  encoding_ends_with: String
-
-  """All values not ending with the given string."""
-  encoding_not_ends_with: String
-  url: String
-
-  """All values that are not equal to given value."""
-  url_not: String
-
-  """All values that are contained in given list."""
-  url_in: [String!]
-
-  """All values that are not contained in given list."""
-  url_not_in: [String!]
-
-  """All values less than the given value."""
-  url_lt: String
-
-  """All values less than or equal the given value."""
-  url_lte: String
-
-  """All values greater than the given value."""
-  url_gt: String
-
-  """All values greater than or equal the given value."""
-  url_gte: String
-
-  """All values containing the given string."""
-  url_contains: String
-
-  """All values not containing the given string."""
-  url_not_contains: String
-
-  """All values starting with the given string."""
-  url_starts_with: String
-
-  """All values not starting with the given string."""
-  url_not_starts_with: String
-
-  """All values ending with the given string."""
-  url_ends_with: String
-
-  """All values not ending with the given string."""
-  url_not_ends_with: String
-}
-
 type FileSubscriptionPayload {
   mutation: MutationType!
   node: File
@@ -1425,15 +1163,6 @@ input FileSubscriptionWhereInput {
   node: FileWhereInput
 }
 
-input FileUpdateDataInput {
-  key: String
-  filename: String
-  mimetype: String
-  encoding: String
-  url: String
-  cursor: CursorUpdateOneRequiredWithoutSourceInput
-}
-
 input FileUpdateInput {
   key: String
   filename: String
@@ -1443,37 +1172,12 @@ input FileUpdateInput {
   cursor: CursorUpdateOneRequiredWithoutSourceInput
 }
 
-input FileUpdateManyDataInput {
-  key: String
-  filename: String
-  mimetype: String
-  encoding: String
-  url: String
-}
-
-input FileUpdateManyInput {
-  create: [FileCreateInput!]
-  connect: [FileWhereUniqueInput!]
-  set: [FileWhereUniqueInput!]
-  disconnect: [FileWhereUniqueInput!]
-  delete: [FileWhereUniqueInput!]
-  update: [FileUpdateWithWhereUniqueNestedInput!]
-  updateMany: [FileUpdateManyWithWhereNestedInput!]
-  deleteMany: [FileScalarWhereInput!]
-  upsert: [FileUpsertWithWhereUniqueNestedInput!]
-}
-
 input FileUpdateManyMutationInput {
   key: String
   filename: String
   mimetype: String
   encoding: String
   url: String
-}
-
-input FileUpdateManyWithWhereNestedInput {
-  where: FileScalarWhereInput!
-  data: FileUpdateManyDataInput!
 }
 
 input FileUpdateOneWithoutCursorInput {
@@ -1493,20 +1197,9 @@ input FileUpdateWithoutCursorDataInput {
   url: String
 }
 
-input FileUpdateWithWhereUniqueNestedInput {
-  where: FileWhereUniqueInput!
-  data: FileUpdateDataInput!
-}
-
 input FileUpsertWithoutCursorInput {
   update: FileUpdateWithoutCursorDataInput!
   create: FileCreateWithoutCursorInput!
-}
-
-input FileUpsertWithWhereUniqueNestedInput {
-  where: FileWhereUniqueInput!
-  update: FileUpdateDataInput!
-  create: FileCreateInput!
 }
 
 input FileWhereInput {
@@ -2200,31 +1893,37 @@ type Mutation {
   createFlavor(data: FlavorCreateInput!): Flavor!
   createCursor(data: CursorCreateInput!): Cursor!
   createFile(data: FileCreateInput!): File!
+  createRenderFile(data: RenderFileCreateInput!): RenderFile!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateEgg(data: EggUpdateInput!, where: EggWhereUniqueInput!): Egg
   updateFlavor(data: FlavorUpdateInput!, where: FlavorWhereUniqueInput!): Flavor
   updateCursor(data: CursorUpdateInput!, where: CursorWhereUniqueInput!): Cursor
   updateFile(data: FileUpdateInput!, where: FileWhereUniqueInput!): File
+  updateRenderFile(data: RenderFileUpdateInput!, where: RenderFileWhereUniqueInput!): RenderFile
   deleteUser(where: UserWhereUniqueInput!): User
   deleteEgg(where: EggWhereUniqueInput!): Egg
   deleteFlavor(where: FlavorWhereUniqueInput!): Flavor
   deleteCursor(where: CursorWhereUniqueInput!): Cursor
   deleteFile(where: FileWhereUniqueInput!): File
+  deleteRenderFile(where: RenderFileWhereUniqueInput!): RenderFile
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertEgg(where: EggWhereUniqueInput!, create: EggCreateInput!, update: EggUpdateInput!): Egg!
   upsertFlavor(where: FlavorWhereUniqueInput!, create: FlavorCreateInput!, update: FlavorUpdateInput!): Flavor!
   upsertCursor(where: CursorWhereUniqueInput!, create: CursorCreateInput!, update: CursorUpdateInput!): Cursor!
   upsertFile(where: FileWhereUniqueInput!, create: FileCreateInput!, update: FileUpdateInput!): File!
+  upsertRenderFile(where: RenderFileWhereUniqueInput!, create: RenderFileCreateInput!, update: RenderFileUpdateInput!): RenderFile!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyEggs(data: EggUpdateManyMutationInput!, where: EggWhereInput): BatchPayload!
   updateManyFlavors(data: FlavorUpdateManyMutationInput!, where: FlavorWhereInput): BatchPayload!
   updateManyCursors(data: CursorUpdateManyMutationInput!, where: CursorWhereInput): BatchPayload!
   updateManyFiles(data: FileUpdateManyMutationInput!, where: FileWhereInput): BatchPayload!
+  updateManyRenderFiles(data: RenderFileUpdateManyMutationInput!, where: RenderFileWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyEggs(where: EggWhereInput): BatchPayload!
   deleteManyFlavors(where: FlavorWhereInput): BatchPayload!
   deleteManyCursors(where: CursorWhereInput): BatchPayload!
   deleteManyFiles(where: FileWhereInput): BatchPayload!
+  deleteManyRenderFiles(where: RenderFileWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -2280,16 +1979,19 @@ type Query {
   flavors(where: FlavorWhereInput, orderBy: FlavorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Flavor]!
   cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor]!
   files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File]!
+  renderFiles(where: RenderFileWhereInput, orderBy: RenderFileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RenderFile]!
   user(where: UserWhereUniqueInput!): User
   egg(where: EggWhereUniqueInput!): Egg
   flavor(where: FlavorWhereUniqueInput!): Flavor
   cursor(where: CursorWhereUniqueInput!): Cursor
   file(where: FileWhereUniqueInput!): File
+  renderFile(where: RenderFileWhereUniqueInput!): RenderFile
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   eggsConnection(where: EggWhereInput, orderBy: EggOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EggConnection!
   flavorsConnection(where: FlavorWhereInput, orderBy: FlavorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FlavorConnection!
   cursorsConnection(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CursorConnection!
   filesConnection(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FileConnection!
+  renderFilesConnection(where: RenderFileWhereInput, orderBy: RenderFileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RenderFileConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -2298,12 +2000,792 @@ type Query {
   ): Node
 }
 
+type RenderFile implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  key: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String!
+  cursor: Cursor!
+}
+
+"""A connection to a list of items."""
+type RenderFileConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RenderFileEdge]!
+  aggregate: AggregateRenderFile!
+}
+
+input RenderFileCreateInput {
+  id: ID
+  key: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String!
+  cursor: CursorCreateOneWithoutRenderInput!
+}
+
+input RenderFileCreateManyWithoutCursorInput {
+  create: [RenderFileCreateWithoutCursorInput!]
+  connect: [RenderFileWhereUniqueInput!]
+}
+
+input RenderFileCreateWithoutCursorInput {
+  id: ID
+  key: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String!
+}
+
+"""An edge in a connection."""
+type RenderFileEdge {
+  """The item at the end of the edge."""
+  node: RenderFile!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RenderFileOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  key_ASC
+  key_DESC
+  filename_ASC
+  filename_DESC
+  mimetype_ASC
+  mimetype_DESC
+  encoding_ASC
+  encoding_DESC
+  url_ASC
+  url_DESC
+}
+
+type RenderFilePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  key: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+  url: String!
+}
+
+input RenderFileScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RenderFileScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RenderFileScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RenderFileScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+  filename: String
+
+  """All values that are not equal to given value."""
+  filename_not: String
+
+  """All values that are contained in given list."""
+  filename_in: [String!]
+
+  """All values that are not contained in given list."""
+  filename_not_in: [String!]
+
+  """All values less than the given value."""
+  filename_lt: String
+
+  """All values less than or equal the given value."""
+  filename_lte: String
+
+  """All values greater than the given value."""
+  filename_gt: String
+
+  """All values greater than or equal the given value."""
+  filename_gte: String
+
+  """All values containing the given string."""
+  filename_contains: String
+
+  """All values not containing the given string."""
+  filename_not_contains: String
+
+  """All values starting with the given string."""
+  filename_starts_with: String
+
+  """All values not starting with the given string."""
+  filename_not_starts_with: String
+
+  """All values ending with the given string."""
+  filename_ends_with: String
+
+  """All values not ending with the given string."""
+  filename_not_ends_with: String
+  mimetype: String
+
+  """All values that are not equal to given value."""
+  mimetype_not: String
+
+  """All values that are contained in given list."""
+  mimetype_in: [String!]
+
+  """All values that are not contained in given list."""
+  mimetype_not_in: [String!]
+
+  """All values less than the given value."""
+  mimetype_lt: String
+
+  """All values less than or equal the given value."""
+  mimetype_lte: String
+
+  """All values greater than the given value."""
+  mimetype_gt: String
+
+  """All values greater than or equal the given value."""
+  mimetype_gte: String
+
+  """All values containing the given string."""
+  mimetype_contains: String
+
+  """All values not containing the given string."""
+  mimetype_not_contains: String
+
+  """All values starting with the given string."""
+  mimetype_starts_with: String
+
+  """All values not starting with the given string."""
+  mimetype_not_starts_with: String
+
+  """All values ending with the given string."""
+  mimetype_ends_with: String
+
+  """All values not ending with the given string."""
+  mimetype_not_ends_with: String
+  encoding: String
+
+  """All values that are not equal to given value."""
+  encoding_not: String
+
+  """All values that are contained in given list."""
+  encoding_in: [String!]
+
+  """All values that are not contained in given list."""
+  encoding_not_in: [String!]
+
+  """All values less than the given value."""
+  encoding_lt: String
+
+  """All values less than or equal the given value."""
+  encoding_lte: String
+
+  """All values greater than the given value."""
+  encoding_gt: String
+
+  """All values greater than or equal the given value."""
+  encoding_gte: String
+
+  """All values containing the given string."""
+  encoding_contains: String
+
+  """All values not containing the given string."""
+  encoding_not_contains: String
+
+  """All values starting with the given string."""
+  encoding_starts_with: String
+
+  """All values not starting with the given string."""
+  encoding_not_starts_with: String
+
+  """All values ending with the given string."""
+  encoding_ends_with: String
+
+  """All values not ending with the given string."""
+  encoding_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+}
+
+type RenderFileSubscriptionPayload {
+  mutation: MutationType!
+  node: RenderFile
+  updatedFields: [String!]
+  previousValues: RenderFilePreviousValues
+}
+
+input RenderFileSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RenderFileSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RenderFileSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RenderFileSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RenderFileWhereInput
+}
+
+input RenderFileUpdateInput {
+  key: String
+  filename: String
+  mimetype: String
+  encoding: String
+  url: String
+  cursor: CursorUpdateOneRequiredWithoutRenderInput
+}
+
+input RenderFileUpdateManyDataInput {
+  key: String
+  filename: String
+  mimetype: String
+  encoding: String
+  url: String
+}
+
+input RenderFileUpdateManyMutationInput {
+  key: String
+  filename: String
+  mimetype: String
+  encoding: String
+  url: String
+}
+
+input RenderFileUpdateManyWithoutCursorInput {
+  create: [RenderFileCreateWithoutCursorInput!]
+  connect: [RenderFileWhereUniqueInput!]
+  set: [RenderFileWhereUniqueInput!]
+  disconnect: [RenderFileWhereUniqueInput!]
+  delete: [RenderFileWhereUniqueInput!]
+  update: [RenderFileUpdateWithWhereUniqueWithoutCursorInput!]
+  updateMany: [RenderFileUpdateManyWithWhereNestedInput!]
+  deleteMany: [RenderFileScalarWhereInput!]
+  upsert: [RenderFileUpsertWithWhereUniqueWithoutCursorInput!]
+}
+
+input RenderFileUpdateManyWithWhereNestedInput {
+  where: RenderFileScalarWhereInput!
+  data: RenderFileUpdateManyDataInput!
+}
+
+input RenderFileUpdateWithoutCursorDataInput {
+  key: String
+  filename: String
+  mimetype: String
+  encoding: String
+  url: String
+}
+
+input RenderFileUpdateWithWhereUniqueWithoutCursorInput {
+  where: RenderFileWhereUniqueInput!
+  data: RenderFileUpdateWithoutCursorDataInput!
+}
+
+input RenderFileUpsertWithWhereUniqueWithoutCursorInput {
+  where: RenderFileWhereUniqueInput!
+  update: RenderFileUpdateWithoutCursorDataInput!
+  create: RenderFileCreateWithoutCursorInput!
+}
+
+input RenderFileWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RenderFileWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RenderFileWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RenderFileWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+  filename: String
+
+  """All values that are not equal to given value."""
+  filename_not: String
+
+  """All values that are contained in given list."""
+  filename_in: [String!]
+
+  """All values that are not contained in given list."""
+  filename_not_in: [String!]
+
+  """All values less than the given value."""
+  filename_lt: String
+
+  """All values less than or equal the given value."""
+  filename_lte: String
+
+  """All values greater than the given value."""
+  filename_gt: String
+
+  """All values greater than or equal the given value."""
+  filename_gte: String
+
+  """All values containing the given string."""
+  filename_contains: String
+
+  """All values not containing the given string."""
+  filename_not_contains: String
+
+  """All values starting with the given string."""
+  filename_starts_with: String
+
+  """All values not starting with the given string."""
+  filename_not_starts_with: String
+
+  """All values ending with the given string."""
+  filename_ends_with: String
+
+  """All values not ending with the given string."""
+  filename_not_ends_with: String
+  mimetype: String
+
+  """All values that are not equal to given value."""
+  mimetype_not: String
+
+  """All values that are contained in given list."""
+  mimetype_in: [String!]
+
+  """All values that are not contained in given list."""
+  mimetype_not_in: [String!]
+
+  """All values less than the given value."""
+  mimetype_lt: String
+
+  """All values less than or equal the given value."""
+  mimetype_lte: String
+
+  """All values greater than the given value."""
+  mimetype_gt: String
+
+  """All values greater than or equal the given value."""
+  mimetype_gte: String
+
+  """All values containing the given string."""
+  mimetype_contains: String
+
+  """All values not containing the given string."""
+  mimetype_not_contains: String
+
+  """All values starting with the given string."""
+  mimetype_starts_with: String
+
+  """All values not starting with the given string."""
+  mimetype_not_starts_with: String
+
+  """All values ending with the given string."""
+  mimetype_ends_with: String
+
+  """All values not ending with the given string."""
+  mimetype_not_ends_with: String
+  encoding: String
+
+  """All values that are not equal to given value."""
+  encoding_not: String
+
+  """All values that are contained in given list."""
+  encoding_in: [String!]
+
+  """All values that are not contained in given list."""
+  encoding_not_in: [String!]
+
+  """All values less than the given value."""
+  encoding_lt: String
+
+  """All values less than or equal the given value."""
+  encoding_lte: String
+
+  """All values greater than the given value."""
+  encoding_gt: String
+
+  """All values greater than or equal the given value."""
+  encoding_gte: String
+
+  """All values containing the given string."""
+  encoding_contains: String
+
+  """All values not containing the given string."""
+  encoding_not_contains: String
+
+  """All values starting with the given string."""
+  encoding_starts_with: String
+
+  """All values not starting with the given string."""
+  encoding_not_starts_with: String
+
+  """All values ending with the given string."""
+  encoding_ends_with: String
+
+  """All values not ending with the given string."""
+  encoding_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  cursor: CursorWhereInput
+}
+
+input RenderFileWhereUniqueInput {
+  id: ID
+  url: String
+}
+
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   egg(where: EggSubscriptionWhereInput): EggSubscriptionPayload
   flavor(where: FlavorSubscriptionWhereInput): FlavorSubscriptionPayload
   cursor(where: CursorSubscriptionWhereInput): CursorSubscriptionPayload
   file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
+  renderFile(where: RenderFileSubscriptionWhereInput): RenderFileSubscriptionPayload
 }
 
 type User implements Node {

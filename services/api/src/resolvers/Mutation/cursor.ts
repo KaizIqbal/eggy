@@ -1,5 +1,3 @@
-// types
-import { Image } from "../../../types";
 // Helper Functions
 import checkFlavor from "../../utils/checkFlavor";
 import checkCursor from "../../utils/checkCursor";
@@ -189,11 +187,21 @@ export const cursorMutations = {
     // Update Cursors
     // TODO
 
-    await Promise.all(
+    return await Promise.all(
       data.map(async (image: Image) => {
-        console.log(image);
+        return await ctx.db.mutation.createRenderFile(
+          {
+            where: {
+              id
+            },
+            data: {
+              ...image
+            }
+          },
+          info
+        );
       })
     );
-    return ctx.db.query.cursor({ where: { id } }, info);
+    // return ctx.db.query.cursor({ where: { id } }, info);
   }
 };
