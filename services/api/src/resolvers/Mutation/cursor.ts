@@ -1,7 +1,6 @@
 // Helper Functions
 import checkFlavor from "../../utils/checkFlavor";
 import checkCursor from "../../utils/checkCursor";
-import { fetchFroms3 } from "../../modules/s3";
 import { invokeRenderLambdaFunction } from "../../modules/lambda/render";
 
 export const cursorMutations = {
@@ -160,17 +159,19 @@ export const cursorMutations = {
     destKey = destKey.replace("source", "render");
 
     // Prepare render payload
-    let payload = {
+    const payload = {
       srcKey: key,
       destKey,
       frames
     };
-    payload = JSON.stringify(payload);
 
     // -------------- Invoke Render Lambda Function --------------
-    const response = await invokeRenderLambdaFunction(payload);
+    const response: any = await invokeRenderLambdaFunction(
+      JSON.stringify(payload)
+    );
 
     // If any error in lambda execution
+    // @ts-ignore
     if (!response.StatusCode === 200) {
       throw new Error("Ooops.Render server generating Exception");
     }
@@ -183,9 +184,34 @@ export const cursorMutations = {
       throw new Error(data.body);
     }
 
-    console.log(data);
-    // Update Cursors
-    // TODO
-    return ctx.db.query.cursor({ where: { id } }, info);
+    // Sotore lambda response data to prisma
+    // if data alredy exits then it overwrite or create new one
+    await Promise.all(
+      data.map(async (image: any) => {
+        return await ctx.db.mutation.upsertRenderFile(
+          {
+            where: {
+              url: image.url
+            },
+            update: {
+              ...image
+            },
+            create: {
+              cursor: {
+                connect: { id }
+              },
+              ...image
+            }
+          },
+          info
+        );
+      })
+    );
+
+    // Update Cursor render flag
+    return ctx.db.mutation.updateCursor(
+      { where: { id }, data: { isRendered: true } },
+      info
+    );
   }
 };
