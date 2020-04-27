@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Mon Apr 27 2020 05:34:47 GMT+0000 (Coordinated Universal Time)
+# timestamp: Mon Apr 27 2020 09:18:24 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -2005,7 +2005,6 @@ type RenderFile implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   key: String!
-  filename: String!
   mimetype: String!
   encoding: String!
   url: String!
@@ -2025,7 +2024,6 @@ type RenderFileConnection {
 input RenderFileCreateInput {
   id: ID
   key: String!
-  filename: String!
   mimetype: String!
   encoding: String!
   url: String!
@@ -2040,7 +2038,6 @@ input RenderFileCreateManyWithoutCursorInput {
 input RenderFileCreateWithoutCursorInput {
   id: ID
   key: String!
-  filename: String!
   mimetype: String!
   encoding: String!
   url: String!
@@ -2064,8 +2061,6 @@ enum RenderFileOrderByInput {
   updatedAt_DESC
   key_ASC
   key_DESC
-  filename_ASC
-  filename_DESC
   mimetype_ASC
   mimetype_DESC
   encoding_ASC
@@ -2079,7 +2074,6 @@ type RenderFilePreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   key: String!
-  filename: String!
   mimetype: String!
   encoding: String!
   url: String!
@@ -2218,46 +2212,6 @@ input RenderFileScalarWhereInput {
 
   """All values not ending with the given string."""
   key_not_ends_with: String
-  filename: String
-
-  """All values that are not equal to given value."""
-  filename_not: String
-
-  """All values that are contained in given list."""
-  filename_in: [String!]
-
-  """All values that are not contained in given list."""
-  filename_not_in: [String!]
-
-  """All values less than the given value."""
-  filename_lt: String
-
-  """All values less than or equal the given value."""
-  filename_lte: String
-
-  """All values greater than the given value."""
-  filename_gt: String
-
-  """All values greater than or equal the given value."""
-  filename_gte: String
-
-  """All values containing the given string."""
-  filename_contains: String
-
-  """All values not containing the given string."""
-  filename_not_contains: String
-
-  """All values starting with the given string."""
-  filename_starts_with: String
-
-  """All values not starting with the given string."""
-  filename_not_starts_with: String
-
-  """All values ending with the given string."""
-  filename_ends_with: String
-
-  """All values not ending with the given string."""
-  filename_not_ends_with: String
   mimetype: String
 
   """All values that are not equal to given value."""
@@ -2419,7 +2373,6 @@ input RenderFileSubscriptionWhereInput {
 
 input RenderFileUpdateInput {
   key: String
-  filename: String
   mimetype: String
   encoding: String
   url: String
@@ -2428,7 +2381,6 @@ input RenderFileUpdateInput {
 
 input RenderFileUpdateManyDataInput {
   key: String
-  filename: String
   mimetype: String
   encoding: String
   url: String
@@ -2436,7 +2388,6 @@ input RenderFileUpdateManyDataInput {
 
 input RenderFileUpdateManyMutationInput {
   key: String
-  filename: String
   mimetype: String
   encoding: String
   url: String
@@ -2461,7 +2412,6 @@ input RenderFileUpdateManyWithWhereNestedInput {
 
 input RenderFileUpdateWithoutCursorDataInput {
   key: String
-  filename: String
   mimetype: String
   encoding: String
   url: String
@@ -2611,46 +2561,6 @@ input RenderFileWhereInput {
 
   """All values not ending with the given string."""
   key_not_ends_with: String
-  filename: String
-
-  """All values that are not equal to given value."""
-  filename_not: String
-
-  """All values that are contained in given list."""
-  filename_in: [String!]
-
-  """All values that are not contained in given list."""
-  filename_not_in: [String!]
-
-  """All values less than the given value."""
-  filename_lt: String
-
-  """All values less than or equal the given value."""
-  filename_lte: String
-
-  """All values greater than the given value."""
-  filename_gt: String
-
-  """All values greater than or equal the given value."""
-  filename_gte: String
-
-  """All values containing the given string."""
-  filename_contains: String
-
-  """All values not containing the given string."""
-  filename_not_contains: String
-
-  """All values starting with the given string."""
-  filename_starts_with: String
-
-  """All values not starting with the given string."""
-  filename_not_starts_with: String
-
-  """All values ending with the given string."""
-  filename_ends_with: String
-
-  """All values not ending with the given string."""
-  filename_not_ends_with: String
   mimetype: String
 
   """All values that are not equal to given value."""
