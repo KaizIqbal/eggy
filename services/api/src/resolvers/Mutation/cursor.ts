@@ -188,23 +188,20 @@ export const cursorMutations = {
     // if data alredy exits then it overwrite or create new one
     await Promise.all(
       data.map(async (image: any) => {
-        return await ctx.db.mutation.upsertRenderFile(
-          {
-            where: {
-              url: image.url
-            },
-            update: {
-              ...image
-            },
-            create: {
-              cursor: {
-                connect: { id }
-              },
-              ...image
-            }
+        return await ctx.db.mutation.upsertRenderFile({
+          where: {
+            url: image.url
           },
-          info
-        );
+          update: {
+            ...image
+          },
+          create: {
+            cursor: {
+              connect: { id }
+            },
+            ...image
+          }
+        });
       })
     );
 
