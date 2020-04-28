@@ -131,19 +131,10 @@ export const fileMutations = {
       where: { cursor: { id: args.cursorId } }
     });
 
-    const renderData = await ctx.db.mutation.updateCursor(
-      {
-        where: { id: data.cursor.id },
-        data: { isRendered: false }
-      },
-      `{
-      render {
-        id
-      }
-    }`
-    );
-
-    console.log(renderData);
+    await ctx.db.mutation.updateCursor({
+      where: { id: data.cursor.id },
+      data: { isRendered: false }
+    });
 
     // Deleting from Prisma Database and returning
     return await ctx.db.mutation.deleteFile(
