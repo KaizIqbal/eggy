@@ -21,9 +21,12 @@ export const fileMutations = {
     // creating Stream
     const stream = createReadStream();
 
-    // Fetch names from database for S3 file structure && updating cursor render flag to false
+    // Fetch names from database for S3 file structure && delete all render stuff
     const data = await ctx.db.mutation.updateCursor(
-      { where: { id: args.cursorId }, data: { isRendered: false } },
+      {
+        where: { id: args.cursorId },
+        data: { isRendered: false, render: { set: [] } }
+      },
       `{
         name
         flavor {
@@ -61,34 +64,29 @@ export const fileMutations = {
     const url = s3Response.Location;
 
     // add detail to prisma
-    const file = await ctx.db.mutation.upsertFile(
+    return await ctx.db.mutation.upsertFile(
       {
         where: {
           url
         },
         update: {
-          key: key,
+          key,
           filename: name,
-          mimetype: mimetype,
-          encoding: encoding,
-          url: url
+          mimetype,
+          encoding,
+          url
         },
         create: {
           cursor: { connect: { id: args.cursorId } },
-          key: key,
+          key,
           filename: name,
-          mimetype: mimetype,
-          encoding: encoding,
-          url: url
+          mimetype,
+          encoding,
+          url
         }
       },
       info
     );
-
-    // Call To Render
-
-    // return File
-    return file;
   },
 
   // ################################################ DELETE FILE ################################################
