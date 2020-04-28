@@ -109,7 +109,7 @@ export const fileMutations = {
     // Deletng from S3
     const s3Response = await deleteFromS3(data.key);
 
-    if (s3Response.deletedMarker) {
+    if (s3Response.DeleteMarker) {
       throw new Error("ERROR: File not deleted");
     }
 
