@@ -45,3 +45,13 @@ export function deleteFromS3(key: any) {
 
   return s3Response;
 }
+
+export function deleteMultipleFromS3(keys: array<Object>) {
+  let params = {
+    Bucket: s3Bucket
+  };
+  keys.forEach(key => {
+    params.Key = key;
+    console.log(params);
+  });
+}

@@ -126,15 +126,24 @@ export const fileMutations = {
       throw new Error("ERROR: File not deleted");
     }
 
-    // Removing render files attached with this file
+    // Removing render files attached with this file in prisma
     await ctx.db.mutation.deleteManyRenderFiles({
       where: { cursor: { id: args.cursorId } }
     });
 
-    await ctx.db.mutation.updateCursor({
-      where: { id: data.cursor.id },
-      data: { isRendered: false }
-    });
+    const renderData = await ctx.db.mutation.updateCursor(
+      {
+        where: { id: data.cursor.id },
+        data: { isRendered: false }
+      },
+      `{
+      render {
+        id
+      }
+    }`
+    );
+
+    console.log(renderData);
 
     // Deleting from Prisma Database and returning
     return await ctx.db.mutation.deleteFile(
