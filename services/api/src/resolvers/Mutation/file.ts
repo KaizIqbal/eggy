@@ -22,10 +22,11 @@ export const fileMutations = {
     const stream = createReadStream();
 
     // Fetch names from database for S3 file structure && delete all render stuff
+
     const data = await ctx.db.mutation.updateCursor(
       {
         where: { id: args.cursorId },
-        data: { isRendered: false, render: { set: [] } }
+        data: { isRendered: false }
       },
       `{
         name
@@ -41,11 +42,17 @@ export const fileMutations = {
       }`
     );
 
-    const name = data.name + getFileExtension(filename);
-
     if (!data) {
       throw new Error("Something Went Wrong");
     }
+
+    // Removing old render files attached with this file
+    await ctx.db.mutation.deleteManyRenderFiles({
+      where: { cursor: { id: args.cursorId } }
+    });
+
+    // generating file name for s3
+    const name = data.name + getFileExtension(filename);
 
     // Generating S3 file strucutre
     const key =
@@ -98,7 +105,13 @@ export const fileMutations = {
     // fetching key from id in databse
     const data = await ctx.db.query.file(
       { where: { id: args.fileId } },
-      `{ id key }`
+      `{ 
+        id 
+        key
+        cursor {
+          id
+        }
+      }`
     );
 
     // file not found for specific id
@@ -109,9 +122,19 @@ export const fileMutations = {
     // Deletng from S3
     const s3Response = await deleteFromS3(data.key);
 
-    if (s3Response.DeleteMarker) {
+    if (s3Response.deleteMarker) {
       throw new Error("ERROR: File not deleted");
     }
+
+    // Removing render files attached with this file
+    await ctx.db.mutation.deleteManyRenderFiles({
+      where: { cursor: { id: args.cursorId } }
+    });
+
+    await ctx.db.mutation.updateCursor({
+      where: { id: data.cursor.id },
+      data: { isRendered: false }
+    });
 
     // Deleting from Prisma Database and returning
     return await ctx.db.mutation.deleteFile(
