@@ -5,7 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "render:local": "npx sls invoke local -f render -p data.json",
-    "freeS3:local": "npx sls invoke freeeS3 -f  freeS3 -p event.json",
+    "freeS3:local": "npx sls invoke local -f  freeS3 -p event.json",
     "render:dev": "npx sls invoke -f render -l -p data.json",
     "freeS3:dev": "npx sls invoke -f freeS3 -l -p event.json",
     "render": "npx sls invoke -f render -p data.json",
