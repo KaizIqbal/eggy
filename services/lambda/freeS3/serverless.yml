@@ -1,11 +1,11 @@
 service:
-  name: render-service
+  name: render
   # app and org for use with dashboard.serverless.com
   # app: your-app-name
   # org: your-org-name
 
 custom:
-  s3Bucket: eggy-engine
+  s3Bucket: eggy-engine 
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
@@ -19,7 +19,7 @@ plugins:
 
 provider:
   name: aws
-  region: ap-south-1
+  region: ap-south-1 
   iamRoleStatements:	
     - Effect: Allow	
       Action:	
