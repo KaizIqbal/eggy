@@ -6,6 +6,9 @@ import { generateRenderTemplate } from "./template/render";
 import { fetchFile } from "./utils/fetchFile";
 import { renderSvg } from "./utils/renderSvg";
 
+import { deleteFromS3 } from "./utils/s3";
+
+// This Function for generate png file on s3
 export const render: Handler = async (event, context) => {
   const { srcKey, destKey, frames } = event;
   let result: any;
@@ -35,6 +38,19 @@ export const render: Handler = async (event, context) => {
 
     const template = generateRenderTemplate(svg);
     result = await renderSvg(template, frames, fileName, destPath);
+  } catch (error) {
+    return context.fail(error);
+  } finally {
+    return context.succeed(result);
+  }
+};
+
+// trigger when files deleted in "raw" folder
+export const freeS3: Handler = async (event, context) => {
+  // delete all resize render files
+  let result = null;
+  try {
+    console.log(event.s3);
   } catch (error) {
     return context.fail(error);
   } finally {
