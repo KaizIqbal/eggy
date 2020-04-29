@@ -110,8 +110,9 @@ dist
 # Webpack directories
 .webpack
 
-# Request data template
+# event & data template
 data.json
+event.json
 
 # yarn v2
 .yarn/cache
