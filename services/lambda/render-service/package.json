@@ -1,14 +1,17 @@
 {
-  "name": "eggy-render-lambda-function",
+  "name": "eggy-render-service",
   "version": "1.0.0",
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "local": "npx sls invoke local --function render --path data.json",
+    "render:local": "npx sls invoke local -f render -p data.json",
+    "freeS3:local": "npx sls invoke freeeS3 -f  freeS3 -p event.json",
+    "render:dev": "npx sls invoke -f render -l -p data.json",
+    "freeS3:dev": "npx sls invoke -f freeS3 -l -p event.json",
+    "render": "npx sls invoke -f render -p data.json",
+    "freeS3": "npx sls invoke -f freeS3 -p event.json",
     "deploy:dev": "npx sls deploy -v",
-    "go:dev": "npx sls invoke -f render -l --path data.json",
     "deploy": "npx sls deploy -s",
-    "go": "npx sls invoke -f render --path data.json",
     "clean": "npx sls remove",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -34,9 +37,5 @@
   },
   "author": "Kaiz Khatri",
   "license": "MIT",
-  "keywords": [
-    "eggy",
-    "render",
-    "lambda"
-  ]
+  "keywords": []
 }
