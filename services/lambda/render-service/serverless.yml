@@ -46,3 +46,16 @@ functions:
     environment:
       S3_REGION: ${self:provider.region}
       S3_BUCKET: ${self:custom.s3Bucket}
+  freeS3:
+      handler: handler.freeS3
+      events:
+        - s3:
+          bucket: ${self:provider.s3Bucket}
+          event: s3:ObjectRemoved:*
+          rules:
+            - prefix: render/raw/
+            - suffix: .png
+      environment:
+        S3_REGION: ${self:provider.region}
+        S3_BUCKET: ${self:custom.s3Bucket}
+    
