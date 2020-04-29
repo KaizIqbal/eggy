@@ -2,6 +2,7 @@ import * as chromium from "chrome-aws-lambda";
 import * as sharp from "sharp";
 
 import { Image, RenderImages } from "../types";
+import { sizes } from "../sizes";
 import { uploadToS3 } from "./s3";
 
 async function renderSvg(
@@ -17,9 +18,6 @@ async function renderSvg(
   const renderImages: RenderImages = {};
 
   const result = [];
-
-  const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
-
   try {
     // -------------------------------------------- SETUP BROWSER
 
@@ -88,10 +86,12 @@ async function renderSvg(
 
     // -------------------------------------------- RESIZE THE FRAMES
 
-    sizes.forEach((size) => {
-      renderImages.raw.forEach(async (image) => {
+    sizes.forEach(size => {
+      renderImages.raw.forEach(async image => {
         let temp: Image = { ...image };
-        temp.Body = await sharp(image.Body).resize(size, size).toBuffer();
+        temp.Body = await sharp(image.Body)
+          .resize(size, size)
+          .toBuffer();
 
         const category = `${size}x${size}`;
 
