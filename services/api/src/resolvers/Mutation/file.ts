@@ -110,6 +110,9 @@ export const fileMutations = {
         key
         cursor {
           id
+          render {
+            key
+          }
         }
       }`
     );
@@ -119,17 +122,28 @@ export const fileMutations = {
       throw new Error("ERROR: file not found");
     }
 
-    // Deletng from S3
+    // Deletng source file from S3
     const s3Response = await deleteFromS3(data.key);
 
+    // @ts-ignore
     if (s3Response.deleteMarker) {
       throw new Error("ERROR: File not deleted");
     }
 
     // Removing render files attached with this file in prisma
-    await ctx.db.mutation.deleteManyRenderFiles({
+    const { count } = await ctx.db.mutation.deleteManyRenderFiles({
       where: { cursor: { id: args.cursorId } }
     });
+
+    if (count > 0) {
+      const keys: array<string> = [];
+      const responseKeys = JSON.parse(JSON.stringify(data.cursor.render));
+
+      responseKeys.filter(obj => keys.push(obj.key));
+
+      // Deleting render files from S3
+      keys.forEach(key => deleteFromS3(key));
+    }
 
     await ctx.db.mutation.updateCursor({
       where: { id: data.cursor.id },
