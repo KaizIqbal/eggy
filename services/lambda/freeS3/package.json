@@ -1,0 +1,41 @@
+{
+  "name": "eggy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "render:local": "npx sls invoke local -f render -p data.json",
+    "freeS3:local": "npx sls invoke local -f  freeS3 -p event.json",
+    "render:dev": "npx sls invoke -f render -l -p data.json",
+    "freeS3:dev": "npx sls invoke -f freeS3 -l -p event.json",
+    "render": "npx sls invoke -f render -p data.json",
+    "freeS3": "npx sls invoke -f freeS3 -p event.json",
+    "deploy:dev": "npx sls deploy -v",
+    "deploy": "npx sls deploy -s",
+    "clean": "npx sls remove",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "chrome-aws-lambda": "^2.1.1",
+    "puppeteer-core": "^3.0.1",
+    "sharp": "0.25.2",
+    "source-map-support": "0.5.17"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.17",
+    "@types/node": "^10.12.18",
+    "@types/puppeteer": "^2.0.1",
+    "@types/puppeteer-core": "2.0.0",
+    "@types/sharp": "0.24.0",
+    "serverless": "1.67.3",
+    "serverless-layers": "2.1.3",
+    "serverless-webpack": "^5.2.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.2.4",
+    "webpack": "^4.29.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "author": "Kaiz Khatri",
+  "license": "MIT",
+  "keywords": []
+}
