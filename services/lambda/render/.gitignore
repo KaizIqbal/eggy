@@ -112,7 +112,6 @@ dist
 
 # event & data template
 data.json
-event.json
 
 # yarn v2
 .yarn/cache
