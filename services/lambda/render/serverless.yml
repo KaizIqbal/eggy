@@ -1,11 +1,11 @@
 service:
-  name: render
+  name: eggy 
   # app and org for use with dashboard.serverless.com
   # app: your-app-name
   # org: your-org-name
 
 custom:
-  s3Bucket: eggy-engine 
+  s3Bucket: ${env:S3_BUCKET} 
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
@@ -19,7 +19,7 @@ plugins:
 
 provider:
   name: aws
-  region: ap-south-1 
+  region: ${env:S3_REGION} 
   iamRoleStatements:	
     - Effect: Allow	
       Action:	
