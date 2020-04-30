@@ -111,7 +111,6 @@ dist
 .webpack
 
 # event & data template
-data.json
 event.json
 
 # yarn v2
