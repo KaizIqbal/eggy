@@ -33,18 +33,4 @@ async function uploadToS3(key: string, contentType: string, stream: Buffer) {
   }
 }
 
-async function deleteFromS3(key: string) {
-  try {
-    // Configure parameter
-    const params = {
-      Bucket: process.env.S3_BUCKET,
-      Key: key
-    };
-
-    // Uploading to S3
-    return await s3.deleteObject(params).promise();
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-export { fetchFromS3, uploadToS3, deleteFromS3 };
+export { fetchFromS3, uploadToS3 };
