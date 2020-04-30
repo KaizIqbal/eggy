@@ -1,11 +1,11 @@
 service:
-  name: render-service
+  name: render
   # app and org for use with dashboard.serverless.com
   # app: your-app-name
   # org: your-org-name
 
 custom:
-  s3Bucket: eggy-engine
+  s3Bucket: eggy-engine 
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
@@ -19,7 +19,7 @@ plugins:
 
 provider:
   name: aws
-  region: ap-south-1
+  region: ap-south-1 
   iamRoleStatements:	
     - Effect: Allow	
       Action:	
@@ -46,17 +46,3 @@ functions:
     environment:
       S3_REGION: ${self:provider.region}
       S3_BUCKET: ${self:custom.s3Bucket}
-  freeS3:
-      handler: handler.freeS3
-      events:
-        - s3:
-          bucket: ${self:provider.s3Bucket}
-          event: s3:ObjectRemoved:*
-          rules:
-            - prefix: render/raw/
-            - suffix: .png
-          existing: true
-      environment:
-        S3_REGION: ${self:provider.region}
-        S3_BUCKET: ${self:custom.s3Bucket}
-    
