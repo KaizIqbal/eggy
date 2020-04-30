@@ -1,36 +1,19 @@
 // aws-sdk is always preinstalled in AWS Lambda in all Node.js runtimes
 import * as S3Client from "aws-sdk/clients/s3";
 const s3 = new S3Client({ region: process.env.S3_REGION });
-
-async function fetchFromS3(key: string) {
-  try {
-    // Fetching from S3
-    const params = {
-      Bucket: process.env.S3_BUCKET,
-      Key: key
-    };
-    return await s3.getObject(params).promise();
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
-async function uploadToS3(key: string, contentType: string, stream: Buffer) {
+async function deleteFromS3(key: string) {
   try {
     // Configure parameter
     const params = {
       Bucket: process.env.S3_BUCKET,
-      Key: key,
-      ACL: "public-read",
-      ContentType: contentType,
-      Body: stream
+      Key: key
     };
 
     // Uploading to S3
-    return await s3.upload(params).promise();
+    return await s3.deleteObject(params).promise();
   } catch (error) {
     throw new Error(error);
   }
 }
 
-export { fetchFromS3, uploadToS3 };
+export { deleteFromS3 };
