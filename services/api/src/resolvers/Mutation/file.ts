@@ -1,4 +1,4 @@
-import { uploadToS3, deleteFromS3 } from "../../modules/s3";
+import { uploadToS3, deleteFromS3, deleteRenderImages } from "../../modules/s3";
 import isAuth from "../../utils/isAuth";
 
 export const fileMutations = {
@@ -136,20 +136,7 @@ export const fileMutations = {
     });
 
     if (count > 0) {
-      const keys: Array<string> = [];
-      const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
-      const responseKeys = JSON.parse(JSON.stringify(data.cursor.render));
-
-      responseKeys.filter((obj: Object) => keys.push(obj.key));
-
-      // Deleting render files from S3
-      keys.forEach(key => {
-        deleteFromS3(key);
-        sizes.forEach(size => {
-          const sizeKey = key.replace("raw", `${size}x${size}`);
-          deleteFromS3(sizeKey);
-        });
-      });
+      deleteRenderImages(data.cursor.render);
     }
 
     await ctx.db.mutation.updateCursor({
