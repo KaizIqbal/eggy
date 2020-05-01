@@ -6,16 +6,14 @@ import { promisify } from "util";
 import { mailFormate, transport } from "../../modules/mail";
 import {
   createAccessToken,
-  createRefreshToken
+  createRefreshToken,
 } from "../../utils/authorization";
 import hasPermission from "../../utils/hasPermission";
 import isAuth from "../../utils/isAuth";
-import verifyUserName from "../../utils/verifyUserName";
 import { sendRefreshToken } from "../../utils/sendRefreshToken";
+import verifyUserName from "../../utils/verifyUserName";
 
 export const authMutations = {
-  // ################################################ SIGN UP ################################################
-
   async signup(parent, args, ctx, info) {
     // 1 => lowercase their email
     args.email = args.email.toLowerCase();
@@ -27,12 +25,12 @@ export const authMutations = {
     verifyUserName(args);
 
     // 4 => create user in database
-    let user = await ctx.db.mutation.createUser({
+    const user = await ctx.db.mutation.createUser({
       data: {
         ...args,
         password,
-        permissions: { set: ["USER"] }
-      }
+        permissions: { set: ["USER"] },
+      },
     });
 
     // 5 => Auth the user
@@ -45,8 +43,6 @@ export const authMutations = {
     return { user, accessToken: createAccessToken(user) };
   },
 
-  // ################################################ SIGN IN ################################################
-
   async signin(parent, args, ctx, info) {
     // Deconstruct the email and password
     const { email, password } = args;
@@ -54,8 +50,8 @@ export const authMutations = {
     // 1 => Check is there is user with that email
     const user = await ctx.db.query.user({
       where: {
-        email
-      }
+        email,
+      },
     });
 
     if (!user) {
@@ -79,13 +75,11 @@ export const authMutations = {
     return { user, accessToken: createAccessToken(user) };
   },
 
-  // ################################################ SIGN OUT ################################################
-
   signout(parent, args, ctx, info) {
     try {
       ctx.response.clearCookie("_euid", {
         domain: process.env.DOMAIN,
-        path: "/"
+        path: "/",
       });
       return { message: "Logout Successfully" };
     } catch (error) {
@@ -93,14 +87,12 @@ export const authMutations = {
     }
   },
 
-  // ################################################ REQUEST FOR PASSWORD FORGET ################################################
-
   async resetPasswordRequest(parent, args, ctx, info) {
     // 1. Check if this is a real user
     const user = await ctx.db.query.user({
       where: {
-        email: args.email
-      }
+        email: args.email,
+      },
     });
 
     if (!user) {
@@ -114,9 +106,9 @@ export const authMutations = {
 
       const res = await ctx.db.mutation.updateUser({
         where: {
-          email: args.email
+          email: args.email,
         },
-        data: { resetToken, resetTokenExpiry }
+        data: { resetToken, resetTokenExpiry },
       });
 
       // 3.Email them that reset token
@@ -128,7 +120,7 @@ export const authMutations = {
           `Your Password reset token is here! \n\n <a href="${
             process.env.FRONTEND_URL
           }/signin/reset?token=${resetToken}">Click here to reset</a>`
-        )
+        ),
       });
       // 4.Return the message
       return { message: "thanks" };
@@ -136,8 +128,6 @@ export const authMutations = {
       throw new Error(error);
     }
   },
-
-  // ################################################ RESET PASSWORD ################################################
 
   async resetPassword(parent, args, ctx, info) {
     // 1 => Check the password match
@@ -152,8 +142,8 @@ export const authMutations = {
     const [user] = await ctx.db.query.users({
       where: {
         resetToken: args.resetToken,
-        resetTokenExpiry_gte: resetTokenExpiry
-      }
+        resetTokenExpiry_gte: resetTokenExpiry,
+      },
     });
 
     if (!user) {
@@ -166,13 +156,13 @@ export const authMutations = {
     // 5 => save the new password to the user and remove  old sesetToken Fields
     const updatedUser = await ctx.db.mutation.updateUser({
       where: {
-        email: user.email
+        email: user.email,
       },
       data: {
         password,
         resetToken: null,
-        resetTokenExpiry: null
-      }
+        resetTokenExpiry: null,
+      },
     });
 
     // 6 => Auth the user
@@ -185,8 +175,6 @@ export const authMutations = {
     return { user: updatedUser, accessToken: createAccessToken(user) };
   },
 
-  // ################################################ FOR UPDATING USER'S PERMISSSIONS ################################################
-
   async updatePermissions(parent, args, ctx, info) {
     // 1. check if they are logged in
     isAuth(ctx);
@@ -195,8 +183,8 @@ export const authMutations = {
     const currentuser = await ctx.db.query.user(
       {
         where: {
-          id: ctx.request.userId
-        }
+          id: ctx.request.userId,
+        },
       },
       `{
         permissions
@@ -211,18 +199,16 @@ export const authMutations = {
       {
         data: {
           permissions: {
-            set: args.permissions
-          }
+            set: args.permissions,
+          },
         },
         where: {
-          id: args.userId
-        }
+          id: args.userId,
+        },
       },
       info
     );
   },
-
-  // ################################################ FOR REVOKING USER SESSION ################################################
 
   async revokeRefreshTokenForUser(parent, args, ctx, info) {
     // 1. check if they are logged in
@@ -232,8 +218,8 @@ export const authMutations = {
     const currentuser = await ctx.db.query.user(
       {
         where: {
-          id: ctx.request.userId
-        }
+          id: ctx.request.userId,
+        },
       },
       `{
         permissions
@@ -247,8 +233,8 @@ export const authMutations = {
     const revokeUser = await ctx.db.query.user(
       {
         where: {
-          id: args.userId
-        }
+          id: args.userId,
+        },
       },
       `{
         tokenVersion
@@ -262,13 +248,13 @@ export const authMutations = {
     return ctx.db.mutation.updateUser(
       {
         data: {
-          tokenVersion
+          tokenVersion,
         },
         where: {
-          id: args.userId
-        }
+          id: args.userId,
+        },
       },
       info
     );
-  }
+  },
 };
