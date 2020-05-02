@@ -1,5 +1,5 @@
-import * as dotenv from "dotenv";
-dotenv.config({ path: `${__dirname}/.env` });
+// import * as dotenv from "dotenv";
+// dotenv.config({ path: `${__dirname}/.env` });
 
 import * as coockieParser from "cookie-parser";
 import createServer from "./createServer";
