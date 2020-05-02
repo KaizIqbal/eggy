@@ -1,7 +1,7 @@
 // Helper Functions
 import checkFlavor from "../../utils/checkFlavor";
 import checkCursor from "../../utils/checkCursor";
-import { invokeRenderLambdaFunction } from "../../modules/lambda/render";
+import { invokeRenderLambdaFunction } from "../../aws/lambda/render";
 
 export const cursorMutations = {
   // ################################################ CREATE CURSOR ################################################
@@ -188,6 +188,7 @@ export const cursorMutations = {
     // if data alredy exits then it overwrite or create new one
     await Promise.all(
       data.map(async (image: any) => {
+        // tslint:disable-next-line: no-return-await
         return await ctx.db.mutation.upsertRenderFile({
           where: {
             url: image.url

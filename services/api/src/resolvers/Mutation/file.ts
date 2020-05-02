@@ -1,4 +1,4 @@
-import { uploadToS3, deleteFromS3, deleteRenderImages } from "../../modules/s3";
+import { uploadToS3, deleteFromS3, deleteRenderImages } from "../../aws/s3";
 import isAuth from "../../utils/isAuth";
 
 export const fileMutations = {
@@ -71,7 +71,7 @@ export const fileMutations = {
     const url = s3Response.Location;
 
     // add detail to prisma
-    return await ctx.db.mutation.upsertFile(
+    return ctx.db.mutation.upsertFile(
       {
         where: {
           url
@@ -137,7 +137,7 @@ export const fileMutations = {
 
     if (count > 0) {
       deleteRenderImages(data.cursor.render);
-      const keys: Array<string> = [];
+      const keys: string[] = [];
       const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
       const responseKeys = JSON.parse(JSON.stringify(data.cursor.render));
 
@@ -159,7 +159,7 @@ export const fileMutations = {
     });
 
     // Deleting from Prisma Database and returning
-    return await ctx.db.mutation.deleteFile(
+    return ctx.db.mutation.deleteFile(
       { where: { id: args.fileId } },
       info
     );
