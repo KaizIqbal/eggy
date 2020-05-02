@@ -14,7 +14,11 @@ export const theme: ITheme = {
 };
 
 export const GlobalStyle = createGlobalStyle<IThemeWrapper>`
+
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;1,500&display=swap');
+
   body {
+    font-family: 'Montserrat', sans-serif;
     margin: 0 auto;
     color: ${props => props.theme.niceBlack}; 
     height: 100%;
