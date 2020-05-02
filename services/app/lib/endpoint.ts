@@ -1,4 +1,2 @@
-const url = "5ttnf.sse.codesandbox.io";
-
-export const endpoint = `https://${url}`;
-export const websocket_endpoint = `ws://${url}`;
+export const endpoint = process.env.API_URI!;
+export const websocket_endpoint = endpoint.replace("https://", "ws://");
