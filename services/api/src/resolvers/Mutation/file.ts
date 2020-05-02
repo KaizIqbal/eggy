@@ -136,14 +136,12 @@ export const fileMutations = {
     });
 
     if (count > 0) {
-<<<<<<< HEAD
       deleteRenderImages(data.cursor.render);
-=======
       const keys: Array<string> = [];
       const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
       const responseKeys = JSON.parse(JSON.stringify(data.cursor.render));
 
-      responseKeys.filter((obj: Object) => keys.push(obj.key));
+      responseKeys.filter((obj: any) => keys.push(obj.key));
 
       // Deleting render files from S3
       keys.forEach(key => {
@@ -153,7 +151,6 @@ export const fileMutations = {
           deleteFromS3(sizeKey);
         });
       });
->>>>>>> 77c028ce907e6fc54e3b7d53eb92aff74180ef69
     }
 
     await ctx.db.mutation.updateCursor({
@@ -168,8 +165,6 @@ export const fileMutations = {
     );
   }
 };
-
-// ########### HELPER FUNCTION ###########
 
 function getFileExtension(filename) {
   let ext = /[.]/.exec(filename) ? /[^.]+$/.exec(filename)[0] : "";
