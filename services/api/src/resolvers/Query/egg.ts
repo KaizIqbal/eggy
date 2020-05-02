@@ -4,11 +4,9 @@ import { forwardTo } from "prisma-binding";
 import isAuth from "../../utils/isAuth";
 
 export const eggQueries = {
-  // ################################################ FOR FETCH SINGLE EGG ################################################
 
   egg: forwardTo("db"),
 
-  // ################################################ FOR FETCH USER'S EGGS ################################################
 
   userBasket(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
@@ -25,7 +23,6 @@ export const eggQueries = {
     );
   },
 
-  // ################################################ FOR FETCH PUBLIC/PUBLISH EGGS ################################################
 
   publicBasket(parent, args, ctx, info) {
     return ctx.db.query.eggsConnection(
