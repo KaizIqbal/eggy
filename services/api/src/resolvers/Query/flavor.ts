@@ -2,7 +2,6 @@
 import isAuth from "../../utils/isAuth";
 
 export const flavorQueries = {
-  // ################################################ FOR FETCH SINGLE FLAVOR ################################################
 
   flavor(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
@@ -18,7 +17,6 @@ export const flavorQueries = {
     );
   },
 
-  // ################################################ FOR FETCH FLAVORS IN EGG ################################################
 
   flavors(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error

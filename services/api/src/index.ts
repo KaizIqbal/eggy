@@ -1,12 +1,14 @@
-//TODO environments variables
-// require("dotenv").config({ path: "secret.env" });
+import * as dotenv from "dotenv";
+dotenv.config({ path: `${__dirname}/.env` });
+
 import * as coockieParser from "cookie-parser";
-import { verify } from "jsonwebtoken";
 import createServer from "./createServer";
-import db from "./db";
 import * as cors from "cors";
+import { verify } from "jsonwebtoken";
+
 import { createAccessToken, createRefreshToken } from "./utils/authorization";
 import { sendRefreshToken } from "./utils/sendRefreshToken";
+import db from "./db";
 
 const server = createServer();
 
@@ -58,7 +60,7 @@ server.express.post("/refresh_token", async (req, res) => {
 
 // Decode the token to get userId from each request
 server.express.use((req: any, res, next) => {
-  const authorization = req.headers["authorization"];
+  const authorization = req.headers.authorization;
 
   if (authorization) {
     try {

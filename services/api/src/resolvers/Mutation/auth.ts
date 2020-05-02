@@ -3,7 +3,7 @@ import { randomBytes } from "crypto";
 
 // Helper Functions
 import { promisify } from "util";
-import { mailFormate, transport } from "../../modules/mail";
+import { mailFormate, transport } from "../../../mail/mail";
 import {
   createAccessToken,
   createRefreshToken,
@@ -118,7 +118,7 @@ export const authMutations = {
         subject: "Your Password Reset Token",
         html: mailFormate(
           `Your Password reset token is here! \n\n <a href="${
-            process.env.FRONTEND_URL
+          process.env.FRONTEND_URL
           }/signin/reset?token=${resetToken}">Click here to reset</a>`
         ),
       });
