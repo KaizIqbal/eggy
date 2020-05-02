@@ -24,6 +24,7 @@
     "apollo-upload-client": "13.0.0",
     "cookie": "0.4.1",
     "dompurify": "2.0.10",
+    "dotenv": "8.2.0",
     "graphql": "15.0.0",
     "isomorphic-unfetch": "3.0.0",
     "jwt-decode": "2.2.0",
@@ -37,6 +38,7 @@
     "subscriptions-transport-ws": "0.9.16"
   },
   "devDependencies": {
+    "@types/dotenv": "8.2.0",
     "@graphql-codegen/cli": "^1.13.0",
     "@graphql-codegen/typescript": "1.13.0",
     "@graphql-codegen/typescript-operations": "1.13.0",
