@@ -1893,12 +1893,20 @@ export type CursorDataFragment = (
   ), source: Maybe<(
     { __typename?: 'File' }
     & FileDataFragment
-  )> }
+  )>, render: Maybe<Array<(
+    { __typename?: 'RenderFile' }
+    & RenderFileDataFragment
+  )>> }
 );
 
 export type FileDataFragment = (
   { __typename?: 'File' }
   & Pick<File, 'id' | 'key' | 'url' | 'mimetype' | 'filename' | 'createdAt' | 'updatedAt'>
+);
+
+export type RenderFileDataFragment = (
+  { __typename?: 'RenderFile' }
+  & Pick<RenderFile, 'id' | 'key' | 'url' | 'mimetype' | 'createdAt' | 'updatedAt'>
 );
 
 export type BasketDataFragment = (
@@ -1979,6 +1987,16 @@ export const FileDataFragmentDoc = gql`
   updatedAt
 }
     `;
+export const RenderFileDataFragmentDoc = gql`
+    fragment RenderFileData on RenderFile {
+  id
+  key
+  url
+  mimetype
+  createdAt
+  updatedAt
+}
+    `;
 export const CursorDataFragmentDoc = gql`
     fragment CursorData on Cursor {
   id
@@ -1991,9 +2009,13 @@ export const CursorDataFragmentDoc = gql`
   source {
     ...FileData
   }
+  render {
+    ...RenderFileData
+  }
 }
     ${FlavorDataFragmentDoc}
-${FileDataFragmentDoc}`;
+${FileDataFragmentDoc}
+${RenderFileDataFragmentDoc}`;
 export const BasketDataFragmentDoc = gql`
     fragment BasketData on EggConnection {
   edges {
