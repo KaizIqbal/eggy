@@ -16,6 +16,12 @@ const Page: React.FC<Props> = ({ children, title = "Eggy" }) => (
       />
       <meta charSet="UTF-8" />
       <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+
+      <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap"
+        rel="stylesheet"
+      />
+
       <title>{title}</title>
     </Head>
 
