@@ -35,6 +35,14 @@ mutation renameCursor($flavorId: ID!, $id: ID!, $name: cursorName! ) {
 }
 
 # ---------- DELETE
+mutation renderCursor($id: ID!) {
+  renderCursor(id: $id) {
+    id
+  }
+}
+
+
+# ---------- DELETE
 mutation deleteCursor($id: ID!) {
   deleteCursor(id: $id) {
     id
