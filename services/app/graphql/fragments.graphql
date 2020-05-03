@@ -37,6 +37,9 @@ fragment CursorData on Cursor {
   source {
     ...FileData
   }
+  render {
+    ...RenderFileData
+  }
 }
 
 fragment FileData on File {
@@ -45,6 +48,15 @@ fragment FileData on File {
   url
   mimetype
   filename
+  createdAt
+  updatedAt
+}
+
+fragment RenderFileData on RenderFile {
+  id
+  key
+  url
+  mimetype
   createdAt
   updatedAt
 }

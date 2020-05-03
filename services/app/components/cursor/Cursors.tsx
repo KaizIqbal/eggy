@@ -5,8 +5,14 @@ import { useCursorsQuery, Cursor } from "generated/graphql";
 import { setCursors } from "helper/constriants";
 
 import { UploadFile, DeleteFile } from "components/file";
-import { DeleteCursor } from "components/cursor";
-import { CursorList, CursorCard, Heading, Actions, Body } from "components/styled/cursor/Cursors";
+import { DeleteCursor, RenderCursor } from "components/cursor";
+import {
+  CursorList,
+  CursorCard,
+  Heading,
+  Actions,
+  Body
+} from "components/styled/cursor/Cursors";
 
 interface IProps {
   flavorId: string;
@@ -47,10 +53,17 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
                   htmlFor={cursor.name}
                   onClick={() =>
                     Router.push(
-                      { pathname: "/workshop/[slug]", query: { flavorId: cursor.flavor.id, cursorId: cursor.id } },
+                      {
+                        pathname: "/workshop/[slug]",
+                        query: {
+                          flavorId: cursor.flavor.id,
+                          cursorId: cursor.id
+                        }
+                      },
                       `/workshop/${cursor.flavor.egg.eggname}`
                     )
-                  }>
+                  }
+                >
                   {cursor.name}
                 </label>
               </Heading>
@@ -66,6 +79,11 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
               </Body>
               <Actions>
                 <DeleteCursor id={cursor.id} flavorId={cursor.flavor.id} />
+                {cursor.isRendered ? (
+                  "rendered"
+                ) : (
+                  <RenderCursor id={cursor.id} flavorId={cursor.flavor.id} />
+                )}
               </Actions>
             </CursorCard>
           );
