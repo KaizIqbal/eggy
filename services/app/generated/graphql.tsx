@@ -1621,6 +1621,19 @@ export type RenameCursorMutation = (
   ) }
 );
 
+export type RenderCursorMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type RenderCursorMutation = (
+  { __typename?: 'Mutation' }
+  & { renderCursor: (
+    { __typename?: 'Cursor' }
+    & Pick<Cursor, 'id'>
+  ) }
+);
+
 export type DeleteCursorMutationVariables = {
   id: Scalars['ID'];
 };
@@ -2405,6 +2418,38 @@ export function useRenameCursorMutation(baseOptions?: ApolloReactHooks.MutationH
 export type RenameCursorMutationHookResult = ReturnType<typeof useRenameCursorMutation>;
 export type RenameCursorMutationResult = ApolloReactCommon.MutationResult<RenameCursorMutation>;
 export type RenameCursorMutationOptions = ApolloReactCommon.BaseMutationOptions<RenameCursorMutation, RenameCursorMutationVariables>;
+export const RenderCursorDocument = gql`
+    mutation renderCursor($id: ID!) {
+  renderCursor(id: $id) {
+    id
+  }
+}
+    `;
+export type RenderCursorMutationFn = ApolloReactCommon.MutationFunction<RenderCursorMutation, RenderCursorMutationVariables>;
+
+/**
+ * __useRenderCursorMutation__
+ *
+ * To run a mutation, you first call `useRenderCursorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRenderCursorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [renderCursorMutation, { data, loading, error }] = useRenderCursorMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useRenderCursorMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RenderCursorMutation, RenderCursorMutationVariables>) {
+        return ApolloReactHooks.useMutation<RenderCursorMutation, RenderCursorMutationVariables>(RenderCursorDocument, baseOptions);
+      }
+export type RenderCursorMutationHookResult = ReturnType<typeof useRenderCursorMutation>;
+export type RenderCursorMutationResult = ApolloReactCommon.MutationResult<RenderCursorMutation>;
+export type RenderCursorMutationOptions = ApolloReactCommon.BaseMutationOptions<RenderCursorMutation, RenderCursorMutationVariables>;
 export const DeleteCursorDocument = gql`
     mutation deleteCursor($id: ID!) {
   deleteCursor(id: $id) {
