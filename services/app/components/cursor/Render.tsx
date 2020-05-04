@@ -9,7 +9,7 @@ interface IProps {
   flavorId: string;
 }
 
-export const RenderCursor: React.FC<IProps> = ({ id, flavorId }) => {
+export const RenderCursor: React.FC<IProps> = ({ id, flavorId, children }) => {
   // ---------------------------------------------------------------- HOOKS
 
   const [RenderCursor, { loading, error }] = useRenderCursorMutation({
@@ -28,8 +28,8 @@ export const RenderCursor: React.FC<IProps> = ({ id, flavorId }) => {
 
   return (
     <>
-      <Button onClick={() => RenderCursor()}>
-        Render{loading ? "ing" : null}
+      <Button onClick={() => RenderCursor()} disabled={loading}>
+        {loading ? "Rendering" : children}
       </Button>
     </>
   );
