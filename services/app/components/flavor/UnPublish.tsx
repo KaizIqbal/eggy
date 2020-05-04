@@ -1,6 +1,6 @@
 import React from "react";
 
-import { usePublishFlavorMutation, FlavorsDocument } from "generated/graphql";
+import { useUnPublishFlavorMutation, FlavorDocument } from "generated/graphql";
 
 import { Button } from "components/styled";
 
@@ -9,14 +9,16 @@ interface IProps {
   eggId: string;
 }
 
-export const PublishFlavor: React.FC<IProps> = ({ id, eggId }) => {
+export const UnPublishFlavor: React.FC<IProps> = ({ id, eggId }) => {
   // ---------------------------------------------------------------- HOOKS
 
-  const [publishFlavor, { loading, error }] = usePublishFlavorMutation({
+  const [unpublishFlavor, { loading, error }] = useUnPublishFlavorMutation({
     refetchQueries: [
       {
-        query: FlavorsDocument,
-        variables: { eggId }
+        query: FlavorDocument,
+        variables: {
+          eggId
+        }
       }
     ]
   });
@@ -29,11 +31,11 @@ export const PublishFlavor: React.FC<IProps> = ({ id, eggId }) => {
     <>
       <Button
         onClick={async () => {
-          await publishFlavor({ variables: { id } });
+          await unpublishFlavor({ variables: { id } });
         }}
         disabled={loading}
       >
-        Publish{loading ? "ing" : ""}
+        UnPublish{loading ? "ing" : ""}
       </Button>
     </>
   );
