@@ -28,7 +28,7 @@ export const RenderCursor: React.FC<IProps> = ({ id, flavorId }) => {
 
   return (
     <>
-      <Button onClick={() => RenderCursor()} disable={loading}>
+      <Button onClick={() => RenderCursor()}>
         Render{loading ? "ing" : null}
       </Button>
     </>
