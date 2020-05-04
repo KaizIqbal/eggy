@@ -5,7 +5,7 @@ import { useCursorsQuery, Cursor } from "generated/graphql";
 import { setCursors } from "helper/constriants";
 
 import { UploadFile, DeleteFile } from "components/file";
-import { DeleteCursor, RenderCursor } from "components/cursor";
+import { DeleteCursor, RenderCursor, PreviewCursor } from "components/cursor";
 import {
   CursorList,
   CursorCard,
@@ -80,7 +80,7 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
               <Actions>
                 <DeleteCursor id={cursor.id} flavorId={cursor.flavor.id} />
                 {cursor.isRendered ? (
-                  console.log(cursor.render)
+                  <PreviewCursor images={cursor.render} />
                 ) : (
                   <RenderCursor id={cursor.id} flavorId={cursor.flavor.id} />
                 )}
