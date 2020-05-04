@@ -31,7 +31,9 @@ export const PreviewCursor: React.FC<IProps> = ({ images }) => {
           <br />
           <Wrapper>
             {images.map((image: RenderFile) => (
-              <Frame src={image.url} />
+              <ul key={image.id}>
+                <Frame src={image.url} />
+              </ul>
             ))}
           </Wrapper>
         </Popup>

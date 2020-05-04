@@ -11,6 +11,7 @@ const PopupContainer = styled.div`
   bottom: 0;
   margin: auto;
   background-color: rgba(0, 0, 0, 0.5);
+  overlflow: auto;
 `;
 
 const PopupInner = styled.div`
