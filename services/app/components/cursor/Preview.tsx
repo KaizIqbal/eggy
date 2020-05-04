@@ -6,7 +6,7 @@ import { Popup } from "components/Popup";
 
 interface IProps {}
 
-export const CreateCursor: React.FC<IProps> = ({}) => {
+export const CreateCursor: React.FC<IProps> = _props => {
   // ---------------------------------------------------------------- HOOKS
 
   const [popup, setPopup] = useState(false);
