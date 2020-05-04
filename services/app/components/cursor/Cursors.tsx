@@ -86,11 +86,11 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
                       Rerender
                     </RenderCursor>
                   </>
-                ) : (
+                ) : cursor.source && cursor.source.id ? (
                   <RenderCursor id={cursor.id} flavorId={cursor.flavor.id}>
                     Render
                   </RenderCursor>
-                )}
+                ) : null}
               </Actions>
             </CursorCard>
           );
