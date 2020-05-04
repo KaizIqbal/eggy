@@ -80,9 +80,16 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
               <Actions>
                 <DeleteCursor id={cursor.id} flavorId={cursor.flavor.id} />
                 {cursor.isRendered ? (
-                  <PreviewCursor images={cursor.render} />
+                  <>
+                    <PreviewCursor images={cursor.render} />
+                    <RenderCursor id={cursor.id} flavorId={cursor.flavor.id}>
+                      Rerender
+                    </RenderCursor>
+                  </>
                 ) : (
-                  <RenderCursor id={cursor.id} flavorId={cursor.flavor.id} />
+                  <RenderCursor id={cursor.id} flavorId={cursor.flavor.id}>
+                    Render
+                  </RenderCursor>
                 )}
               </Actions>
             </CursorCard>
