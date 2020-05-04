@@ -69,7 +69,7 @@ export const flavrorMutations = {
     return ctx.db.mutation.deleteFlavor({ where: { id: args.id } }, info);
   },
 
-  async publishFlavor(aprent, args, ctx, info) {
+  async publishFlavor(parent, args, ctx, info) {
     // Checking user has permissions or not if not then throw Error
     await checkFalvorStatus(ctx, args);
 
