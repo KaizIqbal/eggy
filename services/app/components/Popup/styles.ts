@@ -22,6 +22,7 @@ const PopupInner = styled.div`
   margin: auto;
   border-radius: 20px;
   background: white;
+  overflow-y: auto;
   text-align: center;
   align-content: center;
 `;

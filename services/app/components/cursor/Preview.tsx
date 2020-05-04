@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 
-import { Button } from "components/styled";
+import { RenderFile } from "generated/graphql";
 
+import { Button } from "components/styled";
+import { Wrapper, Frame } from "components/styled/cursor/Preview";
 import { Popup } from "components/Popup";
 
-interface IProps {}
+interface IProps {
+  images: any;
+}
 
-export const CreateCursor: React.FC<IProps> = ({}) => {
+export const PreviewCursor: React.FC<IProps> = ({ images }) => {
   // ---------------------------------------------------------------- HOOKS
 
   const [popup, setPopup] = useState(false);
@@ -21,11 +25,17 @@ export const CreateCursor: React.FC<IProps> = ({}) => {
 
   return (
     <>
-      <Button onClick={togglePopup}>+ Add Cursor</Button>
+      <Button onClick={togglePopup}>Preview</Button>
       {popup ? (
         <Popup closePopup={togglePopup}>
           <br />
-          {body}
+          <Wrapper>
+            {images.map((image: RenderFile) => (
+              <ul key={image.id}>
+                <Frame src={image.url} />
+              </ul>
+            ))}
+          </Wrapper>
         </Popup>
       ) : null}
     </>
