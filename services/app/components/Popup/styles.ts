@@ -11,7 +11,6 @@ const PopupContainer = styled.div`
   bottom: 0;
   margin: auto;
   background-color: rgba(0, 0, 0, 0.5);
-  overlflow: auto;
 `;
 
 const PopupInner = styled.div`
@@ -23,6 +22,7 @@ const PopupInner = styled.div`
   margin: auto;
   border-radius: 20px;
   background: white;
+  overflow-y: auto;
   text-align: center;
   align-content: center;
 `;
