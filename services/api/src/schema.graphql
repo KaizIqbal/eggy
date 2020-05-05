@@ -37,8 +37,6 @@ type Mutation {
   createFlavor(name:String! eggId:ID!): Flavor!
   renameFlavor(id:ID! name:String!): Flavor!  
   deleteFlavor(id:ID!): Flavor!  
-  publishFlavor(id:ID!): Flavor!
-  unPublishFlavor(id:ID!): Flavor!
 
   # Cursors
   createCursor(name:cursorName! frames:Int! flavorId:ID!): Cursor!
@@ -79,6 +77,7 @@ type Query {
   # Flavors
   flavor(id: ID!): Flavor!
   flavors(eggId: ID!): [Flavor]!
+  renderedFlavors(eggId:ID!): [Flavor]!
 
   # User
   me: User
