@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useUnPublishFlavorMutation, FlavorDocument } from "generated/graphql";
+import { useUnPublishFlavorMutation, FlavorsDocument } from "generated/graphql";
 
 import { Button } from "components/styled";
 
@@ -15,7 +15,7 @@ export const UnPublishFlavor: React.FC<IProps> = ({ id, eggId }) => {
   const [unpublishFlavor, { loading, error }] = useUnPublishFlavorMutation({
     refetchQueries: [
       {
-        query: FlavorDocument,
+        query: FlavorsDocument,
         variables: {
           eggId
         }
