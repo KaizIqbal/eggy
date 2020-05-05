@@ -187,7 +187,7 @@ export const cursorMutations = {
     // Sotore lambda response data to prisma
     // if data alredy exits then it overwrite or create new one
     await Promise.all(
-      data.map(async (image: any) => {
+      data.forEach(async (image: any) => {
         // tslint:disable-next-line: no-return-await
         return await ctx.db.mutation.upsertRenderFile({
           where: {
