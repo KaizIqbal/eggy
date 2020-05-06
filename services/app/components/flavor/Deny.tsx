@@ -1,9 +1,9 @@
 import React from "react";
 
 import {
-  usePublishFlavorMutation,
   FlavorsDocument,
-  PublicBasketDocument
+  PublicBasketDocument,
+  useDenyFlavorMutation
 } from "generated/graphql";
 
 import { Button } from "components/styled";
@@ -13,14 +13,16 @@ interface IProps {
   eggId: string;
 }
 
-export const PublishFlavor: React.FC<IProps> = ({ id, eggId }) => {
+export const DenyFalvor: React.FC<IProps> = ({ id, eggId }) => {
   // ---------------------------------------------------------------- HOOKS
 
-  const [publishFlavor, { loading, error }] = usePublishFlavorMutation({
+  const [denyFalvor, { loading, error }] = useDenyFlavorMutation({
     refetchQueries: [
       {
         query: FlavorsDocument,
-        variables: { eggId }
+        variables: {
+          eggId
+        }
       },
       {
         query: PublicBasketDocument
@@ -36,11 +38,11 @@ export const PublishFlavor: React.FC<IProps> = ({ id, eggId }) => {
     <>
       <Button
         onClick={async () => {
-          await publishFlavor({ variables: { id } });
+          await denyFalvor({ variables: { id } });
         }}
         disabled={loading}
       >
-        Publish{loading ? "ing" : ""}
+        UnPublish{loading ? "ing" : ""}
       </Button>
     </>
   );
