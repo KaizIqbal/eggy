@@ -1,6 +1,10 @@
 import React from "react";
 
-import { useUnPublishFlavorMutation, FlavorsDocument } from "generated/graphql";
+import {
+  FlavorsDocument,
+  PublicBasketDocument,
+  useConfirmFlavorMutation
+} from "generated/graphql";
 
 import { Button } from "components/styled";
 
@@ -9,16 +13,17 @@ interface IProps {
   eggId: string;
 }
 
-export const UnPublishFlavor: React.FC<IProps> = ({ id, eggId }) => {
+export const ConfirmFlavor: React.FC<IProps> = ({ id, eggId }) => {
   // ---------------------------------------------------------------- HOOKS
 
-  const [unpublishFlavor, { loading, error }] = useUnPublishFlavorMutation({
+  const [confirmFlavor, { loading, error }] = useConfirmFlavorMutation({
     refetchQueries: [
       {
         query: FlavorsDocument,
-        variables: {
-          eggId
-        }
+        variables: { eggId }
+      },
+      {
+        query: PublicBasketDocument
       }
     ]
   });
@@ -31,11 +36,11 @@ export const UnPublishFlavor: React.FC<IProps> = ({ id, eggId }) => {
     <>
       <Button
         onClick={async () => {
-          await unpublishFlavor({ variables: { id } });
+          await confirmFlavor({ variables: { id } });
         }}
         disabled={loading}
       >
-        UnPublish{loading ? "ing" : ""}
+        Publish{loading ? "ing" : ""}
       </Button>
     </>
   );
