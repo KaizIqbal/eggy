@@ -68,18 +68,18 @@ export const flavrorMutations = {
     return ctx.db.mutation.deleteFlavor({ where: { id: args.id } }, info);
   },
 
-  async publishFlavor(parent, args, ctx, info) {
+  async confirmFlavor(parent, args, ctx, info) {
     // Delete flavor by id
     return ctx.db.mutation.updateFlavor(
-      { where: { id: args.id }, data: { isPublished: true } },
+      { where: { id: args.id }, data: { isConfirmed: true } },
       info
     );
   },
 
-  async unPublishFlavor(parent, args, ctx, info) {
+  async denyFlavor(parent, args, ctx, info) {
     // Delete flavor by id
     return ctx.db.mutation.updateFlavor(
-      { where: { id: args.id }, data: { isPublished: false } },
+      { where: { id: args.id }, data: { isConfirmed: false } },
       info
     );
   }
