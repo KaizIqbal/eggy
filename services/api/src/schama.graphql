@@ -1,0 +1,102 @@
+# import * from "./generated/prisma.graphql"
+
+scalar Upload
+
+type SuccessMessage {
+  message: String
+}
+
+type AuthPayload {
+  accessToken: String!
+  user: User!
+}
+
+type EggFlag {
+  access: Boolean!
+}
+
+type UserFlag {
+  available: Boolean!
+}
+
+type Mutation {
+
+  # File
+  uploadFile(file:Upload! cursorId:ID!): File!
+  deleteFile(fileId:ID!): File!
+  
+  # Eggs
+  createEgg(title:String! platforms:[Platform]!): Egg!
+  updateEgg(id:ID! platforms:[Platform]!): Egg!
+  renameEgg(id:ID! title:String!): Egg!
+  deleteEgg(id:ID!): Egg!
+  publishEgg(id:ID!): Egg!
+  unPublishEgg(id:ID!): Egg!
+
+  # Flavour
+  createFlavor(name:String! eggId:ID!): Flavor!
+  renameFlavor(id:ID! name:String!): Flavor!  
+  deleteFlavor(id:ID!): Flavor!  
+  confirmFlavor(id:ID!):Flavor!
+  denyFlavor(id:ID!): Flavor!
+
+  # Cursors
+  createCursor(name:cursorName! frames:Int! flavorId:ID!): Cursor!
+  updateCursor(id:ID! name:cursorName! frames:Int!): Cursor!
+  renameCursor(id:ID! flavorId:ID! name:cursorName!): Cursor!
+  deleteCursor(id:ID!): Cursor!
+  renderCursor(id:ID!): Cursor!
+    
+  # Auth
+  signup(firstName:String! lastName:String! username: String! email:String! password:String!): AuthPayload!
+  signin(email:String! password:String!): AuthPayload!
+  signout: SuccessMessage
+
+  revokeRefreshTokenForUser(userId:ID!): User!
+  resetPasswordRequest(email:String!): SuccessMessage
+  resetPassword(resetToken:String! ,password:String! ,confirmPassword:String!): AuthPayload!
+
+  updatePermissions(permissions:[Permission] ,userId:ID!): User
+}
+
+# type Subscription {
+#  fileUploaded: FileSubscriptionPayload
+# }
+
+type Query {
+  # Egg
+  egg(where: EggWhereUniqueInput!): Egg
+  isEggAccessible(eggname: String!): EggFlag 
+
+  # Basket
+  publicBasket(after: String first: Int): EggConnection!
+  userBasket(after: String first: Int): EggConnection!
+
+  # Cursors
+  cursor(id:ID!): Cursor
+  cursors(flavorId: ID!):[Cursor]!
+
+  # Flavors
+  flavor(id: ID!): Flavor!
+  flavors(eggId: ID!): [Flavor]!
+  renderedFlavors(eggId:ID!): [Flavor]!
+
+  # User
+  me: User
+  users: [User]!
+  isUserAvailable(username: String!) :UserFlag
+
+  # file
+  file(id: ID!): File!
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  username: String!
+  email: String!
+  password: String!
+  permissions: [Permission!]!
+  tokenVersion: Int! 
+}
