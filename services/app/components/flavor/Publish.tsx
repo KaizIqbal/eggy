@@ -1,6 +1,10 @@
 import React from "react";
 
-import { usePublishFlavorMutation, FlavorsDocument } from "generated/graphql";
+import {
+  usePublishFlavorMutation,
+  FlavorsDocument,
+  PublicBasketDocument
+} from "generated/graphql";
 
 import { Button } from "components/styled";
 
@@ -17,6 +21,9 @@ export const PublishFlavor: React.FC<IProps> = ({ id, eggId }) => {
       {
         query: FlavorsDocument,
         variables: { eggId }
+      },
+      {
+        query: PublicBasketDocument
       }
     ]
   });

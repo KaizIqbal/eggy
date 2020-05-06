@@ -15,6 +15,9 @@ fragment EggData on Egg {
   user {
     ...UserData
   }
+  flavors {
+    id
+  }
 }
 
 fragment FlavorData on Flavor {
