@@ -1,6 +1,10 @@
 import React from "react";
 
-import { useUnPublishFlavorMutation, FlavorsDocument } from "generated/graphql";
+import {
+  useUnPublishFlavorMutation,
+  FlavorsDocument,
+  PublicBasketDocument
+} from "generated/graphql";
 
 import { Button } from "components/styled";
 
@@ -19,6 +23,9 @@ export const UnPublishFlavor: React.FC<IProps> = ({ id, eggId }) => {
         variables: {
           eggId
         }
+      },
+      {
+        query: PublicBasketDocument
       }
     ]
   });
