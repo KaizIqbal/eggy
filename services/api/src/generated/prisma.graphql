@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Mon Apr 27 2020 09:18:24 GMT+0000 (Coordinated Universal Time)
+# timestamp: Wed May 06 2020 12:23:30 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -1506,7 +1506,7 @@ input FileWhereUniqueInput {
 type Flavor implements Node {
   id: ID!
   name: String!
-  isPublished: Boolean!
+  isConfirmed: Boolean!
   egg: Egg!
   cursors(where: CursorWhereInput, orderBy: CursorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cursor!]
 }
@@ -1524,7 +1524,7 @@ type FlavorConnection {
 input FlavorCreateInput {
   id: ID
   name: String!
-  isPublished: Boolean
+  isConfirmed: Boolean
   egg: EggCreateOneWithoutFlavorsInput!
   cursors: CursorCreateManyWithoutFlavorInput
 }
@@ -1542,14 +1542,14 @@ input FlavorCreateOneWithoutCursorsInput {
 input FlavorCreateWithoutCursorsInput {
   id: ID
   name: String!
-  isPublished: Boolean
+  isConfirmed: Boolean
   egg: EggCreateOneWithoutFlavorsInput!
 }
 
 input FlavorCreateWithoutEggInput {
   id: ID
   name: String!
-  isPublished: Boolean
+  isConfirmed: Boolean
   cursors: CursorCreateManyWithoutFlavorInput
 }
 
@@ -1567,14 +1567,14 @@ enum FlavorOrderByInput {
   id_DESC
   name_ASC
   name_DESC
-  isPublished_ASC
-  isPublished_DESC
+  isConfirmed_ASC
+  isConfirmed_DESC
 }
 
 type FlavorPreviousValues {
   id: ID!
   name: String!
-  isPublished: Boolean!
+  isConfirmed: Boolean!
 }
 
 input FlavorScalarWhereInput {
@@ -1666,10 +1666,10 @@ input FlavorScalarWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  isPublished: Boolean
+  isConfirmed: Boolean
 
   """All values that are not equal to given value."""
-  isPublished_not: Boolean
+  isConfirmed_not: Boolean
 }
 
 type FlavorSubscriptionPayload {
@@ -1711,19 +1711,19 @@ input FlavorSubscriptionWhereInput {
 
 input FlavorUpdateInput {
   name: String
-  isPublished: Boolean
+  isConfirmed: Boolean
   egg: EggUpdateOneRequiredWithoutFlavorsInput
   cursors: CursorUpdateManyWithoutFlavorInput
 }
 
 input FlavorUpdateManyDataInput {
   name: String
-  isPublished: Boolean
+  isConfirmed: Boolean
 }
 
 input FlavorUpdateManyMutationInput {
   name: String
-  isPublished: Boolean
+  isConfirmed: Boolean
 }
 
 input FlavorUpdateManyWithoutEggInput {
@@ -1752,13 +1752,13 @@ input FlavorUpdateOneRequiredWithoutCursorsInput {
 
 input FlavorUpdateWithoutCursorsDataInput {
   name: String
-  isPublished: Boolean
+  isConfirmed: Boolean
   egg: EggUpdateOneRequiredWithoutFlavorsInput
 }
 
 input FlavorUpdateWithoutEggDataInput {
   name: String
-  isPublished: Boolean
+  isConfirmed: Boolean
   cursors: CursorUpdateManyWithoutFlavorInput
 }
 
@@ -1867,10 +1867,10 @@ input FlavorWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  isPublished: Boolean
+  isConfirmed: Boolean
 
   """All values that are not equal to given value."""
-  isPublished_not: Boolean
+  isConfirmed_not: Boolean
   egg: EggWhereInput
   cursors_every: CursorWhereInput
   cursors_some: CursorWhereInput
