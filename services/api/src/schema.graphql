@@ -37,6 +37,8 @@ type Mutation {
   createFlavor(name:String! eggId:ID!): Flavor!
   renameFlavor(id:ID! name:String!): Flavor!  
   deleteFlavor(id:ID!): Flavor!  
+  confirmFlavor(id:ID!):Flavor!
+  denyFlavor(id:ID!): Flavor!
 
   # Cursors
   createCursor(name:cursorName! frames:Int! flavorId:ID!): Cursor!
