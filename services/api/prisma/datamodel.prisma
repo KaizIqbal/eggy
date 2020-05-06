@@ -56,7 +56,7 @@ type Egg {
 type Flavor {
   id: ID! @id
   name: String!
-  isPublished: Boolean! @default(value: false)
+  isConfirmed: Boolean! @default(value: false)
   egg: Egg!  @relation(name: "Flavors")
   cursors: [Cursor]  @relation(name: "Cursors" onDelete: CASCADE)
 }
