@@ -40,15 +40,15 @@ mutation deleteFlavor($id: ID!) {
 }
 
 # ---------- PUBLISH
-mutation publishFlavor($id: ID!) {
-  publishFlavor(id: $id) {
+mutation confirmFlavor($id: ID!) {
+  confirmFlavor(id: $id) {
     id
   }
 }
 
 # ---------- UNPUBLISH
-mutation unPublishFlavor($id: ID!) {
-  unPublishFlavor(id: $id) {
+mutation denyFlavor($id: ID!) {
+  denyFlavor(id: $id) {
     id
   }
 }
