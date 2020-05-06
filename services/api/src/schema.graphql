@@ -38,7 +38,7 @@ type Mutation {
   renameFlavor(id:ID! name:String!): Flavor!  
   deleteFlavor(id:ID!): Flavor!  
   confirmFlavor(id:ID!):Flavor!
-  denyFalvor(id:ID!): Flavor!
+  denyFlavor(id:ID!): Flavor!
 
   # Cursors
   createCursor(name:cursorName! frames:Int! flavorId:ID!): Cursor!
