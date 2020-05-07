@@ -40,7 +40,7 @@ export const ConfirmFlavor: React.FC<IProps> = ({ id, eggId }) => {
         }}
         disabled={loading}
       >
-        Publish{loading ? "ing" : ""}
+        Confirm
       </Button>
     </>
   );
