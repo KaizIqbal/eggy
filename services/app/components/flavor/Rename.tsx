@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import { Flavor, useRenameFlavorMutation, FlavorsDocument } from "generated/graphql";
+import {
+  Flavor,
+  useRenameFlavorMutation,
+  FlavorsDocument
+} from "generated/graphql";
 
 import { InlineEdit } from "components/InlineEdit";
 import { Button } from "components/styled";
@@ -54,12 +58,18 @@ export const RenameFlavor: React.FC<IProps> = ({ flavor, eggId }) => {
 
   return (
     <>
-      <Button onClick={togglePopup}>Edit</Button>
+      <Button onClick={togglePopup}>Rename</Button>
       {popup ? (
         <Popup closePopup={togglePopup}>
           <br />
           <h1>
-            <InlineEdit text={name} emptyText={name} onSetText={_handleRename} maxLength={20} regex={regex} />
+            <InlineEdit
+              text={name}
+              emptyText={name}
+              onSetText={_handleRename}
+              maxLength={20}
+              regex={regex}
+            />
           </h1>
           {loading ? <p> Saving ...</p> : null}
           {error ? <p> ${error}</p> : null}
