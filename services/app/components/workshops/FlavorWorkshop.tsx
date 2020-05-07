@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 
 import { useFlavorQuery } from "generated/graphql";
-import { PublishFlavor, UnPublishFlavor } from "components/flavor";
 import { CreateCursor, Cursors } from "components/cursor";
 
 interface IProps {
@@ -39,11 +38,6 @@ export const FlavorWorkshop: React.FC<IProps> = ({ id }) => {
         </h1>
 
         <CreateCursor flavorId={data.flavor.id} />
-        {data.flavor.isPublished ? (
-          <UnPublishFlavor id={data.flavor.id} eggId={data.flavor.egg.id} />
-        ) : (
-          <PublishFlavor id={data.flavor.id} eggId={data.flavor.egg.id} />
-        )}
         <Cursors flavorId={data.flavor.id} />
       </>
     );
