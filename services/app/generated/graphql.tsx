@@ -10,6 +10,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
+  ZipFile: any;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };
@@ -29,6 +30,7 @@ export type Query = {
   users: Array<Maybe<User>>;
   isUserAvailable?: Maybe<UserFlag>;
   file: File;
+  bundle?: Maybe<Scalars['ZipFile']>;
 };
 
 
@@ -97,6 +99,12 @@ export type QueryIsUserAvailableArgs = {
 /**  */
 export type QueryFileArgs = {
   id: Scalars['ID'];
+};
+
+
+/**  */
+export type QueryBundleArgs = {
+  flavorId: Scalars['ID'];
 };
 
 export type EggWhereUniqueInput = {
@@ -1242,6 +1250,7 @@ export type UserFlag = {
   available: Scalars['Boolean'];
 };
 
+
 export type Mutation = {
    __typename?: 'Mutation';
   uploadFile: File;
@@ -1773,6 +1782,16 @@ export type DeleteFileMutation = (
     { __typename?: 'File' }
     & FileDataFragment
   ) }
+);
+
+export type BundleQueryVariables = {
+  flavorId: Scalars['ID'];
+};
+
+
+export type BundleQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'bundle'>
 );
 
 export type FlavorQueryVariables = {
@@ -2810,6 +2829,37 @@ export function useDeleteFileMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type DeleteFileMutationHookResult = ReturnType<typeof useDeleteFileMutation>;
 export type DeleteFileMutationResult = ApolloReactCommon.MutationResult<DeleteFileMutation>;
 export type DeleteFileMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteFileMutation, DeleteFileMutationVariables>;
+export const BundleDocument = gql`
+    query bundle($flavorId: ID!) {
+  bundle(flavorId: $flavorId)
+}
+    `;
+
+/**
+ * __useBundleQuery__
+ *
+ * To run a query within a React component, call `useBundleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBundleQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBundleQuery({
+ *   variables: {
+ *      flavorId: // value for 'flavorId'
+ *   },
+ * });
+ */
+export function useBundleQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<BundleQuery, BundleQueryVariables>) {
+        return ApolloReactHooks.useQuery<BundleQuery, BundleQueryVariables>(BundleDocument, baseOptions);
+      }
+export function useBundleLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<BundleQuery, BundleQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<BundleQuery, BundleQueryVariables>(BundleDocument, baseOptions);
+        }
+export type BundleQueryHookResult = ReturnType<typeof useBundleQuery>;
+export type BundleLazyQueryHookResult = ReturnType<typeof useBundleLazyQuery>;
+export type BundleQueryResult = ApolloReactCommon.QueryResult<BundleQuery, BundleQueryVariables>;
 export const FlavorDocument = gql`
     query flavor($id: ID!) {
   flavor(id: $id) {
