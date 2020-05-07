@@ -13,7 +13,7 @@ interface IProps {
   eggId: string;
 }
 
-export const DenyFalvor: React.FC<IProps> = ({ id, eggId }) => {
+export const DenyFlavor: React.FC<IProps> = ({ id, eggId }) => {
   // ---------------------------------------------------------------- HOOKS
 
   const [denyFalvor, { loading, error }] = useDenyFlavorMutation({
