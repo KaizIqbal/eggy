@@ -17,14 +17,24 @@ export const fileQueries = {
   },
 
   async bundle(parent, args, ctx, info) {
-    const cursors = await ctx.db.query.cursors(
+    let [cursor] = await ctx.db.query.cursors(
       {
         where: { flavor: { id: args.flavorId } }
       },
       `{
-      url
+        render{
+          key
+        }
     }`
     );
-    console.log(cursors);
+
+    cursor = JSON.parse(JSON.stringify(cursor));
+    let [key] = cursor.render.map(obj => obj.key);
+    key = key.split("/raw")[0];
+
+    // Get all cursors render path
+    console.log(key);
+
+    // execute lambda function
   }
 };
