@@ -1,7 +1,3 @@
-
-# Created by https://www.gitignore.io/api/node
-# Edit at https://www.gitignore.io/?templates=node
-
 ### Node ###
 # Logs
 logs
@@ -108,4 +104,22 @@ dist/
 tmp/
 temp/
 
-# End of https://www.gitignore.io/api/node
+### Python ###
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
