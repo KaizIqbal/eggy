@@ -16,6 +16,8 @@ custom:
 
 package:
   excludeDevDependencies: false
+  exclude:
+    - tools/**
 
 # Add the serverless-webpack plugin
 plugins:
