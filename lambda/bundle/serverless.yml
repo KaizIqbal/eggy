@@ -1,0 +1,41 @@
+service:
+  name: eggy 
+  # app and org for use with dashboard.serverless.com
+  # app: your-app-name
+  # org: your-org-name
+
+custom:
+  s3Bucket: ${env:S3_BUCKET} 
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
+package:
+  excludeDevDependencies: false
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  region: ${env:S3_REGION} 
+  iamRoleStatements:	
+    - Effect: Allow	
+      Action:	
+        - "s3:*"	
+      Resource: "arn:aws:s3:::${self:custom.s3Bucket}/*"
+  # function parameters
+  runtime: nodejs12.x
+  timeout: 30
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+
+functions:
+  bundle:
+    handler: handler.bundle
+    environment:
+      S3_REGION: ${self:provider.region}
+      S3_BUCKET: ${self:custom.s3Bucket}
