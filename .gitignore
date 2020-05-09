@@ -109,6 +109,8 @@ temp/
 
 ### Python ###
 
+__pycache__/
+
 # Distribution / packaging
 .Python
 env/
