@@ -19,6 +19,13 @@ provider:
   runtime: python3.8
   region: ${env:S3_REGION}
 
+package:
+  exclude:
+    - env/**
+    - __pycache__/**
+    - node_modules/**
+    - .env.exapmle
+
 functions:
   bundle:
     handler: handler.bundle
