@@ -1,15 +1,16 @@
 import json
+import os
+
+anicursorgen = "./tools/anicursorgen.py"
 
 
 def bundle(event, context):
-    body = {
-        "message": "Go Serverless v1.0! Your function executed successfully!",
-        "input": event
-    }
+
+    # output = os.system("%s -h" % anicursorgen)
 
     response = {
         "statusCode": 200,
-        "body": json.dumps(body)
+        # "bundle": json.dumps(output)
     }
 
     return response
