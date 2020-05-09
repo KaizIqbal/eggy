@@ -140,13 +140,13 @@ def make_cur(frames, args, animated=False):
     buf.write(p('<HHH', 0, 2, len(frames)))
     frame_offsets = []
 
-    def frame_size_cmp(f1, f2):
-        if f1[0] < f2[0]:
-            return -1
-        elif f1[0] > f2[0]:
-            return 1
-        else:
-            return 0
+    # def frame_size_cmp(f1, f2):
+    #     if f1[0] < f2[0]:
+    #         return -1
+    #     elif f1[0] > f2[0]:
+    #         return 1
+    #     else:
+    #         return 0
 
     frames = sorted(frames, reverse=True)
 
@@ -238,13 +238,13 @@ def make_framesets(frames):
                     i, frameset[i][4], frameset[i][0], frameset[i - 1][4], frameset[i - 1][0]), file=sys.stderr)
                 return None
 
-    def frameset_size_cmp(f1, f2):
-        if f1[0][0] < f2[0][0]:
-            return -1
-        elif f1[0][0] > f2[0][0]:
-            return 1
-        else:
-            return 0
+    # def frameset_size_cmp(f1, f2):
+    #     if f1[0][0] < f2[0][0]:
+    #         return -1
+    #     elif f1[0][0] > f2[0][0]:
+    #         return 1
+    #     else:
+    #         return 0
 
     framesets = sorted(framesets, reverse=True)
 
@@ -289,7 +289,7 @@ def make_ani(frames, out, args):
         buf.write(b'icon')
         cur = make_cur(frameset, args, animated=True)
         cur_size = cur.seek(0, io.SEEK_END)
-        aligned_cur_size = cur_size
+        # aligned_cur_size = cur_size
         # if cur_size % 4 != 0:
         #  aligned_cur_size += 4 - cur_size % 2
         buf.write(p('<i', cur_size))
