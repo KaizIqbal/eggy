@@ -7,6 +7,7 @@ anicursorgen = "./tools/anicursorgen.py"
 def bundle(event, context):
 
     # output = os.system("%s -h" % anicursorgen)
+    os.environ["S3_BUCKET"]
 
     response = {
         "statusCode": 200,
