@@ -12,7 +12,7 @@
     "bundle": "npx sls invoke -f bundle - event.json",
     "deploy:dev": "npx sls deploy -v",
     "deploy": "npx sls deploy -s",
-    "clean": "rm -rf ./lib/ && npx sls remove "
+    "clean": "npx sls remove "
   },
   "dependencies": {
     "serverless": "^1.70.0",
