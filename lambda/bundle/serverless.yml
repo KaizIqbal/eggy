@@ -1,35 +1,41 @@
 service: bundle
 
-plugins:
-  - serverless-dotenv-plugin
-  - serverless-python-requirements
-
 custom:
   dotenv:
     logging: false
     include:
       - S3_BUCKET
-      - S3_REGION
-  s3Bucket: ${env:S3_BUCKET}
+      - REGION
   pythonRequirements:
     dockerizePip: non-linux
+  s3Bucket: ${env:S3_BUCKET}
 
-provider:
-  name: aws
-  runtime: python3.8
-  region: ${env:S3_REGION}
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-python-requirements
 
 package:
   exclude:
-    - ./*.sh
+    - ./**.sh
     - env/**
     - __pycache__/**
     - node_modules/**
     - .env.exapmle
+    - .vscode/**
+
+provider:
+  iamRoleStatements:	
+    - Effect: Allow	
+      Action:	
+        - "s3:*"	
+      Resource: "arn:aws:s3:::${self:custom.s3Bucket}/*"
+  name: aws
+  region: ${env:REGION}
+  runtime: python3.8
 
 functions:
   bundle:
     handler: handler.bundle
     environment:
-      S3_REGION: ${self:provider.region}
+      REGION: ${self:provider.region}
       S3_BUCKET: ${self:custom.s3Bucket}
