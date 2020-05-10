@@ -5,12 +5,14 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "bundle:local": "npx sls invoke local -f bundle ",
-    "bundle:dev": "npx sls invoke -f bundle -l ",
-    "bundle": "npx sls invoke -f bundle ",
+    "gen:libs": "./generate_libs.sh xcursorgen ",
+    "freeze": "pip3 freeze > requirements.txt ",
+    "bundle:local": "npx sls invoke local -f bundle -p event.json",
+    "bundle:dev": "npx sls invoke -f bundle -l -p event.json",
+    "bundle": "npx sls invoke -f bundle - event.json",
     "deploy:dev": "npx sls deploy -v",
     "deploy": "npx sls deploy -s",
-    "clean": "npx sls remove"
+    "clean": "npx sls remove "
   },
   "dependencies": {
     "serverless": "^1.70.0",
