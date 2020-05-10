@@ -1,5 +1,6 @@
-### vscode ###
+### custom ###
 .vscode
+event.json
 
 ### Node ###
 # Logs
