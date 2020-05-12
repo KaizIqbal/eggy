@@ -22,7 +22,7 @@ def bundle(event, context):
     fetch.directory_from_s3(s3_dir=key, local_dir=dir)
 
     print("🔥 Generating config files...")
-    bundler.ini.write_xcur()
+    bundler.generate_ini()
 
     print("📦 Creating bundle...")
     bundle = bundler.create_bundle()
