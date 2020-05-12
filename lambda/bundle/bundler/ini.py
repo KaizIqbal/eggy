@@ -1,4 +1,3 @@
-def generate(path):
+def generate(src_dir, out_dir):
     """ Generate .ini config files."""
-    # TODO::
-    print(".ini files generated")
+    pass
