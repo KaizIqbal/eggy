@@ -9,16 +9,23 @@ import fetch
 def bundle(event, context):
 
     key = event["key"]
-    type = event["type"]
 
-    # generate 8 character long unique id
+    # generate 8 character long unique directory name
     dir = str(uuid.uuid4())[:8]
 
-    print("🚛 Fetching resources from S3...")
-    fetch.directory_from_s3(s3_dir=key, out_dir=dir)
+    # configs
+    bundler.config.CURSOR_TYPE = event["type"]
+    bundler.config.DPI = event["sizes"]
+    bundler.config.WORK_DIR = dir
 
-    print("📦 Creating Cursor Bundle...")
-    bundle = bundler.create_bundle(imgs_dir=key, cursor_type=type)
+    print("🚛 Fetching resources from S3...")
+    fetch.directory_from_s3(s3_dir=key, local_dir=dir)
+
+    print("🔥 Generating config files...")
+    bundler.ini.write_xcur()
+
+    print("📦 Creating bundle...")
+    bundle = bundler.create_bundle()
 
     response = {
         "statusCode": 200,
