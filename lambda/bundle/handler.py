@@ -17,12 +17,13 @@ def bundle(event, context):
     bundler.config.CURSOR_TYPE = event["type"]
     bundler.config.DPI = event["sizes"]
     bundler.config.WORK_DIR = dir
+    bundler.config.RAW_DIR = dir + "/raw/"
 
     print("🚛 Fetching resources from S3...")
     fetch.directory_from_s3(s3_dir=key, local_dir=dir)
 
     print("🔥 Generating config files...")
-    bundler.ini.write_xcur()
+    bundler.generate_ini()
 
     print("📦 Creating bundle...")
     bundle = bundler.create_bundle()
