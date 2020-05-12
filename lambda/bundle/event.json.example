@@ -1,12 +1,10 @@
 {
     "_comment_": {
         "key": "S3 key,Where rendered png stored",
-        "raw", "where raw rendered files available",
         "type": "WINDOW || LINUX || ALL ",
         "sizes": "DPI for cursor"
     },
     "key": "",
-    "raw","raw",
     "type": "LINUX"
     "sizes":[24,28,32,40,48,56,65,72,80,88,96]
 }
