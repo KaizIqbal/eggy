@@ -1,10 +1,5 @@
-import uuid
-from . import fetch, ini
+from . import ini, config
 
 
-def create_bundle(imgs_dir, cursor_type):
-
-    print("🔥 Generating Configs...")
-    ini.generate(imgs_dir, out_dir=imgs_dir)
-
+def create_bundle():
     return "bundle"
