@@ -1,24 +1,35 @@
 import json
+import uuid
 
 # modules
-from bundler import fetch, ini
+import bundler
+import fetch
 
 
 def bundle(event, context):
 
     key = event["key"]
-    # type = event["type"]
+
+    # generate 8 character long unique directory name
+    dir = str(uuid.uuid4())[:8]
+
+    # configs
+    bundler.config.CURSOR_TYPE = event["type"]
+    bundler.config.DPI = event["sizes"]
+    bundler.config.WORK_DIR = dir
 
     print("🚛 Fetching resources from S3...")
-    fetch.directory_from_s3(key)
+    fetch.directory_from_s3(s3_dir=key, local_dir=dir)
 
-    print("🔥 Generating Configs...")
-    ini.generate("/tmp/test")
+    print("🔥 Generating config files...")
+    bundler.ini.write_xcur()
+
+    print("📦 Creating bundle...")
+    bundle = bundler.create_bundle()
 
     response = {
         "statusCode": 200,
-        # "key": json.dumps(key),
-        # "type": json.dumps(type)
+        "bundle": json.dumps(bundle)
     }
 
     return response

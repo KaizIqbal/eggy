@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "python:setup": "pip3 install virtualenv && virtualenv -p python3 env && . env/bin/activate && pip3 install -r requirements.txt",
+    "setup": "sudo pip3 install virtualenv && virtualenv env && . env/bin/activate && pip3 install -r requirements.txt && yarn install ",
     "gen:libs": "./generate_libs.sh xcursorgen ",
     "freeze": "pip3 freeze > requirements.txt ",
     "bundle:local": "npx sls invoke local -f bundle -p event.json",
