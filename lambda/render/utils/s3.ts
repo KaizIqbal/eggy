@@ -1,6 +1,6 @@
 // aws-sdk is always preinstalled in AWS Lambda in all Node.js runtimes
 import * as S3Client from "aws-sdk/clients/s3";
-const s3 = new S3Client({ region: process.env.S3_REGION });
+const s3 = new S3Client({ region: process.env.REGION });
 
 async function fetchFromS3(key: string) {
   try {

@@ -4,7 +4,9 @@ import { forwardTo } from "prisma-binding";
 import isAuth from "../../utils/isAuth";
 
 export const eggQueries = {
+
   egg: forwardTo("db"),
+
 
   userBasket(parent, args, ctx, info) {
     // Checking user logged in or not if not then throw Error
