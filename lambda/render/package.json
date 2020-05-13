@@ -4,9 +4,9 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "render:local": "npx sls invoke local -f render -p data.json",
-    "render:dev": "npx sls invoke -f render -l -p data.json",
-    "render": "npx sls invoke -f render -p data.json",
+    "render:local": "npx sls invoke local -f render -p event.json",
+    "render:dev": "npx sls invoke -f render -l -p event.json",
+    "render": "npx sls invoke -f render -p event.json",
     "deploy:dev": "npx sls deploy -v",
     "deploy": "npx sls deploy -s",
     "clean": "npx sls remove",
