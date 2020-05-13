@@ -66,21 +66,5 @@ export const flavrorMutations = {
 
     // Delete flavor by id
     return ctx.db.mutation.deleteFlavor({ where: { id: args.id } }, info);
-  },
-
-  async confirmFlavor(parent, args, ctx, info) {
-    // Delete flavor by id
-    return ctx.db.mutation.updateFlavor(
-      { where: { id: args.id }, data: { isConfirmed: true } },
-      info
-    );
-  },
-
-  async denyFlavor(parent, args, ctx, info) {
-    // Delete flavor by id
-    return ctx.db.mutation.updateFlavor(
-      { where: { id: args.id }, data: { isConfirmed: false } },
-      info
-    );
   }
 };
