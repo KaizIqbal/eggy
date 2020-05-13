@@ -1,8 +1,6 @@
 import * as chromium from "chrome-aws-lambda";
-import * as sharp from "sharp";
 
-import { Image, RenderImages } from "../types";
-import { sizes } from "../sizes";
+import { Image } from "../types";
 import { uploadToS3 } from "./s3";
 
 async function renderSvg(
@@ -14,11 +12,8 @@ async function renderSvg(
   // Browser & HTML Template instance
   let browser: any;
 
-  // render Image Config
-  const renderImages: RenderImages = {};
-
   const result = [];
-  const sizes = [24, 28, 32, 40, 48, 56, 64, 72, 80, 88, 96];
+  const images: Array<Image> = [];
 
   try {
     // -------------------------------------------- SETUP BROWSER
@@ -42,7 +37,6 @@ async function renderSvg(
     if (!svgImage) throw new Error("svg element not found");
     // -------------------------------------------- RENDER FRAMES
 
-    const images: Array<Image> = [];
 
     for (let index = 1; index <= frames; index++) {
       // generate filename & rendered image as base64 encoding
@@ -70,11 +64,10 @@ async function renderSvg(
       console.log(`Rendered Frame ${index}/${frames}`);
 
       // uploading raw images
-
-      const key: string = destPath + "raw/" + image.fileName;
+      const key: string = destPath + image.fileName;
       const response = await uploadToS3(key, image.contentType, image.Body);
 
-      console.log(`Uploading RAW Frames ${index}/${frames}`);
+      console.log(`Uploading Frames ${index}/${frames}`);
       result.push({
         key: response.Key,
         url: response.Location,
@@ -83,28 +76,6 @@ async function renderSvg(
       });
     }
 
-    // save raw images
-    renderImages.raw = images;
-
-    // -------------------------------------------- RESIZE THE FRAMES
-
-    sizes.forEach(size => {
-      renderImages.raw.forEach(async image => {
-        let temp: Image = { ...image };
-        temp.Body = await sharp(image.Body)
-          .resize(size, size)
-          .toBuffer();
-
-        const category = `${size}x${size}`;
-
-        // uploading raw images
-        const key: string = destPath + category + "/" + temp.fileName;
-        const response = await uploadToS3(key, temp.contentType, temp.Body);
-        console.log(
-          `${category} ${filePrefix}.png Uploaded at ${response.Location}`
-        );
-      });
-    });
   } catch (error) {
     throw new Error(error);
   } finally {
