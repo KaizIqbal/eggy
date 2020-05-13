@@ -5,6 +5,11 @@ service:
   # org: your-org-name
 
 custom:
+  dotenv:
+  logging: false
+  include:
+    - S3_BUCKET
+    - REGION
   s3Bucket: ${env:S3_BUCKET} 
   webpack:
     webpackConfig: ./webpack.config.js
@@ -19,7 +24,7 @@ plugins:
 
 provider:
   name: aws
-  region: ${env:S3_REGION} 
+  region: ${env:REGION} 
   iamRoleStatements:	
     - Effect: Allow	
       Action:	
@@ -44,5 +49,5 @@ functions:
   render:
     handler: handler.render
     environment:
-      S3_REGION: ${self:provider.region}
+      REGION: ${self:provider.region}
       S3_BUCKET: ${self:custom.s3Bucket}
