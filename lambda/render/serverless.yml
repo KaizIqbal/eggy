@@ -3,10 +3,10 @@ service:
 
 custom:
   dotenv:
-    logging: false
+    logging: true
     include:
-      - S3_BUCKET
       - REGION
+      - S3_BUCKET
   s3Bucket: ${env:S3_BUCKET}
   webpack:
     webpackConfig: ./webpack.config.js
