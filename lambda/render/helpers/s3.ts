@@ -8,8 +8,7 @@ export const fetchFromS3 = async (key: string) => {
     Bucket: process.env.S3_BUCKET,
     Key: key,
   };
-  const response = await s3.getObject(params).promise();
-  return response;
+  return await s3.getObject(params).promise();
 };
 
 export const uploadToS3 = async (
@@ -27,6 +26,5 @@ export const uploadToS3 = async (
   };
 
   // Uploading to S3
-  const response = await s3.upload(params).promise();
-  return response;
+  return await s3.upload(params).promise();
 };
