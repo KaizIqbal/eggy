@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/k-a-i-z-b4e086/eggy/dev
-# timestamp: Wed May 06 2020 12:23:30 GMT+0000 (Coordinated Universal Time)
+# timestamp: Wed May 13 2020 04:16:15 GMT+0000 (Coordinated Universal Time)
 
 type AggregateCursor {
   count: Int!
@@ -112,11 +112,66 @@ type CursorEdge {
 }
 
 enum cursorName {
-  Pointer_Left
-  Pointer_Center
-  Pointer_Right
-  X11
-  Wayland
+  ALL_SCROLL
+  BD_DOUBLE_ARROW
+  BOTTOM_LEFT_CORNER
+  BOTTOM_RIGHT_CORNER
+  BOTTOM_SIDE
+  BOTTOM_TEE
+  CENTER_PTR
+  CIRCLE
+  CONTEXT_MENU
+  COPY
+  CROSS
+  CROSSED_CIRCLE
+  CROSSHAIR
+  DND_ASK
+  DND_COPY
+  DND_LINK
+  DND_MOVE
+  DND_NONE
+  DND_NO_DROP
+  DOTBOX
+  FD_DOUBLE_ARROW
+  GRABBING
+  HAND
+  HAND1
+  HAND2
+  LEFT_PTR
+  LEFT_PTR_WATCH
+  LEFT_SIDE
+  LEFT_TEE
+  LINK
+  LL_ANGLE
+  LR_ANGLE
+  MOVE
+  PENCIL
+  PLUS
+  POINTER_MOVE
+  QUESTION_ARROW
+  RIGHT_PTR
+  RIGHT_SIDE
+  RIGHT_TEE
+  SB_DOWN_ARROW
+  SB_H_DOUBLE_ARROW
+  SB_LEFT_ARROW
+  SB_RIGHT_ARROW
+  SB_UP_ARROW
+  SB_V_DOUBLE_ARROW
+  TCROSS
+  TOP_LEFT_CORNER
+  TOP_RIGHT_CORNER
+  TOP_SIDE
+  TOP_TEE
+  UL_ANGLE
+  UR_ANGLE
+  VERTICAL_TEXT
+  WATCH
+  WAYLAND_CURSOR
+  XTERM
+  X_CURSOR
+  ZOOM_IN
+  ZOOM_OUT
 }
 
 enum CursorOrderByInput {
