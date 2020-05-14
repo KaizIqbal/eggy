@@ -4,7 +4,3 @@ export interface Image {
   Body: Buffer;
   encoding: string;
 }
-
-export interface RenderImages {
-  [key: string]: Array<Image>;
-}

@@ -3,21 +3,19 @@ import * as chromium from "chrome-aws-lambda";
 import { Image } from "../types";
 import { uploadToS3 } from "./s3";
 
-async function renderSvg(
+const renderSvg = async (
   template: string,
   frames: number,
   filePrefix: string,
   destPath: string
-) {
+) => {
   // Browser & HTML Template instance
   let browser: any;
 
-  const result = [];
-  const images: Array<Image> = [];
+  const renderImages = [];
 
   try {
     // -------------------------------------------- SETUP BROWSER
-
     browser = await chromium.puppeteer.launch({
       args: chromium.args,
       ignoreDefaultArgs: process.env.IS_LOCAL ? [" --single-process "] : [],
@@ -35,9 +33,8 @@ async function renderSvg(
     const svgImage = await page.$("#container");
 
     if (!svgImage) throw new Error("svg element not found");
+
     // -------------------------------------------- RENDER FRAMES
-
-
     for (let index = 1; index <= frames; index++) {
       // generate filename & rendered image as base64 encoding
       const fileName: string =
@@ -50,29 +47,25 @@ async function renderSvg(
       const Body: Buffer = Buffer.from(b64string, "base64");
 
       // setup object
-      const image: Image = {
+      const temp: Image = {
         fileName,
         contentType: "image/png",
         encoding: "base64",
         Body
       };
-
-      // push details to Object
-      images.push(image);
-
-      // Display rendered frame log
       console.log(`Rendered Frame ${index}/${frames}`);
 
       // uploading raw images
-      const key: string = destPath + image.fileName;
-      const response = await uploadToS3(key, image.contentType, image.Body);
-
+      const key: string = destPath + temp.fileName;
       console.log(`Uploading Frames ${index}/${frames}`);
-      result.push({
+      const response = await uploadToS3(key, temp.contentType, temp.Body);
+
+      // push details to Object
+      renderImages.push({
         key: response.Key,
         url: response.Location,
-        mimetype: image.contentType,
-        encoding: image.encoding
+        mimetype: temp.contentType,
+        encoding: temp.encoding
       });
     }
 
@@ -82,7 +75,7 @@ async function renderSvg(
     if (browser) {
       await browser.close();
     }
-    return result;
+    return renderImages;
   }
 }
 
