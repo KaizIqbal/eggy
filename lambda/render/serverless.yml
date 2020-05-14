@@ -1,5 +1,5 @@
 service:
-  name: eggy
+  name: eggy-lambda
 
 custom:
   dotenv:
