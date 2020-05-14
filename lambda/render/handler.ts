@@ -3,8 +3,8 @@ import "source-map-support/register";
 import * as path from "path";
 
 import { generateRenderTemplate } from "./template/render";
-import { fetchFile } from "./utils/fetchFile";
-import { renderSvg } from "./utils/renderSvg";
+import { fetchFile } from "./helpers/fetchFile";
+import { renderSvg } from "./helpers/renderSvg";
 
 // This Function for generate png file on s3
 export const render: Handler = async (event, context) => {
@@ -31,12 +31,13 @@ export const render: Handler = async (event, context) => {
     const svg = await fetchFile(srcKey);
 
     // get fileName from key & remove extension
+
     let fileName = path.parse(srcKey).base;
     fileName = fileName.split(".")[0].toLowerCase();
 
     const template = generateRenderTemplate(svg);
 
-    result = renderSvg(template, frames, fileName, destPath);
+    result = await renderSvg(template, frames, fileName, destPath);
   } catch (error) {
     return context.fail(error);
   } finally {
