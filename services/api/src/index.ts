@@ -1,14 +1,13 @@
-// import * as dotenv from "dotenv";
-// dotenv.config({ path: `${__dirname}/.env` });
-
+import "dotenv/config";
 import * as coockieParser from "cookie-parser";
-import createServer from "./createServer";
 import * as cors from "cors";
 import { verify } from "jsonwebtoken";
 
+import createServer from "./createServer";
+import db from "./db";
+
 import { createAccessToken, createRefreshToken } from "./utils/authorization";
 import { sendRefreshToken } from "./utils/sendRefreshToken";
-import db from "./db";
 
 const server = createServer();
 
