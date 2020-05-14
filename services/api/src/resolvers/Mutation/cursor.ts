@@ -156,7 +156,7 @@ export const cursorMutations = {
 
     // configure render path ../render/*.png in s3
     let destKey = key.split(name)[0];
-    destKey = destKey.replace("source", "render");
+    destKey = destKey.replace("source", "bitmaps");
 
     // Prepare render payload
     const payload = {
