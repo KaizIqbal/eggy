@@ -1,6 +1,6 @@
 import * as chromium from "chrome-aws-lambda";
 
-import { Image } from "types";
+import { Image } from "../types";
 import { uploadToS3 } from "./s3";
 
 const renderSvg = async (
