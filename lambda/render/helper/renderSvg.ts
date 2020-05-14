@@ -1,6 +1,6 @@
 import * as chromium from "chrome-aws-lambda";
 
-import { Image } from "../types";
+import { Image } from "types";
 import { uploadToS3 } from "./s3";
 
 const renderSvg = async (
@@ -23,7 +23,7 @@ const renderSvg = async (
       executablePath: process.env.IS_LOCAL
         ? "/usr/bin/google-chrome-stable"
         : await chromium.executablePath,
-      headless: chromium.headless // If you set this to false, the Chrome window will be displayed, so change it if it does not work during development.
+      headless: chromium.headless, // If you set this to false, the Chrome window will be displayed, so change it if it does not work during development.
     });
 
     const page = await browser.newPage();
@@ -42,7 +42,7 @@ const renderSvg = async (
 
       const b64string: string = (await svgImage.screenshot({
         omitBackground: true,
-        encoding: "base64"
+        encoding: "base64",
       })) as string;
       const Body: Buffer = Buffer.from(b64string, "base64");
 
@@ -51,7 +51,7 @@ const renderSvg = async (
         fileName,
         contentType: "image/png",
         encoding: "base64",
-        Body
+        Body,
       };
       console.log(`Rendered Frame ${index}/${frames}`);
 
@@ -65,10 +65,9 @@ const renderSvg = async (
         key: response.Key,
         url: response.Location,
         mimetype: temp.contentType,
-        encoding: temp.encoding
+        encoding: temp.encoding,
       });
     }
-
   } catch (error) {
     throw new Error(error);
   } finally {
@@ -77,6 +76,6 @@ const renderSvg = async (
     }
     return renderImages;
   }
-}
+};
 
 export { renderSvg };
