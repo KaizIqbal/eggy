@@ -22,8 +22,5 @@ export const template = `
 </html>
 `;
 
-function generateRenderTemplate(svg: string) {
-  return template.replace("<svginjection>", svg);
-}
-
-export { generateRenderTemplate };
+export const generateRenderTemplate = (svg: string) =>
+  template.replace("<svginjection>", svg);

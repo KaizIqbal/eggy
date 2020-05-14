@@ -2,35 +2,31 @@
 import * as S3Client from "aws-sdk/clients/s3";
 const s3 = new S3Client({ region: process.env.REGION });
 
-async function fetchFromS3(key: string) {
-  try {
-    // Fetching from S3
-    const params = {
-      Bucket: process.env.S3_BUCKET,
-      Key: key
-    };
-    return await s3.getObject(params).promise();
-  } catch (error) {
-    throw new Error(error);
-  }
-}
+export const fetchFromS3 = async (key: string) => {
+  // Fetching from S3
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    Key: key,
+  };
+  const response = await s3.getObject(params).promise();
+  return response;
+};
 
-async function uploadToS3(key: string, contentType: string, stream: Buffer) {
-  try {
-    // Configure parameter
-    const params = {
-      Bucket: process.env.S3_BUCKET,
-      Key: key,
-      ACL: "public-read",
-      ContentType: contentType,
-      Body: stream
-    };
+export const uploadToS3 = async (
+  key: string,
+  contentType: string,
+  stream: Buffer
+) => {
+  // Configure parameter
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    Key: key,
+    ACL: "public-read",
+    ContentType: contentType,
+    Body: stream,
+  };
 
-    // Uploading to S3
-    return await s3.upload(params).promise();
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
-export { fetchFromS3, uploadToS3 };
+  // Uploading to S3
+  const response = await s3.upload(params).promise();
+  return response;
+};
