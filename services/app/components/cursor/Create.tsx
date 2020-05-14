@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useCreateCursorMutation, CursorsDocument } from "generated/graphql";
 
 import { getAvailableCursors } from "helper/constriants";
+import sanitizeCursorName from "helper/sanitizeCursorName";
 
 import { Button, Form } from "components/styled";
 import { Popup } from "components/Popup";
@@ -72,10 +73,14 @@ export const CreateCursor: React.FC<IProps> = ({ flavorId }) => {
           {/* Select Cursor Name */}
           <label htmlFor="Cursor Name">
             Select Cursor
-            <select id="name" name="name" ref={register({ required: "Your input is required" })}>
+            <select
+              id="name"
+              name="name"
+              ref={register({ required: "Your input is required" })}
+            >
               {availableCurosrs.map((cursor: string) => (
                 <option key={cursor} value={cursor}>
-                  {cursor}
+                  {sanitizeCursorName(cursor)}
                 </option>
               ))}
             </select>

@@ -2,7 +2,9 @@ import React from "react";
 import Router from "next/router";
 
 import { useCursorsQuery, Cursor } from "generated/graphql";
+
 import { setCursors } from "helper/constriants";
+import sanitizeCursorName from "helper/sanitizeCursorName";
 
 import { UploadFile, DeleteFile } from "components/file";
 import { DeleteCursor, RenderCursor, PreviewCursor } from "components/cursor";
@@ -64,7 +66,7 @@ export const Cursors: React.FC<IProps> = ({ flavorId }) => {
                     )
                   }
                 >
-                  {cursor.name}
+                  {sanitizeCursorName(cursor.name)}
                 </label>
               </Heading>
               <Body>
