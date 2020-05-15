@@ -9,23 +9,17 @@ import fetch
 def bundle(event, context):
 
     key = event["key"]
+    type = event["type"]
+    sizes = event["sizes"]
 
     # generate 8 character long unique directory name
     dir = str(uuid.uuid4())[:8]
 
-    # configs
-    bundler.var.CURSOR_TYPE = event["type"]
-    bundler.var.DPI = event["sizes"]
-    bundler.var.WORK_DIR = dir
-
-    print("🚛 Fetching resources from S3...")
+    print("🚛 Fetching resources from S3 to %s ..." % dir)
     fetch.directory_from_s3(s3_dir=key, local_dir=dir)
 
-    print("🔥 Generating helper files...")
-    bundler.generate_helper()
-
     print("📦 Creating bundle...")
-    bundle = bundler.create_bundle()
+    bundle = bundler.create_bundle(dir, type, sizes)
 
     response = {
         "statusCode": 200,
