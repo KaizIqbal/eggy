@@ -1,8 +1,11 @@
-from . import ini, config
+import os
+from . import ini, var
 
 
-def generate_ini(imgs_dir=config.WORK_DIR, cursor_type=config.CURSOR_TYPE, cursor_dpi=config.SIZES):
-    ini.write_xcur(imgs_dir, cursor_type, cursor_dpi)
+def generate_helper(imgs_dir=var.WORK_DIR, cursor_type=var.CURSOR_TYPE, cursor_dpi=var.SIZES):
+    """ Generate helpers files."""
+    for filename in os.listdir(imgs_dir):
+        print(filename)
 
 
 def create_bundle():
