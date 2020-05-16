@@ -27,10 +27,10 @@ const renderSvg = async (
     });
 
     const page = await browser.newPage();
-    await page.setContent(template, { waitUntil: "load" });
+    await page.setContent(template);
 
     await page.waitForSelector("#container");
-    const svgImage = await page.$("#container");
+    const svgImage = await page.$("#container svg");
 
     if (!svgImage) throw new Error("svg element not found");
 
