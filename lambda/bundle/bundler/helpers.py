@@ -68,18 +68,41 @@ def resize_cursor(cursor, size, imgs_dir):
     thumb.save(out_path)
 
 
-def static_cursor_config(list, imgs_dir, sizes):
+def static_cursor(list, imgs_dir, sizes):
+    sizes_len = len(sizes) - 1
+
     for cursor in list:
         config_file_path = imgs_dir + "/" + cursor.replace(".png", ".in")
-        config_file = open(config_file_path, "a+")
+        with open(config_file_path, "w") as config_file:
+            for index, size in enumerate(sizes):
+                resize_cursor(cursor, size, imgs_dir)
+                # config file content
+                line = "%s xhot yhot %sx%s/%s\n" % (size, size, size, cursor)
+                if (index == sizes_len):
+                    line = "%s xhot yhot %sx%s/%s" % (size, size, size, cursor)
+                config_file.write(line)
+            config_file.close()
 
-        sizes_len = len(sizes) - 1
-        for index, size in enumerate(sizes):
-            resize_cursor(cursor, size, imgs_dir)
-            # config file content
-            line = "%s xhot yhot %sx%s/%s\n" % (size, size, size, cursor)
-            if (index == sizes_len):
-                line = "%s xhot yhot %sx%s/%s" % (size, size, size, cursor)
-            config_file.write(line)
 
-        config_file.close()
+def animated_cursor(list, imgs_dir, sizes):
+    sizes_len = len(sizes)
+    for group in list:
+        group_name = str(group[0]).split("-")[0]
+        config_file_path = imgs_dir + "/" + group_name + ".in"
+        # generate config content
+        content = []
+        for cursor in group:
+            for index, size in enumerate(sizes):
+                resize_cursor(cursor, size, imgs_dir)
+
+                # config file content
+                line = "%s xhot yhot %sx%s/%s\n" % (size, size, size, cursor)
+                if (index == sizes_len):
+                    line = "%s xhot yhot %sx%s/%s" % (size, size, size, cursor)
+                content.append(line)
+        # sort & writing to file
+        content.sort()
+        with open(config_file_path, "w") as config_file:
+            for line in content:
+                config_file.write(line)
+            config_file.close()
