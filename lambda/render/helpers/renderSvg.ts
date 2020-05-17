@@ -3,6 +3,9 @@ import * as chromium from "chrome-aws-lambda";
 import { Image } from "../types";
 import { uploadToS3 } from "./s3";
 
+const zeroPad = (num: number, places: number) =>
+  String(num).padStart(places, "0");
+
 const renderSvg = async (
   template: string,
   frames: number,
@@ -36,9 +39,11 @@ const renderSvg = async (
 
     // -------------------------------------------- RENDER FRAMES
     for (let index = 1; index <= frames; index++) {
+      const padIndex = zeroPad(index, frames.toString.length);
+
       // generate filename & rendered image as base64 encoding
       const fileName: string =
-        frames === 1 ? `${filePrefix}.png` : `${filePrefix}-${index}.png`;
+        frames === 1 ? `${filePrefix}.png` : `${filePrefix}-${padIndex}.png`;
 
       const b64string: string = (await svgImage.screenshot({
         omitBackground: true,
@@ -53,11 +58,11 @@ const renderSvg = async (
         encoding: "base64",
         Body,
       };
-      console.log(`Rendered Frame ${index}/${frames}`);
+      console.log(`Rendered Frame ${padIndex}/${frames}`);
 
       // uploading raw images
       const key: string = destPath + temp.fileName;
-      console.log(`Uploading Frames ${index}/${frames}`);
+      console.log(`Uploading Frames ${padIndex}/${frames}`);
       const response = await uploadToS3(key, temp.contentType, temp.Body);
 
       // push details to Object
