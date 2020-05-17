@@ -28,7 +28,8 @@ def generate_helper(imgs_dir, cursor_sizes):
     """ Generate helpers files."""
     # Configure static cursors
     static_list = helpers.get_cursor_list(imgs_dir)
-    helpers.static_cursor_config(static_list, imgs_dir, cursor_sizes)
+    helpers.static_cursor(static_list, imgs_dir, cursor_sizes)
 
     # configure animated cursors
     animated_cursors_groups = helpers.get_cursor_list(imgs_dir, animated=True)
+    helpers.animated_cursor(animated_cursors_groups, imgs_dir, cursor_sizes)
