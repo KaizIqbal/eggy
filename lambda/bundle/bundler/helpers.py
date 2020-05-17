@@ -34,7 +34,7 @@ def resize_cursor(cursor, size, imgs_dir):
     # helper variables
     in_path = imgs_dir + "/" + cursor
     out_dir = imgs_dir + "/%sx%s/" % (size, size)
-    out_path = out_dir+cursor
+    out_path = out_dir + cursor
 
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
@@ -70,7 +70,7 @@ def resize_cursor(cursor, size, imgs_dir):
 
 def static_cursor_config(list, imgs_dir, sizes):
     for cursor in list:
-        config_file_path = imgs_dir+"/"+cursor.replace(".png", ".in")
+        config_file_path = imgs_dir + "/" + cursor.replace(".png", ".in")
         config_file = open(config_file_path, "a+")
 
         sizes_len = len(sizes) - 1
