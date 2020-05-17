@@ -64,6 +64,7 @@ def resize_cursor(cursor, size, imgs_dir):
 
 def write_xcur(config_file_path, content):
     content.sort()
+    content[-1] = content[-1].rstrip("\n")
     with open(config_file_path, "w") as config_file:
         for line in content:
             config_file.write(line)
