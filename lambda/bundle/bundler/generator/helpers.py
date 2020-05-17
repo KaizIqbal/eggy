@@ -10,7 +10,7 @@ def get_cursor_list(imgs_dir, animated=False):
         all_curosr_list.append(os.path.basename(file_path))
 
     if (animated):
-        # animated cursor have filename-1,2,3..n postfix
+        # animated cursor have filename-01,02,03..n postfix
         temp = [cursor for cursor in all_curosr_list if
                 cursor.find("-") >= 0]
         temp.sort()

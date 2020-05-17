@@ -1,5 +1,4 @@
 import os
-import glob
 
 # modules
 from . import helpers
@@ -24,7 +23,7 @@ def all():
     print("Generating X11 Cursors")
 
 
-def generate_helper(imgs_dir, cursor_sizes):
+def generate(imgs_dir, cursor_sizes):
     """ Generate helpers files."""
     helpers.generate_static_cursor(imgs_dir, cursor_sizes)
     helpers.generate_animated_cursor(imgs_dir, cursor_sizes)
