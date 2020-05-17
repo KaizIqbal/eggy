@@ -70,7 +70,8 @@ def write_xcur(config_file_path, content):
         config_file.close()
 
 
-def static_cursor(list, imgs_dir, sizes):
+def generate_static_cursor(imgs_dir, sizes):
+    list = get_cursor_list(imgs_dir)
     for cursor in list:
         config_file_path = imgs_dir + "/" + cursor.replace(".png", ".in")
         content = []
@@ -82,7 +83,8 @@ def static_cursor(list, imgs_dir, sizes):
         write_xcur(config_file_path, content)
 
 
-def animated_cursor(list, imgs_dir, sizes):
+def generate_animated_cursor(imgs_dir, sizes):
+    list = get_cursor_list(imgs_dir, animated=True)
     for group in list:
         group_name = str(group[0]).split("-")[0]
         config_file_path = imgs_dir + "/" + group_name + ".in"
