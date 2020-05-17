@@ -2,9 +2,13 @@ import * as chromium from "chrome-aws-lambda";
 
 import { Image } from "../types";
 import { uploadToS3 } from "./s3";
-
-const zeroPad = (num: number, places: number) =>
-  String(num).padStart(places, "0");
+const pad = (number: number, length: number) => {
+  var str = "" + number;
+  while (str.length < length) {
+    str = "0" + str;
+  }
+  return str;
+};
 
 const renderSvg = async (
   template: string,
@@ -39,8 +43,7 @@ const renderSvg = async (
 
     // -------------------------------------------- RENDER FRAMES
     for (let index = 1; index <= frames; index++) {
-      const padIndex = zeroPad(index, frames.toString.length);
-
+      const padIndex = pad(index, frames.toString().length);
       // generate filename & rendered image as base64 encoding
       const fileName: string =
         frames === 1 ? `${filePrefix}.png` : `${filePrefix}-${padIndex}.png`;
