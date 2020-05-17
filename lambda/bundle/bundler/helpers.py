@@ -33,10 +33,12 @@ def get_cursor_list(imgs_dir, animated=False):
 def static_cursor_config(list, imgs_dir, sizes):
     for cursor in list:
         config_file_path = imgs_dir+"/"+cursor.replace(".png", ".in")
-        config_file = open(config_file_path, "w")
+        config_file = open(config_file_path, "a+")
 
-        for size in sizes:
+        sizes_len = len(sizes) - 1
+        for index, size in enumerate(sizes):
             # helper variables
+
             sizes = (size, size)
             in_path = imgs_dir + "/" + cursor
             out_dir = imgs_dir + "/%sx%s/" % (size, size)
@@ -51,10 +53,9 @@ def static_cursor_config(list, imgs_dir, sizes):
 
             # config file content
             # add new line on every line but not on last line
-            line = "%s xhot yhot %s\n" % (size, out_path)
-            if size == sizes[-1]:
-                line = "%s xhot yhot %s" % (size, out_path)
-
+            line = "%s xhot yhot %sx%s/%s\n" % (size, size, size, cursor)
+            if (index == sizes_len):
+                line = "%s xhot yhot %sx%s/%s" % (size, size, size, cursor)
             config_file.write(line)
 
         config_file.close()
