@@ -4,7 +4,7 @@ import os
 from . import helpers
 
 
-def x11():
+def generate_x11():
     print("Generating X11 Cursors...")
     # setup environment
     os.environ["LD_LIBRARY_PATH"] = os.getcwd() + "/lib"
@@ -12,18 +12,12 @@ def x11():
     print(os.system("./xcursorgen --help"))
 
 
-def window():
+def generate_window():
     # TODO
     print("Generating Window Cursors..")
 
 
-def all():
-    # TODO
-    print("Generating Window Cursors")
-    print("Generating X11 Cursors")
-
-
-def generate(imgs_dir, cursor_sizes):
+def generate_config(imgs_dir, cursor_sizes):
     """ Generate helpers files."""
     helpers.generate_static_cursor(imgs_dir, cursor_sizes)
     helpers.generate_animated_cursor(imgs_dir, cursor_sizes)
