@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "setup": "sudo pip3 install virtualenv && virtualenv env && . env/bin/activate && pip3 install -r requirements.txt && yarn install ",
-    "gen:libs": "./generate_libs.sh xcursorgen ",
+    "gen:libs": "cd ./bundler/tools && ./generate_libs.sh xcursorgen.out",
     "freeze": "pip3 freeze > requirements.txt ",
     "bundle:local": "npx sls invoke local -f bundle -p event.json",
     "bundle:dev": "npx sls invoke -f bundle -l -p event.json",
