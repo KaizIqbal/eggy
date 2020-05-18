@@ -61,6 +61,10 @@ def resize_cursor(cursor, size, imgs_dir):
         (ideal_width, ideal_height), Image.ANTIALIAS)
     thumb.save(out_path)
 
+    xhot = int(thumb.size[0] / 2)
+    yhot = int(thumb.size[1] / 2)
+    return xhot, yhot
+
 
 def write_xcur(config_file_path, content):
     content.sort()
@@ -78,8 +82,9 @@ def generate_static_cursor(imgs_dir, sizes):
         content = []
 
         for size in sizes:
-            resize_cursor(cursor, size, imgs_dir)
-            line = "%s xhot yhot %sx%s/%s\n" % (size, size, size, cursor)
+            xhot, yhot = resize_cursor(cursor, size, imgs_dir)
+            line = "%s %s %s %sx%s/%s\n" % (size,
+                                            xhot, yhot, size, size, cursor)
             content.append(line)
         write_xcur(config_file_path, content)
 
@@ -93,7 +98,8 @@ def generate_animated_cursor(imgs_dir, sizes):
 
         for cursor in group:
             for size in sizes:
-                resize_cursor(cursor, size, imgs_dir)
-                line = "%s xhot yhot %sx%s/%s\n" % (size, size, size, cursor)
+                xhot, yhot = resize_cursor(cursor, size, imgs_dir)
+                line = "%s %s %s %sx%s/%s\n" % (size,
+                                                xhot, yhot, size, size, cursor)
                 content.append(line)
         write_xcur(config_file_path, content)
