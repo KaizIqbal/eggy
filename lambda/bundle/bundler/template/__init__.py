@@ -11,7 +11,7 @@ def create_dir(dir):
 
 def generate_x11_template(name, to=os.getcwd()+"/"):
 
-    out_dir = to + name
+    out_dir = to + name + "/"
     create_dir(out_dir)
 
     # generating content based on name
@@ -27,7 +27,7 @@ def generate_x11_template(name, to=os.getcwd()+"/"):
                 temp.write(line)
         temp.close()
 
-    ref = out_dir + "/cursors"
+    ref = out_dir + "cursors"
     create_dir(ref)
 
     return ref
