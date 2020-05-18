@@ -31,3 +31,11 @@ def generate_x11_template(name, to=os.getcwd()+"/"):
     create_dir(ref)
 
     return ref
+
+
+def generate_win_template(to=os.getcwd()+"/"):
+
+    ref = to + "/"
+    create_dir(ref)
+
+    return ref
