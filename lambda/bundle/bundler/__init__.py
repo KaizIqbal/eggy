@@ -1,5 +1,8 @@
 import os
+
+# modules
 from . import generator
+from . import tools
 
 
 def create_bundle(imgs_dir, cursor_type, cursor_sizes):
@@ -7,7 +10,11 @@ def create_bundle(imgs_dir, cursor_type, cursor_sizes):
     generator.generate_config(imgs_dir, cursor_sizes)
 
     if cursor_type == "LINUX":
-        generator.generate_x11()
+        tools.generate_x11()
+    elif cursor_type == "WINDOW":
+        tools.generate_window()
     else:
-        pass
+        tools.generate_x11()
+        tools.generate_window()
+
     return "bundle"
