@@ -20,5 +20,11 @@ def generate_x11(config_dir, to):
 
 
 def generate_window(config_dir, to):
-    # TODO
     print("Generating Window Cursors..")
+
+    # generating X11 cursors
+    for root, _, files in os.walk(config_dir):
+        for file in files:
+            cursor_name = file.replace(".in", "")
+            if file.endswith(".in"):
+                print(os.path.join(root, file))
