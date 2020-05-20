@@ -1,4 +1,5 @@
 import json
+import os
 import uuid
 
 # modules
@@ -19,11 +20,11 @@ def bundle(event, context):
     fetch.directory_from_s3(s3_dir=key, local_dir=dir)
 
     print("📦 Creating bundle...")
-    bundle = bundler.create_bundle(dir, type, sizes)
+    bundle_path = bundler.create_bundle(dir, type, sizes)
 
     response = {
         "statusCode": 200,
-        "bundle": json.dumps(bundle)
+        "bundle_path": json.dumps(bundle_path)
     }
 
     return response
