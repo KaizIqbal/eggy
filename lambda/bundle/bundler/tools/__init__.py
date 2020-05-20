@@ -48,6 +48,8 @@ def generate_x11(config_dir, to):
             if file.endswith(".in"):
                 os.system("%s %s %s" % (xcursorgen, os.path.join(
                     config_dir, file), to + "/" + cursor_name))
+    zip_path = create_archive(to)
+    return zip_path
 
 
 def generate_window(config_dir, to):
