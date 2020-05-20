@@ -20,8 +20,7 @@ def cwd(path):
 
 def create_archive(direcctory):
     zip_path = shutil.make_archive(direcctory, 'zip', direcctory)
-    out = zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED)
-    print(out)
+    return zip_path
 
 
 def get_cursor_name(path):
@@ -61,4 +60,5 @@ def generate_window(config_dir, to):
                 with cwd(config_dir):
                     os.system("%s %s %s" %
                               (anicursorgen, path, "../" + to + cursor_name))
-    create_archive(to)
+    zip_path = create_archive(to)
+    return zip_path
