@@ -4,7 +4,7 @@ import uuid
 
 # modules
 import bundler
-import fetch
+import s3
 
 
 def bundle(event, context):
@@ -17,7 +17,7 @@ def bundle(event, context):
     dir = str(uuid.uuid4())[:8]
 
     print("🚛 Fetching resources from S3 to %s ..." % dir)
-    fetch.directory_from_s3(s3_dir=key, local_dir=dir)
+    s3.fetch_directory(s3_dir=key, local_dir=dir)
 
     print("📦 Creating bundle...")
     bundle_path = bundler.create_bundle(dir, type, sizes)
