@@ -1,5 +1,7 @@
-import boto3
 import os
+import datetime
+
+import boto3
 import uuid
 
 region = os.environ.get("REGION")
@@ -20,3 +22,17 @@ def fetch_directory(s3_dir, local_dir):
         if not os.path.exists(os.path.dirname(path)):
             os.makedirs(os.path.dirname(path))
         bucket.download_file(object.key, path)
+
+
+def upload_file_temp(file_path):
+    filename = os.path.basename(file_path)
+    key = "/tmp/" + filename
+
+    now = datetime.datetime.now()
+    now_plus_10 = now + datetime.timedelta(minutes=10)
+
+    bucket.upload_file(file_path, key, ExtraArgs={
+                       "ACL": "public-read", "Expires": now_plus_10})
+
+    bundle_url = '%s/%s/%s' % (s3_resource.meta.endpoint_url, bucket, key)
+    return bundle_url
