@@ -24,9 +24,10 @@ def fetch_directory(s3_dir, local_dir):
         bucket.download_file(object.key, path)
 
 
-def upload_file_temp(file_path):
+def upload_file_temp(file_path, event_key):
     filename = os.path.basename(file_path)
-    key = "/tmp/" + filename
+    bitmaps_dir=event_key.split("/")[-1]
+    key =  event_key.replace(bitmaps_dir,"bundles/")+ filename
 
     now = datetime.datetime.now()
     now_plus_10 = now + datetime.timedelta(minutes=10)

@@ -22,7 +22,7 @@ def bundle(event, context):
     print("📦 Creating bundle...")
     bundle_path = bundler.create_bundle(dir, type, sizes)
 
-    bundle_url = s3.upload_file_temp(bundle_path)
+    bundle_url = s3.upload_file_temp(bundle_path, key)
 
     response = {
         "statusCode": 200,
