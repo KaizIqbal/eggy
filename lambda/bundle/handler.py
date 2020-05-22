@@ -1,36 +1,32 @@
 import json
+import os
 import uuid
 
 # modules
 import bundler
-import fetch
+import s3
 
 
 def bundle(event, context):
 
     key = event["key"]
+    type = event["type"]
+    sizes = event["sizes"]
 
     # generate 8 character long unique directory name
     dir = str(uuid.uuid4())[:8]
 
-    # configs
-    bundler.config.CURSOR_TYPE = event["type"]
-    bundler.config.DPI = event["sizes"]
-    bundler.config.WORK_DIR = dir
-    bundler.config.RAW_DIR = dir + "/raw/"
-
-    print("🚛 Fetching resources from S3...")
-    fetch.directory_from_s3(s3_dir=key, local_dir=dir)
-
-    print("🔥 Generating config files...")
-    bundler.generate_ini()
+    print("🚛 Fetching resources from S3 to %s ..." % dir)
+    s3.fetch_directory(s3_dir=key, local_dir=dir)
 
     print("📦 Creating bundle...")
-    bundle = bundler.create_bundle()
+    bundle_path = bundler.create_bundle(dir, type, sizes)
+
+    bundle_url = s3.upload_file_temp(bundle_path, key)
 
     response = {
         "statusCode": 200,
-        "bundle": json.dumps(bundle)
+        "url": json.dumps(bundle_url)
     }
 
     return response

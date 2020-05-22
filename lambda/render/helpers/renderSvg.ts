@@ -2,6 +2,13 @@ import * as chromium from "chrome-aws-lambda";
 
 import { Image } from "../types";
 import { uploadToS3 } from "./s3";
+const pad = (number: number, length: number) => {
+  var str = "" + number;
+  while (str.length < length) {
+    str = "0" + str;
+  }
+  return str;
+};
 
 const renderSvg = async (
   template: string,
@@ -27,18 +34,19 @@ const renderSvg = async (
     });
 
     const page = await browser.newPage();
-    await page.setContent(template, { waitUntil: "load" });
+    await page.setContent(template);
 
     await page.waitForSelector("#container");
-    const svgImage = await page.$("#container");
+    const svgImage = await page.$("#container svg");
 
     if (!svgImage) throw new Error("svg element not found");
 
     // -------------------------------------------- RENDER FRAMES
     for (let index = 1; index <= frames; index++) {
+      const padIndex = pad(index, frames.toString().length);
       // generate filename & rendered image as base64 encoding
       const fileName: string =
-        frames === 1 ? `${filePrefix}.png` : `${filePrefix}-${index}.png`;
+        frames === 1 ? `${filePrefix}.png` : `${filePrefix}-${padIndex}.png`;
 
       const b64string: string = (await svgImage.screenshot({
         omitBackground: true,
@@ -53,11 +61,11 @@ const renderSvg = async (
         encoding: "base64",
         Body,
       };
-      console.log(`Rendered Frame ${index}/${frames}`);
+      console.log(`Rendered Frame ${padIndex}/${frames}`);
 
       // uploading raw images
       const key: string = destPath + temp.fileName;
-      console.log(`Uploading Frames ${index}/${frames}`);
+      console.log(`Uploading Frames ${padIndex}/${frames}`);
       const response = await uploadToS3(key, temp.contentType, temp.Body);
 
       // push details to Object
