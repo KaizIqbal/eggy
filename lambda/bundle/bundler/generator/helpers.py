@@ -91,6 +91,7 @@ def generate_static_cursor(imgs_dir, sizes):
 
 def generate_animated_cursor(imgs_dir, sizes):
     list = get_cursor_list(imgs_dir, animated=True)
+    delay = 20
     for group in list:
         group_name = str(group[0]).split("-")[0]
         config_file_path = imgs_dir + "/" + group_name + ".in"
@@ -99,7 +100,7 @@ def generate_animated_cursor(imgs_dir, sizes):
         for cursor in group:
             for size in sizes:
                 xhot, yhot = resize_cursor(cursor, size, imgs_dir)
-                line = "%s %s %s %sx%s/%s\n" % (size,
-                                                xhot, yhot, size, size, cursor)
+                line = "%s %s %s %sx%s/%s %s\n" % (size,
+                                                xhot, yhot, size, size, cursor, delay)
                 content.append(line)
         write_xcur(config_file_path, content)
