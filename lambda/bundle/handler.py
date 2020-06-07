@@ -1,9 +1,11 @@
 import json
 import os
-import uuid
+import tempfile
+import shutil
+
 
 # modules
-import bundler
+import configsgen
 import s3
 
 
@@ -13,20 +15,21 @@ def bundle(event, context):
     type = event["type"]
     sizes = event["sizes"]
 
-    # generate 8 character long unique directory name
-    dir = str(uuid.uuid4())[:8]
+    dir = tempfile.mkdtemp()
 
     print("🚛 Fetching resources from S3 to %s ..." % dir)
     s3.fetch_directory(s3_dir=key, local_dir=dir)
 
-    print("📦 Creating bundle...")
-    bundle_path = bundler.create_bundle(dir, type, sizes)
+    # print("🔧 Creating configs...")
 
-    bundle_url = s3.upload_file_temp(bundle_path, key)
+    # bundle_url = s3.upload_file_temp(bundle_path, key)
+    print('🧹 Cleaning resources..')
+    shutil.rmtree(dir)
 
     response = {
         "statusCode": 200,
-        "url": json.dumps(bundle_url)
+        # "url": json.dumps(bundle_url)
+        "url": "hurray!"
     }
 
     return response
