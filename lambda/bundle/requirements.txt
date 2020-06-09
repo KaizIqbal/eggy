@@ -2,6 +2,7 @@ astroid==2.4.1
 autopep8==1.5.2
 boto3==1.13.6
 botocore==1.16.6
+clickgen==1.1.0
 docutils==0.15.2
 isort==4.3.21
 jmespath==0.9.5
@@ -13,6 +14,6 @@ pylint==2.5.2
 python-dateutil==2.8.1
 s3transfer==0.3.3
 six==1.14.0
-toml==0.10.0
+toml==0.10.1
 urllib3==1.25.9
 wrapt==1.12.1
