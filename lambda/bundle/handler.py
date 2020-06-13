@@ -1,12 +1,12 @@
-import json
 import os
-import tempfile
+import json
 import shutil
-import clickgen
+import tempfile
 
 # modules
-import configsgen
 import s3
+import clickgen
+import configsgen
 
 
 def bundle(event, context):
