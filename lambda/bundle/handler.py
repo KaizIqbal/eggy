@@ -24,24 +24,26 @@ def bundle(event, context):
     print("🔧 Creating configs...")
     configsgen.generate_config(imgs_dir, sizes)
 
-    if(type == 'WINDOW'):
-        print("📦 Creating Window bundle...")
-        clickgen.main(name, config_dir=imgs_dir,
-                      out_path=out_dir, win=True, archive=True)
-    elif(type == 'LINUX'):
-        print("📦 Creating Linux bundle...")
-        clickgen.main(name, config_dir=imgs_dir,
-                      out_path=out_dir, x11=True, archive=True)
-    else:
-        print("📦 Creating all types bundle...")
-        clickgen.main(name, config_dir=imgs_dir,
-                      out_path=out_dir, x11=True, win=True, archive=True)
+    try:
+        if(type == 'WINDOW'):
+            print("📦 Creating Window bundle...")
+            clickgen.main(name, config_dir=imgs_dir,
+                          out_path=out_dir, win=True, archive=True)
+        elif(type == 'LINUX'):
+            print("📦 Creating Linux bundle...")
+            clickgen.main(name, config_dir=imgs_dir,
+                          out_path=out_dir, x11=True, archive=True)
+        else:
+            print("📦 Creating all types bundle...")
+            clickgen.main(name, config_dir=imgs_dir,
+                          out_path=out_dir, x11=True, win=True, archive=True)
 
-    bundle_path = os.path.join(out_dir, name+'.tar')
-    bundle_url = s3.upload_file_temp(bundle_path, key)
+        bundle_path = os.path.join(out_dir, name+'.tar')
+        bundle_url = s3.upload_file_temp(bundle_path, key)
 
-    print('🧹 Cleaning resources..')
-    shutil.rmtree(imgs_dir)
+    finally:
+        print('🧹 Cleaning resources..')
+        shutil.rmtree(imgs_dir)
 
     response = {
         "statusCode": 200,
