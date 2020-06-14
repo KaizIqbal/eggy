@@ -40,6 +40,7 @@ def bundle(event, context):
                           out_path=out_dir, x11=True, win=True, archive=True, logs=True)
 
         bundle_path = os.path.join(out_dir, name+'.tar')
+        print('⬆ Uploading Cursor Bundle to file.io for temparary link...')
         fileio_res = fileio.upload(bundle_path)
 
     finally:
