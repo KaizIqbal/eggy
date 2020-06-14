@@ -7,6 +7,7 @@ import tempfile
 import s3
 import clickgen
 import configsgen
+import fileio
 
 
 def bundle(event, context):
@@ -39,6 +40,7 @@ def bundle(event, context):
                           out_path=out_dir, x11=True, win=True, archive=True, logs=True)
 
         bundle_path = os.path.join(out_dir, name+'.tar')
+        fileio_res = fileio.upload(bundle_path)
 
     finally:
         print('🧹 Cleaning resources..')
@@ -46,7 +48,7 @@ def bundle(event, context):
 
     response = {
         "statusCode": 200,
-        "url": json.dumps(bundle_path)
+        "body": fileio_res
     }
 
     return response
