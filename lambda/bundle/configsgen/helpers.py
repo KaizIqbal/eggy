@@ -3,7 +3,7 @@ import itertools
 from PIL import Image
 
 
-def get_cursor_list(imgs_dir, animated=False):
+def get_cursor_list(imgs_dir: str, animated: bool = False) -> list:
     all_curosr_list, cursor_list = [], []
 
     for file_path in os.listdir(imgs_dir):
@@ -24,7 +24,7 @@ def get_cursor_list(imgs_dir, animated=False):
     return cursor_list
 
 
-def resize_cursor(cursor, size, imgs_dir):
+def resize_cursor(cursor: str, size: int, imgs_dir: str):
     # helper variables
     in_path = imgs_dir + "/" + cursor
     out_dir = imgs_dir + "/%sx%s/" % (size, size)
@@ -66,7 +66,7 @@ def resize_cursor(cursor, size, imgs_dir):
     return xhot, yhot
 
 
-def write_xcur(config_file_path, content):
+def write_xcur(config_file_path: str, content: list) -> None:
     content.sort()
     content[-1] = content[-1].rstrip("\n")
     with open(config_file_path, "w") as config_file:
@@ -75,7 +75,7 @@ def write_xcur(config_file_path, content):
         config_file.close()
 
 
-def generate_static_cursor(imgs_dir, sizes):
+def generate_static_cursor(imgs_dir: str, sizes: list) -> None:
     list = get_cursor_list(imgs_dir)
     for cursor in list:
         config_file_path = imgs_dir + "/" + cursor.replace(".png", ".in")
@@ -89,7 +89,7 @@ def generate_static_cursor(imgs_dir, sizes):
         write_xcur(config_file_path, content)
 
 
-def generate_animated_cursor(imgs_dir, sizes):
+def generate_animated_cursor(imgs_dir: str, sizes: list):
     list = get_cursor_list(imgs_dir, animated=True)
     delay = 20
     for group in list:
@@ -101,6 +101,6 @@ def generate_animated_cursor(imgs_dir, sizes):
             for size in sizes:
                 xhot, yhot = resize_cursor(cursor, size, imgs_dir)
                 line = "%s %s %s %sx%s/%s %s\n" % (size,
-                                                xhot, yhot, size, size, cursor, delay)
+                                                   xhot, yhot, size, size, cursor, delay)
                 content.append(line)
         write_xcur(config_file_path, content)
