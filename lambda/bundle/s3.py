@@ -6,7 +6,7 @@ s3_resource = boto3.resource('s3', region)
 bucket = s3_resource.Bucket(os.environ.get("S3_BUCKET"))
 
 
-def fetch_directory(s3_dir, local_dir):
+def fetch_directory(s3_dir: str, local_dir: str) -> None:
     """ Fetch directory from S3Bucket,Config fetched from environment variables.
         To set manually try commands ```
             export REGION=<your-region>
