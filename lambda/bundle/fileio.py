@@ -19,7 +19,8 @@ def upload(file_path: str) -> json:
     c.setopt(pycurl.MAXREDIRS, 5)
     c.perform()
 
-    decoded_res = data.getvalue().decode('utf-8')
+    stream_value = data.getvalue()
+    decoded_res = stream_value.decode('utf-8')
     res = json.loads(decoded_res)
     del res['success']
 
