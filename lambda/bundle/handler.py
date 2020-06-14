@@ -44,14 +44,13 @@ def bundle(event, context):
         bundle_name = name+'.tar'
         bundle_path = os.path.join(out_dir, bundle_name)
         bundle_size = helpers.convert_size(os.path.getsize(bundle_path))
-        bundle_mime = os.path.getmtime(bundle_path)
 
         print('⬆ Uploading Cursor Bundle to file.io for temparary link...')
         fileio_res = fileio.upload(bundle_path)
 
-        body = json.loads(fileio_res)
-        body.update({"filename": bundle_name, "size": bundle_size,
-                     "mimetype": bundle_mime})
+        body = fileio_res
+        body["filename"] = bundle_name
+        body["size"] = bundle_size
 
     finally:
         print('🧹 Cleaning resources..')
@@ -60,7 +59,6 @@ def bundle(event, context):
     response = {
         "statusCode": 200,
         "body": json.dumps(body)
-
     }
 
     return response
