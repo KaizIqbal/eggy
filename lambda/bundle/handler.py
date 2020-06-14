@@ -10,7 +10,7 @@ import configsgen
 import fileio
 
 
-def bundle(event, context):
+def bundle(event, context) -> json:
     name = event["name"]
     key = event["key"]
     type = event["type"]
