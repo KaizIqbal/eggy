@@ -8,6 +8,7 @@ import s3
 import clickgen
 import configsgen
 import fileio
+import helpers
 
 
 def bundle(event, context):
@@ -39,9 +40,18 @@ def bundle(event, context):
             clickgen.main(name, config_dir=imgs_dir,
                           out_path=out_dir, x11=True, win=True, archive=True, logs=True)
 
-        bundle_path = os.path.join(out_dir, name+'.tar')
+        # Bundle info
+        bundle_name = name+'.tar'
+        bundle_path = os.path.join(out_dir, bundle_name)
+        bundle_size = helpers.convert_size(os.path.getsize(bundle_path))
+        bundle_mime = os.path.getmtime(bundle_path)
+
         print('⬆ Uploading Cursor Bundle to file.io for temparary link...')
         fileio_res = fileio.upload(bundle_path)
+
+        body = json.loads(fileio_res)
+        body.update({"filename": bundle_name, "size": bundle_size,
+                     "mimetype": bundle_mime})
 
     finally:
         print('🧹 Cleaning resources..')
@@ -49,7 +59,8 @@ def bundle(event, context):
 
     response = {
         "statusCode": 200,
-        "body": fileio_res
+        "body": json.dumps(body)
+
     }
 
     return response
