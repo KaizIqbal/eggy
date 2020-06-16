@@ -14,6 +14,7 @@ import helpers
 def bundle(event, context):
     random_id = helpers.generate_random_id()
     name = event["name"] + '-' + random_id
+    hotspots = event["hotspots"]
     key = event["key"]
     type = event["type"]
     sizes = event["sizes"]
@@ -25,7 +26,8 @@ def bundle(event, context):
     s3.fetch_directory(s3_dir=key, local_dir=imgs_dir)
 
     print("🔧 Creating configs...")
-    configsgen.generate_config(imgs_dir, sizes)
+    configsgen.generate_config(
+        imgs_dir=imgs_dir, cursor_sizes=sizes, hotspots=hotspots)
 
     try:
         if(type == 'WINDOW'):
