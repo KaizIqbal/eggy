@@ -12,7 +12,8 @@ import helpers
 
 
 def bundle(event, context):
-    name = event["name"]
+    random_id = helpers.generate_random_id()
+    name = event["name"] + '-' + random_id
     key = event["key"]
     type = event["type"]
     sizes = event["sizes"]
