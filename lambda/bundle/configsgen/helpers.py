@@ -80,7 +80,8 @@ def write_xcur(config_file_path: str, content: list) -> None:
 def generate_static_cursor(imgs_dir: str, sizes: List[Num]) -> None:
     list = get_cursor_list(imgs_dir)
     for cursor in list:
-        config_file_path = imgs_dir + "/" + cursor.replace(".png", ".in")
+        config_file_path = os.path.join(
+            imgs_dir, cursor.replace(".png", ".in"))
         content = []
 
         for size in sizes:
@@ -96,7 +97,7 @@ def generate_animated_cursor(imgs_dir: str, sizes: List[Num]):
     delay = 20
     for group in list:
         group_name = str(group[0]).split("-")[0]
-        config_file_path = imgs_dir + "/" + group_name + ".in"
+        config_file_path = os.path.join(imgs_dir, group_name + ".in")
         content = []
 
         for cursor in group:
