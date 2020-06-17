@@ -26,7 +26,7 @@ def get_cursor_list(imgs_dir: str, animated: bool = False) -> list:
     return cursor_list
 
 
-def resize_cursor(cursor: str, size: Num, imgs_dir: str, xhot, yhot) -> List[Num]:
+def resize_cursor(cursor: str, size: Num, imgs_dir: str, xhot=None, yhot=None) -> List[Num]:
     # helper variables
     in_path = imgs_dir + "/" + cursor
     out_dir = imgs_dir + "/%sx%s/" % (size, size)
@@ -66,8 +66,12 @@ def resize_cursor(cursor: str, size: Num, imgs_dir: str, xhot, yhot) -> List[Num
     thumb.save(out_path)
 
     #  finding new X & Y coordinates
-    Rx = round(size / width * xhot)
-    Ry = round(size / height * yhot)
+    if xhot == None or yhot == None:
+        Rx = int(width / 2)
+        Ry = int(height / 2)
+    else:
+        Rx = round(size / width * xhot)
+        Ry = round(size / height * yhot)
 
     return Rx, Ry
 
