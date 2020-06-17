@@ -2,8 +2,10 @@ import os
 import itertools
 from PIL import Image
 
+from .types import List, Num
 
-def get_cursor_list(imgs_dir, animated=False):
+
+def get_cursor_list(imgs_dir: str, animated: bool = False) -> list:
     all_curosr_list, cursor_list = [], []
 
     for file_path in os.listdir(imgs_dir):
@@ -24,7 +26,7 @@ def get_cursor_list(imgs_dir, animated=False):
     return cursor_list
 
 
-def resize_cursor(cursor, size, imgs_dir):
+def resize_cursor(cursor: str, size: Num, imgs_dir: str, xhot=None, yhot=None) -> List[Num]:
     # helper variables
     in_path = imgs_dir + "/" + cursor
     out_dir = imgs_dir + "/%sx%s/" % (size, size)
@@ -33,7 +35,7 @@ def resize_cursor(cursor, size, imgs_dir):
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
 
-    # resizing & save
+    # opening original image
     image = Image.open(in_path)
 
     width = image.size[0]
@@ -55,18 +57,26 @@ def resize_cursor(cursor, size, imgs_dir):
         # ... crop the top and bottom:
         new_height = int(width / ideal_aspect)
         offset = (height - new_height) / 2
-        resize = (0, offset, width, height - offset)
+        resize = (0, offset, width, height-offset)
 
     thumb = image.crop(resize).resize(
         (ideal_width, ideal_height), Image.ANTIALIAS)
+
+    # save resized image
     thumb.save(out_path)
 
-    xhot = int(thumb.size[0] / 2)
-    yhot = int(thumb.size[1] / 2)
-    return xhot, yhot
+    #  finding new X & Y coordinates
+    if xhot == None or yhot == None:
+        Rx = int(width / 2)
+        Ry = int(height / 2)
+    else:
+        Rx = round(size / width * xhot)
+        Ry = round(size / height * yhot)
+
+    return Rx, Ry
 
 
-def write_xcur(config_file_path, content):
+def write_xcur(config_file_path: str, content: list) -> None:
     content.sort()
     content[-1] = content[-1].rstrip("\n")
     with open(config_file_path, "w") as config_file:
@@ -75,32 +85,51 @@ def write_xcur(config_file_path, content):
         config_file.close()
 
 
-def generate_static_cursor(imgs_dir, sizes):
+def generate_static_cursor(imgs_dir: str, sizes: List[Num], hotspots: any) -> None:
     list = get_cursor_list(imgs_dir)
     for cursor in list:
-        config_file_path = imgs_dir + "/" + cursor.replace(".png", ".in")
+
+        config_file_path = os.path.join(
+            imgs_dir, cursor.replace(".png", ".in"))
         content = []
 
+        # Hotspots
+        cursor_name = cursor.split('.')[0]
+        hotspot = hotspots[cursor_name]
+        xhot = hotspot['xhot']
+        yhot = hotspot['yhot']
+
         for size in sizes:
-            xhot, yhot = resize_cursor(cursor, size, imgs_dir)
+            resized_xhot, resized_yhot = resize_cursor(
+                cursor, size, imgs_dir, xhot=xhot, yhot=yhot)
+            print('%s hotspots resized %s(x) %s(y) to %s(x) %s(y)' %
+                  (cursor_name, xhot, yhot, resized_xhot, resized_yhot))
             line = "%s %s %s %sx%s/%s\n" % (size,
-                                            xhot, yhot, size, size, cursor)
+                                            resized_xhot, resized_yhot, size, size, cursor)
             content.append(line)
         write_xcur(config_file_path, content)
 
 
-def generate_animated_cursor(imgs_dir, sizes):
+def generate_animated_cursor(imgs_dir: str, sizes: List[Num], hotspots: any):
     list = get_cursor_list(imgs_dir, animated=True)
     delay = 20
     for group in list:
         group_name = str(group[0]).split("-")[0]
-        config_file_path = imgs_dir + "/" + group_name + ".in"
+        config_file_path = os.path.join(imgs_dir, group_name + ".in")
         content = []
+
+        # Hotspots
+        hotspot = hotspots[group_name]
+        xhot = hotspot['xhot']
+        yhot = hotspot['yhot']
 
         for cursor in group:
             for size in sizes:
-                xhot, yhot = resize_cursor(cursor, size, imgs_dir)
+                resized_xhot, resized_yhot = resize_cursor(
+                    cursor, size, imgs_dir, xhot=xhot, yhot=yhot)
+                print('%s hotspots resized %s(x) %s(y) to %s(x) %s(y)' %
+                      (group_name, xhot, yhot, resized_xhot, resized_yhot))
                 line = "%s %s %s %sx%s/%s %s\n" % (size,
-                                                xhot, yhot, size, size, cursor, delay)
-                content.append(line)
+                                                   resized_xhot, resized_yhot, size, size, cursor, delay)
+            content.append(line)
         write_xcur(config_file_path, content)
