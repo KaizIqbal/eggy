@@ -26,7 +26,7 @@ def get_cursor_list(imgs_dir: str, animated: bool = False) -> list:
     return cursor_list
 
 
-def resize_cursor(cursor: str, size: Num, imgs_dir: str, xhot: int, yhot: int) -> List[Num]:
+def resize_cursor(cursor: str, size: Num, imgs_dir: str, xhot, yhot) -> List[Num]:
     # helper variables
     in_path = imgs_dir + "/" + cursor
     out_dir = imgs_dir + "/%sx%s/" % (size, size)
@@ -35,7 +35,7 @@ def resize_cursor(cursor: str, size: Num, imgs_dir: str, xhot: int, yhot: int) -
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
 
-    # resizing & save
+    # opening original image
     image = Image.open(in_path)
 
     width = image.size[0]
@@ -52,26 +52,22 @@ def resize_cursor(cursor: str, size: Num, imgs_dir: str, xhot: int, yhot: int) -
         # Then crop the left and right edges:
         new_width = int(ideal_aspect * height)
         offset = (width - new_width) / 2
-
-        cord_width = width - offset
-        cord_height = height
-        resize = (offset, 0, cord_width, cord_height)
+        resize = (offset, 0, width - offset, height)
     else:
         # ... crop the top and bottom:
         new_height = int(width / ideal_aspect)
         offset = (height - new_height) / 2
-
-        cord_width = width
-        cord_height = height - offset
-        resize = (0, offset, cord_width, cord_height)
+        resize = (0, offset, width, height-offset)
 
     thumb = image.crop(resize).resize(
         (ideal_width, ideal_height), Image.ANTIALIAS)
+
+    # save resized image
     thumb.save(out_path)
 
-    # TODO: finding new X & Y coordinates
-    Rx = int((xhot / width) * cord_width)
-    Ry = int((yhot / height) * cord_height)
+    #  finding new X & Y coordinates
+    Rx = round(size / width * xhot)
+    Ry = round(size / height * yhot)
 
     return Rx, Ry
 
@@ -95,14 +91,14 @@ def generate_static_cursor(imgs_dir: str, sizes: List[Num], hotspots: any) -> No
 
         # Hotspots
         hotspot = hotspots[cursor.split('.')[0]]
-        xhot = hotspot["xhot"]
-        yhot = hotspot["yhot"]
+        xhot = hotspot['xhot']
+        yhot = hotspot['yhot']
 
         for size in sizes:
-            xhot, yhot = resize_cursor(cursor, size, imgs_dir, xhot, yhot)
-            print(xhot, yhot, size, '\n')
+            resized_xhot, resized_yhot = resize_cursor(
+                cursor, size, imgs_dir, xhot=xhot, yhot=yhot)
             line = "%s %s %s %sx%s/%s\n" % (size,
-                                            xhot, yhot, size, size, cursor)
+                                            resized_xhot, resized_yhot, size, size, cursor)
             content.append(line)
         write_xcur(config_file_path, content)
 
@@ -117,14 +113,14 @@ def generate_animated_cursor(imgs_dir: str, sizes: List[Num], hotspots: any):
 
         # Hotspots
         hotspot = hotspots[group_name]
-        xhot = hotspot["xhot"]
-        yhot = hotspot["yhot"]
+        xhot = hotspot['xhot']
+        yhot = hotspot['yhot']
 
         for cursor in group:
             for size in sizes:
-                xhot, yhot = resize_cursor(cursor, size, imgs_dir, xhot, yhot)
-                print(xhot, yhot, size, '\n')
+                resized_xhot, resized_yhot = resize_cursor(
+                    cursor, size, imgs_dir, xhot=xhot, yhot=yhot)
                 line = "%s %s %s %sx%s/%s %s\n" % (size,
-                                                   xhot, yhot, size, size, cursor, delay)
-                content.append(line)
+                                                   resized_xhot, resized_yhot, size, size, cursor, delay)
+            content.append(line)
         write_xcur(config_file_path, content)
