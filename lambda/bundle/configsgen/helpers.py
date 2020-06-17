@@ -90,13 +90,16 @@ def generate_static_cursor(imgs_dir: str, sizes: List[Num], hotspots: any) -> No
         content = []
 
         # Hotspots
-        hotspot = hotspots[cursor.split('.')[0]]
+        cursor_name = cursor.split('.')[0]
+        hotspot = hotspots[cursor_name]
         xhot = hotspot['xhot']
         yhot = hotspot['yhot']
 
         for size in sizes:
             resized_xhot, resized_yhot = resize_cursor(
                 cursor, size, imgs_dir, xhot=xhot, yhot=yhot)
+            print('%s hotspots resized %s(x) %s(y) to %s(x) %s(y)' %
+                  (cursor_name, xhot, yhot, resized_xhot, resized_yhot))
             line = "%s %s %s %sx%s/%s\n" % (size,
                                             resized_xhot, resized_yhot, size, size, cursor)
             content.append(line)
@@ -120,6 +123,8 @@ def generate_animated_cursor(imgs_dir: str, sizes: List[Num], hotspots: any):
             for size in sizes:
                 resized_xhot, resized_yhot = resize_cursor(
                     cursor, size, imgs_dir, xhot=xhot, yhot=yhot)
+                print('%s hotspots resized %s(x) %s(y) to %s(x) %s(y)' %
+                      (group_name, xhot, yhot, resized_xhot, resized_yhot))
                 line = "%s %s %s %sx%s/%s %s\n" % (size,
                                                    resized_xhot, resized_yhot, size, size, cursor, delay)
             content.append(line)
