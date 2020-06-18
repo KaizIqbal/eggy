@@ -10,7 +10,7 @@ def LDD(path):
 
     LIB = os.environ['LD_LIBRARY_PATH']
 
-    os.environ['LD_LIBRARY_PATH'] = LIB + ':' + path
+    os.environ['LD_LIBRARY_PATH'] = path
     try:
         yield
     finally:
