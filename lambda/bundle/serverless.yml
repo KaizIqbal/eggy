@@ -24,10 +24,10 @@ package:
     - .vscode/**
 
 provider:
-  iamRoleStatements:	
-    - Effect: Allow	
-      Action:	
-        - "s3:*"	
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "s3:*"
       Resource: "arn:aws:s3:::${self:custom.s3Bucket}/*"
   name: aws
   region: ${env:REGION}

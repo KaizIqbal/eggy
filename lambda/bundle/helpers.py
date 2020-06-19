@@ -1,6 +1,20 @@
+from contextlib import contextmanager
+import os
 import math
 import string
 import random
+
+
+@contextmanager
+def LDD(path):
+
+    LIB = os.environ['LD_LIBRARY_PATH']
+
+    os.environ['LD_LIBRARY_PATH'] = path
+    try:
+        yield
+    finally:
+        os.environ['LD_LIBRARY_PATH'] = LIB
 
 
 def convert_size(size_bytes: int) -> str:

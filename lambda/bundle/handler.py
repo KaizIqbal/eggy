@@ -10,6 +10,8 @@ import configsgen
 import fileio
 import helpers
 
+libpath = os.path.abspath('./lib')
+
 
 def bundle(event, context):
     random_id = helpers.generate_random_id()
@@ -35,13 +37,17 @@ def bundle(event, context):
             clickgen.main(name, config_dir=imgs_dir,
                           out_path=out_dir, win=True, archive=True, logs=True)
         elif(type == 'LINUX'):
-            print("📦 Creating Linux bundle...")
-            clickgen.main(name, config_dir=imgs_dir,
-                          out_path=out_dir, x11=True, archive=True, logs=True)
+            with helpers.LDD(libpath):
+                print(os.environ['LD_LIBRARY_PATH'])
+                print("📦 Creating Linux bundle...")
+                clickgen.main(name, config_dir=imgs_dir,
+                              out_path=out_dir, x11=True, archive=True, logs=True)
         else:
-            print("📦 Creating all types bundle...")
-            clickgen.main(name, config_dir=imgs_dir,
-                          out_path=out_dir, x11=True, win=True, archive=True, logs=True)
+            with helpers.LDD(libpath):
+                print(os.environ['LD_LIBRARY_PATH'])
+                print("📦 Creating all types bundle...")
+                clickgen.main(name, config_dir=imgs_dir,
+                              out_path=out_dir, x11=True, win=True, archive=True, logs=True)
 
         # Bundle info
         bundle_name = name+'.tar'
