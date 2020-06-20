@@ -16,6 +16,10 @@ plugins:
 
 package:
   exclude:
+    - ./event.*
+    - package.json
+    - yarn.lock
+    - ./requirements.txt
     - ./**.sh
     - env/**
     - __pycache__/**
