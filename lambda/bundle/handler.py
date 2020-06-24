@@ -10,8 +10,6 @@ import configsgen
 import fileio
 import helpers
 
-libpath = os.path.abspath('./lib')
-
 
 def bundle(event, context):
     random_id = helpers.generate_random_id()
