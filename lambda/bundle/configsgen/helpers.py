@@ -26,7 +26,7 @@ def get_cursor_list(imgs_dir: str, animated: bool = False) -> list:
     return cursor_list
 
 
-def resize_cursor(cursor: str, size: Num, imgs_dir: str, xhot=None, yhot=None) -> List[Num]:
+def resize_cursor(cursor: str, size: Num, imgs_dir: str, xhot, yhot) -> List[Num]:
     # helper variables
     in_path = imgs_dir + "/" + cursor
     out_dir = imgs_dir + "/%sx%s/" % (size, size)
@@ -95,9 +95,13 @@ def generate_static_cursor(imgs_dir: str, sizes: List[Num], hotspots: any) -> No
 
         # Hotspots
         cursor_name = cursor.split('.')[0]
-        hotspot = hotspots[cursor_name]
-        xhot = hotspot['xhot']
-        yhot = hotspot['yhot']
+        try:
+            hotspot = hotspots[cursor_name]
+            xhot = hotspot['xhot']
+            yhot = hotspot['yhot']
+        except TypeError:
+            xhot = None
+            yhot = None
 
         for size in sizes:
             resized_xhot, resized_yhot = resize_cursor(
@@ -119,9 +123,13 @@ def generate_animated_cursor(imgs_dir: str, sizes: List[Num], hotspots: any):
         content = []
 
         # Hotspots
-        hotspot = hotspots[group_name]
-        xhot = hotspot['xhot']
-        yhot = hotspot['yhot']
+        try:
+            hotspot = hotspots[group_name]
+            xhot = hotspot['xhot']
+            yhot = hotspot['yhot']
+        except TypeError:
+            xhot = None
+            yhot = None
 
         for cursor in group:
             for size in sizes:

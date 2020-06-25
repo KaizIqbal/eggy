@@ -7,7 +7,7 @@ custom:
       - S3_BUCKET
       - REGION
   pythonRequirements:
-    dockerizePip: non-linux
+    dockerizePip: true
   s3Bucket: ${env:S3_BUCKET}
 
 plugins:
@@ -16,6 +16,10 @@ plugins:
 
 package:
   exclude:
+    - ./event.*
+    - package.json
+    - yarn.lock
+    - ./requirements.txt
     - ./**.sh
     - env/**
     - __pycache__/**

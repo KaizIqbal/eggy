@@ -10,16 +10,18 @@ import configsgen
 import fileio
 import helpers
 
-libpath = os.path.abspath('./lib')
+libpath = os.path.abspath('./libraries')
 
 
 def bundle(event, context):
     random_id = helpers.generate_random_id()
     name = event["name"] + '-' + random_id
-    hotspots = event["hotspots"]
     key = event["key"]
     type = event["type"]
     sizes = event["sizes"]
+
+    # TODO:Hotspots
+    # hotspots = event["hotspots"]
 
     imgs_dir = tempfile.mkdtemp()
     out_dir = tempfile.mkdtemp()
@@ -28,8 +30,9 @@ def bundle(event, context):
     s3.fetch_directory(s3_dir=key, local_dir=imgs_dir)
 
     print("🔧 Creating configs...")
+    # TODO:Hotspots
     configsgen.generate_config(
-        imgs_dir=imgs_dir, cursor_sizes=sizes, hotspots=hotspots)
+        imgs_dir=imgs_dir, cursor_sizes=sizes, hotspots=None)
 
     try:
         if(type == 'WINDOW'):
@@ -37,15 +40,13 @@ def bundle(event, context):
             clickgen.main(name, config_dir=imgs_dir,
                           out_path=out_dir, win=True, archive=True, logs=True)
         elif(type == 'LINUX'):
+            print("📦 Creating Linux bundle...")
             with helpers.LDD(libpath):
-                print(os.environ['LD_LIBRARY_PATH'])
-                print("📦 Creating Linux bundle...")
                 clickgen.main(name, config_dir=imgs_dir,
                               out_path=out_dir, x11=True, archive=True, logs=True)
         else:
+            print("📦 Creating all types bundle...")
             with helpers.LDD(libpath):
-                print(os.environ['LD_LIBRARY_PATH'])
-                print("📦 Creating all types bundle...")
                 clickgen.main(name, config_dir=imgs_dir,
                               out_path=out_dir, x11=True, win=True, archive=True, logs=True)
 
