@@ -7,8 +7,7 @@ custom:
       - S3_BUCKET
       - REGION
   pythonRequirements:
-    dokcerfile: ./runtime_libs/Dockerfile
-
+    dockerizePip: true
   s3Bucket: ${env:S3_BUCKET}
 
 plugins:
