@@ -6,13 +6,10 @@ custom:
     include:
       - S3_BUCKET
       - REGION
-  pythonRequirements:
-    dockerizePip: true
   s3Bucket: ${env:S3_BUCKET}
 
 plugins:
   - serverless-dotenv-plugin
-  - serverless-python-requirements
 
 package:
   exclude:
@@ -37,9 +34,17 @@ provider:
   region: ${env:REGION}
   runtime: python3.8
 
+layers:
+  dependencies:
+    path: dependencies
+    package:
+      artifact: dependencies.zip
+
 functions:
   bundle:
     handler: handler.bundle
     environment:
       REGION: ${self:provider.region}
       S3_BUCKET: ${self:custom.s3Bucket}
+    layers:
+      - { Ref: DependenciesLambdaLayer }

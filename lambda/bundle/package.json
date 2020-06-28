@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "gen:layer": "./gen_layer.sh",
     "setup": "sudo pip3 install virtualenv && virtualenv env && . env/bin/activate && pip3 install -r requirements.txt && yarn install ",
     "freeze": "pip3 freeze > requirements.txt ",
     "bundle:local": "npx sls invoke local -f bundle -p event.json",
@@ -15,8 +16,7 @@
     "clean": "npx sls remove "
   },
   "dependencies": {
-    "serverless": "~1.72.0",
-    "serverless-python-requirements": "^5.1.0"
+    "serverless": "~1.72.0"
   },
   "devDependencies": {
     "serverless-dotenv-plugin": "^2.4.2"
