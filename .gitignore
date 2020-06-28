@@ -3,6 +3,10 @@
 event.json
 .webpack
 
+# lambda fuctions
+lambda/bundle/dependencies.zip
+lambda/bundle/dependencies
+
 ### Node ###
 # Logs
 logs
@@ -109,7 +113,6 @@ dist/
 tmp/
 temp/
 
-<<<<<<< HEAD
 ### Python ###
 
 __pycache__/
@@ -205,13 +208,3 @@ core
 *.pdb
 *.tar.bz2
 *.tar.gz
-#
-#		Add & Override patterns for xcursorgen 
-#
-#		Edit the following section as needed
-# For example, !report.pc overrides *.pc. See 'man gitignore'
-# 
-xcursorgen
-=======
-# End of https://www.gitignore.io/api/node
->>>>>>> origin/csb-1588764584459
