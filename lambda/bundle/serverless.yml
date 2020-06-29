@@ -13,16 +13,10 @@ plugins:
 
 package:
   exclude:
-    - ./event.*
-    - package.json
-    - yarn.lock
-    - ./requirements.txt
-    - ./**.sh
-    - env/**
-    - __pycache__/**
-    - node_modules/**
-    - .env.exapmle
-    - .vscode/**
+    - "**"
+  include:
+    - "**.py"
+    - "configsgen/**.py"
 
 provider:
   iamRoleStatements:
