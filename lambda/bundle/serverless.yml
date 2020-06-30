@@ -2,7 +2,7 @@ service: bundle
 
 custom:
   dotenv:
-    logging: false
+    logging: true
     include:
       - S3_BUCKET
       - REGION
@@ -22,8 +22,11 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - "s3:*"
-      Resource: "arn:aws:s3:::${self:custom.s3Bucket}/*"
+        - s3:*
+        - s3:ListBucket
+      Resource:
+        - "arn:aws:s3:::${self:custom.s3Bucket}"
+        - "arn:aws:s3:::${self:custom.s3Bucket}/*"
   name: aws
   region: ${env:REGION}
   runtime: python3.8
@@ -40,5 +43,6 @@ functions:
     environment:
       REGION: ${self:provider.region}
       S3_BUCKET: ${self:custom.s3Bucket}
+
     layers:
       - { Ref: DependenciesLambdaLayer }
