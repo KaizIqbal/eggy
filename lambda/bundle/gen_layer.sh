@@ -2,9 +2,12 @@
 
 NAME=dependencies
 
-while IFS= read -r line; do
+while read -r line
+do
   PACKAGES+="$(echo $line | cut -d'=' -f 1) "
-done < requirements.txt
+done <<< $(cat requirements.txt)
+
+echo ${PACKAGES}
 
 docker run --rm -v "$PWD"/"$NAME":/opt lambci/lambda:build-python3.8 \
   bash -c "yum install -y libX11-devel libpng-devel libXcursor-devel && pip install ${PACKAGES} -t /opt/python"
