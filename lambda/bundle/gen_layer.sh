@@ -7,7 +7,7 @@ do
   PACKAGES+="$(echo $line | cut -d'=' -f 1) "
 done <<< $(cat requirements.txt)
 
-echo ${PACKAGES}
+echo "📦 Packages are installed: ${PACKAGES}"
 
 docker run --rm -v "$PWD"/"$NAME":/opt lambci/lambda:build-python3.8 \
   bash -c "yum install -y libX11-devel libpng-devel libXcursor-devel && pip install ${PACKAGES} -t /opt/python"
