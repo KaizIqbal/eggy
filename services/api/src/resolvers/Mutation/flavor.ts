@@ -100,26 +100,12 @@ export const flavrorMutations = {
     data = JSON.parse(data);
 
     // If any error in lambda execution
-    // @ts-ignore
     if (!data.StatusCode === 200) {
-      throw new Error("Ooops.Render server generating Exception");
+      throw new Error("Ooops.Bundle server generating Exception");
     }
 
     // Download response
-    // return {
-    //   key: data.body.key,
-    //   link: data.body.link,
-    //   expiry: data.body.expiry,
-    //   filename: data.body.filename,
-    //   size: data.body.size
-    // };
-    return {
-      key: "test",
-      link: "test",
-      expiry: "test",
-      filename: "test",
-      size: "test"
-    };
+    return data.body;
   },
 
   async deleteFlavor(parent, args, ctx, info) {
