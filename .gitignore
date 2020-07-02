@@ -4,7 +4,6 @@ event.json
 .webpack
 
 # lambda fuctions
-lambda/bundle/dependencies.zip
 lambda/bundle/dependencies
 
 ### Node ###
