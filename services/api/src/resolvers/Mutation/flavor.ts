@@ -1,4 +1,6 @@
+import * as path from "path";
 // Helper Functions
+import { invokeRenderLambdaFunction } from "../../aws/lambda/bundle";
 import checkFlavorName from "../../utils/checkFlavorName";
 import checkEgg from "../../utils/checkEgg";
 import checkFlavor from "../../utils/checkFlavor";
@@ -61,6 +63,39 @@ export const flavrorMutations = {
   // ################################################ DELETE FLAVOR ################################################
 
   async downloadFalvor(parent, args, ctx, info) {
+    const data = await ctx.db.query.flavor(
+      { where: { id: args.id } },
+      `{
+      name
+      egg {
+        title
+        eggname
+        user {
+          username
+        }
+      }
+    }`
+    );
+
+    const key = path.join(
+      data.egg.user.username,
+      data.egg.eggname,
+      data.name,
+      "bitmaps"
+    );
+
+    const sizes = [24, 28, 32, 40, 48, 56, 65, 72, 80, 88, 96];
+    const payload = {
+      name: data.egg.title,
+      key: key,
+      sizes: sizes,
+      type: "LINUX"
+    };
+
+    console.log(payload);
+    // const response: any = invokeRenderLambdaFunction(JSON.stringify(payload));
+
+    // console.log(response);
     // Download response
     return {
       key: "test",
