@@ -60,6 +60,17 @@ export const flavrorMutations = {
 
   // ################################################ DELETE FLAVOR ################################################
 
+  async downloadFalvor(parent, args, ctx, info) {
+    // Download response
+    return {
+      key: "test",
+      link: "test",
+      expiry: "test",
+      filename: "test",
+      size: "test"
+    };
+  },
+
   async deleteFlavor(parent, args, ctx, info) {
     // Checking user has permissions or not if not then throw Error
     await checkFlavor(ctx, args.id, ["ADMIN", "FLAVORDELETE"]);

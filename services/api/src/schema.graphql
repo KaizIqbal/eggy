@@ -7,6 +7,14 @@ type SuccessMessage {
   message: String
 }
 
+type DownloadData {
+  key: String!
+  link: String!
+  expiry: String!
+  filename: String!
+  size: String!
+}
+
 type AuthPayload {
   accessToken: String!
   user: User!
@@ -38,6 +46,7 @@ type Mutation {
   createFlavor(name:String! eggId:ID!): Flavor!
   renameFlavor(id:ID! name:String!): Flavor!  
   deleteFlavor(id:ID!): Flavor!  
+  downloadFalvor(id:ID!): DownloadData!  
   confirmFlavor(id:ID!):Flavor!
   denyFlavor(id:ID!): Flavor!
 
