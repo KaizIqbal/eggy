@@ -3,6 +3,12 @@
 scalar Upload
 scalar ZipFile
 
+enum downloadType {
+  LINUX
+  WINDOW
+  ALL
+}
+
 type SuccessMessage {
   message: String
 }
@@ -46,7 +52,7 @@ type Mutation {
   createFlavor(name:String! eggId:ID!): Flavor!
   renameFlavor(id:ID! name:String!): Flavor!  
   deleteFlavor(id:ID!): Flavor!  
-  downloadFalvor(id:ID!): DownloadData!  
+  downloadFalvor(id:ID! type: downloadType!): DownloadData!  
   confirmFlavor(id:ID!):Flavor!
   denyFlavor(id:ID!): Flavor!
 

@@ -89,14 +89,30 @@ export const flavrorMutations = {
       name: data.egg.title,
       key: key,
       sizes: sizes,
-      type: "LINUX"
+      type: args.type
     };
 
-    console.log(payload);
-    // const response: any = invokeRenderLambdaFunction(JSON.stringify(payload));
+    let response: any = await invokeRenderLambdaFunction(
+      JSON.stringify(payload)
+    );
 
-    // console.log(response);
+    let { Payload: data } = response;
+    data = JSON.parse(data);
+
+    // If any error in lambda execution
+    // @ts-ignore
+    if (!data.StatusCode === 200) {
+      throw new Error("Ooops.Render server generating Exception");
+    }
+
     // Download response
+    // return {
+    //   key: data.body.key,
+    //   link: data.body.link,
+    //   expiry: data.body.expiry,
+    //   filename: data.body.filename,
+    //   size: data.body.size
+    // };
     return {
       key: "test",
       link: "test",
