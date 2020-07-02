@@ -1,4 +1,6 @@
+import * as path from "path";
 // Helper Functions
+import { invokeRenderLambdaFunction } from "../../aws/lambda/bundle";
 import checkFlavorName from "../../utils/checkFlavorName";
 import checkEgg from "../../utils/checkEgg";
 import checkFlavor from "../../utils/checkFlavor";
@@ -61,14 +63,49 @@ export const flavrorMutations = {
   // ################################################ DELETE FLAVOR ################################################
 
   async downloadFalvor(parent, args, ctx, info) {
-    // Download response
-    return {
-      key: "test",
-      link: "test",
-      expiry: "test",
-      filename: "test",
-      size: "test"
+    const data = await ctx.db.query.flavor(
+      { where: { id: args.id } },
+      `{
+      name
+      egg {
+        title
+        eggname
+        user {
+          username
+        }
+      }
+    }`
+    );
+
+    const key = path.join(
+      data.egg.user.username,
+      data.egg.eggname,
+      data.name,
+      "bitmaps"
+    );
+
+    const sizes = [24, 28, 32, 40, 48, 56, 65, 72, 80, 88, 96];
+    const payload = {
+      name: data.egg.title,
+      key: key,
+      sizes: sizes,
+      type: args.type
     };
+
+    let response: any = await invokeRenderLambdaFunction(
+      JSON.stringify(payload)
+    );
+
+    let { Payload: data } = response;
+    data = JSON.parse(data);
+
+    // If any error in lambda execution
+    if (!data.StatusCode === 200) {
+      throw new Error("Ooops.Bundle server generating Exception");
+    }
+
+    // Download response
+    return data.body;
   },
 
   async deleteFlavor(parent, args, ctx, info) {
