@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { Egg } from "generated/graphql";
+import { Button } from "components/styled";
 
 interface IProps {
   egg: any;
@@ -8,6 +9,7 @@ interface IProps {
 
 export const ShowEgg: React.FC<IProps> = props => {
   const egg: Egg = props.egg;
+
   // ---------------------------------------------------------------- RENDER
   return (
     <>
@@ -22,6 +24,9 @@ export const ShowEgg: React.FC<IProps> = props => {
       Available for:
       {egg.platforms.map(platform => (
         <p key={platform}>{platform}</p>
+      ))}
+      {egg.flavors!.map(flavor => (
+        <Button key={flavor.id}>Download </Button>
       ))}
     </>
   );
