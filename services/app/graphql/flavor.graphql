@@ -39,17 +39,26 @@ mutation deleteFlavor($id: ID!) {
   }
 }
 
-# ---------- PUBLISH
+# ---------- CONFIRM FOR PUBLISH
 mutation confirmFlavor($id: ID!) {
   confirmFlavor(id: $id) {
     id
   }
 }
 
-# ---------- UNPUBLISH
+# ---------- DENY FOR PUBLISH
 mutation denyFlavor($id: ID!) {
   denyFlavor(id: $id) {
     id
   }
 }
 
+# ---------- DOWNLOAD FLAVOR
+mutation downloadFlavor($id: ID!, $type: downloadType! ){
+  downloadFalvor(id: $id type: $type){
+    filename
+    size
+    key
+    link
+  }
+}
