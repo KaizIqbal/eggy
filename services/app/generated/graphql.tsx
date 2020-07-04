@@ -1992,7 +1992,7 @@ export type EggDataFragment = (
     & UserDataFragment
   ), flavors: Maybe<Array<(
     { __typename?: 'Flavor' }
-    & Pick<Flavor, 'id'>
+    & Pick<Flavor, 'id' | 'name'>
   )>> }
 );
 
@@ -2087,6 +2087,7 @@ export const EggDataFragmentDoc = gql`
   }
   flavors {
     id
+    name
   }
 }
     ${UserDataFragmentDoc}`;

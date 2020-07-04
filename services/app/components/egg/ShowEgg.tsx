@@ -21,13 +21,24 @@ export const ShowEgg: React.FC<IProps> = props => {
         <h1>{egg.title}</h1>
       </div>
       <p>by {egg.user.firstName + " " + egg.user.lastName}</p>
-      Available for:
-      {egg.platforms.map(platform => (
-        <p key={platform}>{platform}</p>
-      ))}
-      {egg.flavors!.map(flavor => (
-        <Button key={flavor.id}>Download </Button>
-      ))}
+      <strong>Available Download for:</strong>
+      <br />
+      {egg.flavors.length === 0 ? (
+        <p>No Flavors Published</p>
+      ) : (
+        egg.flavors.map(flavor =>
+          egg.platforms.map(platform => (
+            <Button
+              key={flavor.id}
+              onClick={() => {
+                console.log("Download Available");
+              }}
+            >
+              {egg.title + " " + flavor.name + " " + platform}
+            </Button>
+          ))
+        )
+      )}
     </>
   );
 };
