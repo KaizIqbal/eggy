@@ -1,13 +1,13 @@
 import React from "react";
 
-import { Egg, Flavor } from "generated/graphql";
+import { Platform, Flavor, Maybe } from "generated/graphql";
 
 import { Button } from "components/styled";
 
 interface IProps {
-  flavors: Array<Flavor>;
-  title: Egg.title;
-  platforms: Egg.platforms;
+  flavors: Maybe<Array<Flavor>>;
+  title: string;
+  platforms: Array<Platform>;
 }
 
 export const DownloadOptions: React.FC<IProps> = ({
@@ -17,13 +17,11 @@ export const DownloadOptions: React.FC<IProps> = ({
 }) => {
   // ---------------------------------------------------------------- HOOKS
   // ---------------------------------------------------------------- RENDER
-
-  console.log(flavors);
-  if (flavors.length === 0) return <p>No Flavors Published</p>;
+  if (flavors!.length === 0) return <p>No Flavors Published</p>;
   return flavors!.map(flavor =>
     platforms.map(platform => (
       <Button
-        key={flavor.id}
+        key={flavor.id + "_" + platform}
         onClick={() => {
           console.log("Download Available");
         }}
