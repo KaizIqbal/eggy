@@ -1,7 +1,9 @@
 import React from "react";
 import Head from "next/head";
+
 import { Egg } from "generated/graphql";
-import { Button } from "components/styled";
+
+import { DownloadOptions } from "components/egg";
 
 interface IProps {
   egg: any;
@@ -23,22 +25,12 @@ export const ShowEgg: React.FC<IProps> = props => {
       <p>by {egg.user.firstName + " " + egg.user.lastName}</p>
       <strong>Available Download for:</strong>
       <br />
-      {egg.flavors.length === 0 ? (
-        <p>No Flavors Published</p>
-      ) : (
-        egg.flavors.map(flavor =>
-          egg.platforms.map(platform => (
-            <Button
-              key={flavor.id}
-              onClick={() => {
-                console.log("Download Available");
-              }}
-            >
-              {egg.title + " " + flavor.name + " " + platform}
-            </Button>
-          ))
-        )
-      )}
+
+      <DownloadOptions
+        platforms={egg.platforms}
+        title={egg.title}
+        flavors={egg.flavors}
+      />
     </>
   );
 };
