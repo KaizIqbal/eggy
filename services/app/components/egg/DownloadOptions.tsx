@@ -16,15 +16,22 @@ export const DownloadOptions: React.FC<IProps> = ({
   platforms
 }) => {
   // ---------------------------------------------------------------- HOOKS
+
+  // ---------------------------------------------------------------- HANDLING FUNCTION
+
+  const handleClick = (id, platform) => {
+    console.log(id + platform + " Downloading...");
+  };
+
   // ---------------------------------------------------------------- RENDER
+
   if (flavors!.length === 0) return <p>No Flavors Published</p>;
+
   return flavors!.map(flavor =>
     platforms.map(platform => (
       <Button
         key={flavor.id + "_" + platform}
-        onClick={() => {
-          console.log("Download Available");
-        }}
+        onClick={() => handleClick(flavor.id, platform)}
       >
         {title + " " + flavor.name + " " + platform}
       </Button>
