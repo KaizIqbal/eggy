@@ -22,7 +22,7 @@ export const DownloadOptions: React.FC<IProps> = ({
   // ---------------------------------------------------------------- HANDLING FUNCTION
 
   const handleClick = async (id: string, platform: any) => {
-    const data = await downloadFalvor({
+    const { data } = await downloadFalvor({
       variables: { id: id, type: platform }
     });
     console.log(data);
