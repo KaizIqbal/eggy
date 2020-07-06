@@ -17,15 +17,18 @@ export const DownloadOptions: React.FC<IProps> = ({
 }) => {
   // ---------------------------------------------------------------- HOOKS
 
-  const [downloadFalvor, { loading, error }] = useDownloadFlavorMutation();
+  const [
+    downloadFlavor,
+    { loading, error, called }
+  ] = useDownloadFlavorMutation();
 
   // ---------------------------------------------------------------- HANDLING FUNCTION
 
   const handleClick = async (id: string, platform: any) => {
-    const { data } = await downloadFalvor({
+    const { data } = await downloadFlavor({
       variables: { id: id, type: platform }
     });
-    console.log(data);
+    console.log(data!.downloadFlavor);
   };
 
   // ---------------------------------------------------------------- RENDER
@@ -38,6 +41,13 @@ export const DownloadOptions: React.FC<IProps> = ({
         <strong>{title}</strong> Generating ..
       </p>
     );
+  if (!loading && called)
+    return (
+      <>
+        <p>Generated info</p>
+      </>
+    );
+
   return (
     <>
       {flavors.map(flavor =>
