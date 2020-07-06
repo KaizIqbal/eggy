@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Flavor, useDownloadFlavorMutation } from "generated/graphql";
 
@@ -17,6 +17,12 @@ export const DownloadOptions: React.FC<IProps> = ({
 }) => {
   // ---------------------------------------------------------------- HOOKS
 
+  const [info, setInfo] = useState({
+    filename: "",
+    size: "",
+    key: "",
+    link: ""
+  });
   const [
     downloadFlavor,
     { loading, error, called }
@@ -28,7 +34,8 @@ export const DownloadOptions: React.FC<IProps> = ({
     const { data } = await downloadFlavor({
       variables: { id: id, type: platform }
     });
-    console.log(data!.downloadFlavor);
+    delete data!.downloadFlavor.__typename;
+    setInfo(...data!.downloadFlavor);
   };
 
   // ---------------------------------------------------------------- RENDER
@@ -44,7 +51,7 @@ export const DownloadOptions: React.FC<IProps> = ({
   if (!loading && called)
     return (
       <>
-        <p>Generated info</p>
+        <p>Generated info:</p>
       </>
     );
 
