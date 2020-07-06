@@ -24,6 +24,7 @@ export const DownloadOptions: React.FC<IProps> = ({
   const handleClick = (id: string, platform: string) => {
     setBusy(true);
     console.log(id + platform + " Downloading...");
+    setBusy(false);
   };
 
   // ---------------------------------------------------------------- RENDER
