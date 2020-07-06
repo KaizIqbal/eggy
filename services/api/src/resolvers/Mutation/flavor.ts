@@ -62,7 +62,7 @@ export const flavrorMutations = {
 
   // ################################################ DELETE FLAVOR ################################################
 
-  async downloadFalvor(parent, args, ctx, info) {
+  async downloadFlavor(parent, args, ctx, info) {
     const data = await ctx.db.query.flavor(
       { where: { id: args.id } },
       `{
