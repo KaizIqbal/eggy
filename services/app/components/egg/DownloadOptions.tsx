@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { Flavor } from "generated/graphql";
+import { Flavor, useFlavorDownloadMuation } from "generated/graphql";
 
 import { Button } from "components/styled";
 
@@ -17,24 +17,24 @@ export const DownloadOptions: React.FC<IProps> = ({
 }) => {
   // ---------------------------------------------------------------- HOOKS
 
-  const [busy, setBusy] = useState(false);
+  const [downloadFalvor, { loading, error }] = useFlavorDownloadMuation();
 
   // ---------------------------------------------------------------- HANDLING FUNCTION
 
   const handleClick = (id: string, platform: string) => {
-    setBusy(true);
-    console.log(id + platform + " Downloading...");
-    setBusy(false);
+    downloadFalvor({ varaiables: { id: id, type: platform } });
   };
 
   // ---------------------------------------------------------------- RENDER
+
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <>
       {flavors.map(flavor =>
         platforms.map(platform => (
           <Button
-            disabled={busy}
+            disabled={loading}
             key={`${flavor.id}-${platform}`}
             onClick={() => handleClick(flavor.id, platform)}
           >{`${title} ${platform}`}</Button>
