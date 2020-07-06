@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Platform, Flavor, Maybe } from "generated/graphql";
+import { Flavor } from "generated/graphql";
 
 import { Button } from "components/styled";
 
 interface IProps {
-  flavors: Maybe<Array<Flavor>>;
+  flavors: Array<Flavor>;
   title: string;
-  platforms: Array<Platform>;
+  platforms: Array<string>;
 }
 
 export const DownloadOptions: React.FC<IProps> = ({
@@ -17,24 +17,28 @@ export const DownloadOptions: React.FC<IProps> = ({
 }) => {
   // ---------------------------------------------------------------- HOOKS
 
+  const [busy, setBusy] = useState(false);
+
   // ---------------------------------------------------------------- HANDLING FUNCTION
 
-  const handleClick = (id, platform) => {
+  const handleClick = (id: string, platform: string) => {
+    setBusy(true);
     console.log(id + platform + " Downloading...");
   };
 
   // ---------------------------------------------------------------- RENDER
 
-  if (flavors!.length === 0) return <p>No Flavors Published</p>;
-
-  return flavors!.map(flavor =>
-    platforms.map(platform => (
-      <Button
-        key={flavor.id + "_" + platform}
-        onClick={() => handleClick(flavor.id, platform)}
-      >
-        {title + " " + flavor.name + " " + platform}
-      </Button>
-    ))
+  return (
+    <>
+      {flavors.map(flavor =>
+        platforms.map(platform => (
+          <Button
+            disabled={busy}
+            key={`${flavor.id}-${platform}`}
+            onClick={() => handleClick(flavor.id, platform)}
+          >{`${title} ${platform}`}</Button>
+        ))
+      )}
+    </>
   );
 };
