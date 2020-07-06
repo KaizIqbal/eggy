@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Flavor, useFlavorDownloadMuation } from "generated/graphql";
+import { Flavor, useDownloadFlavorMutation } from "generated/graphql";
 
 import { Button } from "components/styled";
 
@@ -17,18 +17,27 @@ export const DownloadOptions: React.FC<IProps> = ({
 }) => {
   // ---------------------------------------------------------------- HOOKS
 
-  const [downloadFalvor, { loading, error }] = useFlavorDownloadMuation();
+  const [downloadFalvor, { loading, error }] = useDownloadFlavorMutation();
 
   // ---------------------------------------------------------------- HANDLING FUNCTION
 
-  const handleClick = (id: string, platform: string) => {
-    downloadFalvor({ varaiables: { id: id, type: platform } });
+  const handleClick = async (id: string, platform: any) => {
+    const data = await downloadFalvor({
+      variables: { id: id, type: platform }
+    });
+    console.log(data);
   };
 
   // ---------------------------------------------------------------- RENDER
 
   if (error) return <p>Error: {error.message}</p>;
 
+  if (loading)
+    return (
+      <p>
+        <strong>{title}</strong> Generating ..
+      </p>
+    );
   return (
     <>
       {flavors.map(flavor =>
@@ -37,7 +46,9 @@ export const DownloadOptions: React.FC<IProps> = ({
             disabled={loading}
             key={`${flavor.id}-${platform}`}
             onClick={() => handleClick(flavor.id, platform)}
-          >{`${title} ${platform}`}</Button>
+          >
+            {`${title} ${platform}`}
+          </Button>
         ))
       )}
     </>
