@@ -52,7 +52,7 @@ type Mutation {
   createFlavor(name:String! eggId:ID!): Flavor!
   renameFlavor(id:ID! name:String!): Flavor!  
   deleteFlavor(id:ID!): Flavor!  
-  downloadFalvor(id:ID! type: downloadType!): DownloadData!  
+  downloadFlavor(id:ID! type: downloadType!): DownloadData!  
   confirmFlavor(id:ID!):Flavor!
   denyFlavor(id:ID!): Flavor!
 

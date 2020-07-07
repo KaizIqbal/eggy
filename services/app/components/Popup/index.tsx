@@ -35,6 +35,7 @@ export const Popup: React.FC<IProps> = props => {
     <PopupContainer>
       <PopupInner ref={wrapperRef}>
         {props.children}
+        <br />
         <button onClick={props.closePopup}>close</button>
       </PopupInner>
     </PopupContainer>

@@ -17,6 +17,7 @@ fragment EggData on Egg {
   }
   flavors {
     id
+    name
   }
 }
 

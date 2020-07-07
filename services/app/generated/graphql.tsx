@@ -1319,6 +1319,7 @@ export type Mutation = {
   createFlavor: Flavor;
   renameFlavor: Flavor;
   deleteFlavor: Flavor;
+  downloadFalvor: DownloadData;
   confirmFlavor: Flavor;
   denyFlavor: Flavor;
   createCursor: Cursor;
@@ -1405,6 +1406,13 @@ export type MutationRenameFlavorArgs = {
 /**  */
 export type MutationDeleteFlavorArgs = {
   id: Scalars['ID'];
+};
+
+
+/**  */
+export type MutationDownloadFalvorArgs = {
+  id: Scalars['ID'];
+  type: DownloadType;
 };
 
 
@@ -1499,6 +1507,21 @@ export type MutationUpdatePermissionsArgs = {
   userId: Scalars['ID'];
 };
 
+
+export enum DownloadType {
+  Linux = 'LINUX',
+  Window = 'WINDOW',
+  All = 'ALL'
+}
+
+export type DownloadData = {
+   __typename?: 'DownloadData';
+  key: Scalars['String'];
+  link: Scalars['String'];
+  expiry: Scalars['String'];
+  filename: Scalars['String'];
+  size: Scalars['String'];
+};
 
 export type AuthPayload = {
    __typename?: 'AuthPayload';
@@ -1942,6 +1965,20 @@ export type DenyFlavorMutation = (
   ) }
 );
 
+export type DownloadFlavorMutationVariables = {
+  id: Scalars['ID'];
+  type: DownloadType;
+};
+
+
+export type DownloadFlavorMutation = (
+  { __typename?: 'Mutation' }
+  & { downloadFalvor: (
+    { __typename?: 'DownloadData' }
+    & Pick<DownloadData, 'filename' | 'size' | 'key' | 'link'>
+  ) }
+);
+
 export type UserDataFragment = (
   { __typename?: 'User' }
   & Pick<User, 'id' | 'email' | 'username' | 'lastName' | 'firstName'>
@@ -1955,7 +1992,7 @@ export type EggDataFragment = (
     & UserDataFragment
   ), flavors: Maybe<Array<(
     { __typename?: 'Flavor' }
-    & Pick<Flavor, 'id'>
+    & Pick<Flavor, 'id' | 'name'>
   )>> }
 );
 
@@ -2050,6 +2087,7 @@ export const EggDataFragmentDoc = gql`
   }
   flavors {
     id
+    name
   }
 }
     ${UserDataFragmentDoc}`;
@@ -3143,6 +3181,42 @@ export function useDenyFlavorMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type DenyFlavorMutationHookResult = ReturnType<typeof useDenyFlavorMutation>;
 export type DenyFlavorMutationResult = ApolloReactCommon.MutationResult<DenyFlavorMutation>;
 export type DenyFlavorMutationOptions = ApolloReactCommon.BaseMutationOptions<DenyFlavorMutation, DenyFlavorMutationVariables>;
+export const DownloadFlavorDocument = gql`
+    mutation downloadFlavor($id: ID!, $type: downloadType!) {
+  downloadFalvor(id: $id, type: $type) {
+    filename
+    size
+    key
+    link
+  }
+}
+    `;
+export type DownloadFlavorMutationFn = ApolloReactCommon.MutationFunction<DownloadFlavorMutation, DownloadFlavorMutationVariables>;
+
+/**
+ * __useDownloadFlavorMutation__
+ *
+ * To run a mutation, you first call `useDownloadFlavorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDownloadFlavorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [downloadFlavorMutation, { data, loading, error }] = useDownloadFlavorMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useDownloadFlavorMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DownloadFlavorMutation, DownloadFlavorMutationVariables>) {
+        return ApolloReactHooks.useMutation<DownloadFlavorMutation, DownloadFlavorMutationVariables>(DownloadFlavorDocument, baseOptions);
+      }
+export type DownloadFlavorMutationHookResult = ReturnType<typeof useDownloadFlavorMutation>;
+export type DownloadFlavorMutationResult = ApolloReactCommon.MutationResult<DownloadFlavorMutation>;
+export type DownloadFlavorMutationOptions = ApolloReactCommon.BaseMutationOptions<DownloadFlavorMutation, DownloadFlavorMutationVariables>;
 export const MeDocument = gql`
     query me {
   me {
