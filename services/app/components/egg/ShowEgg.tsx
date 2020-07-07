@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import { Egg } from "generated/graphql";
 
-import { DownloadOptions } from "components/egg";
+import { DownloadOptions } from "./DownloadOptions";
 
 interface IProps {
   egg: any;
@@ -27,8 +27,8 @@ export const ShowEgg: React.FC<IProps> = props => {
       <br />
 
       <DownloadOptions
-        platforms={egg.platforms}
         title={egg.title}
+        platforms={egg.platforms}
         flavors={egg.flavors}
       />
     </>

@@ -1319,7 +1319,7 @@ export type Mutation = {
   createFlavor: Flavor;
   renameFlavor: Flavor;
   deleteFlavor: Flavor;
-  downloadFalvor: DownloadData;
+  downloadFlavor: DownloadData;
   confirmFlavor: Flavor;
   denyFlavor: Flavor;
   createCursor: Cursor;
@@ -1410,7 +1410,7 @@ export type MutationDeleteFlavorArgs = {
 
 
 /**  */
-export type MutationDownloadFalvorArgs = {
+export type MutationDownloadFlavorArgs = {
   id: Scalars['ID'];
   type: DownloadType;
 };
@@ -1973,7 +1973,7 @@ export type DownloadFlavorMutationVariables = {
 
 export type DownloadFlavorMutation = (
   { __typename?: 'Mutation' }
-  & { downloadFalvor: (
+  & { downloadFlavor: (
     { __typename?: 'DownloadData' }
     & Pick<DownloadData, 'filename' | 'size' | 'key' | 'link'>
   ) }
@@ -3183,7 +3183,7 @@ export type DenyFlavorMutationResult = ApolloReactCommon.MutationResult<DenyFlav
 export type DenyFlavorMutationOptions = ApolloReactCommon.BaseMutationOptions<DenyFlavorMutation, DenyFlavorMutationVariables>;
 export const DownloadFlavorDocument = gql`
     mutation downloadFlavor($id: ID!, $type: downloadType!) {
-  downloadFalvor(id: $id, type: $type) {
+  downloadFlavor(id: $id, type: $type) {
     filename
     size
     key

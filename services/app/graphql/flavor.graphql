@@ -55,7 +55,7 @@ mutation denyFlavor($id: ID!) {
 
 # ---------- DOWNLOAD FLAVOR
 mutation downloadFlavor($id: ID!, $type: downloadType! ){
-  downloadFalvor(id: $id type: $type){
+  downloadFlavor(id: $id type: $type){
     filename
     size
     key
