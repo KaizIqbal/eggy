@@ -6,15 +6,10 @@ import { Button } from "components/styled";
 
 interface IProps {
   flavors: Array<Flavor>;
-  title: string;
   platforms: Array<string>;
 }
 
-export const DownloadOptions: React.FC<IProps> = ({
-  flavors,
-  title,
-  platforms
-}) => {
+export const DownloadOptions: React.FC<IProps> = ({ flavors, platforms }) => {
   // ---------------------------------------------------------------- HOOKS
 
   const [info, setInfo] = useState({
@@ -23,6 +18,7 @@ export const DownloadOptions: React.FC<IProps> = ({
     key: "",
     link: ""
   });
+
   const [
     downloadFlavor,
     { loading, error, called }
@@ -34,29 +30,39 @@ export const DownloadOptions: React.FC<IProps> = ({
     const { data } = await downloadFlavor({
       variables: { id: id, type: platform }
     });
+
+    // cleanup response
     delete data!.downloadFlavor.__typename;
-    setInfo(...data!.downloadFlavor);
+
+    // Updating info state
+    const tempInfo = data!.downloadFlavor;
+    setInfo({ ...tempInfo });
   };
 
   // ---------------------------------------------------------------- RENDER
-
   if (error) return <p>Error: {error.message}</p>;
 
-  if (loading)
-    return (
-      <p>
-        <strong>{title}</strong> Generating ..
-      </p>
-    );
+  if (loading) return <p>Bundling ..</p>;
+
   if (!loading && called)
     return (
       <>
-        <p>Generated info:</p>
+        <strong>Generated info:</strong>
+        <br />
+        <a href={info.link} target="_blank" rel="noopener noreferrer">
+          <Button key={info.key}>
+            {info.filename + "(" + info.size + ")"}
+          </Button>
+        </a>
       </>
     );
 
   return (
     <>
+      <strong>Bundle Options:</strong>
+
+      <br />
+
       {flavors.map(flavor =>
         platforms.map(platform => (
           <Button
@@ -64,7 +70,7 @@ export const DownloadOptions: React.FC<IProps> = ({
             key={`${flavor.id}-${platform}`}
             onClick={() => handleClick(flavor.id, platform)}
           >
-            {`${title} ${platform}`}
+            {platform}
           </Button>
         ))
       )}
