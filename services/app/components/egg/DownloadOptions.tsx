@@ -5,11 +5,16 @@ import { Flavor, useDownloadFlavorMutation } from "generated/graphql";
 import { Button } from "components/styled";
 
 interface IProps {
+  title: string;
   flavors: Array<Flavor>;
   platforms: Array<string>;
 }
 
-export const DownloadOptions: React.FC<IProps> = ({ flavors, platforms }) => {
+export const DownloadOptions: React.FC<IProps> = ({
+  title,
+  flavors,
+  platforms
+}) => {
   // ---------------------------------------------------------------- HOOKS
 
   const [info, setInfo] = useState({
@@ -63,17 +68,20 @@ export const DownloadOptions: React.FC<IProps> = ({ flavors, platforms }) => {
 
       <br />
 
-      {flavors.map(flavor =>
-        platforms.map(platform => (
-          <Button
-            disabled={loading}
-            key={`${flavor.id}-${platform}`}
-            onClick={() => handleClick(flavor.id, platform)}
-          >
-            {platform}
-          </Button>
-        ))
-      )}
+      {flavors.map(flavor => (
+        <div key={flavor.id}>
+          <p>{`${title} ${flavor.name}`}</p>
+          {platforms.map(platform => (
+            <Button
+              disabled={loading}
+              key={`${flavor.id}-${platform}`}
+              onClick={() => handleClick(flavor.id, platform)}
+            >
+              {platform}
+            </Button>
+          ))}
+        </div>
+      ))}
     </>
   );
 };

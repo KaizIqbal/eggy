@@ -8,4 +8,14 @@ import { PublishEgg } from "./Publish";
 import { UnPublishEgg } from "./UnPublish";
 import { DeleteEgg } from "./Delete";
 
-export { ShowEgg, EggPopup, EggPage, CreateEgg, UpdateEgg, RenameEgg, PublishEgg, UnPublishEgg, DeleteEgg };
+export {
+  ShowEgg,
+  EggPopup,
+  EggPage,
+  CreateEgg,
+  UpdateEgg,
+  RenameEgg,
+  PublishEgg,
+  UnPublishEgg,
+  DeleteEgg
+};
