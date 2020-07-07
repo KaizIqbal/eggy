@@ -27,8 +27,8 @@ export const ShowEgg: React.FC<IProps> = props => {
       <br />
 
       <DownloadOptions
-        platforms={egg.platforms}
         title={egg.title}
+        platforms={egg.platforms}
         flavors={egg.flavors}
       />
     </>
