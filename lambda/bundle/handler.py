@@ -12,8 +12,7 @@ import helpers
 
 
 def bundle(event, context):
-    random_id = helpers.generate_random_id()
-    name = event["name"] + '-' + random_id
+    name = event["name"]
     key = event["key"]
     type = event["type"]
     sizes = event["sizes"]
@@ -46,8 +45,14 @@ def bundle(event, context):
             clickgen.main(name, config_dir=imgs_dir,
                           out_path=out_dir, x11=True, win=True, archive=True, logs=True)
 
+        # rename the cursor bundle with unique id
+        original_bundle_name = name + '.tar'
+        random_id = helpers.generate_random_id()
+        bundle_name = name + '-' + random_id + '.tar'
+        shutil.move(os.path.join(out_dir, original_bundle_name),
+                    os.path.join(out_dir, bundle_name))
+
         # Bundle info
-        bundle_name = name+'.tar'
         bundle_path = os.path.join(out_dir, bundle_name)
         bundle_size = helpers.convert_size(os.path.getsize(bundle_path))
 
