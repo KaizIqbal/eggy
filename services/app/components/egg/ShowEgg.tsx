@@ -1,6 +1,9 @@
 import React from "react";
 import Head from "next/head";
+
 import { Egg } from "generated/graphql";
+
+import { DownloadOptions } from "components/egg";
 
 interface IProps {
   egg: any;
@@ -8,6 +11,7 @@ interface IProps {
 
 export const ShowEgg: React.FC<IProps> = props => {
   const egg: Egg = props.egg;
+
   // ---------------------------------------------------------------- RENDER
   return (
     <>
@@ -19,10 +23,14 @@ export const ShowEgg: React.FC<IProps> = props => {
         <h1>{egg.title}</h1>
       </div>
       <p>by {egg.user.firstName + " " + egg.user.lastName}</p>
-      Available for:
-      {egg.platforms.map(platform => (
-        <p key={platform}>{platform}</p>
-      ))}
+      <strong>Available Download for:</strong>
+      <br />
+
+      <DownloadOptions
+        platforms={egg.platforms}
+        title={egg.title}
+        flavors={egg.flavors}
+      />
     </>
   );
 };
