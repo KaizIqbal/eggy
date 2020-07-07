@@ -62,7 +62,7 @@ export const flavrorMutations = {
 
   // ################################################ DELETE FLAVOR ################################################
 
-  async downloadFalvor(parent, args, ctx, info) {
+  async downloadFlavor(parent, args, ctx, info) {
     const data = await ctx.db.query.flavor(
       { where: { id: args.id } },
       `{
@@ -96,16 +96,17 @@ export const flavrorMutations = {
       JSON.stringify(payload)
     );
 
-    let { Payload: data } = response;
-    data = JSON.parse(data);
+    let { Payload: downloadData } = response;
+    downloadData = JSON.parse(downloadData);
 
     // If any error in lambda execution
-    if (!data.StatusCode === 200) {
+    // @ts-ignore
+    if (!downloadData.StatusCode === 200) {
       throw new Error("Ooops.Bundle server generating Exception");
     }
 
     // Download response
-    return data.body;
+    return JSON.parse(downloadData.body);
   },
 
   async deleteFlavor(parent, args, ctx, info) {
