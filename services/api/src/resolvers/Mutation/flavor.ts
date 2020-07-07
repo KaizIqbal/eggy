@@ -66,15 +66,15 @@ export const flavrorMutations = {
     const data = await ctx.db.query.flavor(
       { where: { id: args.id } },
       `{
-      name
-      egg {
-        title
-        eggname
-        user {
-          username
+        name
+        egg {
+          title
+          eggname
+          user {
+            username
+          }
         }
-      }
-    }`
+      }`
     );
 
     const key = path.join(
@@ -86,7 +86,7 @@ export const flavrorMutations = {
 
     const sizes = [24, 28, 32, 40, 48, 56, 65, 72, 80, 88, 96];
     const payload = {
-      name: data.egg.title,
+      name: data.egg.title + data.name,
       key: key,
       sizes: sizes,
       type: args.type
