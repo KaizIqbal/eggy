@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import { Egg } from "generated/graphql";
 
-import { DownloadOptions } from "components/egg";
+import { DownloadOptions } from "./DownloadOptions";
 
 interface IProps {
   egg: any;
