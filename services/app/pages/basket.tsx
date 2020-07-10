@@ -6,7 +6,7 @@ export default () => {
   return (
     <Page title="Eggy Basket">
       <h1>
-        <span role="img" aria-label="Hi">
+        <span role="img" aria-label="Basket">
           🧺
         </span>
         Basket
