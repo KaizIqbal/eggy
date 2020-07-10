@@ -16,9 +16,11 @@ export const cursorMutations = {
 
     const [data] = await ctx.db.query.cursors(
       {
-        where: { name: args.name }
+        where: { flavor: { id: flavorId }, name: args.name }
       },
-      info
+      `{
+        id
+     }`
     );
 
     if (data) {
