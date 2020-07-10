@@ -4,7 +4,12 @@ import Page from "components/Page";
 export default () => {
   return (
     <Page>
-      <h1> 👋 Eggy </h1>
+      <h1>
+        <span role="img" aria-label="Hi">
+          👋
+        </span>
+        Eggy
+      </h1>
     </Page>
   );
 };

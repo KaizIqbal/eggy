@@ -5,7 +5,12 @@ import { PublicBasket } from "components/basket";
 export default () => {
   return (
     <Page title="Eggy Basket">
-      <h1> 🧺 Basket </h1>
+      <h1>
+        <span role="img" aria-label="Hi">
+          🧺
+        </span>
+        Basket
+      </h1>
       <PublicBasket />
     </Page>
   );
